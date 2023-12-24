@@ -19,57 +19,57 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Filecenter_FindCosInfo_FullMethodName                        = "/pb.filecenter/FindCosInfo"
-	Filecenter_FindFileByMd5_FullMethodName                      = "/pb.filecenter/FindFileByMd5"
-	Filecenter_FindFileInfoByFileId_FullMethodName               = "/pb.filecenter/FindFileInfoByFileId"
-	Filecenter_FindFileByFileIdWithUserId_FullMethodName         = "/pb.filecenter/FindFileByFileIdWithUserId"
-	Filecenter_FindFileInfoByFileIdList_FullMethodName           = "/pb.filecenter/FindFileInfoByFileIdList"
-	Filecenter_FindFileInfoByFileIdListWithUserId_FullMethodName = "/pb.filecenter/FindFileInfoByFileIdListWithUserId"
-	Filecenter_FindFileListByFatherId_FullMethodName             = "/pb.filecenter/FindFileListByFatherId"
-	Filecenter_FindFileListByFatherIdWithUserId_FullMethodName   = "/pb.filecenter/FindFileListByFatherIdWithUserId"
-	Filecenter_FindAllFileByFatherId_FullMethodName              = "/pb.filecenter/FindAllFileByFatherId"
-	Filecenter_CalFileSize_FullMethodName                        = "/pb.filecenter/CalFileSize"
-	Filecenter_FindFileCount_FullMethodName                      = "/pb.filecenter/FindFileCount"
-	Filecenter_FindFileType_FullMethodName                       = "/pb.filecenter/FindFileType"
-	Filecenter_FindFileInfoInPublicByFileId_FullMethodName       = "/pb.filecenter/FindFileInfoInPublicByFileId"
-	Filecenter_FindPublicFileByFileIdWithUserId_FullMethodName   = "/pb.filecenter/FindPublicFileByFileIdWithUserId"
-	Filecenter_FindPublicByFileIdList_FullMethodName             = "/pb.filecenter/FindPublicByFileIdList"
-	Filecenter_CalPublicFileSize_FullMethodName                  = "/pb.filecenter/CalPublicFileSize"
-	Filecenter_FindPublicFileListByUserId_FullMethodName         = "/pb.filecenter/FindPublicFileListByUserId"
-	Filecenter_FindPublicFileListByFatherId_FullMethodName       = "/pb.filecenter/FindPublicFileListByFatherId"
-	Filecenter_FindAllPublicFileByFatherId_FullMethodName        = "/pb.filecenter/FindAllPublicFileByFatherId"
-	Filecenter_FindFileBySharingCode_FullMethodName              = "/pb.filecenter/FindFileBySharingCode"
-	Filecenter_UploadFile_FullMethodName                         = "/pb.filecenter/UploadFile"
-	Filecenter_AskUploadFile_FullMethodName                      = "/pb.filecenter/AskUploadFile"
-	Filecenter_AskUploadFileRollback_FullMethodName              = "/pb.filecenter/AskUploadFileRollback"
-	Filecenter_DeleteExpiredFiles_FullMethodName                 = "/pb.filecenter/DeleteExpiredFiles"
-	Filecenter_DeleteExpiredShareCodes_FullMethodName            = "/pb.filecenter/DeleteExpiredShareCodes"
+	Filecenter_GetCosInfo_FullMethodName                      = "/pb.filecenter/GetCosInfo"
+	Filecenter_GetFileByMd5_FullMethodName                    = "/pb.filecenter/GetFileByMd5"
+	Filecenter_GetFileInfoByFileId_FullMethodName             = "/pb.filecenter/GetFileInfoByFileId"
+	Filecenter_GetFileByFileIdWithUserId_FullMethodName       = "/pb.filecenter/GetFileByFileIdWithUserId"
+	Filecenter_GetFileInfoByFileIds_FullMethodName            = "/pb.filecenter/GetFileInfoByFileIds"
+	Filecenter_GetFileInfoByFileIdsWithUserId_FullMethodName  = "/pb.filecenter/GetFileInfoByFileIdsWithUserId"
+	Filecenter_GetFilesByFatherId_FullMethodName              = "/pb.filecenter/GetFilesByFatherId"
+	Filecenter_GetFilesByFatherIdWithUserId_FullMethodName    = "/pb.filecenter/GetFilesByFatherIdWithUserId"
+	Filecenter_GetAllFileByFatherId_FullMethodName            = "/pb.filecenter/GetAllFileByFatherId"
+	Filecenter_GetFileCount_FullMethodName                    = "/pb.filecenter/GetFileCount"
+	Filecenter_GetFileType_FullMethodName                     = "/pb.filecenter/GetFileType"
+	Filecenter_GetFileInfoInPublicByFileId_FullMethodName     = "/pb.filecenter/GetFileInfoInPublicByFileId"
+	Filecenter_GetPublicFileByFileIdWithUserId_FullMethodName = "/pb.filecenter/GetPublicFileByFileIdWithUserId"
+	Filecenter_GetPublicByFileIds_FullMethodName              = "/pb.filecenter/GetPublicByFileIds"
+	Filecenter_GetPublicFilesByUserId_FullMethodName          = "/pb.filecenter/GetPublicFilesByUserId"
+	Filecenter_GetPublicFilesByFatherId_FullMethodName        = "/pb.filecenter/GetPublicFilesByFatherId"
+	Filecenter_GetAllPublicFileByFatherId_FullMethodName      = "/pb.filecenter/GetAllPublicFileByFatherId"
+	Filecenter_GetFileBySharingCode_FullMethodName            = "/pb.filecenter/GetFileBySharingCode"
+	Filecenter_CalFileSize_FullMethodName                     = "/pb.filecenter/CalFileSize"
+	Filecenter_CalPublicFileSize_FullMethodName               = "/pb.filecenter/CalPublicFileSize"
+	Filecenter_UploadFile_FullMethodName                      = "/pb.filecenter/UploadFile"
+	Filecenter_AskUploadFile_FullMethodName                   = "/pb.filecenter/AskUploadFile"
+	Filecenter_AskUploadFileRollback_FullMethodName           = "/pb.filecenter/AskUploadFileRollback"
+	Filecenter_DeleteExpiredFiles_FullMethodName              = "/pb.filecenter/DeleteExpiredFiles"
+	Filecenter_DeleteExpiredShareCodes_FullMethodName         = "/pb.filecenter/DeleteExpiredShareCodes"
 )
 
 // FilecenterClient is the client API for Filecenter service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type FilecenterClient interface {
-	FindCosInfo(ctx context.Context, in *FindCosInfoReq, opts ...grpc.CallOption) (*FindCosInfoResp, error)
-	FindFileByMd5(ctx context.Context, in *FindFileByMd5Req, opts ...grpc.CallOption) (*FindFileByMd5Resp, error)
-	FindFileInfoByFileId(ctx context.Context, in *FindFileInfoByFileIdReq, opts ...grpc.CallOption) (*FindFileInfoByFileIdResp, error)
-	FindFileByFileIdWithUserId(ctx context.Context, in *FindFileByFileIdWithUserIdReq, opts ...grpc.CallOption) (*FindFileByFileIdWithUserIdResp, error)
-	FindFileInfoByFileIdList(ctx context.Context, in *FindFileInfoByFileIdListReq, opts ...grpc.CallOption) (*FindFileInfoByFileIdListResp, error)
-	FindFileInfoByFileIdListWithUserId(ctx context.Context, in *FindFileInfoByFileIdListWithUserIdReq, opts ...grpc.CallOption) (*FindFileInfoByFileIdListWithUserIdResp, error)
-	FindFileListByFatherId(ctx context.Context, in *FindFileListByFatherIdReq, opts ...grpc.CallOption) (*FindFileListByFatherIdResp, error)
-	FindFileListByFatherIdWithUserId(ctx context.Context, in *FindFileListByFatherIdWithUserIdReq, opts ...grpc.CallOption) (*FindFileListByFatherIdWithUserIdResp, error)
-	FindAllFileByFatherId(ctx context.Context, in *FindAllFileByFatherIdReq, opts ...grpc.CallOption) (*FindAllFileByFatherIdResp, error)
+	GetCosInfo(ctx context.Context, in *GetCosInfoReq, opts ...grpc.CallOption) (*GetCosInfoResp, error)
+	GetFileByMd5(ctx context.Context, in *GetFileByMd5Req, opts ...grpc.CallOption) (*GetFileByMd5Resp, error)
+	GetFileInfoByFileId(ctx context.Context, in *GetFileInfoByFileIdReq, opts ...grpc.CallOption) (*GetFileInfoByFileIdResp, error)
+	GetFileByFileIdWithUserId(ctx context.Context, in *GetFileByFileIdWithUserIdReq, opts ...grpc.CallOption) (*GetFileByFileIdWithUserIdResp, error)
+	GetFileInfoByFileIds(ctx context.Context, in *GetFileInfoByFileIdsReq, opts ...grpc.CallOption) (*GetFileInfoByFileIdsResp, error)
+	GetFileInfoByFileIdsWithUserId(ctx context.Context, in *GetFileInfoByFileIdsWithUserIdReq, opts ...grpc.CallOption) (*GetFileInfoByFileIdsWithUserIdResp, error)
+	GetFilesByFatherId(ctx context.Context, in *GetFilesByFatherIdReq, opts ...grpc.CallOption) (*GetFilesByFatherIdResp, error)
+	GetFilesByFatherIdWithUserId(ctx context.Context, in *GetFilesByFatherIdWithUserIdReq, opts ...grpc.CallOption) (*GetFilesByFatherIdWithUserIdResp, error)
+	GetAllFileByFatherId(ctx context.Context, in *GetAllFileByFatherIdReq, opts ...grpc.CallOption) (*GetAllFileByFatherIdResp, error)
+	GetFileCount(ctx context.Context, in *GetFileCountReq, opts ...grpc.CallOption) (*GetFileCountResp, error)
+	GetFileType(ctx context.Context, in *GetFileTypeReq, opts ...grpc.CallOption) (*GetFileTypeReq, error)
+	GetFileInfoInPublicByFileId(ctx context.Context, in *GetFileInfoInPublicByFileIdReq, opts ...grpc.CallOption) (*GetFileInfoInPublicByFileIdResp, error)
+	GetPublicFileByFileIdWithUserId(ctx context.Context, in *GetPublicFileByFileIdWithUserIdReq, opts ...grpc.CallOption) (*GetPublicFileByFileIdWithUserIdResp, error)
+	GetPublicByFileIds(ctx context.Context, in *GetPublicByFileIdsReq, opts ...grpc.CallOption) (*GetPublicByFileIdsResp, error)
+	GetPublicFilesByUserId(ctx context.Context, in *GetPublicFilesByUserIdReq, opts ...grpc.CallOption) (*GetPublicFilesByUserIdResp, error)
+	GetPublicFilesByFatherId(ctx context.Context, in *GetPublicFilesByFatherIdReq, opts ...grpc.CallOption) (*GetPublicFilesByFatherIdResp, error)
+	GetAllPublicFileByFatherId(ctx context.Context, in *GetAllPublicFileByFatherIdReq, opts ...grpc.CallOption) (*GetAllPublicFileByFatherIdResp, error)
+	GetFileBySharingCode(ctx context.Context, in *GetFileBySharingCodeReq, opts ...grpc.CallOption) (*GetFileBySharingCodeResp, error)
 	CalFileSize(ctx context.Context, in *CalFileSizeReq, opts ...grpc.CallOption) (*CalFileSizeResp, error)
-	FindFileCount(ctx context.Context, in *FindFileCountReq, opts ...grpc.CallOption) (*FindFileCountResp, error)
-	FindFileType(ctx context.Context, in *FindFileTypeReq, opts ...grpc.CallOption) (*FindFileTypeReq, error)
-	FindFileInfoInPublicByFileId(ctx context.Context, in *FindFileInfoInPublicByFileIdReq, opts ...grpc.CallOption) (*FindFileInfoInPublicByFileIdResp, error)
-	FindPublicFileByFileIdWithUserId(ctx context.Context, in *FindPublicFileByFileIdWithUserIdReq, opts ...grpc.CallOption) (*FindPublicFileByFileIdWithUserIdResp, error)
-	FindPublicByFileIdList(ctx context.Context, in *FindPublicByFileIdListReq, opts ...grpc.CallOption) (*FindPublicByFileIdListResp, error)
 	CalPublicFileSize(ctx context.Context, in *CalPublicFileSizeReq, opts ...grpc.CallOption) (*CalPublicFileSizeResp, error)
-	FindPublicFileListByUserId(ctx context.Context, in *FindPublicFileListByUserIdReq, opts ...grpc.CallOption) (*FindPublicFileListByUserIdResp, error)
-	FindPublicFileListByFatherId(ctx context.Context, in *FindPublicFileListByFatherIdReq, opts ...grpc.CallOption) (*FindPublicFileListByFatherIdResp, error)
-	FindAllPublicFileByFatherId(ctx context.Context, in *FindAllPublicFileByFatherIdReq, opts ...grpc.CallOption) (*FindAllPublicFileByFatherIdResp, error)
-	FindFileBySharingCode(ctx context.Context, in *FindFileBySharingCodeReq, opts ...grpc.CallOption) (*FindFileBySharingCodeResp, error)
 	UploadFile(ctx context.Context, in *UploadFileReq, opts ...grpc.CallOption) (*UploadFileResp, error)
 	AskUploadFile(ctx context.Context, in *AskUploadFileReq, opts ...grpc.CallOption) (*AskUploadFileResp, error)
 	AskUploadFileRollback(ctx context.Context, in *AskUploadFileReq, opts ...grpc.CallOption) (*AskUploadFileResp, error)
@@ -85,81 +85,162 @@ func NewFilecenterClient(cc grpc.ClientConnInterface) FilecenterClient {
 	return &filecenterClient{cc}
 }
 
-func (c *filecenterClient) FindCosInfo(ctx context.Context, in *FindCosInfoReq, opts ...grpc.CallOption) (*FindCosInfoResp, error) {
-	out := new(FindCosInfoResp)
-	err := c.cc.Invoke(ctx, Filecenter_FindCosInfo_FullMethodName, in, out, opts...)
+func (c *filecenterClient) GetCosInfo(ctx context.Context, in *GetCosInfoReq, opts ...grpc.CallOption) (*GetCosInfoResp, error) {
+	out := new(GetCosInfoResp)
+	err := c.cc.Invoke(ctx, Filecenter_GetCosInfo_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *filecenterClient) FindFileByMd5(ctx context.Context, in *FindFileByMd5Req, opts ...grpc.CallOption) (*FindFileByMd5Resp, error) {
-	out := new(FindFileByMd5Resp)
-	err := c.cc.Invoke(ctx, Filecenter_FindFileByMd5_FullMethodName, in, out, opts...)
+func (c *filecenterClient) GetFileByMd5(ctx context.Context, in *GetFileByMd5Req, opts ...grpc.CallOption) (*GetFileByMd5Resp, error) {
+	out := new(GetFileByMd5Resp)
+	err := c.cc.Invoke(ctx, Filecenter_GetFileByMd5_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *filecenterClient) FindFileInfoByFileId(ctx context.Context, in *FindFileInfoByFileIdReq, opts ...grpc.CallOption) (*FindFileInfoByFileIdResp, error) {
-	out := new(FindFileInfoByFileIdResp)
-	err := c.cc.Invoke(ctx, Filecenter_FindFileInfoByFileId_FullMethodName, in, out, opts...)
+func (c *filecenterClient) GetFileInfoByFileId(ctx context.Context, in *GetFileInfoByFileIdReq, opts ...grpc.CallOption) (*GetFileInfoByFileIdResp, error) {
+	out := new(GetFileInfoByFileIdResp)
+	err := c.cc.Invoke(ctx, Filecenter_GetFileInfoByFileId_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *filecenterClient) FindFileByFileIdWithUserId(ctx context.Context, in *FindFileByFileIdWithUserIdReq, opts ...grpc.CallOption) (*FindFileByFileIdWithUserIdResp, error) {
-	out := new(FindFileByFileIdWithUserIdResp)
-	err := c.cc.Invoke(ctx, Filecenter_FindFileByFileIdWithUserId_FullMethodName, in, out, opts...)
+func (c *filecenterClient) GetFileByFileIdWithUserId(ctx context.Context, in *GetFileByFileIdWithUserIdReq, opts ...grpc.CallOption) (*GetFileByFileIdWithUserIdResp, error) {
+	out := new(GetFileByFileIdWithUserIdResp)
+	err := c.cc.Invoke(ctx, Filecenter_GetFileByFileIdWithUserId_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *filecenterClient) FindFileInfoByFileIdList(ctx context.Context, in *FindFileInfoByFileIdListReq, opts ...grpc.CallOption) (*FindFileInfoByFileIdListResp, error) {
-	out := new(FindFileInfoByFileIdListResp)
-	err := c.cc.Invoke(ctx, Filecenter_FindFileInfoByFileIdList_FullMethodName, in, out, opts...)
+func (c *filecenterClient) GetFileInfoByFileIds(ctx context.Context, in *GetFileInfoByFileIdsReq, opts ...grpc.CallOption) (*GetFileInfoByFileIdsResp, error) {
+	out := new(GetFileInfoByFileIdsResp)
+	err := c.cc.Invoke(ctx, Filecenter_GetFileInfoByFileIds_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *filecenterClient) FindFileInfoByFileIdListWithUserId(ctx context.Context, in *FindFileInfoByFileIdListWithUserIdReq, opts ...grpc.CallOption) (*FindFileInfoByFileIdListWithUserIdResp, error) {
-	out := new(FindFileInfoByFileIdListWithUserIdResp)
-	err := c.cc.Invoke(ctx, Filecenter_FindFileInfoByFileIdListWithUserId_FullMethodName, in, out, opts...)
+func (c *filecenterClient) GetFileInfoByFileIdsWithUserId(ctx context.Context, in *GetFileInfoByFileIdsWithUserIdReq, opts ...grpc.CallOption) (*GetFileInfoByFileIdsWithUserIdResp, error) {
+	out := new(GetFileInfoByFileIdsWithUserIdResp)
+	err := c.cc.Invoke(ctx, Filecenter_GetFileInfoByFileIdsWithUserId_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *filecenterClient) FindFileListByFatherId(ctx context.Context, in *FindFileListByFatherIdReq, opts ...grpc.CallOption) (*FindFileListByFatherIdResp, error) {
-	out := new(FindFileListByFatherIdResp)
-	err := c.cc.Invoke(ctx, Filecenter_FindFileListByFatherId_FullMethodName, in, out, opts...)
+func (c *filecenterClient) GetFilesByFatherId(ctx context.Context, in *GetFilesByFatherIdReq, opts ...grpc.CallOption) (*GetFilesByFatherIdResp, error) {
+	out := new(GetFilesByFatherIdResp)
+	err := c.cc.Invoke(ctx, Filecenter_GetFilesByFatherId_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *filecenterClient) FindFileListByFatherIdWithUserId(ctx context.Context, in *FindFileListByFatherIdWithUserIdReq, opts ...grpc.CallOption) (*FindFileListByFatherIdWithUserIdResp, error) {
-	out := new(FindFileListByFatherIdWithUserIdResp)
-	err := c.cc.Invoke(ctx, Filecenter_FindFileListByFatherIdWithUserId_FullMethodName, in, out, opts...)
+func (c *filecenterClient) GetFilesByFatherIdWithUserId(ctx context.Context, in *GetFilesByFatherIdWithUserIdReq, opts ...grpc.CallOption) (*GetFilesByFatherIdWithUserIdResp, error) {
+	out := new(GetFilesByFatherIdWithUserIdResp)
+	err := c.cc.Invoke(ctx, Filecenter_GetFilesByFatherIdWithUserId_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *filecenterClient) FindAllFileByFatherId(ctx context.Context, in *FindAllFileByFatherIdReq, opts ...grpc.CallOption) (*FindAllFileByFatherIdResp, error) {
-	out := new(FindAllFileByFatherIdResp)
-	err := c.cc.Invoke(ctx, Filecenter_FindAllFileByFatherId_FullMethodName, in, out, opts...)
+func (c *filecenterClient) GetAllFileByFatherId(ctx context.Context, in *GetAllFileByFatherIdReq, opts ...grpc.CallOption) (*GetAllFileByFatherIdResp, error) {
+	out := new(GetAllFileByFatherIdResp)
+	err := c.cc.Invoke(ctx, Filecenter_GetAllFileByFatherId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *filecenterClient) GetFileCount(ctx context.Context, in *GetFileCountReq, opts ...grpc.CallOption) (*GetFileCountResp, error) {
+	out := new(GetFileCountResp)
+	err := c.cc.Invoke(ctx, Filecenter_GetFileCount_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *filecenterClient) GetFileType(ctx context.Context, in *GetFileTypeReq, opts ...grpc.CallOption) (*GetFileTypeReq, error) {
+	out := new(GetFileTypeReq)
+	err := c.cc.Invoke(ctx, Filecenter_GetFileType_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *filecenterClient) GetFileInfoInPublicByFileId(ctx context.Context, in *GetFileInfoInPublicByFileIdReq, opts ...grpc.CallOption) (*GetFileInfoInPublicByFileIdResp, error) {
+	out := new(GetFileInfoInPublicByFileIdResp)
+	err := c.cc.Invoke(ctx, Filecenter_GetFileInfoInPublicByFileId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *filecenterClient) GetPublicFileByFileIdWithUserId(ctx context.Context, in *GetPublicFileByFileIdWithUserIdReq, opts ...grpc.CallOption) (*GetPublicFileByFileIdWithUserIdResp, error) {
+	out := new(GetPublicFileByFileIdWithUserIdResp)
+	err := c.cc.Invoke(ctx, Filecenter_GetPublicFileByFileIdWithUserId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *filecenterClient) GetPublicByFileIds(ctx context.Context, in *GetPublicByFileIdsReq, opts ...grpc.CallOption) (*GetPublicByFileIdsResp, error) {
+	out := new(GetPublicByFileIdsResp)
+	err := c.cc.Invoke(ctx, Filecenter_GetPublicByFileIds_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *filecenterClient) GetPublicFilesByUserId(ctx context.Context, in *GetPublicFilesByUserIdReq, opts ...grpc.CallOption) (*GetPublicFilesByUserIdResp, error) {
+	out := new(GetPublicFilesByUserIdResp)
+	err := c.cc.Invoke(ctx, Filecenter_GetPublicFilesByUserId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *filecenterClient) GetPublicFilesByFatherId(ctx context.Context, in *GetPublicFilesByFatherIdReq, opts ...grpc.CallOption) (*GetPublicFilesByFatherIdResp, error) {
+	out := new(GetPublicFilesByFatherIdResp)
+	err := c.cc.Invoke(ctx, Filecenter_GetPublicFilesByFatherId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *filecenterClient) GetAllPublicFileByFatherId(ctx context.Context, in *GetAllPublicFileByFatherIdReq, opts ...grpc.CallOption) (*GetAllPublicFileByFatherIdResp, error) {
+	out := new(GetAllPublicFileByFatherIdResp)
+	err := c.cc.Invoke(ctx, Filecenter_GetAllPublicFileByFatherId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *filecenterClient) GetFileBySharingCode(ctx context.Context, in *GetFileBySharingCodeReq, opts ...grpc.CallOption) (*GetFileBySharingCodeResp, error) {
+	out := new(GetFileBySharingCodeResp)
+	err := c.cc.Invoke(ctx, Filecenter_GetFileBySharingCode_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -175,90 +256,9 @@ func (c *filecenterClient) CalFileSize(ctx context.Context, in *CalFileSizeReq, 
 	return out, nil
 }
 
-func (c *filecenterClient) FindFileCount(ctx context.Context, in *FindFileCountReq, opts ...grpc.CallOption) (*FindFileCountResp, error) {
-	out := new(FindFileCountResp)
-	err := c.cc.Invoke(ctx, Filecenter_FindFileCount_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *filecenterClient) FindFileType(ctx context.Context, in *FindFileTypeReq, opts ...grpc.CallOption) (*FindFileTypeReq, error) {
-	out := new(FindFileTypeReq)
-	err := c.cc.Invoke(ctx, Filecenter_FindFileType_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *filecenterClient) FindFileInfoInPublicByFileId(ctx context.Context, in *FindFileInfoInPublicByFileIdReq, opts ...grpc.CallOption) (*FindFileInfoInPublicByFileIdResp, error) {
-	out := new(FindFileInfoInPublicByFileIdResp)
-	err := c.cc.Invoke(ctx, Filecenter_FindFileInfoInPublicByFileId_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *filecenterClient) FindPublicFileByFileIdWithUserId(ctx context.Context, in *FindPublicFileByFileIdWithUserIdReq, opts ...grpc.CallOption) (*FindPublicFileByFileIdWithUserIdResp, error) {
-	out := new(FindPublicFileByFileIdWithUserIdResp)
-	err := c.cc.Invoke(ctx, Filecenter_FindPublicFileByFileIdWithUserId_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *filecenterClient) FindPublicByFileIdList(ctx context.Context, in *FindPublicByFileIdListReq, opts ...grpc.CallOption) (*FindPublicByFileIdListResp, error) {
-	out := new(FindPublicByFileIdListResp)
-	err := c.cc.Invoke(ctx, Filecenter_FindPublicByFileIdList_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *filecenterClient) CalPublicFileSize(ctx context.Context, in *CalPublicFileSizeReq, opts ...grpc.CallOption) (*CalPublicFileSizeResp, error) {
 	out := new(CalPublicFileSizeResp)
 	err := c.cc.Invoke(ctx, Filecenter_CalPublicFileSize_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *filecenterClient) FindPublicFileListByUserId(ctx context.Context, in *FindPublicFileListByUserIdReq, opts ...grpc.CallOption) (*FindPublicFileListByUserIdResp, error) {
-	out := new(FindPublicFileListByUserIdResp)
-	err := c.cc.Invoke(ctx, Filecenter_FindPublicFileListByUserId_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *filecenterClient) FindPublicFileListByFatherId(ctx context.Context, in *FindPublicFileListByFatherIdReq, opts ...grpc.CallOption) (*FindPublicFileListByFatherIdResp, error) {
-	out := new(FindPublicFileListByFatherIdResp)
-	err := c.cc.Invoke(ctx, Filecenter_FindPublicFileListByFatherId_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *filecenterClient) FindAllPublicFileByFatherId(ctx context.Context, in *FindAllPublicFileByFatherIdReq, opts ...grpc.CallOption) (*FindAllPublicFileByFatherIdResp, error) {
-	out := new(FindAllPublicFileByFatherIdResp)
-	err := c.cc.Invoke(ctx, Filecenter_FindAllPublicFileByFatherId_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *filecenterClient) FindFileBySharingCode(ctx context.Context, in *FindFileBySharingCodeReq, opts ...grpc.CallOption) (*FindFileBySharingCodeResp, error) {
-	out := new(FindFileBySharingCodeResp)
-	err := c.cc.Invoke(ctx, Filecenter_FindFileBySharingCode_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -314,26 +314,26 @@ func (c *filecenterClient) DeleteExpiredShareCodes(ctx context.Context, in *Dele
 // All implementations must embed UnimplementedFilecenterServer
 // for forward compatibility
 type FilecenterServer interface {
-	FindCosInfo(context.Context, *FindCosInfoReq) (*FindCosInfoResp, error)
-	FindFileByMd5(context.Context, *FindFileByMd5Req) (*FindFileByMd5Resp, error)
-	FindFileInfoByFileId(context.Context, *FindFileInfoByFileIdReq) (*FindFileInfoByFileIdResp, error)
-	FindFileByFileIdWithUserId(context.Context, *FindFileByFileIdWithUserIdReq) (*FindFileByFileIdWithUserIdResp, error)
-	FindFileInfoByFileIdList(context.Context, *FindFileInfoByFileIdListReq) (*FindFileInfoByFileIdListResp, error)
-	FindFileInfoByFileIdListWithUserId(context.Context, *FindFileInfoByFileIdListWithUserIdReq) (*FindFileInfoByFileIdListWithUserIdResp, error)
-	FindFileListByFatherId(context.Context, *FindFileListByFatherIdReq) (*FindFileListByFatherIdResp, error)
-	FindFileListByFatherIdWithUserId(context.Context, *FindFileListByFatherIdWithUserIdReq) (*FindFileListByFatherIdWithUserIdResp, error)
-	FindAllFileByFatherId(context.Context, *FindAllFileByFatherIdReq) (*FindAllFileByFatherIdResp, error)
+	GetCosInfo(context.Context, *GetCosInfoReq) (*GetCosInfoResp, error)
+	GetFileByMd5(context.Context, *GetFileByMd5Req) (*GetFileByMd5Resp, error)
+	GetFileInfoByFileId(context.Context, *GetFileInfoByFileIdReq) (*GetFileInfoByFileIdResp, error)
+	GetFileByFileIdWithUserId(context.Context, *GetFileByFileIdWithUserIdReq) (*GetFileByFileIdWithUserIdResp, error)
+	GetFileInfoByFileIds(context.Context, *GetFileInfoByFileIdsReq) (*GetFileInfoByFileIdsResp, error)
+	GetFileInfoByFileIdsWithUserId(context.Context, *GetFileInfoByFileIdsWithUserIdReq) (*GetFileInfoByFileIdsWithUserIdResp, error)
+	GetFilesByFatherId(context.Context, *GetFilesByFatherIdReq) (*GetFilesByFatherIdResp, error)
+	GetFilesByFatherIdWithUserId(context.Context, *GetFilesByFatherIdWithUserIdReq) (*GetFilesByFatherIdWithUserIdResp, error)
+	GetAllFileByFatherId(context.Context, *GetAllFileByFatherIdReq) (*GetAllFileByFatherIdResp, error)
+	GetFileCount(context.Context, *GetFileCountReq) (*GetFileCountResp, error)
+	GetFileType(context.Context, *GetFileTypeReq) (*GetFileTypeReq, error)
+	GetFileInfoInPublicByFileId(context.Context, *GetFileInfoInPublicByFileIdReq) (*GetFileInfoInPublicByFileIdResp, error)
+	GetPublicFileByFileIdWithUserId(context.Context, *GetPublicFileByFileIdWithUserIdReq) (*GetPublicFileByFileIdWithUserIdResp, error)
+	GetPublicByFileIds(context.Context, *GetPublicByFileIdsReq) (*GetPublicByFileIdsResp, error)
+	GetPublicFilesByUserId(context.Context, *GetPublicFilesByUserIdReq) (*GetPublicFilesByUserIdResp, error)
+	GetPublicFilesByFatherId(context.Context, *GetPublicFilesByFatherIdReq) (*GetPublicFilesByFatherIdResp, error)
+	GetAllPublicFileByFatherId(context.Context, *GetAllPublicFileByFatherIdReq) (*GetAllPublicFileByFatherIdResp, error)
+	GetFileBySharingCode(context.Context, *GetFileBySharingCodeReq) (*GetFileBySharingCodeResp, error)
 	CalFileSize(context.Context, *CalFileSizeReq) (*CalFileSizeResp, error)
-	FindFileCount(context.Context, *FindFileCountReq) (*FindFileCountResp, error)
-	FindFileType(context.Context, *FindFileTypeReq) (*FindFileTypeReq, error)
-	FindFileInfoInPublicByFileId(context.Context, *FindFileInfoInPublicByFileIdReq) (*FindFileInfoInPublicByFileIdResp, error)
-	FindPublicFileByFileIdWithUserId(context.Context, *FindPublicFileByFileIdWithUserIdReq) (*FindPublicFileByFileIdWithUserIdResp, error)
-	FindPublicByFileIdList(context.Context, *FindPublicByFileIdListReq) (*FindPublicByFileIdListResp, error)
 	CalPublicFileSize(context.Context, *CalPublicFileSizeReq) (*CalPublicFileSizeResp, error)
-	FindPublicFileListByUserId(context.Context, *FindPublicFileListByUserIdReq) (*FindPublicFileListByUserIdResp, error)
-	FindPublicFileListByFatherId(context.Context, *FindPublicFileListByFatherIdReq) (*FindPublicFileListByFatherIdResp, error)
-	FindAllPublicFileByFatherId(context.Context, *FindAllPublicFileByFatherIdReq) (*FindAllPublicFileByFatherIdResp, error)
-	FindFileBySharingCode(context.Context, *FindFileBySharingCodeReq) (*FindFileBySharingCodeResp, error)
 	UploadFile(context.Context, *UploadFileReq) (*UploadFileResp, error)
 	AskUploadFile(context.Context, *AskUploadFileReq) (*AskUploadFileResp, error)
 	AskUploadFileRollback(context.Context, *AskUploadFileReq) (*AskUploadFileResp, error)
@@ -346,65 +346,65 @@ type FilecenterServer interface {
 type UnimplementedFilecenterServer struct {
 }
 
-func (UnimplementedFilecenterServer) FindCosInfo(context.Context, *FindCosInfoReq) (*FindCosInfoResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindCosInfo not implemented")
+func (UnimplementedFilecenterServer) GetCosInfo(context.Context, *GetCosInfoReq) (*GetCosInfoResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCosInfo not implemented")
 }
-func (UnimplementedFilecenterServer) FindFileByMd5(context.Context, *FindFileByMd5Req) (*FindFileByMd5Resp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindFileByMd5 not implemented")
+func (UnimplementedFilecenterServer) GetFileByMd5(context.Context, *GetFileByMd5Req) (*GetFileByMd5Resp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFileByMd5 not implemented")
 }
-func (UnimplementedFilecenterServer) FindFileInfoByFileId(context.Context, *FindFileInfoByFileIdReq) (*FindFileInfoByFileIdResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindFileInfoByFileId not implemented")
+func (UnimplementedFilecenterServer) GetFileInfoByFileId(context.Context, *GetFileInfoByFileIdReq) (*GetFileInfoByFileIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFileInfoByFileId not implemented")
 }
-func (UnimplementedFilecenterServer) FindFileByFileIdWithUserId(context.Context, *FindFileByFileIdWithUserIdReq) (*FindFileByFileIdWithUserIdResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindFileByFileIdWithUserId not implemented")
+func (UnimplementedFilecenterServer) GetFileByFileIdWithUserId(context.Context, *GetFileByFileIdWithUserIdReq) (*GetFileByFileIdWithUserIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFileByFileIdWithUserId not implemented")
 }
-func (UnimplementedFilecenterServer) FindFileInfoByFileIdList(context.Context, *FindFileInfoByFileIdListReq) (*FindFileInfoByFileIdListResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindFileInfoByFileIdList not implemented")
+func (UnimplementedFilecenterServer) GetFileInfoByFileIds(context.Context, *GetFileInfoByFileIdsReq) (*GetFileInfoByFileIdsResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFileInfoByFileIds not implemented")
 }
-func (UnimplementedFilecenterServer) FindFileInfoByFileIdListWithUserId(context.Context, *FindFileInfoByFileIdListWithUserIdReq) (*FindFileInfoByFileIdListWithUserIdResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindFileInfoByFileIdListWithUserId not implemented")
+func (UnimplementedFilecenterServer) GetFileInfoByFileIdsWithUserId(context.Context, *GetFileInfoByFileIdsWithUserIdReq) (*GetFileInfoByFileIdsWithUserIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFileInfoByFileIdsWithUserId not implemented")
 }
-func (UnimplementedFilecenterServer) FindFileListByFatherId(context.Context, *FindFileListByFatherIdReq) (*FindFileListByFatherIdResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindFileListByFatherId not implemented")
+func (UnimplementedFilecenterServer) GetFilesByFatherId(context.Context, *GetFilesByFatherIdReq) (*GetFilesByFatherIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFilesByFatherId not implemented")
 }
-func (UnimplementedFilecenterServer) FindFileListByFatherIdWithUserId(context.Context, *FindFileListByFatherIdWithUserIdReq) (*FindFileListByFatherIdWithUserIdResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindFileListByFatherIdWithUserId not implemented")
+func (UnimplementedFilecenterServer) GetFilesByFatherIdWithUserId(context.Context, *GetFilesByFatherIdWithUserIdReq) (*GetFilesByFatherIdWithUserIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFilesByFatherIdWithUserId not implemented")
 }
-func (UnimplementedFilecenterServer) FindAllFileByFatherId(context.Context, *FindAllFileByFatherIdReq) (*FindAllFileByFatherIdResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindAllFileByFatherId not implemented")
+func (UnimplementedFilecenterServer) GetAllFileByFatherId(context.Context, *GetAllFileByFatherIdReq) (*GetAllFileByFatherIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllFileByFatherId not implemented")
+}
+func (UnimplementedFilecenterServer) GetFileCount(context.Context, *GetFileCountReq) (*GetFileCountResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFileCount not implemented")
+}
+func (UnimplementedFilecenterServer) GetFileType(context.Context, *GetFileTypeReq) (*GetFileTypeReq, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFileType not implemented")
+}
+func (UnimplementedFilecenterServer) GetFileInfoInPublicByFileId(context.Context, *GetFileInfoInPublicByFileIdReq) (*GetFileInfoInPublicByFileIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFileInfoInPublicByFileId not implemented")
+}
+func (UnimplementedFilecenterServer) GetPublicFileByFileIdWithUserId(context.Context, *GetPublicFileByFileIdWithUserIdReq) (*GetPublicFileByFileIdWithUserIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPublicFileByFileIdWithUserId not implemented")
+}
+func (UnimplementedFilecenterServer) GetPublicByFileIds(context.Context, *GetPublicByFileIdsReq) (*GetPublicByFileIdsResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPublicByFileIds not implemented")
+}
+func (UnimplementedFilecenterServer) GetPublicFilesByUserId(context.Context, *GetPublicFilesByUserIdReq) (*GetPublicFilesByUserIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPublicFilesByUserId not implemented")
+}
+func (UnimplementedFilecenterServer) GetPublicFilesByFatherId(context.Context, *GetPublicFilesByFatherIdReq) (*GetPublicFilesByFatherIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPublicFilesByFatherId not implemented")
+}
+func (UnimplementedFilecenterServer) GetAllPublicFileByFatherId(context.Context, *GetAllPublicFileByFatherIdReq) (*GetAllPublicFileByFatherIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllPublicFileByFatherId not implemented")
+}
+func (UnimplementedFilecenterServer) GetFileBySharingCode(context.Context, *GetFileBySharingCodeReq) (*GetFileBySharingCodeResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFileBySharingCode not implemented")
 }
 func (UnimplementedFilecenterServer) CalFileSize(context.Context, *CalFileSizeReq) (*CalFileSizeResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CalFileSize not implemented")
 }
-func (UnimplementedFilecenterServer) FindFileCount(context.Context, *FindFileCountReq) (*FindFileCountResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindFileCount not implemented")
-}
-func (UnimplementedFilecenterServer) FindFileType(context.Context, *FindFileTypeReq) (*FindFileTypeReq, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindFileType not implemented")
-}
-func (UnimplementedFilecenterServer) FindFileInfoInPublicByFileId(context.Context, *FindFileInfoInPublicByFileIdReq) (*FindFileInfoInPublicByFileIdResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindFileInfoInPublicByFileId not implemented")
-}
-func (UnimplementedFilecenterServer) FindPublicFileByFileIdWithUserId(context.Context, *FindPublicFileByFileIdWithUserIdReq) (*FindPublicFileByFileIdWithUserIdResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindPublicFileByFileIdWithUserId not implemented")
-}
-func (UnimplementedFilecenterServer) FindPublicByFileIdList(context.Context, *FindPublicByFileIdListReq) (*FindPublicByFileIdListResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindPublicByFileIdList not implemented")
-}
 func (UnimplementedFilecenterServer) CalPublicFileSize(context.Context, *CalPublicFileSizeReq) (*CalPublicFileSizeResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CalPublicFileSize not implemented")
-}
-func (UnimplementedFilecenterServer) FindPublicFileListByUserId(context.Context, *FindPublicFileListByUserIdReq) (*FindPublicFileListByUserIdResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindPublicFileListByUserId not implemented")
-}
-func (UnimplementedFilecenterServer) FindPublicFileListByFatherId(context.Context, *FindPublicFileListByFatherIdReq) (*FindPublicFileListByFatherIdResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindPublicFileListByFatherId not implemented")
-}
-func (UnimplementedFilecenterServer) FindAllPublicFileByFatherId(context.Context, *FindAllPublicFileByFatherIdReq) (*FindAllPublicFileByFatherIdResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindAllPublicFileByFatherId not implemented")
-}
-func (UnimplementedFilecenterServer) FindFileBySharingCode(context.Context, *FindFileBySharingCodeReq) (*FindFileBySharingCodeResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindFileBySharingCode not implemented")
 }
 func (UnimplementedFilecenterServer) UploadFile(context.Context, *UploadFileReq) (*UploadFileResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UploadFile not implemented")
@@ -434,164 +434,326 @@ func RegisterFilecenterServer(s grpc.ServiceRegistrar, srv FilecenterServer) {
 	s.RegisterService(&Filecenter_ServiceDesc, srv)
 }
 
-func _Filecenter_FindCosInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindCosInfoReq)
+func _Filecenter_GetCosInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCosInfoReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FilecenterServer).FindCosInfo(ctx, in)
+		return srv.(FilecenterServer).GetCosInfo(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Filecenter_FindCosInfo_FullMethodName,
+		FullMethod: Filecenter_GetCosInfo_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FilecenterServer).FindCosInfo(ctx, req.(*FindCosInfoReq))
+		return srv.(FilecenterServer).GetCosInfo(ctx, req.(*GetCosInfoReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Filecenter_FindFileByMd5_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindFileByMd5Req)
+func _Filecenter_GetFileByMd5_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFileByMd5Req)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FilecenterServer).FindFileByMd5(ctx, in)
+		return srv.(FilecenterServer).GetFileByMd5(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Filecenter_FindFileByMd5_FullMethodName,
+		FullMethod: Filecenter_GetFileByMd5_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FilecenterServer).FindFileByMd5(ctx, req.(*FindFileByMd5Req))
+		return srv.(FilecenterServer).GetFileByMd5(ctx, req.(*GetFileByMd5Req))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Filecenter_FindFileInfoByFileId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindFileInfoByFileIdReq)
+func _Filecenter_GetFileInfoByFileId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFileInfoByFileIdReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FilecenterServer).FindFileInfoByFileId(ctx, in)
+		return srv.(FilecenterServer).GetFileInfoByFileId(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Filecenter_FindFileInfoByFileId_FullMethodName,
+		FullMethod: Filecenter_GetFileInfoByFileId_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FilecenterServer).FindFileInfoByFileId(ctx, req.(*FindFileInfoByFileIdReq))
+		return srv.(FilecenterServer).GetFileInfoByFileId(ctx, req.(*GetFileInfoByFileIdReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Filecenter_FindFileByFileIdWithUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindFileByFileIdWithUserIdReq)
+func _Filecenter_GetFileByFileIdWithUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFileByFileIdWithUserIdReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FilecenterServer).FindFileByFileIdWithUserId(ctx, in)
+		return srv.(FilecenterServer).GetFileByFileIdWithUserId(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Filecenter_FindFileByFileIdWithUserId_FullMethodName,
+		FullMethod: Filecenter_GetFileByFileIdWithUserId_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FilecenterServer).FindFileByFileIdWithUserId(ctx, req.(*FindFileByFileIdWithUserIdReq))
+		return srv.(FilecenterServer).GetFileByFileIdWithUserId(ctx, req.(*GetFileByFileIdWithUserIdReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Filecenter_FindFileInfoByFileIdList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindFileInfoByFileIdListReq)
+func _Filecenter_GetFileInfoByFileIds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFileInfoByFileIdsReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FilecenterServer).FindFileInfoByFileIdList(ctx, in)
+		return srv.(FilecenterServer).GetFileInfoByFileIds(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Filecenter_FindFileInfoByFileIdList_FullMethodName,
+		FullMethod: Filecenter_GetFileInfoByFileIds_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FilecenterServer).FindFileInfoByFileIdList(ctx, req.(*FindFileInfoByFileIdListReq))
+		return srv.(FilecenterServer).GetFileInfoByFileIds(ctx, req.(*GetFileInfoByFileIdsReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Filecenter_FindFileInfoByFileIdListWithUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindFileInfoByFileIdListWithUserIdReq)
+func _Filecenter_GetFileInfoByFileIdsWithUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFileInfoByFileIdsWithUserIdReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FilecenterServer).FindFileInfoByFileIdListWithUserId(ctx, in)
+		return srv.(FilecenterServer).GetFileInfoByFileIdsWithUserId(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Filecenter_FindFileInfoByFileIdListWithUserId_FullMethodName,
+		FullMethod: Filecenter_GetFileInfoByFileIdsWithUserId_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FilecenterServer).FindFileInfoByFileIdListWithUserId(ctx, req.(*FindFileInfoByFileIdListWithUserIdReq))
+		return srv.(FilecenterServer).GetFileInfoByFileIdsWithUserId(ctx, req.(*GetFileInfoByFileIdsWithUserIdReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Filecenter_FindFileListByFatherId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindFileListByFatherIdReq)
+func _Filecenter_GetFilesByFatherId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFilesByFatherIdReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FilecenterServer).FindFileListByFatherId(ctx, in)
+		return srv.(FilecenterServer).GetFilesByFatherId(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Filecenter_FindFileListByFatherId_FullMethodName,
+		FullMethod: Filecenter_GetFilesByFatherId_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FilecenterServer).FindFileListByFatherId(ctx, req.(*FindFileListByFatherIdReq))
+		return srv.(FilecenterServer).GetFilesByFatherId(ctx, req.(*GetFilesByFatherIdReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Filecenter_FindFileListByFatherIdWithUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindFileListByFatherIdWithUserIdReq)
+func _Filecenter_GetFilesByFatherIdWithUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFilesByFatherIdWithUserIdReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FilecenterServer).FindFileListByFatherIdWithUserId(ctx, in)
+		return srv.(FilecenterServer).GetFilesByFatherIdWithUserId(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Filecenter_FindFileListByFatherIdWithUserId_FullMethodName,
+		FullMethod: Filecenter_GetFilesByFatherIdWithUserId_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FilecenterServer).FindFileListByFatherIdWithUserId(ctx, req.(*FindFileListByFatherIdWithUserIdReq))
+		return srv.(FilecenterServer).GetFilesByFatherIdWithUserId(ctx, req.(*GetFilesByFatherIdWithUserIdReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Filecenter_FindAllFileByFatherId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindAllFileByFatherIdReq)
+func _Filecenter_GetAllFileByFatherId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllFileByFatherIdReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FilecenterServer).FindAllFileByFatherId(ctx, in)
+		return srv.(FilecenterServer).GetAllFileByFatherId(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Filecenter_FindAllFileByFatherId_FullMethodName,
+		FullMethod: Filecenter_GetAllFileByFatherId_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FilecenterServer).FindAllFileByFatherId(ctx, req.(*FindAllFileByFatherIdReq))
+		return srv.(FilecenterServer).GetAllFileByFatherId(ctx, req.(*GetAllFileByFatherIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Filecenter_GetFileCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFileCountReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FilecenterServer).GetFileCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Filecenter_GetFileCount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FilecenterServer).GetFileCount(ctx, req.(*GetFileCountReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Filecenter_GetFileType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFileTypeReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FilecenterServer).GetFileType(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Filecenter_GetFileType_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FilecenterServer).GetFileType(ctx, req.(*GetFileTypeReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Filecenter_GetFileInfoInPublicByFileId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFileInfoInPublicByFileIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FilecenterServer).GetFileInfoInPublicByFileId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Filecenter_GetFileInfoInPublicByFileId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FilecenterServer).GetFileInfoInPublicByFileId(ctx, req.(*GetFileInfoInPublicByFileIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Filecenter_GetPublicFileByFileIdWithUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPublicFileByFileIdWithUserIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FilecenterServer).GetPublicFileByFileIdWithUserId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Filecenter_GetPublicFileByFileIdWithUserId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FilecenterServer).GetPublicFileByFileIdWithUserId(ctx, req.(*GetPublicFileByFileIdWithUserIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Filecenter_GetPublicByFileIds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPublicByFileIdsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FilecenterServer).GetPublicByFileIds(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Filecenter_GetPublicByFileIds_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FilecenterServer).GetPublicByFileIds(ctx, req.(*GetPublicByFileIdsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Filecenter_GetPublicFilesByUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPublicFilesByUserIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FilecenterServer).GetPublicFilesByUserId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Filecenter_GetPublicFilesByUserId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FilecenterServer).GetPublicFilesByUserId(ctx, req.(*GetPublicFilesByUserIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Filecenter_GetPublicFilesByFatherId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPublicFilesByFatherIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FilecenterServer).GetPublicFilesByFatherId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Filecenter_GetPublicFilesByFatherId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FilecenterServer).GetPublicFilesByFatherId(ctx, req.(*GetPublicFilesByFatherIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Filecenter_GetAllPublicFileByFatherId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllPublicFileByFatherIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FilecenterServer).GetAllPublicFileByFatherId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Filecenter_GetAllPublicFileByFatherId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FilecenterServer).GetAllPublicFileByFatherId(ctx, req.(*GetAllPublicFileByFatherIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Filecenter_GetFileBySharingCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFileBySharingCodeReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FilecenterServer).GetFileBySharingCode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Filecenter_GetFileBySharingCode_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FilecenterServer).GetFileBySharingCode(ctx, req.(*GetFileBySharingCodeReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -614,96 +776,6 @@ func _Filecenter_CalFileSize_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Filecenter_FindFileCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindFileCountReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(FilecenterServer).FindFileCount(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Filecenter_FindFileCount_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FilecenterServer).FindFileCount(ctx, req.(*FindFileCountReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Filecenter_FindFileType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindFileTypeReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(FilecenterServer).FindFileType(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Filecenter_FindFileType_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FilecenterServer).FindFileType(ctx, req.(*FindFileTypeReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Filecenter_FindFileInfoInPublicByFileId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindFileInfoInPublicByFileIdReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(FilecenterServer).FindFileInfoInPublicByFileId(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Filecenter_FindFileInfoInPublicByFileId_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FilecenterServer).FindFileInfoInPublicByFileId(ctx, req.(*FindFileInfoInPublicByFileIdReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Filecenter_FindPublicFileByFileIdWithUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindPublicFileByFileIdWithUserIdReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(FilecenterServer).FindPublicFileByFileIdWithUserId(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Filecenter_FindPublicFileByFileIdWithUserId_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FilecenterServer).FindPublicFileByFileIdWithUserId(ctx, req.(*FindPublicFileByFileIdWithUserIdReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Filecenter_FindPublicByFileIdList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindPublicByFileIdListReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(FilecenterServer).FindPublicByFileIdList(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Filecenter_FindPublicByFileIdList_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FilecenterServer).FindPublicByFileIdList(ctx, req.(*FindPublicByFileIdListReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Filecenter_CalPublicFileSize_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CalPublicFileSizeReq)
 	if err := dec(in); err != nil {
@@ -718,78 +790,6 @@ func _Filecenter_CalPublicFileSize_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(FilecenterServer).CalPublicFileSize(ctx, req.(*CalPublicFileSizeReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Filecenter_FindPublicFileListByUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindPublicFileListByUserIdReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(FilecenterServer).FindPublicFileListByUserId(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Filecenter_FindPublicFileListByUserId_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FilecenterServer).FindPublicFileListByUserId(ctx, req.(*FindPublicFileListByUserIdReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Filecenter_FindPublicFileListByFatherId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindPublicFileListByFatherIdReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(FilecenterServer).FindPublicFileListByFatherId(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Filecenter_FindPublicFileListByFatherId_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FilecenterServer).FindPublicFileListByFatherId(ctx, req.(*FindPublicFileListByFatherIdReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Filecenter_FindAllPublicFileByFatherId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindAllPublicFileByFatherIdReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(FilecenterServer).FindAllPublicFileByFatherId(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Filecenter_FindAllPublicFileByFatherId_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FilecenterServer).FindAllPublicFileByFatherId(ctx, req.(*FindAllPublicFileByFatherIdReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Filecenter_FindFileBySharingCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindFileBySharingCodeReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(FilecenterServer).FindFileBySharingCode(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Filecenter_FindFileBySharingCode_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FilecenterServer).FindFileBySharingCode(ctx, req.(*FindFileBySharingCodeReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -892,84 +892,84 @@ var Filecenter_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*FilecenterServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "FindCosInfo",
-			Handler:    _Filecenter_FindCosInfo_Handler,
+			MethodName: "GetCosInfo",
+			Handler:    _Filecenter_GetCosInfo_Handler,
 		},
 		{
-			MethodName: "FindFileByMd5",
-			Handler:    _Filecenter_FindFileByMd5_Handler,
+			MethodName: "GetFileByMd5",
+			Handler:    _Filecenter_GetFileByMd5_Handler,
 		},
 		{
-			MethodName: "FindFileInfoByFileId",
-			Handler:    _Filecenter_FindFileInfoByFileId_Handler,
+			MethodName: "GetFileInfoByFileId",
+			Handler:    _Filecenter_GetFileInfoByFileId_Handler,
 		},
 		{
-			MethodName: "FindFileByFileIdWithUserId",
-			Handler:    _Filecenter_FindFileByFileIdWithUserId_Handler,
+			MethodName: "GetFileByFileIdWithUserId",
+			Handler:    _Filecenter_GetFileByFileIdWithUserId_Handler,
 		},
 		{
-			MethodName: "FindFileInfoByFileIdList",
-			Handler:    _Filecenter_FindFileInfoByFileIdList_Handler,
+			MethodName: "GetFileInfoByFileIds",
+			Handler:    _Filecenter_GetFileInfoByFileIds_Handler,
 		},
 		{
-			MethodName: "FindFileInfoByFileIdListWithUserId",
-			Handler:    _Filecenter_FindFileInfoByFileIdListWithUserId_Handler,
+			MethodName: "GetFileInfoByFileIdsWithUserId",
+			Handler:    _Filecenter_GetFileInfoByFileIdsWithUserId_Handler,
 		},
 		{
-			MethodName: "FindFileListByFatherId",
-			Handler:    _Filecenter_FindFileListByFatherId_Handler,
+			MethodName: "GetFilesByFatherId",
+			Handler:    _Filecenter_GetFilesByFatherId_Handler,
 		},
 		{
-			MethodName: "FindFileListByFatherIdWithUserId",
-			Handler:    _Filecenter_FindFileListByFatherIdWithUserId_Handler,
+			MethodName: "GetFilesByFatherIdWithUserId",
+			Handler:    _Filecenter_GetFilesByFatherIdWithUserId_Handler,
 		},
 		{
-			MethodName: "FindAllFileByFatherId",
-			Handler:    _Filecenter_FindAllFileByFatherId_Handler,
+			MethodName: "GetAllFileByFatherId",
+			Handler:    _Filecenter_GetAllFileByFatherId_Handler,
+		},
+		{
+			MethodName: "GetFileCount",
+			Handler:    _Filecenter_GetFileCount_Handler,
+		},
+		{
+			MethodName: "GetFileType",
+			Handler:    _Filecenter_GetFileType_Handler,
+		},
+		{
+			MethodName: "GetFileInfoInPublicByFileId",
+			Handler:    _Filecenter_GetFileInfoInPublicByFileId_Handler,
+		},
+		{
+			MethodName: "GetPublicFileByFileIdWithUserId",
+			Handler:    _Filecenter_GetPublicFileByFileIdWithUserId_Handler,
+		},
+		{
+			MethodName: "GetPublicByFileIds",
+			Handler:    _Filecenter_GetPublicByFileIds_Handler,
+		},
+		{
+			MethodName: "GetPublicFilesByUserId",
+			Handler:    _Filecenter_GetPublicFilesByUserId_Handler,
+		},
+		{
+			MethodName: "GetPublicFilesByFatherId",
+			Handler:    _Filecenter_GetPublicFilesByFatherId_Handler,
+		},
+		{
+			MethodName: "GetAllPublicFileByFatherId",
+			Handler:    _Filecenter_GetAllPublicFileByFatherId_Handler,
+		},
+		{
+			MethodName: "GetFileBySharingCode",
+			Handler:    _Filecenter_GetFileBySharingCode_Handler,
 		},
 		{
 			MethodName: "CalFileSize",
 			Handler:    _Filecenter_CalFileSize_Handler,
 		},
 		{
-			MethodName: "FindFileCount",
-			Handler:    _Filecenter_FindFileCount_Handler,
-		},
-		{
-			MethodName: "FindFileType",
-			Handler:    _Filecenter_FindFileType_Handler,
-		},
-		{
-			MethodName: "FindFileInfoInPublicByFileId",
-			Handler:    _Filecenter_FindFileInfoInPublicByFileId_Handler,
-		},
-		{
-			MethodName: "FindPublicFileByFileIdWithUserId",
-			Handler:    _Filecenter_FindPublicFileByFileIdWithUserId_Handler,
-		},
-		{
-			MethodName: "FindPublicByFileIdList",
-			Handler:    _Filecenter_FindPublicByFileIdList_Handler,
-		},
-		{
 			MethodName: "CalPublicFileSize",
 			Handler:    _Filecenter_CalPublicFileSize_Handler,
-		},
-		{
-			MethodName: "FindPublicFileListByUserId",
-			Handler:    _Filecenter_FindPublicFileListByUserId_Handler,
-		},
-		{
-			MethodName: "FindPublicFileListByFatherId",
-			Handler:    _Filecenter_FindPublicFileListByFatherId_Handler,
-		},
-		{
-			MethodName: "FindAllPublicFileByFatherId",
-			Handler:    _Filecenter_FindAllPublicFileByFatherId_Handler,
-		},
-		{
-			MethodName: "FindFileBySharingCode",
-			Handler:    _Filecenter_FindFileBySharingCode_Handler,
 		},
 		{
 			MethodName: "UploadFile",
