@@ -1,1 +1,0 @@
-# service-idl-gen-go
