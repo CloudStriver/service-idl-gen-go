@@ -1,4 +1,4 @@
-idl_dir=${IDL_DIR:=../service-idl}
+idl_dir=${IDL_DIR:=../service-idl-go}
 module_name=$(grep '^module' go.mod | awk '{print $2}')
 files=$(find $idl_dir -type f -name '*.proto')
 if [ $? != 0 ];then
