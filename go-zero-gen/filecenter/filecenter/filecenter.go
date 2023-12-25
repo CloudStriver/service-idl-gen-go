@@ -6,7 +6,7 @@ package filecenter
 import (
 	"context"
 
-	"filecenter/pb"
+	"github.com/CloudStriver/service-idl-gen-go/go-zero-gen/filecenter/pb"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"
