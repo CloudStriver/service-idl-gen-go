@@ -41,19 +41,20 @@ jobs:
       - name: Install Protobuf Compiler
         run: |
           go install github.com/zeromicro/go-zero/tools/goctl@latest
+          go install github.com/cloudwego/kitex/tool/cmd/kitex@latest
           goctl env check --install --verbose --force
 
       - name: Update
         run: |
-          rm -r go-zero-gen
-          export IDL_DIR=./service-idl
+          rm -r kitex_gen
+          export IDL_DIR=./service-idl-go
           chmod 755 /home/runner/go/bin/protoc
-          bash build.sh
+          sh build.sh
 
       - name: Commit And Push
         run: |
-          git config --global user.email "1807209079@qq.com"
+          git config --global user.email "bot@cloudmind.com"
           git config --global user.name "${{ github.actor }}"
-          git add go-zero-gen
+          git add kitex_gen
           git commit -m "${{ github.event.client_payload.commit_msg }}"
           git push origin ${{ github.event.client_payload.ref }}
