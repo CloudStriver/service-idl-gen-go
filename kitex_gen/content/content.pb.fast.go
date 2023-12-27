@@ -108,7 +108,7 @@ func (x *File) fastReadField6(buf []byte, _type int8) (offset int, err error) {
 }
 
 func (x *File) fastReadField7(buf []byte, _type int8) (offset int, err error) {
-	x.Size, offset, err = fastpb.ReadInt64(buf, _type)
+	x.SpaceSize, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -223,7 +223,7 @@ func (x *PublicFile) fastReadField6(buf []byte, _type int8) (offset int, err err
 }
 
 func (x *PublicFile) fastReadField7(buf []byte, _type int8) (offset int, err error) {
-	x.Size, offset, err = fastpb.ReadInt64(buf, _type)
+	x.SpaceSize, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -979,7 +979,7 @@ func (x *CalFileSizeReq) fastReadField1(buf []byte, _type int8) (offset int, err
 
 func (x *CalFileSizeReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
-	x.Size = &tmp
+	x.SpaceSize = &tmp
 	return offset, err
 }
 
@@ -1332,7 +1332,7 @@ func (x *CalPublicFileSizeReq) fastReadField1(buf []byte, _type int8) (offset in
 
 func (x *CalPublicFileSizeReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
-	x.Size = &tmp
+	x.SpaceSize = &tmp
 	return offset, err
 }
 
@@ -1787,7 +1787,8 @@ ReadFieldError:
 }
 
 func (x *AskUploadFileReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	x.Size, offset, err = fastpb.ReadInt64(buf, _type)
+	tmp, offset, err := fastpb.ReadInt64(buf, _type)
+	x.SpaceSize = &tmp
 	return offset, err
 }
 
@@ -1909,10 +1910,10 @@ func (x *File) fastWriteField6(buf []byte) (offset int) {
 }
 
 func (x *File) fastWriteField7(buf []byte) (offset int) {
-	if x.Size == 0 {
+	if x.SpaceSize == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetSize())
+	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetSpaceSize())
 	return offset
 }
 
@@ -1998,10 +1999,10 @@ func (x *PublicFile) fastWriteField6(buf []byte) (offset int) {
 }
 
 func (x *PublicFile) fastWriteField7(buf []byte) (offset int) {
-	if x.Size == 0 {
+	if x.SpaceSize == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetSize())
+	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetSpaceSize())
 	return offset
 }
 
@@ -2520,10 +2521,10 @@ func (x *CalFileSizeReq) fastWriteField1(buf []byte) (offset int) {
 }
 
 func (x *CalFileSizeReq) fastWriteField2(buf []byte) (offset int) {
-	if x.Size == nil {
+	if x.SpaceSize == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetSize())
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetSpaceSize())
 	return offset
 }
 
@@ -2752,10 +2753,10 @@ func (x *CalPublicFileSizeReq) fastWriteField1(buf []byte) (offset int) {
 }
 
 func (x *CalPublicFileSizeReq) fastWriteField2(buf []byte) (offset int) {
-	if x.Size == nil {
+	if x.SpaceSize == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetSize())
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetSpaceSize())
 	return offset
 }
 
@@ -3034,10 +3035,10 @@ func (x *AskUploadFileReq) FastWrite(buf []byte) (offset int) {
 }
 
 func (x *AskUploadFileReq) fastWriteField1(buf []byte) (offset int) {
-	if x.Size == 0 {
+	if x.SpaceSize == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 1, x.GetSize())
+	offset += fastpb.WriteInt64(buf[offset:], 1, x.GetSpaceSize())
 	return offset
 }
 
@@ -3169,10 +3170,10 @@ func (x *File) sizeField6() (n int) {
 }
 
 func (x *File) sizeField7() (n int) {
-	if x.Size == 0 {
+	if x.SpaceSize == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(7, x.GetSize())
+	n += fastpb.SizeInt64(7, x.GetSpaceSize())
 	return n
 }
 
@@ -3258,10 +3259,10 @@ func (x *PublicFile) sizeField6() (n int) {
 }
 
 func (x *PublicFile) sizeField7() (n int) {
-	if x.Size == 0 {
+	if x.SpaceSize == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(7, x.GetSize())
+	n += fastpb.SizeInt64(7, x.GetSpaceSize())
 	return n
 }
 
@@ -3780,10 +3781,10 @@ func (x *CalFileSizeReq) sizeField1() (n int) {
 }
 
 func (x *CalFileSizeReq) sizeField2() (n int) {
-	if x.Size == nil {
+	if x.SpaceSize == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(2, x.GetSize())
+	n += fastpb.SizeInt64(2, x.GetSpaceSize())
 	return n
 }
 
@@ -4012,10 +4013,10 @@ func (x *CalPublicFileSizeReq) sizeField1() (n int) {
 }
 
 func (x *CalPublicFileSizeReq) sizeField2() (n int) {
-	if x.Size == nil {
+	if x.SpaceSize == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(2, x.GetSize())
+	n += fastpb.SizeInt64(2, x.GetSpaceSize())
 	return n
 }
 
@@ -4294,10 +4295,10 @@ func (x *AskUploadFileReq) Size() (n int) {
 }
 
 func (x *AskUploadFileReq) sizeField1() (n int) {
-	if x.Size == 0 {
+	if x.SpaceSize == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(1, x.GetSize())
+	n += fastpb.SizeInt64(1, x.GetSpaceSize())
 	return n
 }
 
@@ -4371,7 +4372,7 @@ var fieldIDToName_File = map[int32]string{
 	4: "Path",
 	5: "UserId",
 	6: "FatherId",
-	7: "Size",
+	7: "SpaceSize",
 	8: "Md5",
 	9: "UpdateTime",
 }
@@ -4383,7 +4384,7 @@ var fieldIDToName_PublicFile = map[int32]string{
 	4:  "Path",
 	5:  "UserId",
 	6:  "FatherId",
-	7:  "Size",
+	7:  "SpaceSize",
 	8:  "Md5",
 	9:  "UpdateTime",
 	10: "Description",
@@ -4484,7 +4485,7 @@ var fieldIDToName_GetAllFileByFatherIdResp = map[int32]string{
 
 var fieldIDToName_CalFileSizeReq = map[int32]string{
 	1: "UserId",
-	2: "Size",
+	2: "SpaceSize",
 	3: "Path",
 	4: "Op",
 }
@@ -4532,7 +4533,7 @@ var fieldIDToName_GetPublicByFileIdsResp = map[int32]string{
 
 var fieldIDToName_CalPublicFileSizeReq = map[int32]string{
 	1: "UserId",
-	2: "Size",
+	2: "SpaceSize",
 	3: "Path",
 	4: "Op",
 }
@@ -4592,7 +4593,7 @@ var fieldIDToName_UploadFileReq = map[int32]string{
 var fieldIDToName_UploadFileResp = map[int32]string{}
 
 var fieldIDToName_AskUploadFileReq = map[int32]string{
-	1: "Size",
+	1: "SpaceSize",
 	2: "UserId",
 	3: "Name",
 	4: "Type",
