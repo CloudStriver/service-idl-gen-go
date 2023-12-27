@@ -30,7 +30,7 @@ jobs:
         with:
           repository: ${{ github.event.client_payload.repository }}
           ref: ${{ github.event.client_payload.ref }}
-          path: service-idl
+          path: service-idl-go
           token: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Setup Golang
