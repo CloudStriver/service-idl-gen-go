@@ -11,18 +11,13 @@ import (
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
-	SendEmailCode(ctx context.Context, Req *user.SendEmailCodeReq, callOptions ...callopt.Option) (r *user.SendEmailCodeResp, err error)
-	Login(ctx context.Context, Req *user.LoginReq, callOptions ...callopt.Option) (r *user.LoginResp, err error)
 	UpdateUser(ctx context.Context, Req *user.UpdateUserReq, callOptions ...callopt.Option) (r *user.UpdateUserResp, err error)
 	GetUser(ctx context.Context, Req *user.GetUserReq, callOptions ...callopt.Option) (r *user.GetUserResp, err error)
-	Register(ctx context.Context, Req *user.RegisterReq, callOptions ...callopt.Option) (r *user.RegisterResp, err error)
-	GenerateToken(ctx context.Context, Req *user.GenerateTokenReq, callOptions ...callopt.Option) (r *user.GenerateTokenResp, err error)
-	RefreshToken(ctx context.Context, Req *user.RefreshTokenReq, callOptions ...callopt.Option) (r *user.RefreshTokenResp, err error)
+	GetUserDetail(ctx context.Context, Req *user.GetUserDetailReq, callOptions ...callopt.Option) (r *user.GetUserDetailResp, err error)
 	GetCaptcha(ctx context.Context, Req *user.GetCaptchaReq, callOptions ...callopt.Option) (r *user.GetCaptchaResp, err error)
-	ConfirmCaptcha(ctx context.Context, Req *user.ConfirmCaptchaReq, callOptions ...callopt.Option) (r *user.ConfirmCaptchaResp, err error)
-	ConfirmEmailCode(ctx context.Context, Req *user.ConfirmEmailCodeReq, callOptions ...callopt.Option) (r *user.ConfirmEmailCodeResp, err error)
-	RetrievePassword(ctx context.Context, Req *user.RetrievePasswordReq, callOptions ...callopt.Option) (r *user.RetrievePasswordResp, err error)
+	CreateCaptcha(ctx context.Context, Req *user.CreateCaptchaReq, callOptions ...callopt.Option) (r *user.CreateCaptchaResp, err error)
 	SearchUser(ctx context.Context, Req *user.SearchUserReq, callOptions ...callopt.Option) (r *user.SearchUserResp, err error)
+	CreateUser(ctx context.Context, Req *user.CreateUserReq, callOptions ...callopt.Option) (r *user.CreateUserResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -54,16 +49,6 @@ type kUserServiceClient struct {
 	*kClient
 }
 
-func (p *kUserServiceClient) SendEmailCode(ctx context.Context, Req *user.SendEmailCodeReq, callOptions ...callopt.Option) (r *user.SendEmailCodeResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.SendEmailCode(ctx, Req)
-}
-
-func (p *kUserServiceClient) Login(ctx context.Context, Req *user.LoginReq, callOptions ...callopt.Option) (r *user.LoginResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.Login(ctx, Req)
-}
-
 func (p *kUserServiceClient) UpdateUser(ctx context.Context, Req *user.UpdateUserReq, callOptions ...callopt.Option) (r *user.UpdateUserResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.UpdateUser(ctx, Req)
@@ -74,19 +59,9 @@ func (p *kUserServiceClient) GetUser(ctx context.Context, Req *user.GetUserReq, 
 	return p.kClient.GetUser(ctx, Req)
 }
 
-func (p *kUserServiceClient) Register(ctx context.Context, Req *user.RegisterReq, callOptions ...callopt.Option) (r *user.RegisterResp, err error) {
+func (p *kUserServiceClient) GetUserDetail(ctx context.Context, Req *user.GetUserDetailReq, callOptions ...callopt.Option) (r *user.GetUserDetailResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.Register(ctx, Req)
-}
-
-func (p *kUserServiceClient) GenerateToken(ctx context.Context, Req *user.GenerateTokenReq, callOptions ...callopt.Option) (r *user.GenerateTokenResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.GenerateToken(ctx, Req)
-}
-
-func (p *kUserServiceClient) RefreshToken(ctx context.Context, Req *user.RefreshTokenReq, callOptions ...callopt.Option) (r *user.RefreshTokenResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.RefreshToken(ctx, Req)
+	return p.kClient.GetUserDetail(ctx, Req)
 }
 
 func (p *kUserServiceClient) GetCaptcha(ctx context.Context, Req *user.GetCaptchaReq, callOptions ...callopt.Option) (r *user.GetCaptchaResp, err error) {
@@ -94,22 +69,17 @@ func (p *kUserServiceClient) GetCaptcha(ctx context.Context, Req *user.GetCaptch
 	return p.kClient.GetCaptcha(ctx, Req)
 }
 
-func (p *kUserServiceClient) ConfirmCaptcha(ctx context.Context, Req *user.ConfirmCaptchaReq, callOptions ...callopt.Option) (r *user.ConfirmCaptchaResp, err error) {
+func (p *kUserServiceClient) CreateCaptcha(ctx context.Context, Req *user.CreateCaptchaReq, callOptions ...callopt.Option) (r *user.CreateCaptchaResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.ConfirmCaptcha(ctx, Req)
-}
-
-func (p *kUserServiceClient) ConfirmEmailCode(ctx context.Context, Req *user.ConfirmEmailCodeReq, callOptions ...callopt.Option) (r *user.ConfirmEmailCodeResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.ConfirmEmailCode(ctx, Req)
-}
-
-func (p *kUserServiceClient) RetrievePassword(ctx context.Context, Req *user.RetrievePasswordReq, callOptions ...callopt.Option) (r *user.RetrievePasswordResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.RetrievePassword(ctx, Req)
+	return p.kClient.CreateCaptcha(ctx, Req)
 }
 
 func (p *kUserServiceClient) SearchUser(ctx context.Context, Req *user.SearchUserReq, callOptions ...callopt.Option) (r *user.SearchUserResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.SearchUser(ctx, Req)
+}
+
+func (p *kUserServiceClient) CreateUser(ctx context.Context, Req *user.CreateUserReq, callOptions ...callopt.Option) (r *user.CreateUserResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateUser(ctx, Req)
 }
