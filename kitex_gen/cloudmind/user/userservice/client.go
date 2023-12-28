@@ -4,7 +4,7 @@ package userservice
 
 import (
 	"context"
-	user "github.com/CloudStriver/service-idl-gen-go/kitex_gen/user"
+	user "github.com/CloudStriver/service-idl-gen-go/kitex_gen/cloudmind/user"
 	client "github.com/cloudwego/kitex/client"
 	callopt "github.com/cloudwego/kitex/client/callopt"
 )
@@ -14,8 +14,6 @@ type Client interface {
 	UpdateUser(ctx context.Context, Req *user.UpdateUserReq, callOptions ...callopt.Option) (r *user.UpdateUserResp, err error)
 	GetUser(ctx context.Context, Req *user.GetUserReq, callOptions ...callopt.Option) (r *user.GetUserResp, err error)
 	GetUserDetail(ctx context.Context, Req *user.GetUserDetailReq, callOptions ...callopt.Option) (r *user.GetUserDetailResp, err error)
-	GetCaptcha(ctx context.Context, Req *user.GetCaptchaReq, callOptions ...callopt.Option) (r *user.GetCaptchaResp, err error)
-	CreateCaptcha(ctx context.Context, Req *user.CreateCaptchaReq, callOptions ...callopt.Option) (r *user.CreateCaptchaResp, err error)
 	SearchUser(ctx context.Context, Req *user.SearchUserReq, callOptions ...callopt.Option) (r *user.SearchUserResp, err error)
 	CreateUser(ctx context.Context, Req *user.CreateUserReq, callOptions ...callopt.Option) (r *user.CreateUserResp, err error)
 }
@@ -62,16 +60,6 @@ func (p *kUserServiceClient) GetUser(ctx context.Context, Req *user.GetUserReq, 
 func (p *kUserServiceClient) GetUserDetail(ctx context.Context, Req *user.GetUserDetailReq, callOptions ...callopt.Option) (r *user.GetUserDetailResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetUserDetail(ctx, Req)
-}
-
-func (p *kUserServiceClient) GetCaptcha(ctx context.Context, Req *user.GetCaptchaReq, callOptions ...callopt.Option) (r *user.GetCaptchaResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.GetCaptcha(ctx, Req)
-}
-
-func (p *kUserServiceClient) CreateCaptcha(ctx context.Context, Req *user.CreateCaptchaReq, callOptions ...callopt.Option) (r *user.CreateCaptchaResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.CreateCaptcha(ctx, Req)
 }
 
 func (p *kUserServiceClient) SearchUser(ctx context.Context, Req *user.SearchUserReq, callOptions ...callopt.Option) (r *user.SearchUserResp, err error) {

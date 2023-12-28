@@ -2,7 +2,7 @@
 package userservice
 
 import (
-	user "github.com/CloudStriver/service-idl-gen-go/kitex_gen/user"
+	user "github.com/CloudStriver/service-idl-gen-go/kitex_gen/cloudmind/user"
 	server "github.com/cloudwego/kitex/server"
 )
 
