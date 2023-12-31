@@ -16,7 +16,8 @@ type Client interface {
 	SetPassword(ctx context.Context, Req *sts.SetPasswordReq, callOptions ...callopt.Option) (r *sts.SetPasswordResp, err error)
 	SendEmail(ctx context.Context, Req *sts.SendEmailReq, callOptions ...callopt.Option) (r *sts.SendEmailResp, err error)
 	CheckEmail(ctx context.Context, Req *sts.CheckEmailReq, callOptions ...callopt.Option) (r *sts.CheckEmailResp, err error)
-	AddAuth(ctx context.Context, Req *sts.AddAuthReq, callOptions ...callopt.Option) (r *sts.AddAuthResp, err error)
+	CreateAuth(ctx context.Context, Req *sts.CreateAuthReq, callOptions ...callopt.Option) (r *sts.CreateAuthResp, err error)
+	Login(ctx context.Context, Req *sts.LoginReq, callOptions ...callopt.Option) (r *sts.LoginResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -73,7 +74,12 @@ func (p *kStsServiceClient) CheckEmail(ctx context.Context, Req *sts.CheckEmailR
 	return p.kClient.CheckEmail(ctx, Req)
 }
 
-func (p *kStsServiceClient) AddAuth(ctx context.Context, Req *sts.AddAuthReq, callOptions ...callopt.Option) (r *sts.AddAuthResp, err error) {
+func (p *kStsServiceClient) CreateAuth(ctx context.Context, Req *sts.CreateAuthReq, callOptions ...callopt.Option) (r *sts.CreateAuthResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.AddAuth(ctx, Req)
+	return p.kClient.CreateAuth(ctx, Req)
+}
+
+func (p *kStsServiceClient) Login(ctx context.Context, Req *sts.LoginReq, callOptions ...callopt.Option) (r *sts.LoginResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.Login(ctx, Req)
 }

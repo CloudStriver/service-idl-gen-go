@@ -34,11 +34,6 @@ func (x *PaginationOptions) FastRead(buf []byte, _type int8, number int32) (offs
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 5:
-		offset, err = x.fastReadField5(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -54,29 +49,23 @@ ReadFieldError:
 
 func (x *PaginationOptions) fastReadField1(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
-	x.Page = &tmp
-	return offset, err
-}
-
-func (x *PaginationOptions) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadInt64(buf, _type)
 	x.Limit = &tmp
 	return offset, err
 }
 
-func (x *PaginationOptions) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+func (x *PaginationOptions) fastReadField2(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadString(buf, _type)
 	x.LastToken = &tmp
 	return offset, err
 }
 
-func (x *PaginationOptions) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+func (x *PaginationOptions) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadBool(buf, _type)
 	x.Backward = &tmp
 	return offset, err
 }
 
-func (x *PaginationOptions) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+func (x *PaginationOptions) fastReadField4(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
 	x.Offset = &tmp
 	return offset, err
@@ -90,47 +79,38 @@ func (x *PaginationOptions) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
-	offset += x.fastWriteField5(buf[offset:])
 	return offset
 }
 
 func (x *PaginationOptions) fastWriteField1(buf []byte) (offset int) {
-	if x.Page == nil {
+	if x.Limit == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 1, x.GetPage())
+	offset += fastpb.WriteInt64(buf[offset:], 1, x.GetLimit())
 	return offset
 }
 
 func (x *PaginationOptions) fastWriteField2(buf []byte) (offset int) {
-	if x.Limit == nil {
+	if x.LastToken == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetLimit())
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetLastToken())
 	return offset
 }
 
 func (x *PaginationOptions) fastWriteField3(buf []byte) (offset int) {
-	if x.LastToken == nil {
+	if x.Backward == nil {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 3, x.GetLastToken())
+	offset += fastpb.WriteBool(buf[offset:], 3, x.GetBackward())
 	return offset
 }
 
 func (x *PaginationOptions) fastWriteField4(buf []byte) (offset int) {
-	if x.Backward == nil {
-		return offset
-	}
-	offset += fastpb.WriteBool(buf[offset:], 4, x.GetBackward())
-	return offset
-}
-
-func (x *PaginationOptions) fastWriteField5(buf []byte) (offset int) {
 	if x.Offset == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetOffset())
+	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetOffset())
 	return offset
 }
 
@@ -142,54 +122,44 @@ func (x *PaginationOptions) Size() (n int) {
 	n += x.sizeField2()
 	n += x.sizeField3()
 	n += x.sizeField4()
-	n += x.sizeField5()
 	return n
 }
 
 func (x *PaginationOptions) sizeField1() (n int) {
-	if x.Page == nil {
+	if x.Limit == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(1, x.GetPage())
+	n += fastpb.SizeInt64(1, x.GetLimit())
 	return n
 }
 
 func (x *PaginationOptions) sizeField2() (n int) {
-	if x.Limit == nil {
+	if x.LastToken == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(2, x.GetLimit())
+	n += fastpb.SizeString(2, x.GetLastToken())
 	return n
 }
 
 func (x *PaginationOptions) sizeField3() (n int) {
-	if x.LastToken == nil {
+	if x.Backward == nil {
 		return n
 	}
-	n += fastpb.SizeString(3, x.GetLastToken())
+	n += fastpb.SizeBool(3, x.GetBackward())
 	return n
 }
 
 func (x *PaginationOptions) sizeField4() (n int) {
-	if x.Backward == nil {
-		return n
-	}
-	n += fastpb.SizeBool(4, x.GetBackward())
-	return n
-}
-
-func (x *PaginationOptions) sizeField5() (n int) {
 	if x.Offset == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(5, x.GetOffset())
+	n += fastpb.SizeInt64(4, x.GetOffset())
 	return n
 }
 
 var fieldIDToName_PaginationOptions = map[int32]string{
-	1: "Page",
-	2: "Limit",
-	3: "LastToken",
-	4: "Backward",
-	5: "Offset",
+	1: "Limit",
+	2: "LastToken",
+	3: "Backward",
+	4: "Offset",
 }

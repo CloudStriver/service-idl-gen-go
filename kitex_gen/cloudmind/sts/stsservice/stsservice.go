@@ -26,7 +26,8 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"SetPassword":   kitex.NewMethodInfo(setPasswordHandler, newSetPasswordArgs, newSetPasswordResult, false),
 		"SendEmail":     kitex.NewMethodInfo(sendEmailHandler, newSendEmailArgs, newSendEmailResult, false),
 		"CheckEmail":    kitex.NewMethodInfo(checkEmailHandler, newCheckEmailArgs, newCheckEmailResult, false),
-		"AddAuth":       kitex.NewMethodInfo(addAuthHandler, newAddAuthArgs, newAddAuthResult, false),
+		"CreateAuth":    kitex.NewMethodInfo(createAuthHandler, newCreateAuthArgs, newCreateAuthResult, false),
+		"Login":         kitex.NewMethodInfo(loginHandler, newLoginArgs, newLoginResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName":     "cloudmind.sts",
@@ -808,73 +809,73 @@ func (p *CheckEmailResult) GetResult() interface{} {
 	return p.Success
 }
 
-func addAuthHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+func createAuthHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(sts.AddAuthReq)
+		req := new(sts.CreateAuthReq)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
-		resp, err := handler.(sts.StsService).AddAuth(ctx, req)
+		resp, err := handler.(sts.StsService).CreateAuth(ctx, req)
 		if err != nil {
 			return err
 		}
 		if err := st.SendMsg(resp); err != nil {
 			return err
 		}
-	case *AddAuthArgs:
-		success, err := handler.(sts.StsService).AddAuth(ctx, s.Req)
+	case *CreateAuthArgs:
+		success, err := handler.(sts.StsService).CreateAuth(ctx, s.Req)
 		if err != nil {
 			return err
 		}
-		realResult := result.(*AddAuthResult)
+		realResult := result.(*CreateAuthResult)
 		realResult.Success = success
 	}
 	return nil
 }
-func newAddAuthArgs() interface{} {
-	return &AddAuthArgs{}
+func newCreateAuthArgs() interface{} {
+	return &CreateAuthArgs{}
 }
 
-func newAddAuthResult() interface{} {
-	return &AddAuthResult{}
+func newCreateAuthResult() interface{} {
+	return &CreateAuthResult{}
 }
 
-type AddAuthArgs struct {
-	Req *sts.AddAuthReq
+type CreateAuthArgs struct {
+	Req *sts.CreateAuthReq
 }
 
-func (p *AddAuthArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *CreateAuthArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(sts.AddAuthReq)
+		p.Req = new(sts.CreateAuthReq)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
 
-func (p *AddAuthArgs) FastWrite(buf []byte) (n int) {
+func (p *CreateAuthArgs) FastWrite(buf []byte) (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.FastWrite(buf)
 }
 
-func (p *AddAuthArgs) Size() (n int) {
+func (p *CreateAuthArgs) Size() (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.Size()
 }
 
-func (p *AddAuthArgs) Marshal(out []byte) ([]byte, error) {
+func (p *CreateAuthArgs) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetReq() {
 		return out, nil
 	}
 	return proto.Marshal(p.Req)
 }
 
-func (p *AddAuthArgs) Unmarshal(in []byte) error {
-	msg := new(sts.AddAuthReq)
+func (p *CreateAuthArgs) Unmarshal(in []byte) error {
+	msg := new(sts.CreateAuthReq)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -882,59 +883,59 @@ func (p *AddAuthArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var AddAuthArgs_Req_DEFAULT *sts.AddAuthReq
+var CreateAuthArgs_Req_DEFAULT *sts.CreateAuthReq
 
-func (p *AddAuthArgs) GetReq() *sts.AddAuthReq {
+func (p *CreateAuthArgs) GetReq() *sts.CreateAuthReq {
 	if !p.IsSetReq() {
-		return AddAuthArgs_Req_DEFAULT
+		return CreateAuthArgs_Req_DEFAULT
 	}
 	return p.Req
 }
 
-func (p *AddAuthArgs) IsSetReq() bool {
+func (p *CreateAuthArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *AddAuthArgs) GetFirstArgument() interface{} {
+func (p *CreateAuthArgs) GetFirstArgument() interface{} {
 	return p.Req
 }
 
-type AddAuthResult struct {
-	Success *sts.AddAuthResp
+type CreateAuthResult struct {
+	Success *sts.CreateAuthResp
 }
 
-var AddAuthResult_Success_DEFAULT *sts.AddAuthResp
+var CreateAuthResult_Success_DEFAULT *sts.CreateAuthResp
 
-func (p *AddAuthResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *CreateAuthResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(sts.AddAuthResp)
+		p.Success = new(sts.CreateAuthResp)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
 
-func (p *AddAuthResult) FastWrite(buf []byte) (n int) {
+func (p *CreateAuthResult) FastWrite(buf []byte) (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.FastWrite(buf)
 }
 
-func (p *AddAuthResult) Size() (n int) {
+func (p *CreateAuthResult) Size() (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.Size()
 }
 
-func (p *AddAuthResult) Marshal(out []byte) ([]byte, error) {
+func (p *CreateAuthResult) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetSuccess() {
 		return out, nil
 	}
 	return proto.Marshal(p.Success)
 }
 
-func (p *AddAuthResult) Unmarshal(in []byte) error {
-	msg := new(sts.AddAuthResp)
+func (p *CreateAuthResult) Unmarshal(in []byte) error {
+	msg := new(sts.CreateAuthResp)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -942,22 +943,175 @@ func (p *AddAuthResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *AddAuthResult) GetSuccess() *sts.AddAuthResp {
+func (p *CreateAuthResult) GetSuccess() *sts.CreateAuthResp {
 	if !p.IsSetSuccess() {
-		return AddAuthResult_Success_DEFAULT
+		return CreateAuthResult_Success_DEFAULT
 	}
 	return p.Success
 }
 
-func (p *AddAuthResult) SetSuccess(x interface{}) {
-	p.Success = x.(*sts.AddAuthResp)
+func (p *CreateAuthResult) SetSuccess(x interface{}) {
+	p.Success = x.(*sts.CreateAuthResp)
 }
 
-func (p *AddAuthResult) IsSetSuccess() bool {
+func (p *CreateAuthResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *AddAuthResult) GetResult() interface{} {
+func (p *CreateAuthResult) GetResult() interface{} {
+	return p.Success
+}
+
+func loginHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(sts.LoginReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(sts.StsService).Login(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *LoginArgs:
+		success, err := handler.(sts.StsService).Login(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*LoginResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newLoginArgs() interface{} {
+	return &LoginArgs{}
+}
+
+func newLoginResult() interface{} {
+	return &LoginResult{}
+}
+
+type LoginArgs struct {
+	Req *sts.LoginReq
+}
+
+func (p *LoginArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(sts.LoginReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *LoginArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *LoginArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *LoginArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *LoginArgs) Unmarshal(in []byte) error {
+	msg := new(sts.LoginReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var LoginArgs_Req_DEFAULT *sts.LoginReq
+
+func (p *LoginArgs) GetReq() *sts.LoginReq {
+	if !p.IsSetReq() {
+		return LoginArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *LoginArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *LoginArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type LoginResult struct {
+	Success *sts.LoginResp
+}
+
+var LoginResult_Success_DEFAULT *sts.LoginResp
+
+func (p *LoginResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(sts.LoginResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *LoginResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *LoginResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *LoginResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *LoginResult) Unmarshal(in []byte) error {
+	msg := new(sts.LoginResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *LoginResult) GetSuccess() *sts.LoginResp {
+	if !p.IsSetSuccess() {
+		return LoginResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *LoginResult) SetSuccess(x interface{}) {
+	p.Success = x.(*sts.LoginResp)
+}
+
+func (p *LoginResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *LoginResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -1021,11 +1175,21 @@ func (p *kClient) CheckEmail(ctx context.Context, Req *sts.CheckEmailReq) (r *st
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) AddAuth(ctx context.Context, Req *sts.AddAuthReq) (r *sts.AddAuthResp, err error) {
-	var _args AddAuthArgs
+func (p *kClient) CreateAuth(ctx context.Context, Req *sts.CreateAuthReq) (r *sts.CreateAuthResp, err error) {
+	var _args CreateAuthArgs
 	_args.Req = Req
-	var _result AddAuthResult
-	if err = p.c.Call(ctx, "AddAuth", &_args, &_result); err != nil {
+	var _result CreateAuthResult
+	if err = p.c.Call(ctx, "CreateAuth", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) Login(ctx context.Context, Req *sts.LoginReq) (r *sts.LoginResp, err error) {
+	var _args LoginArgs
+	_args.Req = Req
+	var _result LoginResult
+	if err = p.c.Call(ctx, "Login", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

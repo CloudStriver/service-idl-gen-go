@@ -172,6 +172,91 @@ func (x *UserDetail) fastReadField10(buf []byte, _type int8) (offset int, err er
 	return offset, err
 }
 
+func (x *Relation) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 6:
+		offset, err = x.fastReadField6(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 7:
+		offset, err = x.fastReadField7(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_Relation[number], err)
+}
+
+func (x *Relation) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.Id, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *Relation) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.UserId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *Relation) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.TargetId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *Relation) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	x.TargetType, offset, err = fastpb.ReadInt32(buf, _type)
+	return offset, err
+}
+
+func (x *Relation) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	x.RelationType, offset, err = fastpb.ReadInt32(buf, _type)
+	return offset, err
+}
+
+func (x *Relation) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+	x.CreatedAt, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *Relation) fastReadField7(buf []byte, _type int8) (offset int, err error) {
+	x.UpdatedAt, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
 func (x *User) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -300,6 +385,76 @@ func (x *UserDetail) fastWriteField10(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 10, x.GetUrl())
+	return offset
+}
+
+func (x *Relation) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
+	offset += x.fastWriteField6(buf[offset:])
+	offset += x.fastWriteField7(buf[offset:])
+	return offset
+}
+
+func (x *Relation) fastWriteField1(buf []byte) (offset int) {
+	if x.Id == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetId())
+	return offset
+}
+
+func (x *Relation) fastWriteField2(buf []byte) (offset int) {
+	if x.UserId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetUserId())
+	return offset
+}
+
+func (x *Relation) fastWriteField3(buf []byte) (offset int) {
+	if x.TargetId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetTargetId())
+	return offset
+}
+
+func (x *Relation) fastWriteField4(buf []byte) (offset int) {
+	if x.TargetType == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 4, x.GetTargetType())
+	return offset
+}
+
+func (x *Relation) fastWriteField5(buf []byte) (offset int) {
+	if x.RelationType == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 5, x.GetRelationType())
+	return offset
+}
+
+func (x *Relation) fastWriteField6(buf []byte) (offset int) {
+	if x.CreatedAt == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetCreatedAt())
+	return offset
+}
+
+func (x *Relation) fastWriteField7(buf []byte) (offset int) {
+	if x.UpdatedAt == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetUpdatedAt())
 	return offset
 }
 
@@ -434,6 +589,76 @@ func (x *UserDetail) sizeField10() (n int) {
 	return n
 }
 
+func (x *Relation) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
+	n += x.sizeField6()
+	n += x.sizeField7()
+	return n
+}
+
+func (x *Relation) sizeField1() (n int) {
+	if x.Id == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetId())
+	return n
+}
+
+func (x *Relation) sizeField2() (n int) {
+	if x.UserId == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetUserId())
+	return n
+}
+
+func (x *Relation) sizeField3() (n int) {
+	if x.TargetId == "" {
+		return n
+	}
+	n += fastpb.SizeString(3, x.GetTargetId())
+	return n
+}
+
+func (x *Relation) sizeField4() (n int) {
+	if x.TargetType == 0 {
+		return n
+	}
+	n += fastpb.SizeInt32(4, x.GetTargetType())
+	return n
+}
+
+func (x *Relation) sizeField5() (n int) {
+	if x.RelationType == 0 {
+		return n
+	}
+	n += fastpb.SizeInt32(5, x.GetRelationType())
+	return n
+}
+
+func (x *Relation) sizeField6() (n int) {
+	if x.CreatedAt == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(6, x.GetCreatedAt())
+	return n
+}
+
+func (x *Relation) sizeField7() (n int) {
+	if x.UpdatedAt == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(7, x.GetUpdatedAt())
+	return n
+}
+
 var fieldIDToName_User = map[int32]string{
 	1: "UserId",
 	2: "Name",
@@ -451,4 +676,14 @@ var fieldIDToName_UserDetail = map[int32]string{
 	8:  "UpdatedAt",
 	9:  "Description",
 	10: "Url",
+}
+
+var fieldIDToName_Relation = map[int32]string{
+	1: "Id",
+	2: "UserId",
+	3: "TargetId",
+	4: "TargetType",
+	5: "RelationType",
+	6: "CreatedAt",
+	7: "UpdatedAt",
 }

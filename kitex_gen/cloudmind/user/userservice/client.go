@@ -16,6 +16,9 @@ type Client interface {
 	GetUserDetail(ctx context.Context, Req *user.GetUserDetailReq, callOptions ...callopt.Option) (r *user.GetUserDetailResp, err error)
 	SearchUser(ctx context.Context, Req *user.SearchUserReq, callOptions ...callopt.Option) (r *user.SearchUserResp, err error)
 	CreateUser(ctx context.Context, Req *user.CreateUserReq, callOptions ...callopt.Option) (r *user.CreateUserResp, err error)
+	DeleteUser(ctx context.Context, Req *user.DeleteUserReq, callOptions ...callopt.Option) (r *user.DeleteUserResp, err error)
+	CreateRelation(ctx context.Context, Req *user.CreateRelationReq, callOptions ...callopt.Option) (r *user.CreateRelationResp, err error)
+	GetRelation(ctx context.Context, Req *user.GetRelationReq, callOptions ...callopt.Option) (r *user.GetRelationResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -70,4 +73,19 @@ func (p *kUserServiceClient) SearchUser(ctx context.Context, Req *user.SearchUse
 func (p *kUserServiceClient) CreateUser(ctx context.Context, Req *user.CreateUserReq, callOptions ...callopt.Option) (r *user.CreateUserResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.CreateUser(ctx, Req)
+}
+
+func (p *kUserServiceClient) DeleteUser(ctx context.Context, Req *user.DeleteUserReq, callOptions ...callopt.Option) (r *user.DeleteUserResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteUser(ctx, Req)
+}
+
+func (p *kUserServiceClient) CreateRelation(ctx context.Context, Req *user.CreateRelationReq, callOptions ...callopt.Option) (r *user.CreateRelationResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateRelation(ctx, Req)
+}
+
+func (p *kUserServiceClient) GetRelation(ctx context.Context, Req *user.GetRelationReq, callOptions ...callopt.Option) (r *user.GetRelationResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetRelation(ctx, Req)
 }

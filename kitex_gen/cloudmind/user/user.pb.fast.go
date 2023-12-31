@@ -368,11 +368,6 @@ func (x *SearchUserReq) FastRead(buf []byte, _type int8, number int32) (offset i
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 2:
-		offset, err = x.fastReadField2(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	case 3:
 		offset, err = x.fastReadField3(buf, _type)
 		if err != nil {
@@ -392,16 +387,7 @@ ReadFieldError:
 }
 
 func (x *SearchUserReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var ov SearchUserReq_Name
-	x.SearchOption = &ov
-	ov.Name, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *SearchUserReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	var ov SearchUserReq_UserId
-	x.SearchOption = &ov
-	ov.UserId, offset, err = fastpb.ReadString(buf, _type)
+	x.Keyword, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -482,6 +468,11 @@ func (x *CreateUserReq) FastRead(buf []byte, _type int8, number int32) (offset i
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -496,12 +487,17 @@ ReadFieldError:
 }
 
 func (x *CreateUserReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v UserDetail
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	x.Name, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *CreateUserReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	var v int32
+	v, offset, err = fastpb.ReadInt32(buf, _type)
 	if err != nil {
 		return offset, err
 	}
-	x.User = &v
+	x.Sex = Sex(v)
 	return offset, nil
 }
 
@@ -509,6 +505,11 @@ func (x *CreateUserResp) FastRead(buf []byte, _type int8, number int32) (offset 
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
 		if err != nil {
 			goto ReadFieldError
 		}
@@ -527,6 +528,11 @@ ReadFieldError:
 
 func (x *CreateUserResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
 	x.UserId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *CreateUserResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.Error, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -591,6 +597,288 @@ func (x *GetUserDetailResp) fastReadField1(buf []byte, _type int8) (offset int, 
 }
 
 func (x *GetUserDetailResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.Error, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *DeleteUserReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_DeleteUserReq[number], err)
+}
+
+func (x *DeleteUserReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.UserId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *DeleteUserResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_DeleteUserResp[number], err)
+}
+
+func (x *DeleteUserResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.Error, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *CreateRelationReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CreateRelationReq[number], err)
+}
+
+func (x *CreateRelationReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.TargetId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *CreateRelationReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	var v int32
+	v, offset, err = fastpb.ReadInt32(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.TargetType = TargetType(v)
+	return offset, nil
+}
+
+func (x *CreateRelationReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.UserId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *CreateRelationReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	var v int32
+	v, offset, err = fastpb.ReadInt32(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.RelationType = RelationType(v)
+	return offset, nil
+}
+
+func (x *CreateRelationResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CreateRelationResp[number], err)
+}
+
+func (x *CreateRelationResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.Error, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *GetRelationReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetRelationReq[number], err)
+}
+
+func (x *GetRelationReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadString(buf, _type)
+	x.TargetId = &tmp
+	return offset, err
+}
+
+func (x *GetRelationReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	var v int32
+	v, offset, err = fastpb.ReadInt32(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.TargetType = TargetType(v).Enum()
+	return offset, nil
+}
+
+func (x *GetRelationReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadString(buf, _type)
+	x.UserId = &tmp
+	return offset, err
+}
+
+func (x *GetRelationReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	var v int32
+	v, offset, err = fastpb.ReadInt32(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.RelationType = RelationType(v).Enum()
+	return offset, nil
+}
+
+func (x *GetRelationReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	var v basic.PaginationOptions
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.PaginationOptions = &v
+	return offset, nil
+}
+
+func (x *GetRelationResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetRelationResp[number], err)
+}
+
+func (x *GetRelationResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v Relation
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Relations = append(x.Relations, &v)
+	return offset, nil
+}
+
+func (x *GetRelationResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.Total, offset, err = fastpb.ReadInt32(buf, _type)
+	return offset, err
+}
+
+func (x *GetRelationResp) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.LastToken, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *GetRelationResp) fastReadField4(buf []byte, _type int8) (offset int, err error) {
 	x.Error, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
@@ -830,24 +1118,15 @@ func (x *SearchUserReq) FastWrite(buf []byte) (offset int) {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
-	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
 	return offset
 }
 
 func (x *SearchUserReq) fastWriteField1(buf []byte) (offset int) {
-	if x.GetName() == "" {
+	if x.Keyword == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 1, x.GetName())
-	return offset
-}
-
-func (x *SearchUserReq) fastWriteField2(buf []byte) (offset int) {
-	if x.GetUserId() == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetUserId())
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetKeyword())
 	return offset
 }
 
@@ -909,14 +1188,23 @@ func (x *CreateUserReq) FastWrite(buf []byte) (offset int) {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
 	return offset
 }
 
 func (x *CreateUserReq) fastWriteField1(buf []byte) (offset int) {
-	if x.User == nil {
+	if x.Name == "" {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetUser())
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetName())
+	return offset
+}
+
+func (x *CreateUserReq) fastWriteField2(buf []byte) (offset int) {
+	if x.Sex == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 2, int32(x.GetSex()))
 	return offset
 }
 
@@ -925,6 +1213,7 @@ func (x *CreateUserResp) FastWrite(buf []byte) (offset int) {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
 	return offset
 }
 
@@ -933,6 +1222,14 @@ func (x *CreateUserResp) fastWriteField1(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 1, x.GetUserId())
+	return offset
+}
+
+func (x *CreateUserResp) fastWriteField2(buf []byte) (offset int) {
+	if x.Error == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetError())
 	return offset
 }
 
@@ -974,6 +1271,194 @@ func (x *GetUserDetailResp) fastWriteField2(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 2, x.GetError())
+	return offset
+}
+
+func (x *DeleteUserReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *DeleteUserReq) fastWriteField1(buf []byte) (offset int) {
+	if x.UserId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetUserId())
+	return offset
+}
+
+func (x *DeleteUserResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *DeleteUserResp) fastWriteField1(buf []byte) (offset int) {
+	if x.Error == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetError())
+	return offset
+}
+
+func (x *CreateRelationReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	return offset
+}
+
+func (x *CreateRelationReq) fastWriteField1(buf []byte) (offset int) {
+	if x.TargetId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetTargetId())
+	return offset
+}
+
+func (x *CreateRelationReq) fastWriteField2(buf []byte) (offset int) {
+	if x.TargetType == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 2, int32(x.GetTargetType()))
+	return offset
+}
+
+func (x *CreateRelationReq) fastWriteField3(buf []byte) (offset int) {
+	if x.UserId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetUserId())
+	return offset
+}
+
+func (x *CreateRelationReq) fastWriteField4(buf []byte) (offset int) {
+	if x.RelationType == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 4, int32(x.GetRelationType()))
+	return offset
+}
+
+func (x *CreateRelationResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *CreateRelationResp) fastWriteField1(buf []byte) (offset int) {
+	if x.Error == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetError())
+	return offset
+}
+
+func (x *GetRelationReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
+	return offset
+}
+
+func (x *GetRelationReq) fastWriteField1(buf []byte) (offset int) {
+	if x.TargetId == nil {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetTargetId())
+	return offset
+}
+
+func (x *GetRelationReq) fastWriteField2(buf []byte) (offset int) {
+	if x.TargetType == nil {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 2, int32(x.GetTargetType()))
+	return offset
+}
+
+func (x *GetRelationReq) fastWriteField3(buf []byte) (offset int) {
+	if x.UserId == nil {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetUserId())
+	return offset
+}
+
+func (x *GetRelationReq) fastWriteField4(buf []byte) (offset int) {
+	if x.RelationType == nil {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 4, int32(x.GetRelationType()))
+	return offset
+}
+
+func (x *GetRelationReq) fastWriteField5(buf []byte) (offset int) {
+	if x.PaginationOptions == nil {
+		return offset
+	}
+	offset += fastpb.WriteMessage(buf[offset:], 5, x.GetPaginationOptions())
+	return offset
+}
+
+func (x *GetRelationResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	return offset
+}
+
+func (x *GetRelationResp) fastWriteField1(buf []byte) (offset int) {
+	if x.Relations == nil {
+		return offset
+	}
+	for i := range x.GetRelations() {
+		offset += fastpb.WriteMessage(buf[offset:], 1, x.GetRelations()[i])
+	}
+	return offset
+}
+
+func (x *GetRelationResp) fastWriteField2(buf []byte) (offset int) {
+	if x.Total == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 2, x.GetTotal())
+	return offset
+}
+
+func (x *GetRelationResp) fastWriteField3(buf []byte) (offset int) {
+	if x.LastToken == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetLastToken())
+	return offset
+}
+
+func (x *GetRelationResp) fastWriteField4(buf []byte) (offset int) {
+	if x.Error == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetError())
 	return offset
 }
 
@@ -1212,24 +1697,15 @@ func (x *SearchUserReq) Size() (n int) {
 		return n
 	}
 	n += x.sizeField1()
-	n += x.sizeField2()
 	n += x.sizeField3()
 	return n
 }
 
 func (x *SearchUserReq) sizeField1() (n int) {
-	if x.GetName() == "" {
+	if x.Keyword == "" {
 		return n
 	}
-	n += fastpb.SizeString(1, x.GetName())
-	return n
-}
-
-func (x *SearchUserReq) sizeField2() (n int) {
-	if x.GetUserId() == "" {
-		return n
-	}
-	n += fastpb.SizeString(2, x.GetUserId())
+	n += fastpb.SizeString(1, x.GetKeyword())
 	return n
 }
 
@@ -1291,14 +1767,23 @@ func (x *CreateUserReq) Size() (n int) {
 		return n
 	}
 	n += x.sizeField1()
+	n += x.sizeField2()
 	return n
 }
 
 func (x *CreateUserReq) sizeField1() (n int) {
-	if x.User == nil {
+	if x.Name == "" {
 		return n
 	}
-	n += fastpb.SizeMessage(1, x.GetUser())
+	n += fastpb.SizeString(1, x.GetName())
+	return n
+}
+
+func (x *CreateUserReq) sizeField2() (n int) {
+	if x.Sex == 0 {
+		return n
+	}
+	n += fastpb.SizeInt32(2, int32(x.GetSex()))
 	return n
 }
 
@@ -1307,6 +1792,7 @@ func (x *CreateUserResp) Size() (n int) {
 		return n
 	}
 	n += x.sizeField1()
+	n += x.sizeField2()
 	return n
 }
 
@@ -1315,6 +1801,14 @@ func (x *CreateUserResp) sizeField1() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(1, x.GetUserId())
+	return n
+}
+
+func (x *CreateUserResp) sizeField2() (n int) {
+	if x.Error == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetError())
 	return n
 }
 
@@ -1356,6 +1850,194 @@ func (x *GetUserDetailResp) sizeField2() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(2, x.GetError())
+	return n
+}
+
+func (x *DeleteUserReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *DeleteUserReq) sizeField1() (n int) {
+	if x.UserId == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetUserId())
+	return n
+}
+
+func (x *DeleteUserResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *DeleteUserResp) sizeField1() (n int) {
+	if x.Error == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetError())
+	return n
+}
+
+func (x *CreateRelationReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	return n
+}
+
+func (x *CreateRelationReq) sizeField1() (n int) {
+	if x.TargetId == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetTargetId())
+	return n
+}
+
+func (x *CreateRelationReq) sizeField2() (n int) {
+	if x.TargetType == 0 {
+		return n
+	}
+	n += fastpb.SizeInt32(2, int32(x.GetTargetType()))
+	return n
+}
+
+func (x *CreateRelationReq) sizeField3() (n int) {
+	if x.UserId == "" {
+		return n
+	}
+	n += fastpb.SizeString(3, x.GetUserId())
+	return n
+}
+
+func (x *CreateRelationReq) sizeField4() (n int) {
+	if x.RelationType == 0 {
+		return n
+	}
+	n += fastpb.SizeInt32(4, int32(x.GetRelationType()))
+	return n
+}
+
+func (x *CreateRelationResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *CreateRelationResp) sizeField1() (n int) {
+	if x.Error == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetError())
+	return n
+}
+
+func (x *GetRelationReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
+	return n
+}
+
+func (x *GetRelationReq) sizeField1() (n int) {
+	if x.TargetId == nil {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetTargetId())
+	return n
+}
+
+func (x *GetRelationReq) sizeField2() (n int) {
+	if x.TargetType == nil {
+		return n
+	}
+	n += fastpb.SizeInt32(2, int32(x.GetTargetType()))
+	return n
+}
+
+func (x *GetRelationReq) sizeField3() (n int) {
+	if x.UserId == nil {
+		return n
+	}
+	n += fastpb.SizeString(3, x.GetUserId())
+	return n
+}
+
+func (x *GetRelationReq) sizeField4() (n int) {
+	if x.RelationType == nil {
+		return n
+	}
+	n += fastpb.SizeInt32(4, int32(x.GetRelationType()))
+	return n
+}
+
+func (x *GetRelationReq) sizeField5() (n int) {
+	if x.PaginationOptions == nil {
+		return n
+	}
+	n += fastpb.SizeMessage(5, x.GetPaginationOptions())
+	return n
+}
+
+func (x *GetRelationResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	return n
+}
+
+func (x *GetRelationResp) sizeField1() (n int) {
+	if x.Relations == nil {
+		return n
+	}
+	for i := range x.GetRelations() {
+		n += fastpb.SizeMessage(1, x.GetRelations()[i])
+	}
+	return n
+}
+
+func (x *GetRelationResp) sizeField2() (n int) {
+	if x.Total == 0 {
+		return n
+	}
+	n += fastpb.SizeInt32(2, x.GetTotal())
+	return n
+}
+
+func (x *GetRelationResp) sizeField3() (n int) {
+	if x.LastToken == "" {
+		return n
+	}
+	n += fastpb.SizeString(3, x.GetLastToken())
+	return n
+}
+
+func (x *GetRelationResp) sizeField4() (n int) {
+	if x.Error == "" {
+		return n
+	}
+	n += fastpb.SizeString(4, x.GetError())
 	return n
 }
 
@@ -1409,8 +2091,7 @@ var fieldIDToName_GetCaptchaResp = map[int32]string{
 }
 
 var fieldIDToName_SearchUserReq = map[int32]string{
-	1: "Name",
-	2: "UserId",
+	1: "Keyword",
 	3: "PaginationOptions",
 }
 
@@ -1422,11 +2103,13 @@ var fieldIDToName_SearchUserResp = map[int32]string{
 }
 
 var fieldIDToName_CreateUserReq = map[int32]string{
-	1: "User",
+	1: "Name",
+	2: "Sex",
 }
 
 var fieldIDToName_CreateUserResp = map[int32]string{
 	1: "UserId",
+	2: "Error",
 }
 
 var fieldIDToName_GetUserDetailReq = map[int32]string{
@@ -1436,6 +2119,40 @@ var fieldIDToName_GetUserDetailReq = map[int32]string{
 var fieldIDToName_GetUserDetailResp = map[int32]string{
 	1: "User",
 	2: "Error",
+}
+
+var fieldIDToName_DeleteUserReq = map[int32]string{
+	1: "UserId",
+}
+
+var fieldIDToName_DeleteUserResp = map[int32]string{
+	1: "Error",
+}
+
+var fieldIDToName_CreateRelationReq = map[int32]string{
+	1: "TargetId",
+	2: "TargetType",
+	3: "UserId",
+	4: "RelationType",
+}
+
+var fieldIDToName_CreateRelationResp = map[int32]string{
+	1: "Error",
+}
+
+var fieldIDToName_GetRelationReq = map[int32]string{
+	1: "TargetId",
+	2: "TargetType",
+	3: "UserId",
+	4: "RelationType",
+	5: "PaginationOptions",
+}
+
+var fieldIDToName_GetRelationResp = map[int32]string{
+	1: "Relations",
+	2: "Total",
+	3: "LastToken",
+	4: "Error",
 }
 
 var _ = basic.File_basic_pagination_proto

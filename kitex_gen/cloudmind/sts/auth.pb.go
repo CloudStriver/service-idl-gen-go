@@ -24,25 +24,25 @@ const (
 type AuthType int32
 
 const (
-	AuthType_UnKnown AuthType = 0
-	AuthType_email   AuthType = 1
-	AuthType_qq      AuthType = 2
-	AuthType_wechat  AuthType = 3
+	AuthType_UnKnownType AuthType = 0
+	AuthType_email       AuthType = 1
+	AuthType_qq          AuthType = 2
+	AuthType_wechat      AuthType = 3
 )
 
 // Enum value maps for AuthType.
 var (
 	AuthType_name = map[int32]string{
-		0: "UnKnown",
+		0: "UnKnownType",
 		1: "email",
 		2: "qq",
 		3: "wechat",
 	}
 	AuthType_value = map[string]int32{
-		"UnKnown": 0,
-		"email":   1,
-		"qq":      2,
-		"wechat":  3,
+		"UnKnownType": 0,
+		"email":       1,
+		"qq":          2,
+		"wechat":      3,
 	}
 )
 
@@ -71,6 +71,58 @@ func (x AuthType) Number() protoreflect.EnumNumber {
 // Deprecated: Use AuthType.Descriptor instead.
 func (AuthType) EnumDescriptor() ([]byte, []int) {
 	return file_cloudmind_sts_auth_proto_rawDescGZIP(), []int{0}
+}
+
+type Role int32
+
+const (
+	Role_UnKnownRole Role = 0
+	Role_System      Role = 1
+	Role_User        Role = 2
+	Role_Test        Role = 3
+)
+
+// Enum value maps for Role.
+var (
+	Role_name = map[int32]string{
+		0: "UnKnownRole",
+		1: "System",
+		2: "User",
+		3: "Test",
+	}
+	Role_value = map[string]int32{
+		"UnKnownRole": 0,
+		"System":      1,
+		"User":        2,
+		"Test":        3,
+	}
+)
+
+func (x Role) Enum() *Role {
+	p := new(Role)
+	*p = x
+	return p
+}
+
+func (x Role) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (Role) Descriptor() protoreflect.EnumDescriptor {
+	return file_cloudmind_sts_auth_proto_enumTypes[1].Descriptor()
+}
+
+func (Role) Type() protoreflect.EnumType {
+	return &file_cloudmind_sts_auth_proto_enumTypes[1]
+}
+
+func (x Role) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use Role.Descriptor instead.
+func (Role) EnumDescriptor() ([]byte, []int) {
+	return file_cloudmind_sts_auth_proto_rawDescGZIP(), []int{1}
 }
 
 type Auth struct {
@@ -876,16 +928,20 @@ func (x *CheckEmailResp) GetError() string {
 	return ""
 }
 
-type AddAuthReq struct {
+type CreateAuthReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Auth *Auth `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	Type     AuthType `protobuf:"varint,1,opt,name=type,proto3,enum=cloudmind.sts.AuthType" json:"type,omitempty"`
+	Key      string   `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
+	UserId   string   `protobuf:"bytes,3,opt,name=userId,proto3" json:"userId,omitempty"`
+	Role     Role     `protobuf:"varint,4,opt,name=role,proto3,enum=cloudmind.sts.Role" json:"role,omitempty"`
+	Password string   `protobuf:"bytes,5,opt,name=Password,proto3" json:"Password,omitempty"`
 }
 
-func (x *AddAuthReq) Reset() {
-	*x = AddAuthReq{}
+func (x *CreateAuthReq) Reset() {
+	*x = CreateAuthReq{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_cloudmind_sts_auth_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -893,13 +949,13 @@ func (x *AddAuthReq) Reset() {
 	}
 }
 
-func (x *AddAuthReq) String() string {
+func (x *CreateAuthReq) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*AddAuthReq) ProtoMessage() {}
+func (*CreateAuthReq) ProtoMessage() {}
 
-func (x *AddAuthReq) ProtoReflect() protoreflect.Message {
+func (x *CreateAuthReq) ProtoReflect() protoreflect.Message {
 	mi := &file_cloudmind_sts_auth_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -911,19 +967,47 @@ func (x *AddAuthReq) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use AddAuthReq.ProtoReflect.Descriptor instead.
-func (*AddAuthReq) Descriptor() ([]byte, []int) {
+// Deprecated: Use CreateAuthReq.ProtoReflect.Descriptor instead.
+func (*CreateAuthReq) Descriptor() ([]byte, []int) {
 	return file_cloudmind_sts_auth_proto_rawDescGZIP(), []int{14}
 }
 
-func (x *AddAuthReq) GetAuth() *Auth {
+func (x *CreateAuthReq) GetType() AuthType {
 	if x != nil {
-		return x.Auth
+		return x.Type
 	}
-	return nil
+	return AuthType_UnKnownType
 }
 
-type AddAuthResp struct {
+func (x *CreateAuthReq) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+func (x *CreateAuthReq) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *CreateAuthReq) GetRole() Role {
+	if x != nil {
+		return x.Role
+	}
+	return Role_UnKnownRole
+}
+
+func (x *CreateAuthReq) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
+type CreateAuthResp struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -931,8 +1015,8 @@ type AddAuthResp struct {
 	Error string `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
 }
 
-func (x *AddAuthResp) Reset() {
-	*x = AddAuthResp{}
+func (x *CreateAuthResp) Reset() {
+	*x = CreateAuthResp{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_cloudmind_sts_auth_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -940,13 +1024,13 @@ func (x *AddAuthResp) Reset() {
 	}
 }
 
-func (x *AddAuthResp) String() string {
+func (x *CreateAuthResp) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*AddAuthResp) ProtoMessage() {}
+func (*CreateAuthResp) ProtoMessage() {}
 
-func (x *AddAuthResp) ProtoReflect() protoreflect.Message {
+func (x *CreateAuthResp) ProtoReflect() protoreflect.Message {
 	mi := &file_cloudmind_sts_auth_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -958,12 +1042,122 @@ func (x *AddAuthResp) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use AddAuthResp.ProtoReflect.Descriptor instead.
-func (*AddAuthResp) Descriptor() ([]byte, []int) {
+// Deprecated: Use CreateAuthResp.ProtoReflect.Descriptor instead.
+func (*CreateAuthResp) Descriptor() ([]byte, []int) {
 	return file_cloudmind_sts_auth_proto_rawDescGZIP(), []int{15}
 }
 
-func (x *AddAuthResp) GetError() string {
+func (x *CreateAuthResp) GetError() string {
+	if x != nil {
+		return x.Error
+	}
+	return ""
+}
+
+type LoginReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Email    string `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
+	Password string `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+}
+
+func (x *LoginReq) Reset() {
+	*x = LoginReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cloudmind_sts_auth_proto_msgTypes[16]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *LoginReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoginReq) ProtoMessage() {}
+
+func (x *LoginReq) ProtoReflect() protoreflect.Message {
+	mi := &file_cloudmind_sts_auth_proto_msgTypes[16]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoginReq.ProtoReflect.Descriptor instead.
+func (*LoginReq) Descriptor() ([]byte, []int) {
+	return file_cloudmind_sts_auth_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *LoginReq) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+func (x *LoginReq) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
+type LoginResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	UserId string `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
+	Error  string `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
+}
+
+func (x *LoginResp) Reset() {
+	*x = LoginResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cloudmind_sts_auth_proto_msgTypes[17]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *LoginResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoginResp) ProtoMessage() {}
+
+func (x *LoginResp) ProtoReflect() protoreflect.Message {
+	mi := &file_cloudmind_sts_auth_proto_msgTypes[17]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoginResp.ProtoReflect.Descriptor instead.
+func (*LoginResp) Descriptor() ([]byte, []int) {
+	return file_cloudmind_sts_auth_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *LoginResp) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *LoginResp) GetError() string {
 	if x != nil {
 		return x.Error
 	}
@@ -1040,16 +1234,35 @@ var file_cloudmind_sts_auth_proto_rawDesc = []byte{
 	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x22, 0x26, 0x0a, 0x0e, 0x43,
 	0x68, 0x65, 0x63, 0x6b, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x12, 0x14, 0x0a,
 	0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x72,
-	0x72, 0x6f, 0x72, 0x22, 0x35, 0x0a, 0x0a, 0x41, 0x64, 0x64, 0x41, 0x75, 0x74, 0x68, 0x52, 0x65,
-	0x71, 0x12, 0x27, 0x0a, 0x04, 0x61, 0x75, 0x74, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
-	0x13, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x73, 0x74, 0x73, 0x2e,
-	0x41, 0x75, 0x74, 0x68, 0x52, 0x04, 0x61, 0x75, 0x74, 0x68, 0x22, 0x23, 0x0a, 0x0b, 0x41, 0x64,
-	0x64, 0x41, 0x75, 0x74, 0x68, 0x52, 0x65, 0x73, 0x70, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x72, 0x72,
-	0x6f, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x2a,
-	0x36, 0x0a, 0x08, 0x41, 0x75, 0x74, 0x68, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0b, 0x0a, 0x07, 0x55,
-	0x6e, 0x4b, 0x6e, 0x6f, 0x77, 0x6e, 0x10, 0x00, 0x12, 0x09, 0x0a, 0x05, 0x65, 0x6d, 0x61, 0x69,
-	0x6c, 0x10, 0x01, 0x12, 0x06, 0x0a, 0x02, 0x71, 0x71, 0x10, 0x02, 0x12, 0x0a, 0x0a, 0x06, 0x77,
-	0x65, 0x63, 0x68, 0x61, 0x74, 0x10, 0x03, 0x32, 0xd4, 0x03, 0x0a, 0x0a, 0x53, 0x74, 0x73, 0x53,
+	0x72, 0x6f, 0x72, 0x22, 0xab, 0x01, 0x0a, 0x0d, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x41, 0x75,
+	0x74, 0x68, 0x52, 0x65, 0x71, 0x12, 0x2b, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x0e, 0x32, 0x17, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e,
+	0x73, 0x74, 0x73, 0x2e, 0x41, 0x75, 0x74, 0x68, 0x54, 0x79, 0x70, 0x65, 0x52, 0x04, 0x74, 0x79,
+	0x70, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x03, 0x6b, 0x65, 0x79, 0x12, 0x16, 0x0a, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x27, 0x0a, 0x04,
+	0x72, 0x6f, 0x6c, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x13, 0x2e, 0x63, 0x6c, 0x6f,
+	0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x73, 0x74, 0x73, 0x2e, 0x52, 0x6f, 0x6c, 0x65, 0x52,
+	0x04, 0x72, 0x6f, 0x6c, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x50, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72,
+	0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x50, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72,
+	0x64, 0x22, 0x26, 0x0a, 0x0e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x41, 0x75, 0x74, 0x68, 0x52,
+	0x65, 0x73, 0x70, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x22, 0x3c, 0x0a, 0x08, 0x4c, 0x6f, 0x67,
+	0x69, 0x6e, 0x52, 0x65, 0x71, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x12, 0x1a, 0x0a, 0x08, 0x70,
+	0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x70,
+	0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x22, 0x39, 0x0a, 0x09, 0x4c, 0x6f, 0x67, 0x69, 0x6e,
+	0x52, 0x65, 0x73, 0x70, 0x12, 0x16, 0x0a, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x14, 0x0a, 0x05,
+	0x65, 0x72, 0x72, 0x6f, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x72, 0x72,
+	0x6f, 0x72, 0x2a, 0x3a, 0x0a, 0x08, 0x41, 0x75, 0x74, 0x68, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0f,
+	0x0a, 0x0b, 0x55, 0x6e, 0x4b, 0x6e, 0x6f, 0x77, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x10, 0x00, 0x12,
+	0x09, 0x0a, 0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x10, 0x01, 0x12, 0x06, 0x0a, 0x02, 0x71, 0x71,
+	0x10, 0x02, 0x12, 0x0a, 0x0a, 0x06, 0x77, 0x65, 0x63, 0x68, 0x61, 0x74, 0x10, 0x03, 0x2a, 0x37,
+	0x0a, 0x04, 0x52, 0x6f, 0x6c, 0x65, 0x12, 0x0f, 0x0a, 0x0b, 0x55, 0x6e, 0x4b, 0x6e, 0x6f, 0x77,
+	0x6e, 0x52, 0x6f, 0x6c, 0x65, 0x10, 0x00, 0x12, 0x0a, 0x0a, 0x06, 0x53, 0x79, 0x73, 0x74, 0x65,
+	0x6d, 0x10, 0x01, 0x12, 0x08, 0x0a, 0x04, 0x55, 0x73, 0x65, 0x72, 0x10, 0x02, 0x12, 0x08, 0x0a,
+	0x04, 0x54, 0x65, 0x73, 0x74, 0x10, 0x03, 0x32, 0x99, 0x04, 0x0a, 0x0a, 0x53, 0x74, 0x73, 0x53,
 	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x52, 0x0a, 0x0d, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65,
 	0x43, 0x61, 0x70, 0x74, 0x63, 0x68, 0x61, 0x12, 0x1f, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d,
 	0x69, 0x6e, 0x64, 0x2e, 0x73, 0x74, 0x73, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x61,
@@ -1074,16 +1287,21 @@ var file_cloudmind_sts_auth_proto_rawDesc = []byte{
 	0x1c, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x73, 0x74, 0x73, 0x2e,
 	0x43, 0x68, 0x65, 0x63, 0x6b, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x71, 0x1a, 0x1d, 0x2e,
 	0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x73, 0x74, 0x73, 0x2e, 0x43, 0x68,
-	0x65, 0x63, 0x6b, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x12, 0x40, 0x0a, 0x07,
-	0x41, 0x64, 0x64, 0x41, 0x75, 0x74, 0x68, 0x12, 0x19, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d,
-	0x69, 0x6e, 0x64, 0x2e, 0x73, 0x74, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x41, 0x75, 0x74, 0x68, 0x52,
-	0x65, 0x71, 0x1a, 0x1a, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x73,
-	0x74, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x41, 0x75, 0x74, 0x68, 0x52, 0x65, 0x73, 0x70, 0x42, 0x44,
-	0x5a, 0x42, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x6c, 0x6f,
-	0x75, 0x64, 0x53, 0x74, 0x72, 0x69, 0x76, 0x65, 0x72, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63,
-	0x65, 0x2d, 0x69, 0x64, 0x6c, 0x2d, 0x67, 0x65, 0x6e, 0x2d, 0x67, 0x6f, 0x2f, 0x6b, 0x69, 0x74,
-	0x65, 0x78, 0x5f, 0x67, 0x65, 0x6e, 0x2f, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64,
-	0x2f, 0x73, 0x74, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x63, 0x6b, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x12, 0x49, 0x0a, 0x0a,
+	0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x41, 0x75, 0x74, 0x68, 0x12, 0x1c, 0x2e, 0x63, 0x6c, 0x6f,
+	0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x73, 0x74, 0x73, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74,
+	0x65, 0x41, 0x75, 0x74, 0x68, 0x52, 0x65, 0x71, 0x1a, 0x1d, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64,
+	0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x73, 0x74, 0x73, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x41,
+	0x75, 0x74, 0x68, 0x52, 0x65, 0x73, 0x70, 0x12, 0x3a, 0x0a, 0x05, 0x4c, 0x6f, 0x67, 0x69, 0x6e,
+	0x12, 0x17, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x73, 0x74, 0x73,
+	0x2e, 0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x52, 0x65, 0x71, 0x1a, 0x18, 0x2e, 0x63, 0x6c, 0x6f, 0x75,
+	0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x73, 0x74, 0x73, 0x2e, 0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x52,
+	0x65, 0x73, 0x70, 0x42, 0x44, 0x5a, 0x42, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
+	0x6d, 0x2f, 0x43, 0x6c, 0x6f, 0x75, 0x64, 0x53, 0x74, 0x72, 0x69, 0x76, 0x65, 0x72, 0x2f, 0x73,
+	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2d, 0x69, 0x64, 0x6c, 0x2d, 0x67, 0x65, 0x6e, 0x2d, 0x67,
+	0x6f, 0x2f, 0x6b, 0x69, 0x74, 0x65, 0x78, 0x5f, 0x67, 0x65, 0x6e, 0x2f, 0x63, 0x6c, 0x6f, 0x75,
+	0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2f, 0x73, 0x74, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x33,
 }
 
 var (
@@ -1098,49 +1316,55 @@ func file_cloudmind_sts_auth_proto_rawDescGZIP() []byte {
 	return file_cloudmind_sts_auth_proto_rawDescData
 }
 
-var file_cloudmind_sts_auth_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_cloudmind_sts_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
+var file_cloudmind_sts_auth_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_cloudmind_sts_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_cloudmind_sts_auth_proto_goTypes = []interface{}{
 	(AuthType)(0),             // 0: cloudmind.sts.AuthType
-	(*Auth)(nil),              // 1: cloudmind.sts.Auth
-	(*EmailOptions)(nil),      // 2: cloudmind.sts.EmailOptions
-	(*UserIdOptions)(nil),     // 3: cloudmind.sts.UserIdOptions
-	(*Point)(nil),             // 4: cloudmind.sts.Point
-	(*SendEmailReq)(nil),      // 5: cloudmind.sts.SendEmailReq
-	(*SendEmailResp)(nil),     // 6: cloudmind.sts.SendEmailResp
-	(*CreateCaptchaReq)(nil),  // 7: cloudmind.sts.CreateCaptchaReq
-	(*CreateCaptchaResp)(nil), // 8: cloudmind.sts.CreateCaptchaResp
-	(*CheckCaptchaReq)(nil),   // 9: cloudmind.sts.CheckCaptchaReq
-	(*CheckCaptchaResp)(nil),  // 10: cloudmind.sts.CheckCaptchaResp
-	(*SetPasswordReq)(nil),    // 11: cloudmind.sts.SetPasswordReq
-	(*SetPasswordResp)(nil),   // 12: cloudmind.sts.SetPasswordResp
-	(*CheckEmailReq)(nil),     // 13: cloudmind.sts.CheckEmailReq
-	(*CheckEmailResp)(nil),    // 14: cloudmind.sts.CheckEmailResp
-	(*AddAuthReq)(nil),        // 15: cloudmind.sts.AddAuthReq
-	(*AddAuthResp)(nil),       // 16: cloudmind.sts.AddAuthResp
+	(Role)(0),                 // 1: cloudmind.sts.Role
+	(*Auth)(nil),              // 2: cloudmind.sts.Auth
+	(*EmailOptions)(nil),      // 3: cloudmind.sts.EmailOptions
+	(*UserIdOptions)(nil),     // 4: cloudmind.sts.UserIdOptions
+	(*Point)(nil),             // 5: cloudmind.sts.Point
+	(*SendEmailReq)(nil),      // 6: cloudmind.sts.SendEmailReq
+	(*SendEmailResp)(nil),     // 7: cloudmind.sts.SendEmailResp
+	(*CreateCaptchaReq)(nil),  // 8: cloudmind.sts.CreateCaptchaReq
+	(*CreateCaptchaResp)(nil), // 9: cloudmind.sts.CreateCaptchaResp
+	(*CheckCaptchaReq)(nil),   // 10: cloudmind.sts.CheckCaptchaReq
+	(*CheckCaptchaResp)(nil),  // 11: cloudmind.sts.CheckCaptchaResp
+	(*SetPasswordReq)(nil),    // 12: cloudmind.sts.SetPasswordReq
+	(*SetPasswordResp)(nil),   // 13: cloudmind.sts.SetPasswordResp
+	(*CheckEmailReq)(nil),     // 14: cloudmind.sts.CheckEmailReq
+	(*CheckEmailResp)(nil),    // 15: cloudmind.sts.CheckEmailResp
+	(*CreateAuthReq)(nil),     // 16: cloudmind.sts.CreateAuthReq
+	(*CreateAuthResp)(nil),    // 17: cloudmind.sts.CreateAuthResp
+	(*LoginReq)(nil),          // 18: cloudmind.sts.LoginReq
+	(*LoginResp)(nil),         // 19: cloudmind.sts.LoginResp
 }
 var file_cloudmind_sts_auth_proto_depIdxs = []int32{
-	4,  // 0: cloudmind.sts.CheckCaptchaReq.point:type_name -> cloudmind.sts.Point
-	3,  // 1: cloudmind.sts.SetPasswordReq.userIdOptions:type_name -> cloudmind.sts.UserIdOptions
-	2,  // 2: cloudmind.sts.SetPasswordReq.emailOptions:type_name -> cloudmind.sts.EmailOptions
-	1,  // 3: cloudmind.sts.AddAuthReq.auth:type_name -> cloudmind.sts.Auth
-	7,  // 4: cloudmind.sts.StsService.CreateCaptcha:input_type -> cloudmind.sts.CreateCaptchaReq
-	9,  // 5: cloudmind.sts.StsService.CheckCaptcha:input_type -> cloudmind.sts.CheckCaptchaReq
-	11, // 6: cloudmind.sts.StsService.SetPassword:input_type -> cloudmind.sts.SetPasswordReq
-	5,  // 7: cloudmind.sts.StsService.SendEmail:input_type -> cloudmind.sts.SendEmailReq
-	13, // 8: cloudmind.sts.StsService.CheckEmail:input_type -> cloudmind.sts.CheckEmailReq
-	15, // 9: cloudmind.sts.StsService.AddAuth:input_type -> cloudmind.sts.AddAuthReq
-	8,  // 10: cloudmind.sts.StsService.CreateCaptcha:output_type -> cloudmind.sts.CreateCaptchaResp
-	10, // 11: cloudmind.sts.StsService.CheckCaptcha:output_type -> cloudmind.sts.CheckCaptchaResp
-	12, // 12: cloudmind.sts.StsService.SetPassword:output_type -> cloudmind.sts.SetPasswordResp
-	6,  // 13: cloudmind.sts.StsService.SendEmail:output_type -> cloudmind.sts.SendEmailResp
-	14, // 14: cloudmind.sts.StsService.CheckEmail:output_type -> cloudmind.sts.CheckEmailResp
-	16, // 15: cloudmind.sts.StsService.AddAuth:output_type -> cloudmind.sts.AddAuthResp
-	10, // [10:16] is the sub-list for method output_type
-	4,  // [4:10] is the sub-list for method input_type
-	4,  // [4:4] is the sub-list for extension type_name
-	4,  // [4:4] is the sub-list for extension extendee
-	0,  // [0:4] is the sub-list for field type_name
+	5,  // 0: cloudmind.sts.CheckCaptchaReq.point:type_name -> cloudmind.sts.Point
+	4,  // 1: cloudmind.sts.SetPasswordReq.userIdOptions:type_name -> cloudmind.sts.UserIdOptions
+	3,  // 2: cloudmind.sts.SetPasswordReq.emailOptions:type_name -> cloudmind.sts.EmailOptions
+	0,  // 3: cloudmind.sts.CreateAuthReq.type:type_name -> cloudmind.sts.AuthType
+	1,  // 4: cloudmind.sts.CreateAuthReq.role:type_name -> cloudmind.sts.Role
+	8,  // 5: cloudmind.sts.StsService.CreateCaptcha:input_type -> cloudmind.sts.CreateCaptchaReq
+	10, // 6: cloudmind.sts.StsService.CheckCaptcha:input_type -> cloudmind.sts.CheckCaptchaReq
+	12, // 7: cloudmind.sts.StsService.SetPassword:input_type -> cloudmind.sts.SetPasswordReq
+	6,  // 8: cloudmind.sts.StsService.SendEmail:input_type -> cloudmind.sts.SendEmailReq
+	14, // 9: cloudmind.sts.StsService.CheckEmail:input_type -> cloudmind.sts.CheckEmailReq
+	16, // 10: cloudmind.sts.StsService.CreateAuth:input_type -> cloudmind.sts.CreateAuthReq
+	18, // 11: cloudmind.sts.StsService.Login:input_type -> cloudmind.sts.LoginReq
+	9,  // 12: cloudmind.sts.StsService.CreateCaptcha:output_type -> cloudmind.sts.CreateCaptchaResp
+	11, // 13: cloudmind.sts.StsService.CheckCaptcha:output_type -> cloudmind.sts.CheckCaptchaResp
+	13, // 14: cloudmind.sts.StsService.SetPassword:output_type -> cloudmind.sts.SetPasswordResp
+	7,  // 15: cloudmind.sts.StsService.SendEmail:output_type -> cloudmind.sts.SendEmailResp
+	15, // 16: cloudmind.sts.StsService.CheckEmail:output_type -> cloudmind.sts.CheckEmailResp
+	17, // 17: cloudmind.sts.StsService.CreateAuth:output_type -> cloudmind.sts.CreateAuthResp
+	19, // 18: cloudmind.sts.StsService.Login:output_type -> cloudmind.sts.LoginResp
+	12, // [12:19] is the sub-list for method output_type
+	5,  // [5:12] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_cloudmind_sts_auth_proto_init() }
@@ -1318,7 +1542,7 @@ func file_cloudmind_sts_auth_proto_init() {
 			}
 		}
 		file_cloudmind_sts_auth_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AddAuthReq); i {
+			switch v := v.(*CreateAuthReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1330,7 +1554,31 @@ func file_cloudmind_sts_auth_proto_init() {
 			}
 		}
 		file_cloudmind_sts_auth_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AddAuthResp); i {
+			switch v := v.(*CreateAuthResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cloudmind_sts_auth_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*LoginReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cloudmind_sts_auth_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*LoginResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1351,8 +1599,8 @@ func file_cloudmind_sts_auth_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_cloudmind_sts_auth_proto_rawDesc,
-			NumEnums:      1,
-			NumMessages:   16,
+			NumEnums:      2,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -1377,5 +1625,6 @@ type StsService interface {
 	SetPassword(ctx context.Context, req *SetPasswordReq) (res *SetPasswordResp, err error)
 	SendEmail(ctx context.Context, req *SendEmailReq) (res *SendEmailResp, err error)
 	CheckEmail(ctx context.Context, req *CheckEmailReq) (res *CheckEmailResp, err error)
-	AddAuth(ctx context.Context, req *AddAuthReq) (res *AddAuthResp, err error)
+	CreateAuth(ctx context.Context, req *CreateAuthReq) (res *CreateAuthResp, err error)
+	Login(ctx context.Context, req *LoginReq) (res *LoginResp, err error)
 }
