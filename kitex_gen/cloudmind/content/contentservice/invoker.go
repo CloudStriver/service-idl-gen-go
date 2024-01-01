@@ -3,7 +3,7 @@
 package contentservice
 
 import (
-	content "github.com/CloudStriver/service-idl-gen-go/kitex_gen/content"
+	content "github.com/CloudStriver/service-idl-gen-go/kitex_gen/cloudmind/content"
 	server "github.com/cloudwego/kitex/server"
 )
 
