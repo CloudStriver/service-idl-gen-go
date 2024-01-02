@@ -5,7 +5,6 @@ package core_api
 import (
 	fmt "fmt"
 	basic "github.com/CloudStriver/service-idl-gen-go/kitex_gen/basic"
-	user "github.com/CloudStriver/service-idl-gen-go/kitex_gen/cloudmind/user"
 	fastpb "github.com/cloudwego/fastpb"
 )
 
@@ -13,5 +12,4 @@ var (
 	_ = fmt.Errorf
 	_ = fastpb.Skip
 )
-var _ = user.File_cloudmind_user_common_proto
 var _ = basic.File_basic_pagination_proto

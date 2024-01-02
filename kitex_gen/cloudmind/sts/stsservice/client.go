@@ -18,6 +18,7 @@ type Client interface {
 	CheckEmail(ctx context.Context, Req *sts.CheckEmailReq, callOptions ...callopt.Option) (r *sts.CheckEmailResp, err error)
 	CreateAuth(ctx context.Context, Req *sts.CreateAuthReq, callOptions ...callopt.Option) (r *sts.CreateAuthResp, err error)
 	Login(ctx context.Context, Req *sts.LoginReq, callOptions ...callopt.Option) (r *sts.LoginResp, err error)
+	AppendAuth(ctx context.Context, Req *sts.AppendAuthReq, callOptions ...callopt.Option) (r *sts.AppendAuthResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -82,4 +83,9 @@ func (p *kStsServiceClient) CreateAuth(ctx context.Context, Req *sts.CreateAuthR
 func (p *kStsServiceClient) Login(ctx context.Context, Req *sts.LoginReq, callOptions ...callopt.Option) (r *sts.LoginResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.Login(ctx, Req)
+}
+
+func (p *kStsServiceClient) AppendAuth(ctx context.Context, Req *sts.AppendAuthReq, callOptions ...callopt.Option) (r *sts.AppendAuthResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.AppendAuth(ctx, Req)
 }

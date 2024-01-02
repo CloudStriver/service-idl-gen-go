@@ -28,6 +28,7 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"CheckEmail":    kitex.NewMethodInfo(checkEmailHandler, newCheckEmailArgs, newCheckEmailResult, false),
 		"CreateAuth":    kitex.NewMethodInfo(createAuthHandler, newCreateAuthArgs, newCreateAuthResult, false),
 		"Login":         kitex.NewMethodInfo(loginHandler, newLoginArgs, newLoginResult, false),
+		"AppendAuth":    kitex.NewMethodInfo(appendAuthHandler, newAppendAuthArgs, newAppendAuthResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName":     "cloudmind.sts",
@@ -1115,6 +1116,159 @@ func (p *LoginResult) GetResult() interface{} {
 	return p.Success
 }
 
+func appendAuthHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(sts.AppendAuthReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(sts.StsService).AppendAuth(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *AppendAuthArgs:
+		success, err := handler.(sts.StsService).AppendAuth(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*AppendAuthResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newAppendAuthArgs() interface{} {
+	return &AppendAuthArgs{}
+}
+
+func newAppendAuthResult() interface{} {
+	return &AppendAuthResult{}
+}
+
+type AppendAuthArgs struct {
+	Req *sts.AppendAuthReq
+}
+
+func (p *AppendAuthArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(sts.AppendAuthReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *AppendAuthArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *AppendAuthArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *AppendAuthArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *AppendAuthArgs) Unmarshal(in []byte) error {
+	msg := new(sts.AppendAuthReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var AppendAuthArgs_Req_DEFAULT *sts.AppendAuthReq
+
+func (p *AppendAuthArgs) GetReq() *sts.AppendAuthReq {
+	if !p.IsSetReq() {
+		return AppendAuthArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *AppendAuthArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *AppendAuthArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type AppendAuthResult struct {
+	Success *sts.AppendAuthResp
+}
+
+var AppendAuthResult_Success_DEFAULT *sts.AppendAuthResp
+
+func (p *AppendAuthResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(sts.AppendAuthResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *AppendAuthResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *AppendAuthResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *AppendAuthResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *AppendAuthResult) Unmarshal(in []byte) error {
+	msg := new(sts.AppendAuthResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *AppendAuthResult) GetSuccess() *sts.AppendAuthResp {
+	if !p.IsSetSuccess() {
+		return AppendAuthResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *AppendAuthResult) SetSuccess(x interface{}) {
+	p.Success = x.(*sts.AppendAuthResp)
+}
+
+func (p *AppendAuthResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *AppendAuthResult) GetResult() interface{} {
+	return p.Success
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -1190,6 +1344,16 @@ func (p *kClient) Login(ctx context.Context, Req *sts.LoginReq) (r *sts.LoginRes
 	_args.Req = Req
 	var _result LoginResult
 	if err = p.c.Call(ctx, "Login", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) AppendAuth(ctx context.Context, Req *sts.AppendAuthReq) (r *sts.AppendAuthResp, err error) {
+	var _args AppendAuthArgs
+	_args.Req = Req
+	var _result AppendAuthResult
+	if err = p.c.Call(ctx, "AppendAuth", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

@@ -12,8 +12,14 @@ import (
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
 	Register(ctx context.Context, Req *core_api.RegisterReq, callOptions ...callopt.Option) (r *core_api.RegisterResp, err error)
-	Login(ctx context.Context, Req *core_api.LoginReq, callOptions ...callopt.Option) (r *core_api.LoginResp, err error)
+	EmailLogin(ctx context.Context, Req *core_api.EmailLoginReq, callOptions ...callopt.Option) (r *core_api.EmailLoginResp, err error)
+	GithubLogin(ctx context.Context, Req *core_api.GithubLoginReq, callOptions ...callopt.Option) (r *core_api.GithubLoginResp, err error)
+	GiteeLogin(ctx context.Context, Req *core_api.GiteeLoginReq, callOptions ...callopt.Option) (r *core_api.GiteeLoginResp, err error)
 	RefreshToken(ctx context.Context, Req *core_api.RefreshTokenReq, callOptions ...callopt.Option) (r *core_api.RefreshTokenResp, err error)
+	SendEmail(ctx context.Context, Req *core_api.SendEmailReq, callOptions ...callopt.Option) (r *core_api.SendEmailResp, err error)
+	GetCaptcha(ctx context.Context, Req *core_api.GetCaptchaReq, callOptions ...callopt.Option) (r *core_api.GetCaptchaResp, err error)
+	SetPasswordByEmail(ctx context.Context, Req *core_api.SetPasswordByEmailReq, callOptions ...callopt.Option) (r *core_api.SetPasswordByEmailResp, err error)
+	SetPasswordByPassword(ctx context.Context, Req *core_api.SetPasswordByPasswordReq, callOptions ...callopt.Option) (r *core_api.SetPasswordByPasswordReq, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -50,12 +56,42 @@ func (p *kAuthClient) Register(ctx context.Context, Req *core_api.RegisterReq, c
 	return p.kClient.Register(ctx, Req)
 }
 
-func (p *kAuthClient) Login(ctx context.Context, Req *core_api.LoginReq, callOptions ...callopt.Option) (r *core_api.LoginResp, err error) {
+func (p *kAuthClient) EmailLogin(ctx context.Context, Req *core_api.EmailLoginReq, callOptions ...callopt.Option) (r *core_api.EmailLoginResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.Login(ctx, Req)
+	return p.kClient.EmailLogin(ctx, Req)
+}
+
+func (p *kAuthClient) GithubLogin(ctx context.Context, Req *core_api.GithubLoginReq, callOptions ...callopt.Option) (r *core_api.GithubLoginResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GithubLogin(ctx, Req)
+}
+
+func (p *kAuthClient) GiteeLogin(ctx context.Context, Req *core_api.GiteeLoginReq, callOptions ...callopt.Option) (r *core_api.GiteeLoginResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GiteeLogin(ctx, Req)
 }
 
 func (p *kAuthClient) RefreshToken(ctx context.Context, Req *core_api.RefreshTokenReq, callOptions ...callopt.Option) (r *core_api.RefreshTokenResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.RefreshToken(ctx, Req)
+}
+
+func (p *kAuthClient) SendEmail(ctx context.Context, Req *core_api.SendEmailReq, callOptions ...callopt.Option) (r *core_api.SendEmailResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.SendEmail(ctx, Req)
+}
+
+func (p *kAuthClient) GetCaptcha(ctx context.Context, Req *core_api.GetCaptchaReq, callOptions ...callopt.Option) (r *core_api.GetCaptchaResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetCaptcha(ctx, Req)
+}
+
+func (p *kAuthClient) SetPasswordByEmail(ctx context.Context, Req *core_api.SetPasswordByEmailReq, callOptions ...callopt.Option) (r *core_api.SetPasswordByEmailResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.SetPasswordByEmail(ctx, Req)
+}
+
+func (p *kAuthClient) SetPasswordByPassword(ctx context.Context, Req *core_api.SetPasswordByPasswordReq, callOptions ...callopt.Option) (r *core_api.SetPasswordByPasswordReq, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.SetPasswordByPassword(ctx, Req)
 }

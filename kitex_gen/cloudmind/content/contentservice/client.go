@@ -30,6 +30,12 @@ type Client interface {
 	CreateLabel(ctx context.Context, Req *content.CreateLabelReq, callOptions ...callopt.Option) (r *content.CreateLabelResp, err error)
 	UpdateLabel(ctx context.Context, Req *content.UpdateLabelReq, callOptions ...callopt.Option) (r *content.UpdateLabelResp, err error)
 	DeleteLabel(ctx context.Context, Req *content.DeleteLabelReq, callOptions ...callopt.Option) (r *content.DeleteLabelResp, err error)
+	UpdateUser(ctx context.Context, Req *content.UpdateUserReq, callOptions ...callopt.Option) (r *content.UpdateUserResp, err error)
+	GetUser(ctx context.Context, Req *content.GetUserReq, callOptions ...callopt.Option) (r *content.GetUserResp, err error)
+	GetUserDetail(ctx context.Context, Req *content.GetUserDetailReq, callOptions ...callopt.Option) (r *content.GetUserDetailResp, err error)
+	SearchUser(ctx context.Context, Req *content.SearchUserReq, callOptions ...callopt.Option) (r *content.SearchUserResp, err error)
+	CreateUser(ctx context.Context, Req *content.CreateUserReq, callOptions ...callopt.Option) (r *content.CreateUserResp, err error)
+	DeleteUser(ctx context.Context, Req *content.DeleteUserReq, callOptions ...callopt.Option) (r *content.DeleteUserResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -154,4 +160,34 @@ func (p *kContentServiceClient) UpdateLabel(ctx context.Context, Req *content.Up
 func (p *kContentServiceClient) DeleteLabel(ctx context.Context, Req *content.DeleteLabelReq, callOptions ...callopt.Option) (r *content.DeleteLabelResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.DeleteLabel(ctx, Req)
+}
+
+func (p *kContentServiceClient) UpdateUser(ctx context.Context, Req *content.UpdateUserReq, callOptions ...callopt.Option) (r *content.UpdateUserResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.UpdateUser(ctx, Req)
+}
+
+func (p *kContentServiceClient) GetUser(ctx context.Context, Req *content.GetUserReq, callOptions ...callopt.Option) (r *content.GetUserResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetUser(ctx, Req)
+}
+
+func (p *kContentServiceClient) GetUserDetail(ctx context.Context, Req *content.GetUserDetailReq, callOptions ...callopt.Option) (r *content.GetUserDetailResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetUserDetail(ctx, Req)
+}
+
+func (p *kContentServiceClient) SearchUser(ctx context.Context, Req *content.SearchUserReq, callOptions ...callopt.Option) (r *content.SearchUserResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.SearchUser(ctx, Req)
+}
+
+func (p *kContentServiceClient) CreateUser(ctx context.Context, Req *content.CreateUserReq, callOptions ...callopt.Option) (r *content.CreateUserResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateUser(ctx, Req)
+}
+
+func (p *kContentServiceClient) DeleteUser(ctx context.Context, Req *content.DeleteUserReq, callOptions ...callopt.Option) (r *content.DeleteUserResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteUser(ctx, Req)
 }
