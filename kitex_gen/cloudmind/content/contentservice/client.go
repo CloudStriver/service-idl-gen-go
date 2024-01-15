@@ -24,9 +24,6 @@ type Client interface {
 	AddFileToPublicSpace(ctx context.Context, Req *content.AddFileToPublicSpaceReq, callOptions ...callopt.Option) (r *content.AddFileToPublicSpaceResp, err error)
 	DeleteFile(ctx context.Context, Req *content.DeleteFileReq, callOptions ...callopt.Option) (r *content.DeleteFileResp, err error)
 	RecoverRecycleBinFile(ctx context.Context, Req *content.RecoverRecycleBinFileReq, callOptions ...callopt.Option) (r *content.RecoverRecycleBinFileResp, err error)
-	AskUploadFile(ctx context.Context, Req *content.AskUploadFileReq, callOptions ...callopt.Option) (r *content.AskUploadFileResp, err error)
-	AskUploadFileRollback(ctx context.Context, Req *content.AskUploadFileReq, callOptions ...callopt.Option) (r *content.AskUploadFileResp, err error)
-	DeleteShareFile(ctx context.Context, Req *content.DeleteShareFileReq, callOptions ...callopt.Option) (r *content.DeleteShareFileResp, err error)
 	DeleteExpiredFiles(ctx context.Context, Req *content.DeleteExpiredFilesReq, callOptions ...callopt.Option) (r *content.DeleteExpiredFilesResp, err error)
 	DeleteExpiredShareCodes(ctx context.Context, Req *content.DeleteExpiredShareCodesReq, callOptions ...callopt.Option) (r *content.DeleteExpiredShareCodesResp, err error)
 	GetLabel(ctx context.Context, Req *content.GetLabelReq, callOptions ...callopt.Option) (r *content.GetLabelResp, err error)
@@ -138,21 +135,6 @@ func (p *kContentServiceClient) DeleteFile(ctx context.Context, Req *content.Del
 func (p *kContentServiceClient) RecoverRecycleBinFile(ctx context.Context, Req *content.RecoverRecycleBinFileReq, callOptions ...callopt.Option) (r *content.RecoverRecycleBinFileResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.RecoverRecycleBinFile(ctx, Req)
-}
-
-func (p *kContentServiceClient) AskUploadFile(ctx context.Context, Req *content.AskUploadFileReq, callOptions ...callopt.Option) (r *content.AskUploadFileResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.AskUploadFile(ctx, Req)
-}
-
-func (p *kContentServiceClient) AskUploadFileRollback(ctx context.Context, Req *content.AskUploadFileReq, callOptions ...callopt.Option) (r *content.AskUploadFileResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.AskUploadFileRollback(ctx, Req)
-}
-
-func (p *kContentServiceClient) DeleteShareFile(ctx context.Context, Req *content.DeleteShareFileReq, callOptions ...callopt.Option) (r *content.DeleteShareFileResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.DeleteShareFile(ctx, Req)
 }
 
 func (p *kContentServiceClient) DeleteExpiredFiles(ctx context.Context, Req *content.DeleteExpiredFilesReq, callOptions ...callopt.Option) (r *content.DeleteExpiredFilesResp, err error) {
