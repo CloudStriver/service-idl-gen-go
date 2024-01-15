@@ -263,81 +263,6 @@ func (x *UserIdOptions) fastReadField2(buf []byte, _type int8) (offset int, err 
 	return offset, err
 }
 
-func (x *Point) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
-	switch number {
-	case 1:
-		offset, err = x.fastReadField1(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 2:
-		offset, err = x.fastReadField2(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	default:
-		offset, err = fastpb.Skip(buf, _type, number)
-		if err != nil {
-			goto SkipFieldError
-		}
-	}
-	return offset, nil
-SkipFieldError:
-	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
-ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_Point[number], err)
-}
-
-func (x *Point) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	x.X, offset, err = fastpb.ReadInt32(buf, _type)
-	return offset, err
-}
-
-func (x *Point) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.Y, offset, err = fastpb.ReadInt32(buf, _type)
-	return offset, err
-}
-
-func (x *Captcha) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
-	switch number {
-	case 1:
-		offset, err = x.fastReadField1(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 2:
-		offset, err = x.fastReadField2(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	default:
-		offset, err = fastpb.Skip(buf, _type, number)
-		if err != nil {
-			goto SkipFieldError
-		}
-	}
-	return offset, nil
-SkipFieldError:
-	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
-ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_Captcha[number], err)
-}
-
-func (x *Captcha) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v Point
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
-	if err != nil {
-		return offset, err
-	}
-	x.Point = &v
-	return offset, nil
-}
-
-func (x *Captcha) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.Key, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
 func (x *User) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -512,56 +437,6 @@ func (x *UserIdOptions) fastWriteField2(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 2, x.GetPassword())
-	return offset
-}
-
-func (x *Point) FastWrite(buf []byte) (offset int) {
-	if x == nil {
-		return offset
-	}
-	offset += x.fastWriteField1(buf[offset:])
-	offset += x.fastWriteField2(buf[offset:])
-	return offset
-}
-
-func (x *Point) fastWriteField1(buf []byte) (offset int) {
-	if x.X == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt32(buf[offset:], 1, x.GetX())
-	return offset
-}
-
-func (x *Point) fastWriteField2(buf []byte) (offset int) {
-	if x.Y == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt32(buf[offset:], 2, x.GetY())
-	return offset
-}
-
-func (x *Captcha) FastWrite(buf []byte) (offset int) {
-	if x == nil {
-		return offset
-	}
-	offset += x.fastWriteField1(buf[offset:])
-	offset += x.fastWriteField2(buf[offset:])
-	return offset
-}
-
-func (x *Captcha) fastWriteField1(buf []byte) (offset int) {
-	if x.Point == nil {
-		return offset
-	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetPoint())
-	return offset
-}
-
-func (x *Captcha) fastWriteField2(buf []byte) (offset int) {
-	if x.Key == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetKey())
 	return offset
 }
 
@@ -742,56 +617,6 @@ func (x *UserIdOptions) sizeField2() (n int) {
 	return n
 }
 
-func (x *Point) Size() (n int) {
-	if x == nil {
-		return n
-	}
-	n += x.sizeField1()
-	n += x.sizeField2()
-	return n
-}
-
-func (x *Point) sizeField1() (n int) {
-	if x.X == 0 {
-		return n
-	}
-	n += fastpb.SizeInt32(1, x.GetX())
-	return n
-}
-
-func (x *Point) sizeField2() (n int) {
-	if x.Y == 0 {
-		return n
-	}
-	n += fastpb.SizeInt32(2, x.GetY())
-	return n
-}
-
-func (x *Captcha) Size() (n int) {
-	if x == nil {
-		return n
-	}
-	n += x.sizeField1()
-	n += x.sizeField2()
-	return n
-}
-
-func (x *Captcha) sizeField1() (n int) {
-	if x.Point == nil {
-		return n
-	}
-	n += fastpb.SizeMessage(1, x.GetPoint())
-	return n
-}
-
-func (x *Captcha) sizeField2() (n int) {
-	if x.Key == "" {
-		return n
-	}
-	n += fastpb.SizeString(2, x.GetKey())
-	return n
-}
-
 var fieldIDToName_User = map[int32]string{
 	1: "UserId",
 	2: "Role",
@@ -823,14 +648,4 @@ var fieldIDToName_EmailOptions = map[int32]string{
 var fieldIDToName_UserIdOptions = map[int32]string{
 	1: "UserId",
 	2: "Password",
-}
-
-var fieldIDToName_Point = map[int32]string{
-	1: "X",
-	2: "Y",
-}
-
-var fieldIDToName_Captcha = map[int32]string{
-	1: "Point",
-	2: "Key",
 }

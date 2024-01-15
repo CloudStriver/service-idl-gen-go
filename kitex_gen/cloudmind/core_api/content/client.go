@@ -3,11 +3,16 @@
 package content
 
 import (
+	"context"
+	core_api "github.com/CloudStriver/service-idl-gen-go/kitex_gen/cloudmind/core_api"
 	client "github.com/cloudwego/kitex/client"
+	callopt "github.com/cloudwego/kitex/client/callopt"
 )
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
+	UpdateUser(ctx context.Context, Req *core_api.UpdateUserReq, callOptions ...callopt.Option) (r *core_api.UpdateUserResp, err error)
+	SearchUser(ctx context.Context, Req *core_api.SearchUserReq, callOptions ...callopt.Option) (r *core_api.SearchUserResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -37,4 +42,14 @@ func MustNewClient(destService string, opts ...client.Option) Client {
 
 type kContentClient struct {
 	*kClient
+}
+
+func (p *kContentClient) UpdateUser(ctx context.Context, Req *core_api.UpdateUserReq, callOptions ...callopt.Option) (r *core_api.UpdateUserResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.UpdateUser(ctx, Req)
+}
+
+func (p *kContentClient) SearchUser(ctx context.Context, Req *core_api.SearchUserReq, callOptions ...callopt.Option) (r *core_api.SearchUserResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.SearchUser(ctx, Req)
 }

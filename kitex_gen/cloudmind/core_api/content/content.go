@@ -3,9 +3,12 @@
 package content
 
 import (
+	"context"
 	core_api "github.com/CloudStriver/service-idl-gen-go/kitex_gen/cloudmind/core_api"
 	client "github.com/cloudwego/kitex/client"
 	kitex "github.com/cloudwego/kitex/pkg/serviceinfo"
+	streaming "github.com/cloudwego/kitex/pkg/streaming"
+	proto "google.golang.org/protobuf/proto"
 )
 
 func serviceInfo() *kitex.ServiceInfo {
@@ -17,7 +20,10 @@ var contentServiceInfo = NewServiceInfo()
 func NewServiceInfo() *kitex.ServiceInfo {
 	serviceName := "content"
 	handlerType := (*core_api.Content)(nil)
-	methods := map[string]kitex.MethodInfo{}
+	methods := map[string]kitex.MethodInfo{
+		"UpdateUser": kitex.NewMethodInfo(updateUserHandler, newUpdateUserArgs, newUpdateUserResult, false),
+		"SearchUser": kitex.NewMethodInfo(searchUserHandler, newSearchUserArgs, newSearchUserResult, false),
+	}
 	extra := map[string]interface{}{
 		"PackageName":     "cloudmind.core_api",
 		"ServiceFilePath": ``,
@@ -33,6 +39,312 @@ func NewServiceInfo() *kitex.ServiceInfo {
 	return svcInfo
 }
 
+func updateUserHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.UpdateUserReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Content).UpdateUser(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *UpdateUserArgs:
+		success, err := handler.(core_api.Content).UpdateUser(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*UpdateUserResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newUpdateUserArgs() interface{} {
+	return &UpdateUserArgs{}
+}
+
+func newUpdateUserResult() interface{} {
+	return &UpdateUserResult{}
+}
+
+type UpdateUserArgs struct {
+	Req *core_api.UpdateUserReq
+}
+
+func (p *UpdateUserArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.UpdateUserReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *UpdateUserArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *UpdateUserArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *UpdateUserArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *UpdateUserArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.UpdateUserReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var UpdateUserArgs_Req_DEFAULT *core_api.UpdateUserReq
+
+func (p *UpdateUserArgs) GetReq() *core_api.UpdateUserReq {
+	if !p.IsSetReq() {
+		return UpdateUserArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *UpdateUserArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *UpdateUserArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type UpdateUserResult struct {
+	Success *core_api.UpdateUserResp
+}
+
+var UpdateUserResult_Success_DEFAULT *core_api.UpdateUserResp
+
+func (p *UpdateUserResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.UpdateUserResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *UpdateUserResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *UpdateUserResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *UpdateUserResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *UpdateUserResult) Unmarshal(in []byte) error {
+	msg := new(core_api.UpdateUserResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *UpdateUserResult) GetSuccess() *core_api.UpdateUserResp {
+	if !p.IsSetSuccess() {
+		return UpdateUserResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *UpdateUserResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.UpdateUserResp)
+}
+
+func (p *UpdateUserResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *UpdateUserResult) GetResult() interface{} {
+	return p.Success
+}
+
+func searchUserHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.SearchUserReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Content).SearchUser(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *SearchUserArgs:
+		success, err := handler.(core_api.Content).SearchUser(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*SearchUserResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newSearchUserArgs() interface{} {
+	return &SearchUserArgs{}
+}
+
+func newSearchUserResult() interface{} {
+	return &SearchUserResult{}
+}
+
+type SearchUserArgs struct {
+	Req *core_api.SearchUserReq
+}
+
+func (p *SearchUserArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.SearchUserReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *SearchUserArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *SearchUserArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *SearchUserArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *SearchUserArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.SearchUserReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var SearchUserArgs_Req_DEFAULT *core_api.SearchUserReq
+
+func (p *SearchUserArgs) GetReq() *core_api.SearchUserReq {
+	if !p.IsSetReq() {
+		return SearchUserArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *SearchUserArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *SearchUserArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type SearchUserResult struct {
+	Success *core_api.SearchUserResp
+}
+
+var SearchUserResult_Success_DEFAULT *core_api.SearchUserResp
+
+func (p *SearchUserResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.SearchUserResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *SearchUserResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *SearchUserResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *SearchUserResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *SearchUserResult) Unmarshal(in []byte) error {
+	msg := new(core_api.SearchUserResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *SearchUserResult) GetSuccess() *core_api.SearchUserResp {
+	if !p.IsSetSuccess() {
+		return SearchUserResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *SearchUserResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.SearchUserResp)
+}
+
+func (p *SearchUserResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *SearchUserResult) GetResult() interface{} {
+	return p.Success
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -41,4 +353,24 @@ func newServiceClient(c client.Client) *kClient {
 	return &kClient{
 		c: c,
 	}
+}
+
+func (p *kClient) UpdateUser(ctx context.Context, Req *core_api.UpdateUserReq) (r *core_api.UpdateUserResp, err error) {
+	var _args UpdateUserArgs
+	_args.Req = Req
+	var _result UpdateUserResult
+	if err = p.c.Call(ctx, "UpdateUser", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) SearchUser(ctx context.Context, Req *core_api.SearchUserReq) (r *core_api.SearchUserResp, err error) {
+	var _args SearchUserArgs
+	_args.Req = Req
+	var _result SearchUserResult
+	if err = p.c.Call(ctx, "SearchUser", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
 }

@@ -60,117 +60,6 @@ SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 }
 
-func (x *CreateCaptchaReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
-	switch number {
-	default:
-		offset, err = fastpb.Skip(buf, _type, number)
-		if err != nil {
-			goto SkipFieldError
-		}
-	}
-	return offset, nil
-SkipFieldError:
-	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
-}
-
-func (x *CreateCaptchaResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
-	switch number {
-	case 1:
-		offset, err = x.fastReadField1(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 2:
-		offset, err = x.fastReadField2(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 3:
-		offset, err = x.fastReadField3(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	default:
-		offset, err = fastpb.Skip(buf, _type, number)
-		if err != nil {
-			goto SkipFieldError
-		}
-	}
-	return offset, nil
-SkipFieldError:
-	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
-ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CreateCaptchaResp[number], err)
-}
-
-func (x *CreateCaptchaResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	x.OriginalImageBase64, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *CreateCaptchaResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.JigsawImageBase64, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *CreateCaptchaResp) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	x.Key, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *CheckCaptchaReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
-	switch number {
-	case 1:
-		offset, err = x.fastReadField1(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 2:
-		offset, err = x.fastReadField2(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	default:
-		offset, err = fastpb.Skip(buf, _type, number)
-		if err != nil {
-			goto SkipFieldError
-		}
-	}
-	return offset, nil
-SkipFieldError:
-	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
-ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CheckCaptchaReq[number], err)
-}
-
-func (x *CheckCaptchaReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v Point
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
-	if err != nil {
-		return offset, err
-	}
-	x.Point = &v
-	return offset, nil
-}
-
-func (x *CheckCaptchaReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.Key, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *CheckCaptchaResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
-	switch number {
-	default:
-		offset, err = fastpb.Skip(buf, _type, number)
-		if err != nil {
-			goto SkipFieldError
-		}
-	}
-	return offset, nil
-SkipFieldError:
-	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
-}
-
 func (x *SetPasswordReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
@@ -384,11 +273,6 @@ func (x *LoginReq) FastRead(buf []byte, _type int8, number int32) (offset int, e
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 5:
-		offset, err = x.fastReadField5(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -415,16 +299,6 @@ func (x *LoginReq) fastReadField1(buf []byte, _type int8) (offset int, err error
 func (x *LoginReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
 	x.Password, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
-}
-
-func (x *LoginReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	var v Captcha
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
-	if err != nil {
-		return offset, err
-	}
-	x.Captcha = &v
-	return offset, nil
 }
 
 func (x *LoginResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -542,79 +416,6 @@ func (x *SendEmailReq) fastWriteField2(buf []byte) (offset int) {
 }
 
 func (x *SendEmailResp) FastWrite(buf []byte) (offset int) {
-	if x == nil {
-		return offset
-	}
-	return offset
-}
-
-func (x *CreateCaptchaReq) FastWrite(buf []byte) (offset int) {
-	if x == nil {
-		return offset
-	}
-	return offset
-}
-
-func (x *CreateCaptchaResp) FastWrite(buf []byte) (offset int) {
-	if x == nil {
-		return offset
-	}
-	offset += x.fastWriteField1(buf[offset:])
-	offset += x.fastWriteField2(buf[offset:])
-	offset += x.fastWriteField3(buf[offset:])
-	return offset
-}
-
-func (x *CreateCaptchaResp) fastWriteField1(buf []byte) (offset int) {
-	if x.OriginalImageBase64 == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 1, x.GetOriginalImageBase64())
-	return offset
-}
-
-func (x *CreateCaptchaResp) fastWriteField2(buf []byte) (offset int) {
-	if x.JigsawImageBase64 == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetJigsawImageBase64())
-	return offset
-}
-
-func (x *CreateCaptchaResp) fastWriteField3(buf []byte) (offset int) {
-	if x.Key == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 3, x.GetKey())
-	return offset
-}
-
-func (x *CheckCaptchaReq) FastWrite(buf []byte) (offset int) {
-	if x == nil {
-		return offset
-	}
-	offset += x.fastWriteField1(buf[offset:])
-	offset += x.fastWriteField2(buf[offset:])
-	return offset
-}
-
-func (x *CheckCaptchaReq) fastWriteField1(buf []byte) (offset int) {
-	if x.Point == nil {
-		return offset
-	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetPoint())
-	return offset
-}
-
-func (x *CheckCaptchaReq) fastWriteField2(buf []byte) (offset int) {
-	if x.Key == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetKey())
-	return offset
-}
-
-func (x *CheckCaptchaResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
@@ -750,7 +551,6 @@ func (x *LoginReq) FastWrite(buf []byte) (offset int) {
 	}
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
-	offset += x.fastWriteField5(buf[offset:])
 	return offset
 }
 
@@ -767,14 +567,6 @@ func (x *LoginReq) fastWriteField2(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 2, x.GetPassword())
-	return offset
-}
-
-func (x *LoginReq) fastWriteField5(buf []byte) (offset int) {
-	if x.Captcha == nil {
-		return offset
-	}
-	offset += fastpb.WriteMessage(buf[offset:], 5, x.GetCaptcha())
 	return offset
 }
 
@@ -861,79 +653,6 @@ func (x *SendEmailReq) sizeField2() (n int) {
 }
 
 func (x *SendEmailResp) Size() (n int) {
-	if x == nil {
-		return n
-	}
-	return n
-}
-
-func (x *CreateCaptchaReq) Size() (n int) {
-	if x == nil {
-		return n
-	}
-	return n
-}
-
-func (x *CreateCaptchaResp) Size() (n int) {
-	if x == nil {
-		return n
-	}
-	n += x.sizeField1()
-	n += x.sizeField2()
-	n += x.sizeField3()
-	return n
-}
-
-func (x *CreateCaptchaResp) sizeField1() (n int) {
-	if x.OriginalImageBase64 == "" {
-		return n
-	}
-	n += fastpb.SizeString(1, x.GetOriginalImageBase64())
-	return n
-}
-
-func (x *CreateCaptchaResp) sizeField2() (n int) {
-	if x.JigsawImageBase64 == "" {
-		return n
-	}
-	n += fastpb.SizeString(2, x.GetJigsawImageBase64())
-	return n
-}
-
-func (x *CreateCaptchaResp) sizeField3() (n int) {
-	if x.Key == "" {
-		return n
-	}
-	n += fastpb.SizeString(3, x.GetKey())
-	return n
-}
-
-func (x *CheckCaptchaReq) Size() (n int) {
-	if x == nil {
-		return n
-	}
-	n += x.sizeField1()
-	n += x.sizeField2()
-	return n
-}
-
-func (x *CheckCaptchaReq) sizeField1() (n int) {
-	if x.Point == nil {
-		return n
-	}
-	n += fastpb.SizeMessage(1, x.GetPoint())
-	return n
-}
-
-func (x *CheckCaptchaReq) sizeField2() (n int) {
-	if x.Key == "" {
-		return n
-	}
-	n += fastpb.SizeString(2, x.GetKey())
-	return n
-}
-
-func (x *CheckCaptchaResp) Size() (n int) {
 	if x == nil {
 		return n
 	}
@@ -1069,7 +788,6 @@ func (x *LoginReq) Size() (n int) {
 	}
 	n += x.sizeField1()
 	n += x.sizeField2()
-	n += x.sizeField5()
 	return n
 }
 
@@ -1086,14 +804,6 @@ func (x *LoginReq) sizeField2() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(2, x.GetPassword())
-	return n
-}
-
-func (x *LoginReq) sizeField5() (n int) {
-	if x.Captcha == nil {
-		return n
-	}
-	n += fastpb.SizeMessage(5, x.GetCaptcha())
 	return n
 }
 
@@ -1161,21 +871,6 @@ var fieldIDToName_SendEmailReq = map[int32]string{
 
 var fieldIDToName_SendEmailResp = map[int32]string{}
 
-var fieldIDToName_CreateCaptchaReq = map[int32]string{}
-
-var fieldIDToName_CreateCaptchaResp = map[int32]string{
-	1: "OriginalImageBase64",
-	2: "JigsawImageBase64",
-	3: "Key",
-}
-
-var fieldIDToName_CheckCaptchaReq = map[int32]string{
-	1: "Point",
-	2: "Key",
-}
-
-var fieldIDToName_CheckCaptchaResp = map[int32]string{}
-
 var fieldIDToName_SetPasswordReq = map[int32]string{
 	1: "UserIdOptions",
 	2: "EmailOptions",
@@ -1204,7 +899,6 @@ var fieldIDToName_CreateAuthResp = map[int32]string{
 var fieldIDToName_LoginReq = map[int32]string{
 	1: "Auth",
 	2: "Password",
-	5: "Captcha",
 }
 
 var fieldIDToName_LoginResp = map[int32]string{

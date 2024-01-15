@@ -62,13 +62,8 @@ func (x *RegisterReq) fastReadField1(buf []byte, _type int8) (offset int, err er
 }
 
 func (x *RegisterReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	var v int32
-	v, offset, err = fastpb.ReadInt32(buf, _type)
-	if err != nil {
-		return offset, err
-	}
-	x.Sex = content.Sex(v)
-	return offset, nil
+	x.Sex, offset, err = fastpb.ReadInt32(buf, _type)
+	return offset, err
 }
 
 func (x *RegisterReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
@@ -82,8 +77,7 @@ func (x *RegisterReq) fastReadField4(buf []byte, _type int8) (offset int, err er
 }
 
 func (x *RegisterReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadString(buf, _type)
-	x.Code = &tmp
+	x.Code, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -154,6 +148,11 @@ func (x *EmailLoginReq) FastRead(buf []byte, _type int8, number int32) (offset i
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -178,16 +177,16 @@ func (x *EmailLoginReq) fastReadField2(buf []byte, _type int8) (offset int, err 
 }
 
 func (x *EmailLoginReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	var v sts.Point
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
-	if err != nil {
-		return offset, err
-	}
-	x.Point = &v
-	return offset, nil
+	x.X, offset, err = fastpb.ReadInt32(buf, _type)
+	return offset, err
 }
 
 func (x *EmailLoginReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	x.Y, offset, err = fastpb.ReadInt32(buf, _type)
+	return offset, err
+}
+
+func (x *EmailLoginReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	x.Key, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
@@ -673,7 +672,7 @@ func (x *RegisterReq) fastWriteField2(buf []byte) (offset int) {
 	if x.Sex == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 2, int32(x.GetSex()))
+	offset += fastpb.WriteInt32(buf[offset:], 2, x.GetSex())
 	return offset
 }
 
@@ -694,7 +693,7 @@ func (x *RegisterReq) fastWriteField4(buf []byte) (offset int) {
 }
 
 func (x *RegisterReq) fastWriteField5(buf []byte) (offset int) {
-	if x.Code == nil {
+	if x.Code == "" {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 5, x.GetCode())
@@ -743,6 +742,7 @@ func (x *EmailLoginReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
 	return offset
 }
 
@@ -763,18 +763,26 @@ func (x *EmailLoginReq) fastWriteField2(buf []byte) (offset int) {
 }
 
 func (x *EmailLoginReq) fastWriteField3(buf []byte) (offset int) {
-	if x.Point == nil {
+	if x.X == 0 {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 3, x.GetPoint())
+	offset += fastpb.WriteInt32(buf[offset:], 3, x.GetX())
 	return offset
 }
 
 func (x *EmailLoginReq) fastWriteField4(buf []byte) (offset int) {
+	if x.Y == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 4, x.GetY())
+	return offset
+}
+
+func (x *EmailLoginReq) fastWriteField5(buf []byte) (offset int) {
 	if x.Key == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 4, x.GetKey())
+	offset += fastpb.WriteString(buf[offset:], 5, x.GetKey())
 	return offset
 }
 
@@ -1123,7 +1131,7 @@ func (x *RegisterReq) sizeField2() (n int) {
 	if x.Sex == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(2, int32(x.GetSex()))
+	n += fastpb.SizeInt32(2, x.GetSex())
 	return n
 }
 
@@ -1144,7 +1152,7 @@ func (x *RegisterReq) sizeField4() (n int) {
 }
 
 func (x *RegisterReq) sizeField5() (n int) {
-	if x.Code == nil {
+	if x.Code == "" {
 		return n
 	}
 	n += fastpb.SizeString(5, x.GetCode())
@@ -1193,6 +1201,7 @@ func (x *EmailLoginReq) Size() (n int) {
 	n += x.sizeField2()
 	n += x.sizeField3()
 	n += x.sizeField4()
+	n += x.sizeField5()
 	return n
 }
 
@@ -1213,18 +1222,26 @@ func (x *EmailLoginReq) sizeField2() (n int) {
 }
 
 func (x *EmailLoginReq) sizeField3() (n int) {
-	if x.Point == nil {
+	if x.X == 0 {
 		return n
 	}
-	n += fastpb.SizeMessage(3, x.GetPoint())
+	n += fastpb.SizeInt32(3, x.GetX())
 	return n
 }
 
 func (x *EmailLoginReq) sizeField4() (n int) {
+	if x.Y == 0 {
+		return n
+	}
+	n += fastpb.SizeInt32(4, x.GetY())
+	return n
+}
+
+func (x *EmailLoginReq) sizeField5() (n int) {
 	if x.Key == "" {
 		return n
 	}
-	n += fastpb.SizeString(4, x.GetKey())
+	n += fastpb.SizeString(5, x.GetKey())
 	return n
 }
 
@@ -1566,8 +1583,9 @@ var fieldIDToName_RegisterResp = map[int32]string{
 var fieldIDToName_EmailLoginReq = map[int32]string{
 	1: "Email",
 	2: "Password",
-	3: "Point",
-	4: "Key",
+	3: "X",
+	4: "Y",
+	5: "Key",
 }
 
 var fieldIDToName_EmailLoginResp = map[int32]string{

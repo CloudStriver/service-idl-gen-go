@@ -5,6 +5,7 @@ package core_api
 import (
 	fmt "fmt"
 	basic "github.com/CloudStriver/service-idl-gen-go/kitex_gen/basic"
+	http "github.com/CloudStriver/service-idl-gen-go/kitex_gen/http"
 	fastpb "github.com/cloudwego/fastpb"
 )
 
@@ -12,4 +13,324 @@ var (
 	_ = fmt.Errorf
 	_ = fastpb.Skip
 )
+
+func (x *UpdateUserReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_UpdateUserReq[number], err)
+}
+
+func (x *UpdateUserReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v UserDetail
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.UserDetail = &v
+	return offset, nil
+}
+
+func (x *UpdateUserResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+}
+
+func (x *SearchUserReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_SearchUserReq[number], err)
+}
+
+func (x *SearchUserReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.Keyword, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *SearchUserReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	var v basic.PaginationOptions
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.PaginationOptions = &v
+	return offset, nil
+}
+
+func (x *SearchUserResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_SearchUserResp[number], err)
+}
+
+func (x *SearchUserResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v User
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Users = append(x.Users, &v)
+	return offset, nil
+}
+
+func (x *SearchUserResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.LastToken, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *SearchUserResp) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.Total, offset, err = fastpb.ReadInt32(buf, _type)
+	return offset, err
+}
+
+func (x *UpdateUserReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *UpdateUserReq) fastWriteField1(buf []byte) (offset int) {
+	if x.UserDetail == nil {
+		return offset
+	}
+	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetUserDetail())
+	return offset
+}
+
+func (x *UpdateUserResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	return offset
+}
+
+func (x *SearchUserReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	return offset
+}
+
+func (x *SearchUserReq) fastWriteField1(buf []byte) (offset int) {
+	if x.Keyword == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetKeyword())
+	return offset
+}
+
+func (x *SearchUserReq) fastWriteField2(buf []byte) (offset int) {
+	if x.PaginationOptions == nil {
+		return offset
+	}
+	offset += fastpb.WriteMessage(buf[offset:], 2, x.GetPaginationOptions())
+	return offset
+}
+
+func (x *SearchUserResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	return offset
+}
+
+func (x *SearchUserResp) fastWriteField1(buf []byte) (offset int) {
+	if x.Users == nil {
+		return offset
+	}
+	for i := range x.GetUsers() {
+		offset += fastpb.WriteMessage(buf[offset:], 1, x.GetUsers()[i])
+	}
+	return offset
+}
+
+func (x *SearchUserResp) fastWriteField2(buf []byte) (offset int) {
+	if x.LastToken == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetLastToken())
+	return offset
+}
+
+func (x *SearchUserResp) fastWriteField3(buf []byte) (offset int) {
+	if x.Total == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 3, x.GetTotal())
+	return offset
+}
+
+func (x *UpdateUserReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *UpdateUserReq) sizeField1() (n int) {
+	if x.UserDetail == nil {
+		return n
+	}
+	n += fastpb.SizeMessage(1, x.GetUserDetail())
+	return n
+}
+
+func (x *UpdateUserResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	return n
+}
+
+func (x *SearchUserReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	return n
+}
+
+func (x *SearchUserReq) sizeField1() (n int) {
+	if x.Keyword == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetKeyword())
+	return n
+}
+
+func (x *SearchUserReq) sizeField2() (n int) {
+	if x.PaginationOptions == nil {
+		return n
+	}
+	n += fastpb.SizeMessage(2, x.GetPaginationOptions())
+	return n
+}
+
+func (x *SearchUserResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	return n
+}
+
+func (x *SearchUserResp) sizeField1() (n int) {
+	if x.Users == nil {
+		return n
+	}
+	for i := range x.GetUsers() {
+		n += fastpb.SizeMessage(1, x.GetUsers()[i])
+	}
+	return n
+}
+
+func (x *SearchUserResp) sizeField2() (n int) {
+	if x.LastToken == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetLastToken())
+	return n
+}
+
+func (x *SearchUserResp) sizeField3() (n int) {
+	if x.Total == 0 {
+		return n
+	}
+	n += fastpb.SizeInt32(3, x.GetTotal())
+	return n
+}
+
+var fieldIDToName_UpdateUserReq = map[int32]string{
+	1: "UserDetail",
+}
+
+var fieldIDToName_UpdateUserResp = map[int32]string{}
+
+var fieldIDToName_SearchUserReq = map[int32]string{
+	1: "Keyword",
+	2: "PaginationOptions",
+}
+
+var fieldIDToName_SearchUserResp = map[int32]string{
+	1: "Users",
+	2: "LastToken",
+	3: "Total",
+}
+
 var _ = basic.File_basic_pagination_proto
+var _ = http.File_http_http_proto

@@ -11,8 +11,6 @@ import (
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
-	CreateCaptcha(ctx context.Context, Req *sts.CreateCaptchaReq, callOptions ...callopt.Option) (r *sts.CreateCaptchaResp, err error)
-	CheckCaptcha(ctx context.Context, Req *sts.CheckCaptchaReq, callOptions ...callopt.Option) (r *sts.CheckCaptchaResp, err error)
 	SetPassword(ctx context.Context, Req *sts.SetPasswordReq, callOptions ...callopt.Option) (r *sts.SetPasswordResp, err error)
 	SendEmail(ctx context.Context, Req *sts.SendEmailReq, callOptions ...callopt.Option) (r *sts.SendEmailResp, err error)
 	CheckEmail(ctx context.Context, Req *sts.CheckEmailReq, callOptions ...callopt.Option) (r *sts.CheckEmailResp, err error)
@@ -48,16 +46,6 @@ func MustNewClient(destService string, opts ...client.Option) Client {
 
 type kStsServiceClient struct {
 	*kClient
-}
-
-func (p *kStsServiceClient) CreateCaptcha(ctx context.Context, Req *sts.CreateCaptchaReq, callOptions ...callopt.Option) (r *sts.CreateCaptchaResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.CreateCaptcha(ctx, Req)
-}
-
-func (p *kStsServiceClient) CheckCaptcha(ctx context.Context, Req *sts.CheckCaptchaReq, callOptions ...callopt.Option) (r *sts.CheckCaptchaResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.CheckCaptcha(ctx, Req)
 }
 
 func (p *kStsServiceClient) SetPassword(ctx context.Context, Req *sts.SetPasswordReq, callOptions ...callopt.Option) (r *sts.SetPasswordResp, err error) {

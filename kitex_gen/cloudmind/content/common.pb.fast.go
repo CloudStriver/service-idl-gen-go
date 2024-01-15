@@ -720,13 +720,8 @@ func (x *UserDetailInfo) fastReadField2(buf []byte, _type int8) (offset int, err
 }
 
 func (x *UserDetailInfo) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	var v int32
-	v, offset, err = fastpb.ReadInt32(buf, _type)
-	if err != nil {
-		return offset, err
-	}
-	x.Sex = Sex(v)
-	return offset, nil
+	x.Sex, offset, err = fastpb.ReadInt32(buf, _type)
+	return offset, err
 }
 
 func (x *UserDetailInfo) fastReadField4(buf []byte, _type int8) (offset int, err error) {
@@ -790,13 +785,8 @@ func (x *UserInfo) fastReadField2(buf []byte, _type int8) (offset int, err error
 }
 
 func (x *UserInfo) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	var v int32
-	v, offset, err = fastpb.ReadInt32(buf, _type)
-	if err != nil {
-		return offset, err
-	}
-	x.Sex = Sex(v)
-	return offset, nil
+	x.Sex, offset, err = fastpb.ReadInt32(buf, _type)
+	return offset, err
 }
 
 func (x *File) FastWrite(buf []byte) (offset int) {
@@ -1334,7 +1324,7 @@ func (x *UserDetailInfo) fastWriteField3(buf []byte) (offset int) {
 	if x.Sex == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 3, int32(x.GetSex()))
+	offset += fastpb.WriteInt32(buf[offset:], 3, x.GetSex())
 	return offset
 }
 
@@ -1400,7 +1390,7 @@ func (x *UserInfo) fastWriteField3(buf []byte) (offset int) {
 	if x.Sex == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 3, int32(x.GetSex()))
+	offset += fastpb.WriteInt32(buf[offset:], 3, x.GetSex())
 	return offset
 }
 
@@ -1939,7 +1929,7 @@ func (x *UserDetailInfo) sizeField3() (n int) {
 	if x.Sex == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(3, int32(x.GetSex()))
+	n += fastpb.SizeInt32(3, x.GetSex())
 	return n
 }
 
@@ -2005,7 +1995,7 @@ func (x *UserInfo) sizeField3() (n int) {
 	if x.Sex == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(3, int32(x.GetSex()))
+	n += fastpb.SizeInt32(3, x.GetSex())
 	return n
 }
 
