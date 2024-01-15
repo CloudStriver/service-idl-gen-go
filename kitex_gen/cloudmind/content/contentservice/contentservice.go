@@ -30,9 +30,12 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"CreateFolder":            kitex.NewMethodInfo(createFolderHandler, newCreateFolderArgs, newCreateFolderResult, false),
 		"UpdateFile":              kitex.NewMethodInfo(updateFileHandler, newUpdateFileArgs, newUpdateFileResult, false),
 		"MoveFile":                kitex.NewMethodInfo(moveFileHandler, newMoveFileArgs, newMoveFileResult, false),
+		"SaveFileToPrivateSpace":  kitex.NewMethodInfo(saveFileToPrivateSpaceHandler, newSaveFileToPrivateSpaceArgs, newSaveFileToPrivateSpaceResult, false),
+		"AddFileToPublicSpace":    kitex.NewMethodInfo(addFileToPublicSpaceHandler, newAddFileToPublicSpaceArgs, newAddFileToPublicSpaceResult, false),
+		"DeleteFile":              kitex.NewMethodInfo(deleteFileHandler, newDeleteFileArgs, newDeleteFileResult, false),
+		"RecoverRecycleBinFile":   kitex.NewMethodInfo(recoverRecycleBinFileHandler, newRecoverRecycleBinFileArgs, newRecoverRecycleBinFileResult, false),
 		"AskUploadFile":           kitex.NewMethodInfo(askUploadFileHandler, newAskUploadFileArgs, newAskUploadFileResult, false),
 		"AskUploadFileRollback":   kitex.NewMethodInfo(askUploadFileRollbackHandler, newAskUploadFileRollbackArgs, newAskUploadFileRollbackResult, false),
-		"DeleteFile":              kitex.NewMethodInfo(deleteFileHandler, newDeleteFileArgs, newDeleteFileResult, false),
 		"DeleteShareFile":         kitex.NewMethodInfo(deleteShareFileHandler, newDeleteShareFileArgs, newDeleteShareFileResult, false),
 		"DeleteExpiredFiles":      kitex.NewMethodInfo(deleteExpiredFilesHandler, newDeleteExpiredFilesArgs, newDeleteExpiredFilesResult, false),
 		"DeleteExpiredShareCodes": kitex.NewMethodInfo(deleteExpiredShareCodesHandler, newDeleteExpiredShareCodesArgs, newDeleteExpiredShareCodesResult, false),
@@ -40,6 +43,11 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"CreateLabel":             kitex.NewMethodInfo(createLabelHandler, newCreateLabelArgs, newCreateLabelResult, false),
 		"UpdateLabel":             kitex.NewMethodInfo(updateLabelHandler, newUpdateLabelArgs, newUpdateLabelResult, false),
 		"DeleteLabel":             kitex.NewMethodInfo(deleteLabelHandler, newDeleteLabelArgs, newDeleteLabelResult, false),
+		"GetShareList":            kitex.NewMethodInfo(getShareListHandler, newGetShareListArgs, newGetShareListResult, false),
+		"CreateShareCode":         kitex.NewMethodInfo(createShareCodeHandler, newCreateShareCodeArgs, newCreateShareCodeResult, false),
+		"UpdateShareCode":         kitex.NewMethodInfo(updateShareCodeHandler, newUpdateShareCodeArgs, newUpdateShareCodeResult, false),
+		"DeleteShareCode":         kitex.NewMethodInfo(deleteShareCodeHandler, newDeleteShareCodeArgs, newDeleteShareCodeResult, false),
+		"ParsingShareCode":        kitex.NewMethodInfo(parsingShareCodeHandler, newParsingShareCodeArgs, newParsingShareCodeResult, false),
 		"UpdateUser":              kitex.NewMethodInfo(updateUserHandler, newUpdateUserArgs, newUpdateUserResult, false),
 		"GetUser":                 kitex.NewMethodInfo(getUserHandler, newGetUserArgs, newGetUserResult, false),
 		"GetUserDetail":           kitex.NewMethodInfo(getUserDetailHandler, newGetUserDetailArgs, newGetUserDetailResult, false),
@@ -1439,6 +1447,618 @@ func (p *MoveFileResult) GetResult() interface{} {
 	return p.Success
 }
 
+func saveFileToPrivateSpaceHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.SaveFileToPrivateSpaceReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).SaveFileToPrivateSpace(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *SaveFileToPrivateSpaceArgs:
+		success, err := handler.(content.ContentService).SaveFileToPrivateSpace(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*SaveFileToPrivateSpaceResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newSaveFileToPrivateSpaceArgs() interface{} {
+	return &SaveFileToPrivateSpaceArgs{}
+}
+
+func newSaveFileToPrivateSpaceResult() interface{} {
+	return &SaveFileToPrivateSpaceResult{}
+}
+
+type SaveFileToPrivateSpaceArgs struct {
+	Req *content.SaveFileToPrivateSpaceReq
+}
+
+func (p *SaveFileToPrivateSpaceArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.SaveFileToPrivateSpaceReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *SaveFileToPrivateSpaceArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *SaveFileToPrivateSpaceArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *SaveFileToPrivateSpaceArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *SaveFileToPrivateSpaceArgs) Unmarshal(in []byte) error {
+	msg := new(content.SaveFileToPrivateSpaceReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var SaveFileToPrivateSpaceArgs_Req_DEFAULT *content.SaveFileToPrivateSpaceReq
+
+func (p *SaveFileToPrivateSpaceArgs) GetReq() *content.SaveFileToPrivateSpaceReq {
+	if !p.IsSetReq() {
+		return SaveFileToPrivateSpaceArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *SaveFileToPrivateSpaceArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *SaveFileToPrivateSpaceArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type SaveFileToPrivateSpaceResult struct {
+	Success *content.SaveFileToPrivateSpaceResp
+}
+
+var SaveFileToPrivateSpaceResult_Success_DEFAULT *content.SaveFileToPrivateSpaceResp
+
+func (p *SaveFileToPrivateSpaceResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.SaveFileToPrivateSpaceResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *SaveFileToPrivateSpaceResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *SaveFileToPrivateSpaceResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *SaveFileToPrivateSpaceResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *SaveFileToPrivateSpaceResult) Unmarshal(in []byte) error {
+	msg := new(content.SaveFileToPrivateSpaceResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *SaveFileToPrivateSpaceResult) GetSuccess() *content.SaveFileToPrivateSpaceResp {
+	if !p.IsSetSuccess() {
+		return SaveFileToPrivateSpaceResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *SaveFileToPrivateSpaceResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.SaveFileToPrivateSpaceResp)
+}
+
+func (p *SaveFileToPrivateSpaceResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *SaveFileToPrivateSpaceResult) GetResult() interface{} {
+	return p.Success
+}
+
+func addFileToPublicSpaceHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.AddFileToPublicSpaceReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).AddFileToPublicSpace(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *AddFileToPublicSpaceArgs:
+		success, err := handler.(content.ContentService).AddFileToPublicSpace(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*AddFileToPublicSpaceResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newAddFileToPublicSpaceArgs() interface{} {
+	return &AddFileToPublicSpaceArgs{}
+}
+
+func newAddFileToPublicSpaceResult() interface{} {
+	return &AddFileToPublicSpaceResult{}
+}
+
+type AddFileToPublicSpaceArgs struct {
+	Req *content.AddFileToPublicSpaceReq
+}
+
+func (p *AddFileToPublicSpaceArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.AddFileToPublicSpaceReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *AddFileToPublicSpaceArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *AddFileToPublicSpaceArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *AddFileToPublicSpaceArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *AddFileToPublicSpaceArgs) Unmarshal(in []byte) error {
+	msg := new(content.AddFileToPublicSpaceReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var AddFileToPublicSpaceArgs_Req_DEFAULT *content.AddFileToPublicSpaceReq
+
+func (p *AddFileToPublicSpaceArgs) GetReq() *content.AddFileToPublicSpaceReq {
+	if !p.IsSetReq() {
+		return AddFileToPublicSpaceArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *AddFileToPublicSpaceArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *AddFileToPublicSpaceArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type AddFileToPublicSpaceResult struct {
+	Success *content.AddFileToPublicSpaceResp
+}
+
+var AddFileToPublicSpaceResult_Success_DEFAULT *content.AddFileToPublicSpaceResp
+
+func (p *AddFileToPublicSpaceResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.AddFileToPublicSpaceResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *AddFileToPublicSpaceResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *AddFileToPublicSpaceResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *AddFileToPublicSpaceResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *AddFileToPublicSpaceResult) Unmarshal(in []byte) error {
+	msg := new(content.AddFileToPublicSpaceResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *AddFileToPublicSpaceResult) GetSuccess() *content.AddFileToPublicSpaceResp {
+	if !p.IsSetSuccess() {
+		return AddFileToPublicSpaceResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *AddFileToPublicSpaceResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.AddFileToPublicSpaceResp)
+}
+
+func (p *AddFileToPublicSpaceResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *AddFileToPublicSpaceResult) GetResult() interface{} {
+	return p.Success
+}
+
+func deleteFileHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.DeleteFileReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).DeleteFile(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *DeleteFileArgs:
+		success, err := handler.(content.ContentService).DeleteFile(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*DeleteFileResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newDeleteFileArgs() interface{} {
+	return &DeleteFileArgs{}
+}
+
+func newDeleteFileResult() interface{} {
+	return &DeleteFileResult{}
+}
+
+type DeleteFileArgs struct {
+	Req *content.DeleteFileReq
+}
+
+func (p *DeleteFileArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.DeleteFileReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *DeleteFileArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *DeleteFileArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *DeleteFileArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *DeleteFileArgs) Unmarshal(in []byte) error {
+	msg := new(content.DeleteFileReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var DeleteFileArgs_Req_DEFAULT *content.DeleteFileReq
+
+func (p *DeleteFileArgs) GetReq() *content.DeleteFileReq {
+	if !p.IsSetReq() {
+		return DeleteFileArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *DeleteFileArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *DeleteFileArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type DeleteFileResult struct {
+	Success *content.DeleteFileResp
+}
+
+var DeleteFileResult_Success_DEFAULT *content.DeleteFileResp
+
+func (p *DeleteFileResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.DeleteFileResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *DeleteFileResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *DeleteFileResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *DeleteFileResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *DeleteFileResult) Unmarshal(in []byte) error {
+	msg := new(content.DeleteFileResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *DeleteFileResult) GetSuccess() *content.DeleteFileResp {
+	if !p.IsSetSuccess() {
+		return DeleteFileResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *DeleteFileResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.DeleteFileResp)
+}
+
+func (p *DeleteFileResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *DeleteFileResult) GetResult() interface{} {
+	return p.Success
+}
+
+func recoverRecycleBinFileHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.RecoverRecycleBinFileReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).RecoverRecycleBinFile(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *RecoverRecycleBinFileArgs:
+		success, err := handler.(content.ContentService).RecoverRecycleBinFile(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*RecoverRecycleBinFileResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newRecoverRecycleBinFileArgs() interface{} {
+	return &RecoverRecycleBinFileArgs{}
+}
+
+func newRecoverRecycleBinFileResult() interface{} {
+	return &RecoverRecycleBinFileResult{}
+}
+
+type RecoverRecycleBinFileArgs struct {
+	Req *content.RecoverRecycleBinFileReq
+}
+
+func (p *RecoverRecycleBinFileArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.RecoverRecycleBinFileReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *RecoverRecycleBinFileArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *RecoverRecycleBinFileArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *RecoverRecycleBinFileArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *RecoverRecycleBinFileArgs) Unmarshal(in []byte) error {
+	msg := new(content.RecoverRecycleBinFileReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var RecoverRecycleBinFileArgs_Req_DEFAULT *content.RecoverRecycleBinFileReq
+
+func (p *RecoverRecycleBinFileArgs) GetReq() *content.RecoverRecycleBinFileReq {
+	if !p.IsSetReq() {
+		return RecoverRecycleBinFileArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *RecoverRecycleBinFileArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *RecoverRecycleBinFileArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type RecoverRecycleBinFileResult struct {
+	Success *content.RecoverRecycleBinFileResp
+}
+
+var RecoverRecycleBinFileResult_Success_DEFAULT *content.RecoverRecycleBinFileResp
+
+func (p *RecoverRecycleBinFileResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.RecoverRecycleBinFileResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *RecoverRecycleBinFileResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *RecoverRecycleBinFileResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *RecoverRecycleBinFileResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *RecoverRecycleBinFileResult) Unmarshal(in []byte) error {
+	msg := new(content.RecoverRecycleBinFileResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *RecoverRecycleBinFileResult) GetSuccess() *content.RecoverRecycleBinFileResp {
+	if !p.IsSetSuccess() {
+		return RecoverRecycleBinFileResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *RecoverRecycleBinFileResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.RecoverRecycleBinFileResp)
+}
+
+func (p *RecoverRecycleBinFileResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *RecoverRecycleBinFileResult) GetResult() interface{} {
+	return p.Success
+}
+
 func askUploadFileHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
@@ -1742,159 +2362,6 @@ func (p *AskUploadFileRollbackResult) IsSetSuccess() bool {
 }
 
 func (p *AskUploadFileRollbackResult) GetResult() interface{} {
-	return p.Success
-}
-
-func deleteFileHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	switch s := arg.(type) {
-	case *streaming.Args:
-		st := s.Stream
-		req := new(content.DeleteFileReq)
-		if err := st.RecvMsg(req); err != nil {
-			return err
-		}
-		resp, err := handler.(content.ContentService).DeleteFile(ctx, req)
-		if err != nil {
-			return err
-		}
-		if err := st.SendMsg(resp); err != nil {
-			return err
-		}
-	case *DeleteFileArgs:
-		success, err := handler.(content.ContentService).DeleteFile(ctx, s.Req)
-		if err != nil {
-			return err
-		}
-		realResult := result.(*DeleteFileResult)
-		realResult.Success = success
-	}
-	return nil
-}
-func newDeleteFileArgs() interface{} {
-	return &DeleteFileArgs{}
-}
-
-func newDeleteFileResult() interface{} {
-	return &DeleteFileResult{}
-}
-
-type DeleteFileArgs struct {
-	Req *content.DeleteFileReq
-}
-
-func (p *DeleteFileArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetReq() {
-		p.Req = new(content.DeleteFileReq)
-	}
-	return p.Req.FastRead(buf, _type, number)
-}
-
-func (p *DeleteFileArgs) FastWrite(buf []byte) (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.FastWrite(buf)
-}
-
-func (p *DeleteFileArgs) Size() (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.Size()
-}
-
-func (p *DeleteFileArgs) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetReq() {
-		return out, nil
-	}
-	return proto.Marshal(p.Req)
-}
-
-func (p *DeleteFileArgs) Unmarshal(in []byte) error {
-	msg := new(content.DeleteFileReq)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Req = msg
-	return nil
-}
-
-var DeleteFileArgs_Req_DEFAULT *content.DeleteFileReq
-
-func (p *DeleteFileArgs) GetReq() *content.DeleteFileReq {
-	if !p.IsSetReq() {
-		return DeleteFileArgs_Req_DEFAULT
-	}
-	return p.Req
-}
-
-func (p *DeleteFileArgs) IsSetReq() bool {
-	return p.Req != nil
-}
-
-func (p *DeleteFileArgs) GetFirstArgument() interface{} {
-	return p.Req
-}
-
-type DeleteFileResult struct {
-	Success *content.DeleteFileResp
-}
-
-var DeleteFileResult_Success_DEFAULT *content.DeleteFileResp
-
-func (p *DeleteFileResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetSuccess() {
-		p.Success = new(content.DeleteFileResp)
-	}
-	return p.Success.FastRead(buf, _type, number)
-}
-
-func (p *DeleteFileResult) FastWrite(buf []byte) (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.FastWrite(buf)
-}
-
-func (p *DeleteFileResult) Size() (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.Size()
-}
-
-func (p *DeleteFileResult) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetSuccess() {
-		return out, nil
-	}
-	return proto.Marshal(p.Success)
-}
-
-func (p *DeleteFileResult) Unmarshal(in []byte) error {
-	msg := new(content.DeleteFileResp)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Success = msg
-	return nil
-}
-
-func (p *DeleteFileResult) GetSuccess() *content.DeleteFileResp {
-	if !p.IsSetSuccess() {
-		return DeleteFileResult_Success_DEFAULT
-	}
-	return p.Success
-}
-
-func (p *DeleteFileResult) SetSuccess(x interface{}) {
-	p.Success = x.(*content.DeleteFileResp)
-}
-
-func (p *DeleteFileResult) IsSetSuccess() bool {
-	return p.Success != nil
-}
-
-func (p *DeleteFileResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -2969,6 +3436,771 @@ func (p *DeleteLabelResult) GetResult() interface{} {
 	return p.Success
 }
 
+func getShareListHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.GetShareListReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).GetShareList(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetShareListArgs:
+		success, err := handler.(content.ContentService).GetShareList(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetShareListResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetShareListArgs() interface{} {
+	return &GetShareListArgs{}
+}
+
+func newGetShareListResult() interface{} {
+	return &GetShareListResult{}
+}
+
+type GetShareListArgs struct {
+	Req *content.GetShareListReq
+}
+
+func (p *GetShareListArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.GetShareListReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetShareListArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetShareListArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetShareListArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetShareListArgs) Unmarshal(in []byte) error {
+	msg := new(content.GetShareListReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetShareListArgs_Req_DEFAULT *content.GetShareListReq
+
+func (p *GetShareListArgs) GetReq() *content.GetShareListReq {
+	if !p.IsSetReq() {
+		return GetShareListArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetShareListArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetShareListArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetShareListResult struct {
+	Success *content.GetShareListResp
+}
+
+var GetShareListResult_Success_DEFAULT *content.GetShareListResp
+
+func (p *GetShareListResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.GetShareListResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetShareListResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetShareListResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetShareListResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetShareListResult) Unmarshal(in []byte) error {
+	msg := new(content.GetShareListResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetShareListResult) GetSuccess() *content.GetShareListResp {
+	if !p.IsSetSuccess() {
+		return GetShareListResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetShareListResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.GetShareListResp)
+}
+
+func (p *GetShareListResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetShareListResult) GetResult() interface{} {
+	return p.Success
+}
+
+func createShareCodeHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.CreateShareCodeReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).CreateShareCode(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *CreateShareCodeArgs:
+		success, err := handler.(content.ContentService).CreateShareCode(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*CreateShareCodeResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newCreateShareCodeArgs() interface{} {
+	return &CreateShareCodeArgs{}
+}
+
+func newCreateShareCodeResult() interface{} {
+	return &CreateShareCodeResult{}
+}
+
+type CreateShareCodeArgs struct {
+	Req *content.CreateShareCodeReq
+}
+
+func (p *CreateShareCodeArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.CreateShareCodeReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *CreateShareCodeArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *CreateShareCodeArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *CreateShareCodeArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *CreateShareCodeArgs) Unmarshal(in []byte) error {
+	msg := new(content.CreateShareCodeReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var CreateShareCodeArgs_Req_DEFAULT *content.CreateShareCodeReq
+
+func (p *CreateShareCodeArgs) GetReq() *content.CreateShareCodeReq {
+	if !p.IsSetReq() {
+		return CreateShareCodeArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *CreateShareCodeArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *CreateShareCodeArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type CreateShareCodeResult struct {
+	Success *content.CreateShareCodeResp
+}
+
+var CreateShareCodeResult_Success_DEFAULT *content.CreateShareCodeResp
+
+func (p *CreateShareCodeResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.CreateShareCodeResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *CreateShareCodeResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *CreateShareCodeResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *CreateShareCodeResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *CreateShareCodeResult) Unmarshal(in []byte) error {
+	msg := new(content.CreateShareCodeResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *CreateShareCodeResult) GetSuccess() *content.CreateShareCodeResp {
+	if !p.IsSetSuccess() {
+		return CreateShareCodeResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *CreateShareCodeResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.CreateShareCodeResp)
+}
+
+func (p *CreateShareCodeResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *CreateShareCodeResult) GetResult() interface{} {
+	return p.Success
+}
+
+func updateShareCodeHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.UpdateShareCodeReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).UpdateShareCode(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *UpdateShareCodeArgs:
+		success, err := handler.(content.ContentService).UpdateShareCode(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*UpdateShareCodeResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newUpdateShareCodeArgs() interface{} {
+	return &UpdateShareCodeArgs{}
+}
+
+func newUpdateShareCodeResult() interface{} {
+	return &UpdateShareCodeResult{}
+}
+
+type UpdateShareCodeArgs struct {
+	Req *content.UpdateShareCodeReq
+}
+
+func (p *UpdateShareCodeArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.UpdateShareCodeReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *UpdateShareCodeArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *UpdateShareCodeArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *UpdateShareCodeArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *UpdateShareCodeArgs) Unmarshal(in []byte) error {
+	msg := new(content.UpdateShareCodeReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var UpdateShareCodeArgs_Req_DEFAULT *content.UpdateShareCodeReq
+
+func (p *UpdateShareCodeArgs) GetReq() *content.UpdateShareCodeReq {
+	if !p.IsSetReq() {
+		return UpdateShareCodeArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *UpdateShareCodeArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *UpdateShareCodeArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type UpdateShareCodeResult struct {
+	Success *content.UpdateShareCodeResp
+}
+
+var UpdateShareCodeResult_Success_DEFAULT *content.UpdateShareCodeResp
+
+func (p *UpdateShareCodeResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.UpdateShareCodeResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *UpdateShareCodeResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *UpdateShareCodeResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *UpdateShareCodeResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *UpdateShareCodeResult) Unmarshal(in []byte) error {
+	msg := new(content.UpdateShareCodeResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *UpdateShareCodeResult) GetSuccess() *content.UpdateShareCodeResp {
+	if !p.IsSetSuccess() {
+		return UpdateShareCodeResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *UpdateShareCodeResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.UpdateShareCodeResp)
+}
+
+func (p *UpdateShareCodeResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *UpdateShareCodeResult) GetResult() interface{} {
+	return p.Success
+}
+
+func deleteShareCodeHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.DeleteShareCodeReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).DeleteShareCode(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *DeleteShareCodeArgs:
+		success, err := handler.(content.ContentService).DeleteShareCode(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*DeleteShareCodeResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newDeleteShareCodeArgs() interface{} {
+	return &DeleteShareCodeArgs{}
+}
+
+func newDeleteShareCodeResult() interface{} {
+	return &DeleteShareCodeResult{}
+}
+
+type DeleteShareCodeArgs struct {
+	Req *content.DeleteShareCodeReq
+}
+
+func (p *DeleteShareCodeArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.DeleteShareCodeReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *DeleteShareCodeArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *DeleteShareCodeArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *DeleteShareCodeArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *DeleteShareCodeArgs) Unmarshal(in []byte) error {
+	msg := new(content.DeleteShareCodeReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var DeleteShareCodeArgs_Req_DEFAULT *content.DeleteShareCodeReq
+
+func (p *DeleteShareCodeArgs) GetReq() *content.DeleteShareCodeReq {
+	if !p.IsSetReq() {
+		return DeleteShareCodeArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *DeleteShareCodeArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *DeleteShareCodeArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type DeleteShareCodeResult struct {
+	Success *content.DeleteShareCodeResp
+}
+
+var DeleteShareCodeResult_Success_DEFAULT *content.DeleteShareCodeResp
+
+func (p *DeleteShareCodeResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.DeleteShareCodeResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *DeleteShareCodeResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *DeleteShareCodeResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *DeleteShareCodeResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *DeleteShareCodeResult) Unmarshal(in []byte) error {
+	msg := new(content.DeleteShareCodeResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *DeleteShareCodeResult) GetSuccess() *content.DeleteShareCodeResp {
+	if !p.IsSetSuccess() {
+		return DeleteShareCodeResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *DeleteShareCodeResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.DeleteShareCodeResp)
+}
+
+func (p *DeleteShareCodeResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *DeleteShareCodeResult) GetResult() interface{} {
+	return p.Success
+}
+
+func parsingShareCodeHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.ParsingShareCodeReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).ParsingShareCode(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *ParsingShareCodeArgs:
+		success, err := handler.(content.ContentService).ParsingShareCode(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*ParsingShareCodeResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newParsingShareCodeArgs() interface{} {
+	return &ParsingShareCodeArgs{}
+}
+
+func newParsingShareCodeResult() interface{} {
+	return &ParsingShareCodeResult{}
+}
+
+type ParsingShareCodeArgs struct {
+	Req *content.ParsingShareCodeReq
+}
+
+func (p *ParsingShareCodeArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.ParsingShareCodeReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *ParsingShareCodeArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *ParsingShareCodeArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *ParsingShareCodeArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *ParsingShareCodeArgs) Unmarshal(in []byte) error {
+	msg := new(content.ParsingShareCodeReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var ParsingShareCodeArgs_Req_DEFAULT *content.ParsingShareCodeReq
+
+func (p *ParsingShareCodeArgs) GetReq() *content.ParsingShareCodeReq {
+	if !p.IsSetReq() {
+		return ParsingShareCodeArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *ParsingShareCodeArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *ParsingShareCodeArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type ParsingShareCodeResult struct {
+	Success *content.ParsingShareCodeResp
+}
+
+var ParsingShareCodeResult_Success_DEFAULT *content.ParsingShareCodeResp
+
+func (p *ParsingShareCodeResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.ParsingShareCodeResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *ParsingShareCodeResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *ParsingShareCodeResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *ParsingShareCodeResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *ParsingShareCodeResult) Unmarshal(in []byte) error {
+	msg := new(content.ParsingShareCodeResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *ParsingShareCodeResult) GetSuccess() *content.ParsingShareCodeResp {
+	if !p.IsSetSuccess() {
+		return ParsingShareCodeResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *ParsingShareCodeResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.ParsingShareCodeResp)
+}
+
+func (p *ParsingShareCodeResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *ParsingShareCodeResult) GetResult() interface{} {
+	return p.Success
+}
+
 func updateUserHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
@@ -3987,6 +5219,46 @@ func (p *kClient) MoveFile(ctx context.Context, Req *content.MoveFileReq) (r *co
 	return _result.GetSuccess(), nil
 }
 
+func (p *kClient) SaveFileToPrivateSpace(ctx context.Context, Req *content.SaveFileToPrivateSpaceReq) (r *content.SaveFileToPrivateSpaceResp, err error) {
+	var _args SaveFileToPrivateSpaceArgs
+	_args.Req = Req
+	var _result SaveFileToPrivateSpaceResult
+	if err = p.c.Call(ctx, "SaveFileToPrivateSpace", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) AddFileToPublicSpace(ctx context.Context, Req *content.AddFileToPublicSpaceReq) (r *content.AddFileToPublicSpaceResp, err error) {
+	var _args AddFileToPublicSpaceArgs
+	_args.Req = Req
+	var _result AddFileToPublicSpaceResult
+	if err = p.c.Call(ctx, "AddFileToPublicSpace", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) DeleteFile(ctx context.Context, Req *content.DeleteFileReq) (r *content.DeleteFileResp, err error) {
+	var _args DeleteFileArgs
+	_args.Req = Req
+	var _result DeleteFileResult
+	if err = p.c.Call(ctx, "DeleteFile", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) RecoverRecycleBinFile(ctx context.Context, Req *content.RecoverRecycleBinFileReq) (r *content.RecoverRecycleBinFileResp, err error) {
+	var _args RecoverRecycleBinFileArgs
+	_args.Req = Req
+	var _result RecoverRecycleBinFileResult
+	if err = p.c.Call(ctx, "RecoverRecycleBinFile", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
 func (p *kClient) AskUploadFile(ctx context.Context, Req *content.AskUploadFileReq) (r *content.AskUploadFileResp, err error) {
 	var _args AskUploadFileArgs
 	_args.Req = Req
@@ -4002,16 +5274,6 @@ func (p *kClient) AskUploadFileRollback(ctx context.Context, Req *content.AskUpl
 	_args.Req = Req
 	var _result AskUploadFileRollbackResult
 	if err = p.c.Call(ctx, "AskUploadFileRollback", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
-}
-
-func (p *kClient) DeleteFile(ctx context.Context, Req *content.DeleteFileReq) (r *content.DeleteFileResp, err error) {
-	var _args DeleteFileArgs
-	_args.Req = Req
-	var _result DeleteFileResult
-	if err = p.c.Call(ctx, "DeleteFile", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
@@ -4082,6 +5344,56 @@ func (p *kClient) DeleteLabel(ctx context.Context, Req *content.DeleteLabelReq) 
 	_args.Req = Req
 	var _result DeleteLabelResult
 	if err = p.c.Call(ctx, "DeleteLabel", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetShareList(ctx context.Context, Req *content.GetShareListReq) (r *content.GetShareListResp, err error) {
+	var _args GetShareListArgs
+	_args.Req = Req
+	var _result GetShareListResult
+	if err = p.c.Call(ctx, "GetShareList", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CreateShareCode(ctx context.Context, Req *content.CreateShareCodeReq) (r *content.CreateShareCodeResp, err error) {
+	var _args CreateShareCodeArgs
+	_args.Req = Req
+	var _result CreateShareCodeResult
+	if err = p.c.Call(ctx, "CreateShareCode", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) UpdateShareCode(ctx context.Context, Req *content.UpdateShareCodeReq) (r *content.UpdateShareCodeResp, err error) {
+	var _args UpdateShareCodeArgs
+	_args.Req = Req
+	var _result UpdateShareCodeResult
+	if err = p.c.Call(ctx, "UpdateShareCode", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) DeleteShareCode(ctx context.Context, Req *content.DeleteShareCodeReq) (r *content.DeleteShareCodeResp, err error) {
+	var _args DeleteShareCodeArgs
+	_args.Req = Req
+	var _result DeleteShareCodeResult
+	if err = p.c.Call(ctx, "DeleteShareCode", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) ParsingShareCode(ctx context.Context, Req *content.ParsingShareCodeReq) (r *content.ParsingShareCodeResp, err error) {
+	var _args ParsingShareCodeArgs
+	_args.Req = Req
+	var _result ParsingShareCodeResult
+	if err = p.c.Call(ctx, "ParsingShareCode", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

@@ -20,9 +20,12 @@ type Client interface {
 	CreateFolder(ctx context.Context, Req *content.CreateFolderReq, callOptions ...callopt.Option) (r *content.CreateFolderResp, err error)
 	UpdateFile(ctx context.Context, Req *content.UpdateFileReq, callOptions ...callopt.Option) (r *content.UpdateFileResp, err error)
 	MoveFile(ctx context.Context, Req *content.MoveFileReq, callOptions ...callopt.Option) (r *content.MoveFileResp, err error)
+	SaveFileToPrivateSpace(ctx context.Context, Req *content.SaveFileToPrivateSpaceReq, callOptions ...callopt.Option) (r *content.SaveFileToPrivateSpaceResp, err error)
+	AddFileToPublicSpace(ctx context.Context, Req *content.AddFileToPublicSpaceReq, callOptions ...callopt.Option) (r *content.AddFileToPublicSpaceResp, err error)
+	DeleteFile(ctx context.Context, Req *content.DeleteFileReq, callOptions ...callopt.Option) (r *content.DeleteFileResp, err error)
+	RecoverRecycleBinFile(ctx context.Context, Req *content.RecoverRecycleBinFileReq, callOptions ...callopt.Option) (r *content.RecoverRecycleBinFileResp, err error)
 	AskUploadFile(ctx context.Context, Req *content.AskUploadFileReq, callOptions ...callopt.Option) (r *content.AskUploadFileResp, err error)
 	AskUploadFileRollback(ctx context.Context, Req *content.AskUploadFileReq, callOptions ...callopt.Option) (r *content.AskUploadFileResp, err error)
-	DeleteFile(ctx context.Context, Req *content.DeleteFileReq, callOptions ...callopt.Option) (r *content.DeleteFileResp, err error)
 	DeleteShareFile(ctx context.Context, Req *content.DeleteShareFileReq, callOptions ...callopt.Option) (r *content.DeleteShareFileResp, err error)
 	DeleteExpiredFiles(ctx context.Context, Req *content.DeleteExpiredFilesReq, callOptions ...callopt.Option) (r *content.DeleteExpiredFilesResp, err error)
 	DeleteExpiredShareCodes(ctx context.Context, Req *content.DeleteExpiredShareCodesReq, callOptions ...callopt.Option) (r *content.DeleteExpiredShareCodesResp, err error)
@@ -30,6 +33,11 @@ type Client interface {
 	CreateLabel(ctx context.Context, Req *content.CreateLabelReq, callOptions ...callopt.Option) (r *content.CreateLabelResp, err error)
 	UpdateLabel(ctx context.Context, Req *content.UpdateLabelReq, callOptions ...callopt.Option) (r *content.UpdateLabelResp, err error)
 	DeleteLabel(ctx context.Context, Req *content.DeleteLabelReq, callOptions ...callopt.Option) (r *content.DeleteLabelResp, err error)
+	GetShareList(ctx context.Context, Req *content.GetShareListReq, callOptions ...callopt.Option) (r *content.GetShareListResp, err error)
+	CreateShareCode(ctx context.Context, Req *content.CreateShareCodeReq, callOptions ...callopt.Option) (r *content.CreateShareCodeResp, err error)
+	UpdateShareCode(ctx context.Context, Req *content.UpdateShareCodeReq, callOptions ...callopt.Option) (r *content.UpdateShareCodeResp, err error)
+	DeleteShareCode(ctx context.Context, Req *content.DeleteShareCodeReq, callOptions ...callopt.Option) (r *content.DeleteShareCodeResp, err error)
+	ParsingShareCode(ctx context.Context, Req *content.ParsingShareCodeReq, callOptions ...callopt.Option) (r *content.ParsingShareCodeResp, err error)
 	UpdateUser(ctx context.Context, Req *content.UpdateUserReq, callOptions ...callopt.Option) (r *content.UpdateUserResp, err error)
 	GetUser(ctx context.Context, Req *content.GetUserReq, callOptions ...callopt.Option) (r *content.GetUserResp, err error)
 	GetUserDetail(ctx context.Context, Req *content.GetUserDetailReq, callOptions ...callopt.Option) (r *content.GetUserDetailResp, err error)
@@ -112,6 +120,26 @@ func (p *kContentServiceClient) MoveFile(ctx context.Context, Req *content.MoveF
 	return p.kClient.MoveFile(ctx, Req)
 }
 
+func (p *kContentServiceClient) SaveFileToPrivateSpace(ctx context.Context, Req *content.SaveFileToPrivateSpaceReq, callOptions ...callopt.Option) (r *content.SaveFileToPrivateSpaceResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.SaveFileToPrivateSpace(ctx, Req)
+}
+
+func (p *kContentServiceClient) AddFileToPublicSpace(ctx context.Context, Req *content.AddFileToPublicSpaceReq, callOptions ...callopt.Option) (r *content.AddFileToPublicSpaceResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.AddFileToPublicSpace(ctx, Req)
+}
+
+func (p *kContentServiceClient) DeleteFile(ctx context.Context, Req *content.DeleteFileReq, callOptions ...callopt.Option) (r *content.DeleteFileResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteFile(ctx, Req)
+}
+
+func (p *kContentServiceClient) RecoverRecycleBinFile(ctx context.Context, Req *content.RecoverRecycleBinFileReq, callOptions ...callopt.Option) (r *content.RecoverRecycleBinFileResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.RecoverRecycleBinFile(ctx, Req)
+}
+
 func (p *kContentServiceClient) AskUploadFile(ctx context.Context, Req *content.AskUploadFileReq, callOptions ...callopt.Option) (r *content.AskUploadFileResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.AskUploadFile(ctx, Req)
@@ -120,11 +148,6 @@ func (p *kContentServiceClient) AskUploadFile(ctx context.Context, Req *content.
 func (p *kContentServiceClient) AskUploadFileRollback(ctx context.Context, Req *content.AskUploadFileReq, callOptions ...callopt.Option) (r *content.AskUploadFileResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.AskUploadFileRollback(ctx, Req)
-}
-
-func (p *kContentServiceClient) DeleteFile(ctx context.Context, Req *content.DeleteFileReq, callOptions ...callopt.Option) (r *content.DeleteFileResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.DeleteFile(ctx, Req)
 }
 
 func (p *kContentServiceClient) DeleteShareFile(ctx context.Context, Req *content.DeleteShareFileReq, callOptions ...callopt.Option) (r *content.DeleteShareFileResp, err error) {
@@ -160,6 +183,31 @@ func (p *kContentServiceClient) UpdateLabel(ctx context.Context, Req *content.Up
 func (p *kContentServiceClient) DeleteLabel(ctx context.Context, Req *content.DeleteLabelReq, callOptions ...callopt.Option) (r *content.DeleteLabelResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.DeleteLabel(ctx, Req)
+}
+
+func (p *kContentServiceClient) GetShareList(ctx context.Context, Req *content.GetShareListReq, callOptions ...callopt.Option) (r *content.GetShareListResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetShareList(ctx, Req)
+}
+
+func (p *kContentServiceClient) CreateShareCode(ctx context.Context, Req *content.CreateShareCodeReq, callOptions ...callopt.Option) (r *content.CreateShareCodeResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateShareCode(ctx, Req)
+}
+
+func (p *kContentServiceClient) UpdateShareCode(ctx context.Context, Req *content.UpdateShareCodeReq, callOptions ...callopt.Option) (r *content.UpdateShareCodeResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.UpdateShareCode(ctx, Req)
+}
+
+func (p *kContentServiceClient) DeleteShareCode(ctx context.Context, Req *content.DeleteShareCodeReq, callOptions ...callopt.Option) (r *content.DeleteShareCodeResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteShareCode(ctx, Req)
+}
+
+func (p *kContentServiceClient) ParsingShareCode(ctx context.Context, Req *content.ParsingShareCodeReq, callOptions ...callopt.Option) (r *content.ParsingShareCodeResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.ParsingShareCode(ctx, Req)
 }
 
 func (p *kContentServiceClient) UpdateUser(ctx context.Context, Req *content.UpdateUserReq, callOptions ...callopt.Option) (r *content.UpdateUserResp, err error) {

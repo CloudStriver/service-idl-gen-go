@@ -338,6 +338,206 @@ func (x *Label) fastReadField2(buf []byte, _type int8) (offset int, err error) {
 	return offset, err
 }
 
+func (x *ShareFile) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 6:
+		offset, err = x.fastReadField6(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 7:
+		offset, err = x.fastReadField7(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 8:
+		offset, err = x.fastReadField8(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 9:
+		offset, err = x.fastReadField9(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 10:
+		offset, err = x.fastReadField10(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_ShareFile[number], err)
+}
+
+func (x *ShareFile) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.Code, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *ShareFile) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.UserId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *ShareFile) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.Name, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *ShareFile) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	var v int32
+	v, offset, err = fastpb.ReadInt32(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Status = Status(v)
+	return offset, nil
+}
+
+func (x *ShareFile) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	x.Limit, offset, err = fastpb.ReadInt32(buf, _type)
+	return offset, err
+}
+
+func (x *ShareFile) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Persons = append(x.Persons, v)
+	return offset, err
+}
+
+func (x *ShareFile) fastReadField7(buf []byte, _type int8) (offset int, err error) {
+	x.EffectiveTime, offset, err = fastpb.ReadInt32(buf, _type)
+	return offset, err
+}
+
+func (x *ShareFile) fastReadField8(buf []byte, _type int8) (offset int, err error) {
+	x.BrowseNumber, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *ShareFile) fastReadField9(buf []byte, _type int8) (offset int, err error) {
+	x.CreateAt, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *ShareFile) fastReadField10(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.FileList = append(x.FileList, v)
+	return offset, err
+}
+
+func (x *ShareCode) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 8:
+		offset, err = x.fastReadField8(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 9:
+		offset, err = x.fastReadField9(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_ShareCode[number], err)
+}
+
+func (x *ShareCode) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.Code, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *ShareCode) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.Name, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *ShareCode) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	var v int32
+	v, offset, err = fastpb.ReadInt32(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Status = Status(v)
+	return offset, nil
+}
+
+func (x *ShareCode) fastReadField8(buf []byte, _type int8) (offset int, err error) {
+	x.BrowseNumber, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *ShareCode) fastReadField9(buf []byte, _type int8) (offset int, err error) {
+	x.CreateAt, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
 func (x *SearchField) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
@@ -506,6 +706,43 @@ func (x *FileFilterOptions) fastReadField5(buf []byte, _type int8) (offset int, 
 
 func (x *FileFilterOptions) fastReadField6(buf []byte, _type int8) (offset int, err error) {
 	x.DocumentType, offset, err = fastpb.ReadInt32(buf, _type)
+	return offset, err
+}
+
+func (x *ShareFileFilterOptions) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_ShareFileFilterOptions[number], err)
+}
+
+func (x *ShareFileFilterOptions) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadString(buf, _type)
+	x.OnlyCode = &tmp
+	return offset, err
+}
+
+func (x *ShareFileFilterOptions) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadString(buf, _type)
+	x.OnlyUserId = &tmp
 	return offset, err
 }
 
@@ -1048,6 +1285,159 @@ func (x *Label) fastWriteField2(buf []byte) (offset int) {
 	return offset
 }
 
+func (x *ShareFile) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
+	offset += x.fastWriteField6(buf[offset:])
+	offset += x.fastWriteField7(buf[offset:])
+	offset += x.fastWriteField8(buf[offset:])
+	offset += x.fastWriteField9(buf[offset:])
+	offset += x.fastWriteField10(buf[offset:])
+	return offset
+}
+
+func (x *ShareFile) fastWriteField1(buf []byte) (offset int) {
+	if x.Code == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetCode())
+	return offset
+}
+
+func (x *ShareFile) fastWriteField2(buf []byte) (offset int) {
+	if x.UserId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetUserId())
+	return offset
+}
+
+func (x *ShareFile) fastWriteField3(buf []byte) (offset int) {
+	if x.Name == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetName())
+	return offset
+}
+
+func (x *ShareFile) fastWriteField4(buf []byte) (offset int) {
+	if x.Status == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 4, int32(x.GetStatus()))
+	return offset
+}
+
+func (x *ShareFile) fastWriteField5(buf []byte) (offset int) {
+	if x.Limit == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 5, x.GetLimit())
+	return offset
+}
+
+func (x *ShareFile) fastWriteField6(buf []byte) (offset int) {
+	if len(x.Persons) == 0 {
+		return offset
+	}
+	for i := range x.GetPersons() {
+		offset += fastpb.WriteString(buf[offset:], 6, x.GetPersons()[i])
+	}
+	return offset
+}
+
+func (x *ShareFile) fastWriteField7(buf []byte) (offset int) {
+	if x.EffectiveTime == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 7, x.GetEffectiveTime())
+	return offset
+}
+
+func (x *ShareFile) fastWriteField8(buf []byte) (offset int) {
+	if x.BrowseNumber == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 8, x.GetBrowseNumber())
+	return offset
+}
+
+func (x *ShareFile) fastWriteField9(buf []byte) (offset int) {
+	if x.CreateAt == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 9, x.GetCreateAt())
+	return offset
+}
+
+func (x *ShareFile) fastWriteField10(buf []byte) (offset int) {
+	if len(x.FileList) == 0 {
+		return offset
+	}
+	for i := range x.GetFileList() {
+		offset += fastpb.WriteString(buf[offset:], 10, x.GetFileList()[i])
+	}
+	return offset
+}
+
+func (x *ShareCode) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField8(buf[offset:])
+	offset += x.fastWriteField9(buf[offset:])
+	return offset
+}
+
+func (x *ShareCode) fastWriteField1(buf []byte) (offset int) {
+	if x.Code == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetCode())
+	return offset
+}
+
+func (x *ShareCode) fastWriteField3(buf []byte) (offset int) {
+	if x.Name == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetName())
+	return offset
+}
+
+func (x *ShareCode) fastWriteField4(buf []byte) (offset int) {
+	if x.Status == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 4, int32(x.GetStatus()))
+	return offset
+}
+
+func (x *ShareCode) fastWriteField8(buf []byte) (offset int) {
+	if x.BrowseNumber == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 8, x.GetBrowseNumber())
+	return offset
+}
+
+func (x *ShareCode) fastWriteField9(buf []byte) (offset int) {
+	if x.CreateAt == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 9, x.GetCreateAt())
+	return offset
+}
+
 func (x *SearchField) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -1165,6 +1555,31 @@ func (x *FileFilterOptions) fastWriteField6(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteInt32(buf[offset:], 6, x.GetDocumentType())
+	return offset
+}
+
+func (x *ShareFileFilterOptions) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	return offset
+}
+
+func (x *ShareFileFilterOptions) fastWriteField1(buf []byte) (offset int) {
+	if x.OnlyCode == nil {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetOnlyCode())
+	return offset
+}
+
+func (x *ShareFileFilterOptions) fastWriteField2(buf []byte) (offset int) {
+	if x.OnlyUserId == nil {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetOnlyUserId())
 	return offset
 }
 
@@ -1653,6 +2068,159 @@ func (x *Label) sizeField2() (n int) {
 	return n
 }
 
+func (x *ShareFile) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
+	n += x.sizeField6()
+	n += x.sizeField7()
+	n += x.sizeField8()
+	n += x.sizeField9()
+	n += x.sizeField10()
+	return n
+}
+
+func (x *ShareFile) sizeField1() (n int) {
+	if x.Code == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetCode())
+	return n
+}
+
+func (x *ShareFile) sizeField2() (n int) {
+	if x.UserId == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetUserId())
+	return n
+}
+
+func (x *ShareFile) sizeField3() (n int) {
+	if x.Name == "" {
+		return n
+	}
+	n += fastpb.SizeString(3, x.GetName())
+	return n
+}
+
+func (x *ShareFile) sizeField4() (n int) {
+	if x.Status == 0 {
+		return n
+	}
+	n += fastpb.SizeInt32(4, int32(x.GetStatus()))
+	return n
+}
+
+func (x *ShareFile) sizeField5() (n int) {
+	if x.Limit == 0 {
+		return n
+	}
+	n += fastpb.SizeInt32(5, x.GetLimit())
+	return n
+}
+
+func (x *ShareFile) sizeField6() (n int) {
+	if len(x.Persons) == 0 {
+		return n
+	}
+	for i := range x.GetPersons() {
+		n += fastpb.SizeString(6, x.GetPersons()[i])
+	}
+	return n
+}
+
+func (x *ShareFile) sizeField7() (n int) {
+	if x.EffectiveTime == 0 {
+		return n
+	}
+	n += fastpb.SizeInt32(7, x.GetEffectiveTime())
+	return n
+}
+
+func (x *ShareFile) sizeField8() (n int) {
+	if x.BrowseNumber == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(8, x.GetBrowseNumber())
+	return n
+}
+
+func (x *ShareFile) sizeField9() (n int) {
+	if x.CreateAt == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(9, x.GetCreateAt())
+	return n
+}
+
+func (x *ShareFile) sizeField10() (n int) {
+	if len(x.FileList) == 0 {
+		return n
+	}
+	for i := range x.GetFileList() {
+		n += fastpb.SizeString(10, x.GetFileList()[i])
+	}
+	return n
+}
+
+func (x *ShareCode) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField8()
+	n += x.sizeField9()
+	return n
+}
+
+func (x *ShareCode) sizeField1() (n int) {
+	if x.Code == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetCode())
+	return n
+}
+
+func (x *ShareCode) sizeField3() (n int) {
+	if x.Name == "" {
+		return n
+	}
+	n += fastpb.SizeString(3, x.GetName())
+	return n
+}
+
+func (x *ShareCode) sizeField4() (n int) {
+	if x.Status == 0 {
+		return n
+	}
+	n += fastpb.SizeInt32(4, int32(x.GetStatus()))
+	return n
+}
+
+func (x *ShareCode) sizeField8() (n int) {
+	if x.BrowseNumber == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(8, x.GetBrowseNumber())
+	return n
+}
+
+func (x *ShareCode) sizeField9() (n int) {
+	if x.CreateAt == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(9, x.GetCreateAt())
+	return n
+}
+
 func (x *SearchField) Size() (n int) {
 	if x == nil {
 		return n
@@ -1770,6 +2338,31 @@ func (x *FileFilterOptions) sizeField6() (n int) {
 		return n
 	}
 	n += fastpb.SizeInt32(6, x.GetDocumentType())
+	return n
+}
+
+func (x *ShareFileFilterOptions) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	return n
+}
+
+func (x *ShareFileFilterOptions) sizeField1() (n int) {
+	if x.OnlyCode == nil {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetOnlyCode())
+	return n
+}
+
+func (x *ShareFileFilterOptions) sizeField2() (n int) {
+	if x.OnlyUserId == nil {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetOnlyUserId())
 	return n
 }
 
@@ -2034,6 +2627,27 @@ var fieldIDToName_Label = map[int32]string{
 	2: "Value",
 }
 
+var fieldIDToName_ShareFile = map[int32]string{
+	1:  "Code",
+	2:  "UserId",
+	3:  "Name",
+	4:  "Status",
+	5:  "Limit",
+	6:  "Persons",
+	7:  "EffectiveTime",
+	8:  "BrowseNumber",
+	9:  "CreateAt",
+	10: "FileList",
+}
+
+var fieldIDToName_ShareCode = map[int32]string{
+	1: "Code",
+	3: "Name",
+	4: "Status",
+	8: "BrowseNumber",
+	9: "CreateAt",
+}
+
 var fieldIDToName_SearchField = map[int32]string{
 	1: "Text",
 	2: "Title",
@@ -2052,6 +2666,11 @@ var fieldIDToName_FileFilterOptions = map[int32]string{
 	4: "OnlyFileType",
 	5: "IsDel",
 	6: "DocumentType",
+}
+
+var fieldIDToName_ShareFileFilterOptions = map[int32]string{
+	1: "OnlyCode",
+	2: "OnlyUserId",
 }
 
 var fieldIDToName_User = map[int32]string{
