@@ -21,10 +21,11 @@ func NewServiceInfo() *kitex.ServiceInfo {
 	serviceName := "RelationService"
 	handlerType := (*relation.RelationService)(nil)
 	methods := map[string]kitex.MethodInfo{
-		"CreateRelation": kitex.NewMethodInfo(createRelationHandler, newCreateRelationArgs, newCreateRelationResult, false),
-		"GetRelations":   kitex.NewMethodInfo(getRelationsHandler, newGetRelationsArgs, newGetRelationsResult, false),
-		"DeleteRelation": kitex.NewMethodInfo(deleteRelationHandler, newDeleteRelationArgs, newDeleteRelationResult, false),
-		"GetRelation":    kitex.NewMethodInfo(getRelationHandler, newGetRelationArgs, newGetRelationResult, false),
+		"CreateRelation":   kitex.NewMethodInfo(createRelationHandler, newCreateRelationArgs, newCreateRelationResult, false),
+		"GetRelations":     kitex.NewMethodInfo(getRelationsHandler, newGetRelationsArgs, newGetRelationsResult, false),
+		"GetRelationCount": kitex.NewMethodInfo(getRelationCountHandler, newGetRelationCountArgs, newGetRelationCountResult, false),
+		"DeleteRelation":   kitex.NewMethodInfo(deleteRelationHandler, newDeleteRelationArgs, newDeleteRelationResult, false),
+		"GetRelation":      kitex.NewMethodInfo(getRelationHandler, newGetRelationArgs, newGetRelationResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName":     "platform.relation",
@@ -344,6 +345,159 @@ func (p *GetRelationsResult) IsSetSuccess() bool {
 }
 
 func (p *GetRelationsResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getRelationCountHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(relation.GetRelationCountReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(relation.RelationService).GetRelationCount(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetRelationCountArgs:
+		success, err := handler.(relation.RelationService).GetRelationCount(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetRelationCountResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetRelationCountArgs() interface{} {
+	return &GetRelationCountArgs{}
+}
+
+func newGetRelationCountResult() interface{} {
+	return &GetRelationCountResult{}
+}
+
+type GetRelationCountArgs struct {
+	Req *relation.GetRelationCountReq
+}
+
+func (p *GetRelationCountArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(relation.GetRelationCountReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetRelationCountArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetRelationCountArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetRelationCountArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetRelationCountArgs) Unmarshal(in []byte) error {
+	msg := new(relation.GetRelationCountReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetRelationCountArgs_Req_DEFAULT *relation.GetRelationCountReq
+
+func (p *GetRelationCountArgs) GetReq() *relation.GetRelationCountReq {
+	if !p.IsSetReq() {
+		return GetRelationCountArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetRelationCountArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetRelationCountArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetRelationCountResult struct {
+	Success *relation.GetRelationCountResp
+}
+
+var GetRelationCountResult_Success_DEFAULT *relation.GetRelationCountResp
+
+func (p *GetRelationCountResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(relation.GetRelationCountResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetRelationCountResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetRelationCountResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetRelationCountResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetRelationCountResult) Unmarshal(in []byte) error {
+	msg := new(relation.GetRelationCountResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetRelationCountResult) GetSuccess() *relation.GetRelationCountResp {
+	if !p.IsSetSuccess() {
+		return GetRelationCountResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetRelationCountResult) SetSuccess(x interface{}) {
+	p.Success = x.(*relation.GetRelationCountResp)
+}
+
+func (p *GetRelationCountResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetRelationCountResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -678,6 +832,16 @@ func (p *kClient) GetRelations(ctx context.Context, Req *relation.GetRelationsRe
 	_args.Req = Req
 	var _result GetRelationsResult
 	if err = p.c.Call(ctx, "GetRelations", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetRelationCount(ctx context.Context, Req *relation.GetRelationCountReq) (r *relation.GetRelationCountResp, err error) {
+	var _args GetRelationCountArgs
+	_args.Req = Req
+	var _result GetRelationCountResult
+	if err = p.c.Call(ctx, "GetRelationCount", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

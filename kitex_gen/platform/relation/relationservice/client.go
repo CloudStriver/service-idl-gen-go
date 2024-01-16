@@ -13,6 +13,7 @@ import (
 type Client interface {
 	CreateRelation(ctx context.Context, Req *relation.CreateRelationReq, callOptions ...callopt.Option) (r *relation.CreateRelationResp, err error)
 	GetRelations(ctx context.Context, Req *relation.GetRelationsReq, callOptions ...callopt.Option) (r *relation.GetRelationsResp, err error)
+	GetRelationCount(ctx context.Context, Req *relation.GetRelationCountReq, callOptions ...callopt.Option) (r *relation.GetRelationCountResp, err error)
 	DeleteRelation(ctx context.Context, Req *relation.DeleteRelationReq, callOptions ...callopt.Option) (r *relation.DeleteRelationResp, err error)
 	GetRelation(ctx context.Context, Req *relation.GetRelationReq, callOptions ...callopt.Option) (r *relation.GetRelationResp, err error)
 }
@@ -54,6 +55,11 @@ func (p *kRelationServiceClient) CreateRelation(ctx context.Context, Req *relati
 func (p *kRelationServiceClient) GetRelations(ctx context.Context, Req *relation.GetRelationsReq, callOptions ...callopt.Option) (r *relation.GetRelationsResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetRelations(ctx, Req)
+}
+
+func (p *kRelationServiceClient) GetRelationCount(ctx context.Context, Req *relation.GetRelationCountReq, callOptions ...callopt.Option) (r *relation.GetRelationCountResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetRelationCount(ctx, Req)
 }
 
 func (p *kRelationServiceClient) DeleteRelation(ctx context.Context, Req *relation.DeleteRelationReq, callOptions ...callopt.Option) (r *relation.DeleteRelationResp, err error) {
