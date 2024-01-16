@@ -134,7 +134,7 @@ func (x *File) fastReadField8(buf []byte, _type int8) (offset int, err error) {
 }
 
 func (x *File) fastReadField9(buf []byte, _type int8) (offset int, err error) {
-	x.IsDel, offset, err = fastpb.ReadInt32(buf, _type)
+	x.IsDel, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -279,7 +279,7 @@ func (x *FileInfo) fastReadField8(buf []byte, _type int8) (offset int, err error
 }
 
 func (x *FileInfo) fastReadField9(buf []byte, _type int8) (offset int, err error) {
-	x.IsDel, offset, err = fastpb.ReadInt32(buf, _type)
+	x.IsDel, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -429,7 +429,7 @@ func (x *ShareFile) fastReadField4(buf []byte, _type int8) (offset int, err erro
 }
 
 func (x *ShareFile) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	x.Limit, offset, err = fastpb.ReadInt32(buf, _type)
+	x.Limit, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -444,7 +444,7 @@ func (x *ShareFile) fastReadField6(buf []byte, _type int8) (offset int, err erro
 }
 
 func (x *ShareFile) fastReadField7(buf []byte, _type int8) (offset int, err error) {
-	x.EffectiveTime, offset, err = fastpb.ReadInt32(buf, _type)
+	x.EffectiveTime, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -694,18 +694,18 @@ func (x *FileFilterOptions) fastReadField3(buf []byte, _type int8) (offset int, 
 }
 
 func (x *FileFilterOptions) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadInt32(buf, _type)
+	tmp, offset, err := fastpb.ReadInt64(buf, _type)
 	x.OnlyFileType = &tmp
 	return offset, err
 }
 
 func (x *FileFilterOptions) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	x.IsDel, offset, err = fastpb.ReadInt32(buf, _type)
+	x.IsDel, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
 func (x *FileFilterOptions) fastReadField6(buf []byte, _type int8) (offset int, err error) {
-	x.DocumentType, offset, err = fastpb.ReadInt32(buf, _type)
+	x.DocumentType, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -862,7 +862,7 @@ func (x *UserDetail) fastReadField2(buf []byte, _type int8) (offset int, err err
 }
 
 func (x *UserDetail) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	x.Sex, offset, err = fastpb.ReadInt32(buf, _type)
+	x.Sex, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -957,7 +957,7 @@ func (x *UserDetailInfo) fastReadField2(buf []byte, _type int8) (offset int, err
 }
 
 func (x *UserDetailInfo) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	x.Sex, offset, err = fastpb.ReadInt32(buf, _type)
+	x.Sex, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -1022,7 +1022,7 @@ func (x *UserInfo) fastReadField2(buf []byte, _type int8) (offset int, err error
 }
 
 func (x *UserInfo) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	x.Sex, offset, err = fastpb.ReadInt32(buf, _type)
+	x.Sex, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -1113,7 +1113,7 @@ func (x *File) fastWriteField9(buf []byte) (offset int) {
 	if x.IsDel == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 9, x.GetIsDel())
+	offset += fastpb.WriteInt64(buf[offset:], 9, x.GetIsDel())
 	return offset
 }
 
@@ -1230,7 +1230,7 @@ func (x *FileInfo) fastWriteField9(buf []byte) (offset int) {
 	if x.IsDel == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 9, x.GetIsDel())
+	offset += fastpb.WriteInt64(buf[offset:], 9, x.GetIsDel())
 	return offset
 }
 
@@ -1338,7 +1338,7 @@ func (x *ShareFile) fastWriteField5(buf []byte) (offset int) {
 	if x.Limit == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 5, x.GetLimit())
+	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetLimit())
 	return offset
 }
 
@@ -1356,7 +1356,7 @@ func (x *ShareFile) fastWriteField7(buf []byte) (offset int) {
 	if x.EffectiveTime == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 7, x.GetEffectiveTime())
+	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetEffectiveTime())
 	return offset
 }
 
@@ -1538,7 +1538,7 @@ func (x *FileFilterOptions) fastWriteField4(buf []byte) (offset int) {
 	if x.OnlyFileType == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 4, x.GetOnlyFileType())
+	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetOnlyFileType())
 	return offset
 }
 
@@ -1546,7 +1546,7 @@ func (x *FileFilterOptions) fastWriteField5(buf []byte) (offset int) {
 	if x.IsDel == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 5, x.GetIsDel())
+	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetIsDel())
 	return offset
 }
 
@@ -1554,7 +1554,7 @@ func (x *FileFilterOptions) fastWriteField6(buf []byte) (offset int) {
 	if x.DocumentType == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 6, x.GetDocumentType())
+	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetDocumentType())
 	return offset
 }
 
@@ -1653,7 +1653,7 @@ func (x *UserDetail) fastWriteField3(buf []byte) (offset int) {
 	if x.Sex == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 3, x.GetSex())
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetSex())
 	return offset
 }
 
@@ -1739,7 +1739,7 @@ func (x *UserDetailInfo) fastWriteField3(buf []byte) (offset int) {
 	if x.Sex == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 3, x.GetSex())
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetSex())
 	return offset
 }
 
@@ -1805,7 +1805,7 @@ func (x *UserInfo) fastWriteField3(buf []byte) (offset int) {
 	if x.Sex == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 3, x.GetSex())
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetSex())
 	return offset
 }
 
@@ -1896,7 +1896,7 @@ func (x *File) sizeField9() (n int) {
 	if x.IsDel == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(9, x.GetIsDel())
+	n += fastpb.SizeInt64(9, x.GetIsDel())
 	return n
 }
 
@@ -2013,7 +2013,7 @@ func (x *FileInfo) sizeField9() (n int) {
 	if x.IsDel == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(9, x.GetIsDel())
+	n += fastpb.SizeInt64(9, x.GetIsDel())
 	return n
 }
 
@@ -2121,7 +2121,7 @@ func (x *ShareFile) sizeField5() (n int) {
 	if x.Limit == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(5, x.GetLimit())
+	n += fastpb.SizeInt64(5, x.GetLimit())
 	return n
 }
 
@@ -2139,7 +2139,7 @@ func (x *ShareFile) sizeField7() (n int) {
 	if x.EffectiveTime == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(7, x.GetEffectiveTime())
+	n += fastpb.SizeInt64(7, x.GetEffectiveTime())
 	return n
 }
 
@@ -2321,7 +2321,7 @@ func (x *FileFilterOptions) sizeField4() (n int) {
 	if x.OnlyFileType == nil {
 		return n
 	}
-	n += fastpb.SizeInt32(4, x.GetOnlyFileType())
+	n += fastpb.SizeInt64(4, x.GetOnlyFileType())
 	return n
 }
 
@@ -2329,7 +2329,7 @@ func (x *FileFilterOptions) sizeField5() (n int) {
 	if x.IsDel == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(5, x.GetIsDel())
+	n += fastpb.SizeInt64(5, x.GetIsDel())
 	return n
 }
 
@@ -2337,7 +2337,7 @@ func (x *FileFilterOptions) sizeField6() (n int) {
 	if x.DocumentType == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(6, x.GetDocumentType())
+	n += fastpb.SizeInt64(6, x.GetDocumentType())
 	return n
 }
 
@@ -2436,7 +2436,7 @@ func (x *UserDetail) sizeField3() (n int) {
 	if x.Sex == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(3, x.GetSex())
+	n += fastpb.SizeInt64(3, x.GetSex())
 	return n
 }
 
@@ -2522,7 +2522,7 @@ func (x *UserDetailInfo) sizeField3() (n int) {
 	if x.Sex == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(3, x.GetSex())
+	n += fastpb.SizeInt64(3, x.GetSex())
 	return n
 }
 
@@ -2588,7 +2588,7 @@ func (x *UserInfo) sizeField3() (n int) {
 	if x.Sex == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(3, x.GetSex())
+	n += fastpb.SizeInt64(3, x.GetSex())
 	return n
 }
 

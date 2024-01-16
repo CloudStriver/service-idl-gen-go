@@ -48,7 +48,7 @@ func (x *User) fastReadField1(buf []byte, _type int8) (offset int, err error) {
 }
 
 func (x *User) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.Role, offset, err = fastpb.ReadInt32(buf, _type)
+	x.Role, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -129,7 +129,7 @@ ReadFieldError:
 }
 
 func (x *Auth) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	x.AuthType, offset, err = fastpb.ReadInt32(buf, _type)
+	x.AuthType, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -285,7 +285,7 @@ func (x *User) fastWriteField2(buf []byte) (offset int) {
 	if x.Role == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 2, x.GetRole())
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetRole())
 	return offset
 }
 
@@ -336,7 +336,7 @@ func (x *Auth) fastWriteField1(buf []byte) (offset int) {
 	if x.AuthType == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 1, x.GetAuthType())
+	offset += fastpb.WriteInt64(buf[offset:], 1, x.GetAuthType())
 	return offset
 }
 
@@ -462,7 +462,7 @@ func (x *User) sizeField2() (n int) {
 	if x.Role == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(2, x.GetRole())
+	n += fastpb.SizeInt64(2, x.GetRole())
 	return n
 }
 
@@ -513,7 +513,7 @@ func (x *Auth) sizeField1() (n int) {
 	if x.AuthType == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(1, x.GetAuthType())
+	n += fastpb.SizeInt64(1, x.GetAuthType())
 	return n
 }
 
