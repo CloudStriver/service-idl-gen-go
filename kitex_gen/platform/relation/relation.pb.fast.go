@@ -256,6 +256,11 @@ func (x *GetRelationsReq) FastRead(buf []byte, _type int8, number int32) (offset
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	case 4:
 		offset, err = x.fastReadField4(buf, _type)
 		if err != nil {
@@ -296,6 +301,11 @@ func (x *GetRelationsReq) fastReadField2(buf []byte, _type int8) (offset int, er
 	}
 	ov.ToFilterOptions = &v
 	return offset, nil
+}
+
+func (x *GetRelationsReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.RelationType, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
 }
 
 func (x *GetRelationsReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
@@ -360,6 +370,11 @@ func (x *GetRelationCountReq) FastRead(buf []byte, _type int8, number int32) (of
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -395,6 +410,11 @@ func (x *GetRelationCountReq) fastReadField2(buf []byte, _type int8) (offset int
 	}
 	ov.ToFilterOptions = &v
 	return offset, nil
+}
+
+func (x *GetRelationCountReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.RelationType, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
 }
 
 func (x *GetRelationCountResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -574,6 +594,7 @@ func (x *GetRelationsReq) FastWrite(buf []byte) (offset int) {
 	}
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
 	return offset
 }
@@ -591,6 +612,14 @@ func (x *GetRelationsReq) fastWriteField2(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteMessage(buf[offset:], 2, x.GetToFilterOptions())
+	return offset
+}
+
+func (x *GetRelationsReq) fastWriteField3(buf []byte) (offset int) {
+	if x.RelationType == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetRelationType())
 	return offset
 }
 
@@ -635,6 +664,7 @@ func (x *GetRelationCountReq) FastWrite(buf []byte) (offset int) {
 	}
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
 	return offset
 }
 
@@ -651,6 +681,14 @@ func (x *GetRelationCountReq) fastWriteField2(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteMessage(buf[offset:], 2, x.GetToFilterOptions())
+	return offset
+}
+
+func (x *GetRelationCountReq) fastWriteField3(buf []byte) (offset int) {
+	if x.RelationType == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetRelationType())
 	return offset
 }
 
@@ -822,6 +860,7 @@ func (x *GetRelationsReq) Size() (n int) {
 	}
 	n += x.sizeField1()
 	n += x.sizeField2()
+	n += x.sizeField3()
 	n += x.sizeField4()
 	return n
 }
@@ -839,6 +878,14 @@ func (x *GetRelationsReq) sizeField2() (n int) {
 		return n
 	}
 	n += fastpb.SizeMessage(2, x.GetToFilterOptions())
+	return n
+}
+
+func (x *GetRelationsReq) sizeField3() (n int) {
+	if x.RelationType == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(3, x.GetRelationType())
 	return n
 }
 
@@ -883,6 +930,7 @@ func (x *GetRelationCountReq) Size() (n int) {
 	}
 	n += x.sizeField1()
 	n += x.sizeField2()
+	n += x.sizeField3()
 	return n
 }
 
@@ -899,6 +947,14 @@ func (x *GetRelationCountReq) sizeField2() (n int) {
 		return n
 	}
 	n += fastpb.SizeMessage(2, x.GetToFilterOptions())
+	return n
+}
+
+func (x *GetRelationCountReq) sizeField3() (n int) {
+	if x.RelationType == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(3, x.GetRelationType())
 	return n
 }
 
@@ -953,6 +1009,7 @@ var fieldIDToName_ToFilterOptions = map[int32]string{
 var fieldIDToName_GetRelationsReq = map[int32]string{
 	1: "FromFilterOptions",
 	2: "ToFilterOptions",
+	3: "RelationType",
 	4: "PaginationOptions",
 }
 
@@ -964,6 +1021,7 @@ var fieldIDToName_GetRelationsResp = map[int32]string{
 var fieldIDToName_GetRelationCountReq = map[int32]string{
 	1: "FromFilterOptions",
 	2: "ToFilterOptions",
+	3: "RelationType",
 }
 
 var fieldIDToName_GetRelationCountResp = map[int32]string{
