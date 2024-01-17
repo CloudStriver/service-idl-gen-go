@@ -143,7 +143,7 @@ func (x *SearchUserResp) fastReadField2(buf []byte, _type int8) (offset int, err
 }
 
 func (x *SearchUserResp) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	x.Total, offset, err = fastpb.ReadInt32(buf, _type)
+	x.Total, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -227,7 +227,7 @@ func (x *SearchUserResp) fastWriteField3(buf []byte) (offset int) {
 	if x.Total == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 3, x.GetTotal())
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetTotal())
 	return offset
 }
 
@@ -311,7 +311,7 @@ func (x *SearchUserResp) sizeField3() (n int) {
 	if x.Total == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(3, x.GetTotal())
+	n += fastpb.SizeInt64(3, x.GetTotal())
 	return n
 }
 

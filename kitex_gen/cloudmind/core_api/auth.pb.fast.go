@@ -62,7 +62,7 @@ func (x *RegisterReq) fastReadField1(buf []byte, _type int8) (offset int, err er
 }
 
 func (x *RegisterReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.Sex, offset, err = fastpb.ReadInt32(buf, _type)
+	x.Sex, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -138,21 +138,6 @@ func (x *EmailLoginReq) FastRead(buf []byte, _type int8, number int32) (offset i
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 3:
-		offset, err = x.fastReadField3(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 4:
-		offset, err = x.fastReadField4(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 5:
-		offset, err = x.fastReadField5(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -173,21 +158,6 @@ func (x *EmailLoginReq) fastReadField1(buf []byte, _type int8) (offset int, err 
 
 func (x *EmailLoginReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
 	x.Password, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *EmailLoginReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	x.X, offset, err = fastpb.ReadInt32(buf, _type)
-	return offset, err
-}
-
-func (x *EmailLoginReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	x.Y, offset, err = fastpb.ReadInt32(buf, _type)
-	return offset, err
-}
-
-func (x *EmailLoginReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	x.Key, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -672,7 +642,7 @@ func (x *RegisterReq) fastWriteField2(buf []byte) (offset int) {
 	if x.Sex == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 2, x.GetSex())
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetSex())
 	return offset
 }
 
@@ -740,9 +710,6 @@ func (x *EmailLoginReq) FastWrite(buf []byte) (offset int) {
 	}
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
-	offset += x.fastWriteField3(buf[offset:])
-	offset += x.fastWriteField4(buf[offset:])
-	offset += x.fastWriteField5(buf[offset:])
 	return offset
 }
 
@@ -759,30 +726,6 @@ func (x *EmailLoginReq) fastWriteField2(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 2, x.GetPassword())
-	return offset
-}
-
-func (x *EmailLoginReq) fastWriteField3(buf []byte) (offset int) {
-	if x.X == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt32(buf[offset:], 3, x.GetX())
-	return offset
-}
-
-func (x *EmailLoginReq) fastWriteField4(buf []byte) (offset int) {
-	if x.Y == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt32(buf[offset:], 4, x.GetY())
-	return offset
-}
-
-func (x *EmailLoginReq) fastWriteField5(buf []byte) (offset int) {
-	if x.Key == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 5, x.GetKey())
 	return offset
 }
 
@@ -1131,7 +1074,7 @@ func (x *RegisterReq) sizeField2() (n int) {
 	if x.Sex == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(2, x.GetSex())
+	n += fastpb.SizeInt64(2, x.GetSex())
 	return n
 }
 
@@ -1199,9 +1142,6 @@ func (x *EmailLoginReq) Size() (n int) {
 	}
 	n += x.sizeField1()
 	n += x.sizeField2()
-	n += x.sizeField3()
-	n += x.sizeField4()
-	n += x.sizeField5()
 	return n
 }
 
@@ -1218,30 +1158,6 @@ func (x *EmailLoginReq) sizeField2() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(2, x.GetPassword())
-	return n
-}
-
-func (x *EmailLoginReq) sizeField3() (n int) {
-	if x.X == 0 {
-		return n
-	}
-	n += fastpb.SizeInt32(3, x.GetX())
-	return n
-}
-
-func (x *EmailLoginReq) sizeField4() (n int) {
-	if x.Y == 0 {
-		return n
-	}
-	n += fastpb.SizeInt32(4, x.GetY())
-	return n
-}
-
-func (x *EmailLoginReq) sizeField5() (n int) {
-	if x.Key == "" {
-		return n
-	}
-	n += fastpb.SizeString(5, x.GetKey())
 	return n
 }
 
@@ -1583,9 +1499,6 @@ var fieldIDToName_RegisterResp = map[int32]string{
 var fieldIDToName_EmailLoginReq = map[int32]string{
 	1: "Email",
 	2: "Password",
-	3: "X",
-	4: "Y",
-	5: "Key",
 }
 
 var fieldIDToName_EmailLoginResp = map[int32]string{

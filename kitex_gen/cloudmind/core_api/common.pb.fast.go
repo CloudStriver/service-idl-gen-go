@@ -88,6 +88,11 @@ func (x *UserDetail) FastRead(buf []byte, _type int8, number int32) (offset int,
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 6:
+		offset, err = x.fastReadField6(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -123,6 +128,11 @@ func (x *UserDetail) fastReadField4(buf []byte, _type int8) (offset int, err err
 
 func (x *UserDetail) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	x.Description, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *UserDetail) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+	x.Url, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -187,7 +197,7 @@ func (x *RelationInfo) fastReadField4(buf []byte, _type int8) (offset int, err e
 }
 
 func (x *RelationInfo) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	x.RelationType, offset, err = fastpb.ReadInt32(buf, _type)
+	x.RelationType, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -234,6 +244,7 @@ func (x *UserDetail) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
 	offset += x.fastWriteField5(buf[offset:])
+	offset += x.fastWriteField6(buf[offset:])
 	return offset
 }
 
@@ -274,6 +285,14 @@ func (x *UserDetail) fastWriteField5(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 5, x.GetDescription())
+	return offset
+}
+
+func (x *UserDetail) fastWriteField6(buf []byte) (offset int) {
+	if x.Url == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 6, x.GetUrl())
 	return offset
 }
 
@@ -325,7 +344,7 @@ func (x *RelationInfo) fastWriteField5(buf []byte) (offset int) {
 	if x.RelationType == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 5, x.GetRelationType())
+	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetRelationType())
 	return offset
 }
 
@@ -372,6 +391,7 @@ func (x *UserDetail) Size() (n int) {
 	n += x.sizeField3()
 	n += x.sizeField4()
 	n += x.sizeField5()
+	n += x.sizeField6()
 	return n
 }
 
@@ -412,6 +432,14 @@ func (x *UserDetail) sizeField5() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(5, x.GetDescription())
+	return n
+}
+
+func (x *UserDetail) sizeField6() (n int) {
+	if x.Url == "" {
+		return n
+	}
+	n += fastpb.SizeString(6, x.GetUrl())
 	return n
 }
 
@@ -463,7 +491,7 @@ func (x *RelationInfo) sizeField5() (n int) {
 	if x.RelationType == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(5, x.GetRelationType())
+	n += fastpb.SizeInt64(5, x.GetRelationType())
 	return n
 }
 
@@ -479,6 +507,7 @@ var fieldIDToName_UserDetail = map[int32]string{
 	3: "FullName",
 	4: "IdCard",
 	5: "Description",
+	6: "Url",
 }
 
 var fieldIDToName_RelationInfo = map[int32]string{
