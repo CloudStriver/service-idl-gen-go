@@ -3,11 +3,15 @@
 package relation
 
 import (
+	"context"
+	core_api "github.com/CloudStriver/service-idl-gen-go/kitex_gen/cloudmind/core_api"
 	client "github.com/cloudwego/kitex/client"
+	callopt "github.com/cloudwego/kitex/client/callopt"
 )
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
+	CreateRelation(ctx context.Context, Req *core_api.CreateRelationReq, callOptions ...callopt.Option) (r *core_api.CreateRelationResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -37,4 +41,9 @@ func MustNewClient(destService string, opts ...client.Option) Client {
 
 type kRelationClient struct {
 	*kClient
+}
+
+func (p *kRelationClient) CreateRelation(ctx context.Context, Req *core_api.CreateRelationReq, callOptions ...callopt.Option) (r *core_api.CreateRelationResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateRelation(ctx, Req)
 }

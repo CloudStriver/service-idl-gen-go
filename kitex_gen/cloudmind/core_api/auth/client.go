@@ -17,7 +17,6 @@ type Client interface {
 	GiteeLogin(ctx context.Context, Req *core_api.GiteeLoginReq, callOptions ...callopt.Option) (r *core_api.GiteeLoginResp, err error)
 	RefreshToken(ctx context.Context, Req *core_api.RefreshTokenReq, callOptions ...callopt.Option) (r *core_api.RefreshTokenResp, err error)
 	SendEmail(ctx context.Context, Req *core_api.SendEmailReq, callOptions ...callopt.Option) (r *core_api.SendEmailResp, err error)
-	GetCaptcha(ctx context.Context, Req *core_api.GetCaptchaReq, callOptions ...callopt.Option) (r *core_api.GetCaptchaResp, err error)
 	SetPasswordByEmail(ctx context.Context, Req *core_api.SetPasswordByEmailReq, callOptions ...callopt.Option) (r *core_api.SetPasswordByEmailResp, err error)
 	SetPasswordByPassword(ctx context.Context, Req *core_api.SetPasswordByPasswordReq, callOptions ...callopt.Option) (r *core_api.SetPasswordByPasswordReq, err error)
 }
@@ -79,11 +78,6 @@ func (p *kAuthClient) RefreshToken(ctx context.Context, Req *core_api.RefreshTok
 func (p *kAuthClient) SendEmail(ctx context.Context, Req *core_api.SendEmailReq, callOptions ...callopt.Option) (r *core_api.SendEmailResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.SendEmail(ctx, Req)
-}
-
-func (p *kAuthClient) GetCaptcha(ctx context.Context, Req *core_api.GetCaptchaReq, callOptions ...callopt.Option) (r *core_api.GetCaptchaResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.GetCaptcha(ctx, Req)
 }
 
 func (p *kAuthClient) SetPasswordByEmail(ctx context.Context, Req *core_api.SetPasswordByEmailReq, callOptions ...callopt.Option) (r *core_api.SetPasswordByEmailResp, err error) {

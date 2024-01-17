@@ -27,7 +27,6 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"GiteeLogin":            kitex.NewMethodInfo(giteeLoginHandler, newGiteeLoginArgs, newGiteeLoginResult, false),
 		"RefreshToken":          kitex.NewMethodInfo(refreshTokenHandler, newRefreshTokenArgs, newRefreshTokenResult, false),
 		"SendEmail":             kitex.NewMethodInfo(sendEmailHandler, newSendEmailArgs, newSendEmailResult, false),
-		"GetCaptcha":            kitex.NewMethodInfo(getCaptchaHandler, newGetCaptchaArgs, newGetCaptchaResult, false),
 		"SetPasswordByEmail":    kitex.NewMethodInfo(setPasswordByEmailHandler, newSetPasswordByEmailArgs, newSetPasswordByEmailResult, false),
 		"SetPasswordByPassword": kitex.NewMethodInfo(setPasswordByPasswordHandler, newSetPasswordByPasswordArgs, newSetPasswordByPasswordResult, false),
 	}
@@ -964,159 +963,6 @@ func (p *SendEmailResult) GetResult() interface{} {
 	return p.Success
 }
 
-func getCaptchaHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	switch s := arg.(type) {
-	case *streaming.Args:
-		st := s.Stream
-		req := new(core_api.GetCaptchaReq)
-		if err := st.RecvMsg(req); err != nil {
-			return err
-		}
-		resp, err := handler.(core_api.Auth).GetCaptcha(ctx, req)
-		if err != nil {
-			return err
-		}
-		if err := st.SendMsg(resp); err != nil {
-			return err
-		}
-	case *GetCaptchaArgs:
-		success, err := handler.(core_api.Auth).GetCaptcha(ctx, s.Req)
-		if err != nil {
-			return err
-		}
-		realResult := result.(*GetCaptchaResult)
-		realResult.Success = success
-	}
-	return nil
-}
-func newGetCaptchaArgs() interface{} {
-	return &GetCaptchaArgs{}
-}
-
-func newGetCaptchaResult() interface{} {
-	return &GetCaptchaResult{}
-}
-
-type GetCaptchaArgs struct {
-	Req *core_api.GetCaptchaReq
-}
-
-func (p *GetCaptchaArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetReq() {
-		p.Req = new(core_api.GetCaptchaReq)
-	}
-	return p.Req.FastRead(buf, _type, number)
-}
-
-func (p *GetCaptchaArgs) FastWrite(buf []byte) (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.FastWrite(buf)
-}
-
-func (p *GetCaptchaArgs) Size() (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.Size()
-}
-
-func (p *GetCaptchaArgs) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetReq() {
-		return out, nil
-	}
-	return proto.Marshal(p.Req)
-}
-
-func (p *GetCaptchaArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.GetCaptchaReq)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Req = msg
-	return nil
-}
-
-var GetCaptchaArgs_Req_DEFAULT *core_api.GetCaptchaReq
-
-func (p *GetCaptchaArgs) GetReq() *core_api.GetCaptchaReq {
-	if !p.IsSetReq() {
-		return GetCaptchaArgs_Req_DEFAULT
-	}
-	return p.Req
-}
-
-func (p *GetCaptchaArgs) IsSetReq() bool {
-	return p.Req != nil
-}
-
-func (p *GetCaptchaArgs) GetFirstArgument() interface{} {
-	return p.Req
-}
-
-type GetCaptchaResult struct {
-	Success *core_api.GetCaptchaResp
-}
-
-var GetCaptchaResult_Success_DEFAULT *core_api.GetCaptchaResp
-
-func (p *GetCaptchaResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetSuccess() {
-		p.Success = new(core_api.GetCaptchaResp)
-	}
-	return p.Success.FastRead(buf, _type, number)
-}
-
-func (p *GetCaptchaResult) FastWrite(buf []byte) (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.FastWrite(buf)
-}
-
-func (p *GetCaptchaResult) Size() (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.Size()
-}
-
-func (p *GetCaptchaResult) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetSuccess() {
-		return out, nil
-	}
-	return proto.Marshal(p.Success)
-}
-
-func (p *GetCaptchaResult) Unmarshal(in []byte) error {
-	msg := new(core_api.GetCaptchaResp)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Success = msg
-	return nil
-}
-
-func (p *GetCaptchaResult) GetSuccess() *core_api.GetCaptchaResp {
-	if !p.IsSetSuccess() {
-		return GetCaptchaResult_Success_DEFAULT
-	}
-	return p.Success
-}
-
-func (p *GetCaptchaResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.GetCaptchaResp)
-}
-
-func (p *GetCaptchaResult) IsSetSuccess() bool {
-	return p.Success != nil
-}
-
-func (p *GetCaptchaResult) GetResult() interface{} {
-	return p.Success
-}
-
 func setPasswordByEmailHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
@@ -1488,16 +1334,6 @@ func (p *kClient) SendEmail(ctx context.Context, Req *core_api.SendEmailReq) (r 
 	_args.Req = Req
 	var _result SendEmailResult
 	if err = p.c.Call(ctx, "SendEmail", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
-}
-
-func (p *kClient) GetCaptcha(ctx context.Context, Req *core_api.GetCaptchaReq) (r *core_api.GetCaptchaResp, err error) {
-	var _args GetCaptchaArgs
-	_args.Req = Req
-	var _result GetCaptchaResult
-	if err = p.c.Call(ctx, "GetCaptcha", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

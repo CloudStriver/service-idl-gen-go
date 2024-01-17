@@ -3,9 +3,12 @@
 package relation
 
 import (
+	"context"
 	core_api "github.com/CloudStriver/service-idl-gen-go/kitex_gen/cloudmind/core_api"
 	client "github.com/cloudwego/kitex/client"
 	kitex "github.com/cloudwego/kitex/pkg/serviceinfo"
+	streaming "github.com/cloudwego/kitex/pkg/streaming"
+	proto "google.golang.org/protobuf/proto"
 )
 
 func serviceInfo() *kitex.ServiceInfo {
@@ -17,7 +20,9 @@ var relationServiceInfo = NewServiceInfo()
 func NewServiceInfo() *kitex.ServiceInfo {
 	serviceName := "relation"
 	handlerType := (*core_api.Relation)(nil)
-	methods := map[string]kitex.MethodInfo{}
+	methods := map[string]kitex.MethodInfo{
+		"CreateRelation": kitex.NewMethodInfo(createRelationHandler, newCreateRelationArgs, newCreateRelationResult, false),
+	}
 	extra := map[string]interface{}{
 		"PackageName":     "cloudmind.core_api",
 		"ServiceFilePath": ``,
@@ -33,6 +38,159 @@ func NewServiceInfo() *kitex.ServiceInfo {
 	return svcInfo
 }
 
+func createRelationHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.CreateRelationReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Relation).CreateRelation(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *CreateRelationArgs:
+		success, err := handler.(core_api.Relation).CreateRelation(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*CreateRelationResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newCreateRelationArgs() interface{} {
+	return &CreateRelationArgs{}
+}
+
+func newCreateRelationResult() interface{} {
+	return &CreateRelationResult{}
+}
+
+type CreateRelationArgs struct {
+	Req *core_api.CreateRelationReq
+}
+
+func (p *CreateRelationArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.CreateRelationReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *CreateRelationArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *CreateRelationArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *CreateRelationArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *CreateRelationArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.CreateRelationReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var CreateRelationArgs_Req_DEFAULT *core_api.CreateRelationReq
+
+func (p *CreateRelationArgs) GetReq() *core_api.CreateRelationReq {
+	if !p.IsSetReq() {
+		return CreateRelationArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *CreateRelationArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *CreateRelationArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type CreateRelationResult struct {
+	Success *core_api.CreateRelationResp
+}
+
+var CreateRelationResult_Success_DEFAULT *core_api.CreateRelationResp
+
+func (p *CreateRelationResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.CreateRelationResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *CreateRelationResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *CreateRelationResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *CreateRelationResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *CreateRelationResult) Unmarshal(in []byte) error {
+	msg := new(core_api.CreateRelationResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *CreateRelationResult) GetSuccess() *core_api.CreateRelationResp {
+	if !p.IsSetSuccess() {
+		return CreateRelationResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *CreateRelationResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.CreateRelationResp)
+}
+
+func (p *CreateRelationResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *CreateRelationResult) GetResult() interface{} {
+	return p.Success
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -41,4 +199,14 @@ func newServiceClient(c client.Client) *kClient {
 	return &kClient{
 		c: c,
 	}
+}
+
+func (p *kClient) CreateRelation(ctx context.Context, Req *core_api.CreateRelationReq) (r *core_api.CreateRelationResp, err error) {
+	var _args CreateRelationArgs
+	_args.Req = Req
+	var _result CreateRelationResult
+	if err = p.c.Call(ctx, "CreateRelation", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
 }
