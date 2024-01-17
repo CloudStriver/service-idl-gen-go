@@ -12,6 +12,10 @@ import (
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
 	CreateRelation(ctx context.Context, Req *core_api.CreateRelationReq, callOptions ...callopt.Option) (r *core_api.CreateRelationResp, err error)
+	GetFromRelations(ctx context.Context, Req *core_api.GetFromRelationsReq, callOptions ...callopt.Option) (r *core_api.GetFromRelationsResp, err error)
+	GetToRelations(ctx context.Context, Req *core_api.GetToRelationsReq, callOptions ...callopt.Option) (r *core_api.GetToRelationsResp, err error)
+	GetRelation(ctx context.Context, Req *core_api.GetRelationReq, callOptions ...callopt.Option) (r *core_api.GetRelationResp, err error)
+	DeleteRelation(ctx context.Context, Req *core_api.DeleteRelationReq, callOptions ...callopt.Option) (r *core_api.DeleteRelationResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -46,4 +50,24 @@ type kRelationClient struct {
 func (p *kRelationClient) CreateRelation(ctx context.Context, Req *core_api.CreateRelationReq, callOptions ...callopt.Option) (r *core_api.CreateRelationResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.CreateRelation(ctx, Req)
+}
+
+func (p *kRelationClient) GetFromRelations(ctx context.Context, Req *core_api.GetFromRelationsReq, callOptions ...callopt.Option) (r *core_api.GetFromRelationsResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetFromRelations(ctx, Req)
+}
+
+func (p *kRelationClient) GetToRelations(ctx context.Context, Req *core_api.GetToRelationsReq, callOptions ...callopt.Option) (r *core_api.GetToRelationsResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetToRelations(ctx, Req)
+}
+
+func (p *kRelationClient) GetRelation(ctx context.Context, Req *core_api.GetRelationReq, callOptions ...callopt.Option) (r *core_api.GetRelationResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetRelation(ctx, Req)
+}
+
+func (p *kRelationClient) DeleteRelation(ctx context.Context, Req *core_api.DeleteRelationReq, callOptions ...callopt.Option) (r *core_api.DeleteRelationResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteRelation(ctx, Req)
 }

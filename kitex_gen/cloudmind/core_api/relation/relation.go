@@ -21,7 +21,11 @@ func NewServiceInfo() *kitex.ServiceInfo {
 	serviceName := "relation"
 	handlerType := (*core_api.Relation)(nil)
 	methods := map[string]kitex.MethodInfo{
-		"CreateRelation": kitex.NewMethodInfo(createRelationHandler, newCreateRelationArgs, newCreateRelationResult, false),
+		"CreateRelation":   kitex.NewMethodInfo(createRelationHandler, newCreateRelationArgs, newCreateRelationResult, false),
+		"GetFromRelations": kitex.NewMethodInfo(getFromRelationsHandler, newGetFromRelationsArgs, newGetFromRelationsResult, false),
+		"GetToRelations":   kitex.NewMethodInfo(getToRelationsHandler, newGetToRelationsArgs, newGetToRelationsResult, false),
+		"GetRelation":      kitex.NewMethodInfo(getRelationHandler, newGetRelationArgs, newGetRelationResult, false),
+		"DeleteRelation":   kitex.NewMethodInfo(deleteRelationHandler, newDeleteRelationArgs, newDeleteRelationResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName":     "cloudmind.core_api",
@@ -191,6 +195,618 @@ func (p *CreateRelationResult) GetResult() interface{} {
 	return p.Success
 }
 
+func getFromRelationsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.GetFromRelationsReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Relation).GetFromRelations(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetFromRelationsArgs:
+		success, err := handler.(core_api.Relation).GetFromRelations(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetFromRelationsResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetFromRelationsArgs() interface{} {
+	return &GetFromRelationsArgs{}
+}
+
+func newGetFromRelationsResult() interface{} {
+	return &GetFromRelationsResult{}
+}
+
+type GetFromRelationsArgs struct {
+	Req *core_api.GetFromRelationsReq
+}
+
+func (p *GetFromRelationsArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.GetFromRelationsReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetFromRelationsArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetFromRelationsArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetFromRelationsArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetFromRelationsArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.GetFromRelationsReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetFromRelationsArgs_Req_DEFAULT *core_api.GetFromRelationsReq
+
+func (p *GetFromRelationsArgs) GetReq() *core_api.GetFromRelationsReq {
+	if !p.IsSetReq() {
+		return GetFromRelationsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetFromRelationsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetFromRelationsArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetFromRelationsResult struct {
+	Success *core_api.GetFromRelationsResp
+}
+
+var GetFromRelationsResult_Success_DEFAULT *core_api.GetFromRelationsResp
+
+func (p *GetFromRelationsResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.GetFromRelationsResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetFromRelationsResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetFromRelationsResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetFromRelationsResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetFromRelationsResult) Unmarshal(in []byte) error {
+	msg := new(core_api.GetFromRelationsResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetFromRelationsResult) GetSuccess() *core_api.GetFromRelationsResp {
+	if !p.IsSetSuccess() {
+		return GetFromRelationsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetFromRelationsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.GetFromRelationsResp)
+}
+
+func (p *GetFromRelationsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetFromRelationsResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getToRelationsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.GetToRelationsReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Relation).GetToRelations(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetToRelationsArgs:
+		success, err := handler.(core_api.Relation).GetToRelations(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetToRelationsResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetToRelationsArgs() interface{} {
+	return &GetToRelationsArgs{}
+}
+
+func newGetToRelationsResult() interface{} {
+	return &GetToRelationsResult{}
+}
+
+type GetToRelationsArgs struct {
+	Req *core_api.GetToRelationsReq
+}
+
+func (p *GetToRelationsArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.GetToRelationsReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetToRelationsArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetToRelationsArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetToRelationsArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetToRelationsArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.GetToRelationsReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetToRelationsArgs_Req_DEFAULT *core_api.GetToRelationsReq
+
+func (p *GetToRelationsArgs) GetReq() *core_api.GetToRelationsReq {
+	if !p.IsSetReq() {
+		return GetToRelationsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetToRelationsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetToRelationsArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetToRelationsResult struct {
+	Success *core_api.GetToRelationsResp
+}
+
+var GetToRelationsResult_Success_DEFAULT *core_api.GetToRelationsResp
+
+func (p *GetToRelationsResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.GetToRelationsResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetToRelationsResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetToRelationsResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetToRelationsResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetToRelationsResult) Unmarshal(in []byte) error {
+	msg := new(core_api.GetToRelationsResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetToRelationsResult) GetSuccess() *core_api.GetToRelationsResp {
+	if !p.IsSetSuccess() {
+		return GetToRelationsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetToRelationsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.GetToRelationsResp)
+}
+
+func (p *GetToRelationsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetToRelationsResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getRelationHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.GetRelationReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Relation).GetRelation(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetRelationArgs:
+		success, err := handler.(core_api.Relation).GetRelation(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetRelationResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetRelationArgs() interface{} {
+	return &GetRelationArgs{}
+}
+
+func newGetRelationResult() interface{} {
+	return &GetRelationResult{}
+}
+
+type GetRelationArgs struct {
+	Req *core_api.GetRelationReq
+}
+
+func (p *GetRelationArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.GetRelationReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetRelationArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetRelationArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetRelationArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetRelationArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.GetRelationReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetRelationArgs_Req_DEFAULT *core_api.GetRelationReq
+
+func (p *GetRelationArgs) GetReq() *core_api.GetRelationReq {
+	if !p.IsSetReq() {
+		return GetRelationArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetRelationArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetRelationArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetRelationResult struct {
+	Success *core_api.GetRelationResp
+}
+
+var GetRelationResult_Success_DEFAULT *core_api.GetRelationResp
+
+func (p *GetRelationResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.GetRelationResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetRelationResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetRelationResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetRelationResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetRelationResult) Unmarshal(in []byte) error {
+	msg := new(core_api.GetRelationResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetRelationResult) GetSuccess() *core_api.GetRelationResp {
+	if !p.IsSetSuccess() {
+		return GetRelationResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetRelationResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.GetRelationResp)
+}
+
+func (p *GetRelationResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetRelationResult) GetResult() interface{} {
+	return p.Success
+}
+
+func deleteRelationHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.DeleteRelationReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Relation).DeleteRelation(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *DeleteRelationArgs:
+		success, err := handler.(core_api.Relation).DeleteRelation(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*DeleteRelationResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newDeleteRelationArgs() interface{} {
+	return &DeleteRelationArgs{}
+}
+
+func newDeleteRelationResult() interface{} {
+	return &DeleteRelationResult{}
+}
+
+type DeleteRelationArgs struct {
+	Req *core_api.DeleteRelationReq
+}
+
+func (p *DeleteRelationArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.DeleteRelationReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *DeleteRelationArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *DeleteRelationArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *DeleteRelationArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *DeleteRelationArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.DeleteRelationReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var DeleteRelationArgs_Req_DEFAULT *core_api.DeleteRelationReq
+
+func (p *DeleteRelationArgs) GetReq() *core_api.DeleteRelationReq {
+	if !p.IsSetReq() {
+		return DeleteRelationArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *DeleteRelationArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *DeleteRelationArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type DeleteRelationResult struct {
+	Success *core_api.DeleteRelationResp
+}
+
+var DeleteRelationResult_Success_DEFAULT *core_api.DeleteRelationResp
+
+func (p *DeleteRelationResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.DeleteRelationResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *DeleteRelationResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *DeleteRelationResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *DeleteRelationResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *DeleteRelationResult) Unmarshal(in []byte) error {
+	msg := new(core_api.DeleteRelationResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *DeleteRelationResult) GetSuccess() *core_api.DeleteRelationResp {
+	if !p.IsSetSuccess() {
+		return DeleteRelationResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *DeleteRelationResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.DeleteRelationResp)
+}
+
+func (p *DeleteRelationResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *DeleteRelationResult) GetResult() interface{} {
+	return p.Success
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -206,6 +822,46 @@ func (p *kClient) CreateRelation(ctx context.Context, Req *core_api.CreateRelati
 	_args.Req = Req
 	var _result CreateRelationResult
 	if err = p.c.Call(ctx, "CreateRelation", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetFromRelations(ctx context.Context, Req *core_api.GetFromRelationsReq) (r *core_api.GetFromRelationsResp, err error) {
+	var _args GetFromRelationsArgs
+	_args.Req = Req
+	var _result GetFromRelationsResult
+	if err = p.c.Call(ctx, "GetFromRelations", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetToRelations(ctx context.Context, Req *core_api.GetToRelationsReq) (r *core_api.GetToRelationsResp, err error) {
+	var _args GetToRelationsArgs
+	_args.Req = Req
+	var _result GetToRelationsResult
+	if err = p.c.Call(ctx, "GetToRelations", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetRelation(ctx context.Context, Req *core_api.GetRelationReq) (r *core_api.GetRelationResp, err error) {
+	var _args GetRelationArgs
+	_args.Req = Req
+	var _result GetRelationResult
+	if err = p.c.Call(ctx, "GetRelation", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) DeleteRelation(ctx context.Context, Req *core_api.DeleteRelationReq) (r *core_api.DeleteRelationResp, err error) {
+	var _args DeleteRelationArgs
+	_args.Req = Req
+	var _result DeleteRelationResult
+	if err = p.c.Call(ctx, "DeleteRelation", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

@@ -143,6 +143,16 @@ func (x *RelationInfo) FastRead(buf []byte, _type int8, number int32) (offset in
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -157,157 +167,27 @@ ReadFieldError:
 }
 
 func (x *RelationInfo) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	x.ToType, offset, err = fastpb.ReadInt32(buf, _type)
+	x.FromId, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
 func (x *RelationInfo) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.ToId, offset, err = fastpb.ReadString(buf, _type)
+	x.FromType, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
 func (x *RelationInfo) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.ToId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *RelationInfo) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	x.ToType, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *RelationInfo) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	x.RelationType, offset, err = fastpb.ReadInt32(buf, _type)
-	return offset, err
-}
-
-func (x *RelationFilterOptions) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
-	switch number {
-	case 1:
-		offset, err = x.fastReadField1(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 2:
-		offset, err = x.fastReadField2(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 3:
-		offset, err = x.fastReadField3(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 4:
-		offset, err = x.fastReadField4(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 5:
-		offset, err = x.fastReadField5(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	default:
-		offset, err = fastpb.Skip(buf, _type, number)
-		if err != nil {
-			goto SkipFieldError
-		}
-	}
-	return offset, nil
-SkipFieldError:
-	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
-ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_RelationFilterOptions[number], err)
-}
-
-func (x *RelationFilterOptions) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadInt32(buf, _type)
-	x.OnlyFromType = &tmp
-	return offset, err
-}
-
-func (x *RelationFilterOptions) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadString(buf, _type)
-	x.OnlyFromId = &tmp
-	return offset, err
-}
-
-func (x *RelationFilterOptions) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadInt32(buf, _type)
-	x.OnlyToType = &tmp
-	return offset, err
-}
-
-func (x *RelationFilterOptions) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadString(buf, _type)
-	x.OnlyToId = &tmp
-	return offset, err
-}
-
-func (x *RelationFilterOptions) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadInt32(buf, _type)
-	x.OnlyRelationType = &tmp
-	return offset, err
-}
-
-func (x *UserRelation) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
-	switch number {
-	case 1:
-		offset, err = x.fastReadField1(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 2:
-		offset, err = x.fastReadField2(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 3:
-		offset, err = x.fastReadField3(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 4:
-		offset, err = x.fastReadField4(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 5:
-		offset, err = x.fastReadField5(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	default:
-		offset, err = fastpb.Skip(buf, _type, number)
-		if err != nil {
-			goto SkipFieldError
-		}
-	}
-	return offset, nil
-SkipFieldError:
-	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
-ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_UserRelation[number], err)
-}
-
-func (x *UserRelation) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v User
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
-	if err != nil {
-		return offset, err
-	}
-	x.User = &v
-	return offset, nil
-}
-
-func (x *UserRelation) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.CreateTime, offset, err = fastpb.ReadInt64(buf, _type)
-	return offset, err
-}
-
-func (x *UserRelation) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	x.UpdateTime, offset, err = fastpb.ReadInt64(buf, _type)
-	return offset, err
-}
-
-func (x *UserRelation) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	x.RelationType, offset, err = fastpb.ReadInt32(buf, _type)
-	return offset, err
-}
-
-func (x *UserRelation) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	x.IsToMe, offset, err = fastpb.ReadBool(buf, _type)
 	return offset, err
 }
 
@@ -404,134 +284,48 @@ func (x *RelationInfo) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
 	return offset
 }
 
 func (x *RelationInfo) fastWriteField1(buf []byte) (offset int) {
-	if x.ToType == 0 {
+	if x.FromId == "" {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 1, x.GetToType())
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetFromId())
 	return offset
 }
 
 func (x *RelationInfo) fastWriteField2(buf []byte) (offset int) {
-	if x.ToId == "" {
+	if x.FromType == 0 {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetToId())
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetFromType())
 	return offset
 }
 
 func (x *RelationInfo) fastWriteField3(buf []byte) (offset int) {
+	if x.ToId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetToId())
+	return offset
+}
+
+func (x *RelationInfo) fastWriteField4(buf []byte) (offset int) {
+	if x.ToType == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetToType())
+	return offset
+}
+
+func (x *RelationInfo) fastWriteField5(buf []byte) (offset int) {
 	if x.RelationType == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 3, x.GetRelationType())
-	return offset
-}
-
-func (x *RelationFilterOptions) FastWrite(buf []byte) (offset int) {
-	if x == nil {
-		return offset
-	}
-	offset += x.fastWriteField1(buf[offset:])
-	offset += x.fastWriteField2(buf[offset:])
-	offset += x.fastWriteField3(buf[offset:])
-	offset += x.fastWriteField4(buf[offset:])
-	offset += x.fastWriteField5(buf[offset:])
-	return offset
-}
-
-func (x *RelationFilterOptions) fastWriteField1(buf []byte) (offset int) {
-	if x.OnlyFromType == nil {
-		return offset
-	}
-	offset += fastpb.WriteInt32(buf[offset:], 1, x.GetOnlyFromType())
-	return offset
-}
-
-func (x *RelationFilterOptions) fastWriteField2(buf []byte) (offset int) {
-	if x.OnlyFromId == nil {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetOnlyFromId())
-	return offset
-}
-
-func (x *RelationFilterOptions) fastWriteField3(buf []byte) (offset int) {
-	if x.OnlyToType == nil {
-		return offset
-	}
-	offset += fastpb.WriteInt32(buf[offset:], 3, x.GetOnlyToType())
-	return offset
-}
-
-func (x *RelationFilterOptions) fastWriteField4(buf []byte) (offset int) {
-	if x.OnlyToId == nil {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 4, x.GetOnlyToId())
-	return offset
-}
-
-func (x *RelationFilterOptions) fastWriteField5(buf []byte) (offset int) {
-	if x.OnlyRelationType == nil {
-		return offset
-	}
-	offset += fastpb.WriteInt32(buf[offset:], 5, x.GetOnlyRelationType())
-	return offset
-}
-
-func (x *UserRelation) FastWrite(buf []byte) (offset int) {
-	if x == nil {
-		return offset
-	}
-	offset += x.fastWriteField1(buf[offset:])
-	offset += x.fastWriteField2(buf[offset:])
-	offset += x.fastWriteField3(buf[offset:])
-	offset += x.fastWriteField4(buf[offset:])
-	offset += x.fastWriteField5(buf[offset:])
-	return offset
-}
-
-func (x *UserRelation) fastWriteField1(buf []byte) (offset int) {
-	if x.User == nil {
-		return offset
-	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetUser())
-	return offset
-}
-
-func (x *UserRelation) fastWriteField2(buf []byte) (offset int) {
-	if x.CreateTime == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetCreateTime())
-	return offset
-}
-
-func (x *UserRelation) fastWriteField3(buf []byte) (offset int) {
-	if x.UpdateTime == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetUpdateTime())
-	return offset
-}
-
-func (x *UserRelation) fastWriteField4(buf []byte) (offset int) {
-	if x.RelationType == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt32(buf[offset:], 4, x.GetRelationType())
-	return offset
-}
-
-func (x *UserRelation) fastWriteField5(buf []byte) (offset int) {
-	if !x.IsToMe {
-		return offset
-	}
-	offset += fastpb.WriteBool(buf[offset:], 5, x.GetIsToMe())
+	offset += fastpb.WriteInt32(buf[offset:], 5, x.GetRelationType())
 	return offset
 }
 
@@ -628,134 +422,48 @@ func (x *RelationInfo) Size() (n int) {
 	n += x.sizeField1()
 	n += x.sizeField2()
 	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
 	return n
 }
 
 func (x *RelationInfo) sizeField1() (n int) {
-	if x.ToType == 0 {
+	if x.FromId == "" {
 		return n
 	}
-	n += fastpb.SizeInt32(1, x.GetToType())
+	n += fastpb.SizeString(1, x.GetFromId())
 	return n
 }
 
 func (x *RelationInfo) sizeField2() (n int) {
-	if x.ToId == "" {
+	if x.FromType == 0 {
 		return n
 	}
-	n += fastpb.SizeString(2, x.GetToId())
+	n += fastpb.SizeInt64(2, x.GetFromType())
 	return n
 }
 
 func (x *RelationInfo) sizeField3() (n int) {
+	if x.ToId == "" {
+		return n
+	}
+	n += fastpb.SizeString(3, x.GetToId())
+	return n
+}
+
+func (x *RelationInfo) sizeField4() (n int) {
+	if x.ToType == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(4, x.GetToType())
+	return n
+}
+
+func (x *RelationInfo) sizeField5() (n int) {
 	if x.RelationType == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(3, x.GetRelationType())
-	return n
-}
-
-func (x *RelationFilterOptions) Size() (n int) {
-	if x == nil {
-		return n
-	}
-	n += x.sizeField1()
-	n += x.sizeField2()
-	n += x.sizeField3()
-	n += x.sizeField4()
-	n += x.sizeField5()
-	return n
-}
-
-func (x *RelationFilterOptions) sizeField1() (n int) {
-	if x.OnlyFromType == nil {
-		return n
-	}
-	n += fastpb.SizeInt32(1, x.GetOnlyFromType())
-	return n
-}
-
-func (x *RelationFilterOptions) sizeField2() (n int) {
-	if x.OnlyFromId == nil {
-		return n
-	}
-	n += fastpb.SizeString(2, x.GetOnlyFromId())
-	return n
-}
-
-func (x *RelationFilterOptions) sizeField3() (n int) {
-	if x.OnlyToType == nil {
-		return n
-	}
-	n += fastpb.SizeInt32(3, x.GetOnlyToType())
-	return n
-}
-
-func (x *RelationFilterOptions) sizeField4() (n int) {
-	if x.OnlyToId == nil {
-		return n
-	}
-	n += fastpb.SizeString(4, x.GetOnlyToId())
-	return n
-}
-
-func (x *RelationFilterOptions) sizeField5() (n int) {
-	if x.OnlyRelationType == nil {
-		return n
-	}
-	n += fastpb.SizeInt32(5, x.GetOnlyRelationType())
-	return n
-}
-
-func (x *UserRelation) Size() (n int) {
-	if x == nil {
-		return n
-	}
-	n += x.sizeField1()
-	n += x.sizeField2()
-	n += x.sizeField3()
-	n += x.sizeField4()
-	n += x.sizeField5()
-	return n
-}
-
-func (x *UserRelation) sizeField1() (n int) {
-	if x.User == nil {
-		return n
-	}
-	n += fastpb.SizeMessage(1, x.GetUser())
-	return n
-}
-
-func (x *UserRelation) sizeField2() (n int) {
-	if x.CreateTime == 0 {
-		return n
-	}
-	n += fastpb.SizeInt64(2, x.GetCreateTime())
-	return n
-}
-
-func (x *UserRelation) sizeField3() (n int) {
-	if x.UpdateTime == 0 {
-		return n
-	}
-	n += fastpb.SizeInt64(3, x.GetUpdateTime())
-	return n
-}
-
-func (x *UserRelation) sizeField4() (n int) {
-	if x.RelationType == 0 {
-		return n
-	}
-	n += fastpb.SizeInt32(4, x.GetRelationType())
-	return n
-}
-
-func (x *UserRelation) sizeField5() (n int) {
-	if !x.IsToMe {
-		return n
-	}
-	n += fastpb.SizeBool(5, x.GetIsToMe())
+	n += fastpb.SizeInt32(5, x.GetRelationType())
 	return n
 }
 
@@ -774,25 +482,11 @@ var fieldIDToName_UserDetail = map[int32]string{
 }
 
 var fieldIDToName_RelationInfo = map[int32]string{
-	1: "ToType",
-	2: "ToId",
-	3: "RelationType",
-}
-
-var fieldIDToName_RelationFilterOptions = map[int32]string{
-	1: "OnlyFromType",
-	2: "OnlyFromId",
-	3: "OnlyToType",
-	4: "OnlyToId",
-	5: "OnlyRelationType",
-}
-
-var fieldIDToName_UserRelation = map[int32]string{
-	1: "User",
-	2: "CreateTime",
-	3: "UpdateTime",
-	4: "RelationType",
-	5: "IsToMe",
+	1: "FromId",
+	2: "FromType",
+	3: "ToId",
+	4: "ToType",
+	5: "RelationType",
 }
 
 var _ = sts.File_cloudmind_sts_common_proto
