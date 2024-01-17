@@ -17,6 +17,9 @@ type Client interface {
 	CreateAuth(ctx context.Context, Req *sts.CreateAuthReq, callOptions ...callopt.Option) (r *sts.CreateAuthResp, err error)
 	Login(ctx context.Context, Req *sts.LoginReq, callOptions ...callopt.Option) (r *sts.LoginResp, err error)
 	AppendAuth(ctx context.Context, Req *sts.AppendAuthReq, callOptions ...callopt.Option) (r *sts.AppendAuthResp, err error)
+	GenCosSts(ctx context.Context, Req *sts.GenCosStsReq, callOptions ...callopt.Option) (r *sts.GenCosStsResp, err error)
+	GenSignedUrl(ctx context.Context, Req *sts.GenSignedUrlReq, callOptions ...callopt.Option) (r *sts.GenSignedUrlResp, err error)
+	DeleteObject(ctx context.Context, Req *sts.DeleteObjectReq, callOptions ...callopt.Option) (r *sts.DeleteObjectResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -76,4 +79,19 @@ func (p *kStsServiceClient) Login(ctx context.Context, Req *sts.LoginReq, callOp
 func (p *kStsServiceClient) AppendAuth(ctx context.Context, Req *sts.AppendAuthReq, callOptions ...callopt.Option) (r *sts.AppendAuthResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.AppendAuth(ctx, Req)
+}
+
+func (p *kStsServiceClient) GenCosSts(ctx context.Context, Req *sts.GenCosStsReq, callOptions ...callopt.Option) (r *sts.GenCosStsResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GenCosSts(ctx, Req)
+}
+
+func (p *kStsServiceClient) GenSignedUrl(ctx context.Context, Req *sts.GenSignedUrlReq, callOptions ...callopt.Option) (r *sts.GenSignedUrlResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GenSignedUrl(ctx, Req)
+}
+
+func (p *kStsServiceClient) DeleteObject(ctx context.Context, Req *sts.DeleteObjectReq, callOptions ...callopt.Option) (r *sts.DeleteObjectResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteObject(ctx, Req)
 }
