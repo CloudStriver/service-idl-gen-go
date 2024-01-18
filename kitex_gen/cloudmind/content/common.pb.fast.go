@@ -1133,6 +1133,11 @@ func (x *PostInfo) FastRead(buf []byte, _type int8, number int32) (offset int, e
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 7:
+		offset, err = x.fastReadField7(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -1147,21 +1152,26 @@ ReadFieldError:
 }
 
 func (x *PostInfo) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	x.UserId, offset, err = fastpb.ReadString(buf, _type)
+	x.PostId, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
 func (x *PostInfo) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.Title, offset, err = fastpb.ReadString(buf, _type)
+	x.UserId, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
 func (x *PostInfo) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	x.Text, offset, err = fastpb.ReadString(buf, _type)
+	x.Title, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
 func (x *PostInfo) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	x.Text, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *PostInfo) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	var v string
 	v, offset, err = fastpb.ReadString(buf, _type)
 	if err != nil {
@@ -1171,12 +1181,12 @@ func (x *PostInfo) fastReadField4(buf []byte, _type int8) (offset int, err error
 	return offset, err
 }
 
-func (x *PostInfo) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+func (x *PostInfo) fastReadField6(buf []byte, _type int8) (offset int, err error) {
 	x.Status, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
-func (x *PostInfo) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+func (x *PostInfo) fastReadField7(buf []byte, _type int8) (offset int, err error) {
 	x.Url, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
@@ -2125,56 +2135,65 @@ func (x *PostInfo) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField4(buf[offset:])
 	offset += x.fastWriteField5(buf[offset:])
 	offset += x.fastWriteField6(buf[offset:])
+	offset += x.fastWriteField7(buf[offset:])
 	return offset
 }
 
 func (x *PostInfo) fastWriteField1(buf []byte) (offset int) {
-	if x.UserId == "" {
+	if x.PostId == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 1, x.GetUserId())
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetPostId())
 	return offset
 }
 
 func (x *PostInfo) fastWriteField2(buf []byte) (offset int) {
-	if x.Title == "" {
+	if x.UserId == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetTitle())
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetUserId())
 	return offset
 }
 
 func (x *PostInfo) fastWriteField3(buf []byte) (offset int) {
-	if x.Text == "" {
+	if x.Title == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 3, x.GetText())
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetTitle())
 	return offset
 }
 
 func (x *PostInfo) fastWriteField4(buf []byte) (offset int) {
-	if len(x.Tags) == 0 {
+	if x.Text == "" {
 		return offset
 	}
-	for i := range x.GetTags() {
-		offset += fastpb.WriteString(buf[offset:], 4, x.GetTags()[i])
-	}
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetText())
 	return offset
 }
 
 func (x *PostInfo) fastWriteField5(buf []byte) (offset int) {
-	if x.Status == 0 {
+	if len(x.Tags) == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetStatus())
+	for i := range x.GetTags() {
+		offset += fastpb.WriteString(buf[offset:], 5, x.GetTags()[i])
+	}
 	return offset
 }
 
 func (x *PostInfo) fastWriteField6(buf []byte) (offset int) {
+	if x.Status == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetStatus())
+	return offset
+}
+
+func (x *PostInfo) fastWriteField7(buf []byte) (offset int) {
 	if x.Url == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 6, x.GetUrl())
+	offset += fastpb.WriteString(buf[offset:], 7, x.GetUrl())
 	return offset
 }
 
@@ -3102,56 +3121,65 @@ func (x *PostInfo) Size() (n int) {
 	n += x.sizeField4()
 	n += x.sizeField5()
 	n += x.sizeField6()
+	n += x.sizeField7()
 	return n
 }
 
 func (x *PostInfo) sizeField1() (n int) {
-	if x.UserId == "" {
+	if x.PostId == "" {
 		return n
 	}
-	n += fastpb.SizeString(1, x.GetUserId())
+	n += fastpb.SizeString(1, x.GetPostId())
 	return n
 }
 
 func (x *PostInfo) sizeField2() (n int) {
-	if x.Title == "" {
+	if x.UserId == "" {
 		return n
 	}
-	n += fastpb.SizeString(2, x.GetTitle())
+	n += fastpb.SizeString(2, x.GetUserId())
 	return n
 }
 
 func (x *PostInfo) sizeField3() (n int) {
-	if x.Text == "" {
+	if x.Title == "" {
 		return n
 	}
-	n += fastpb.SizeString(3, x.GetText())
+	n += fastpb.SizeString(3, x.GetTitle())
 	return n
 }
 
 func (x *PostInfo) sizeField4() (n int) {
-	if len(x.Tags) == 0 {
+	if x.Text == "" {
 		return n
 	}
-	for i := range x.GetTags() {
-		n += fastpb.SizeString(4, x.GetTags()[i])
-	}
+	n += fastpb.SizeString(4, x.GetText())
 	return n
 }
 
 func (x *PostInfo) sizeField5() (n int) {
-	if x.Status == 0 {
+	if len(x.Tags) == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(5, x.GetStatus())
+	for i := range x.GetTags() {
+		n += fastpb.SizeString(5, x.GetTags()[i])
+	}
 	return n
 }
 
 func (x *PostInfo) sizeField6() (n int) {
+	if x.Status == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(6, x.GetStatus())
+	return n
+}
+
+func (x *PostInfo) sizeField7() (n int) {
 	if x.Url == "" {
 		return n
 	}
-	n += fastpb.SizeString(6, x.GetUrl())
+	n += fastpb.SizeString(7, x.GetUrl())
 	return n
 }
 
@@ -3342,12 +3370,13 @@ var fieldIDToName_Post = map[int32]string{
 }
 
 var fieldIDToName_PostInfo = map[int32]string{
-	1: "UserId",
-	2: "Title",
-	3: "Text",
-	4: "Tags",
-	5: "Status",
-	6: "Url",
+	1: "PostId",
+	2: "UserId",
+	3: "Title",
+	4: "Text",
+	5: "Tags",
+	6: "Status",
+	7: "Url",
 }
 
 var fieldIDToName_PostFilterOptions = map[int32]string{

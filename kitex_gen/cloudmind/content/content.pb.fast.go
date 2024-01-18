@@ -1859,11 +1859,6 @@ func (x *UpdatePostReq) FastRead(buf []byte, _type int8, number int32) (offset i
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 2:
-		offset, err = x.fastReadField2(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -1878,11 +1873,6 @@ ReadFieldError:
 }
 
 func (x *UpdatePostReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	x.PostId, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *UpdatePostReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
 	var v PostInfo
 	offset, err = fastpb.ReadMessage(buf, _type, &v)
 	if err != nil {
@@ -3201,23 +3191,14 @@ func (x *UpdatePostReq) FastWrite(buf []byte) (offset int) {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
-	offset += x.fastWriteField2(buf[offset:])
 	return offset
 }
 
 func (x *UpdatePostReq) fastWriteField1(buf []byte) (offset int) {
-	if x.PostId == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 1, x.GetPostId())
-	return offset
-}
-
-func (x *UpdatePostReq) fastWriteField2(buf []byte) (offset int) {
 	if x.Post == nil {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 2, x.GetPost())
+	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetPost())
 	return offset
 }
 
@@ -4461,23 +4442,14 @@ func (x *UpdatePostReq) Size() (n int) {
 		return n
 	}
 	n += x.sizeField1()
-	n += x.sizeField2()
 	return n
 }
 
 func (x *UpdatePostReq) sizeField1() (n int) {
-	if x.PostId == "" {
-		return n
-	}
-	n += fastpb.SizeString(1, x.GetPostId())
-	return n
-}
-
-func (x *UpdatePostReq) sizeField2() (n int) {
 	if x.Post == nil {
 		return n
 	}
-	n += fastpb.SizeMessage(2, x.GetPost())
+	n += fastpb.SizeMessage(1, x.GetPost())
 	return n
 }
 
@@ -4840,8 +4812,7 @@ var fieldIDToName_DeletePostReq = map[int32]string{
 var fieldIDToName_DeletePostResp = map[int32]string{}
 
 var fieldIDToName_UpdatePostReq = map[int32]string{
-	1: "PostId",
-	2: "Post",
+	1: "Post",
 }
 
 var fieldIDToName_UpdatePostResp = map[int32]string{}
