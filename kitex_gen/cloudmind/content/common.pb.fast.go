@@ -520,6 +520,16 @@ func (x *SearchField) FastRead(buf []byte, _type int8, number int32) (offset int
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -548,6 +558,18 @@ func (x *SearchField) fastReadField2(buf []byte, _type int8) (offset int, err er
 func (x *SearchField) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadString(buf, _type)
 	x.Tag = &tmp
+	return offset, err
+}
+
+func (x *SearchField) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadString(buf, _type)
+	x.Text = &tmp
+	return offset, err
+}
+
+func (x *SearchField) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadString(buf, _type)
+	x.Title = &tmp
 	return offset, err
 }
 
@@ -1279,7 +1301,7 @@ func (x *PostFilterOptions) fastReadField5(buf []byte, _type int8) (offset int, 
 
 func (x *PostFilterOptions) fastReadField6(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
-	x.Status = &tmp
+	x.OnlyStatus = &tmp
 	return offset, err
 }
 
@@ -1682,6 +1704,8 @@ func (x *SearchField) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
 	return offset
 }
 
@@ -1706,6 +1730,22 @@ func (x *SearchField) fastWriteField3(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 3, x.GetTag())
+	return offset
+}
+
+func (x *SearchField) fastWriteField4(buf []byte) (offset int) {
+	if x.Text == nil {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetText())
+	return offset
+}
+
+func (x *SearchField) fastWriteField5(buf []byte) (offset int) {
+	if x.Title == nil {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 5, x.GetTitle())
 	return offset
 }
 
@@ -2271,10 +2311,10 @@ func (x *PostFilterOptions) fastWriteField5(buf []byte) (offset int) {
 }
 
 func (x *PostFilterOptions) fastWriteField6(buf []byte) (offset int) {
-	if x.Status == nil {
+	if x.OnlyStatus == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetStatus())
+	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetOnlyStatus())
 	return offset
 }
 
@@ -2677,6 +2717,8 @@ func (x *SearchField) Size() (n int) {
 	n += x.sizeField1()
 	n += x.sizeField2()
 	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
 	return n
 }
 
@@ -2701,6 +2743,22 @@ func (x *SearchField) sizeField3() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(3, x.GetTag())
+	return n
+}
+
+func (x *SearchField) sizeField4() (n int) {
+	if x.Text == nil {
+		return n
+	}
+	n += fastpb.SizeString(4, x.GetText())
+	return n
+}
+
+func (x *SearchField) sizeField5() (n int) {
+	if x.Title == nil {
+		return n
+	}
+	n += fastpb.SizeString(5, x.GetTitle())
 	return n
 }
 
@@ -3266,10 +3324,10 @@ func (x *PostFilterOptions) sizeField5() (n int) {
 }
 
 func (x *PostFilterOptions) sizeField6() (n int) {
-	if x.Status == nil {
+	if x.OnlyStatus == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(6, x.GetStatus())
+	n += fastpb.SizeInt64(6, x.GetOnlyStatus())
 	return n
 }
 
@@ -3331,6 +3389,8 @@ var fieldIDToName_SearchField = map[int32]string{
 	1: "Name",
 	2: "Id",
 	3: "Tag",
+	4: "Text",
+	5: "Title",
 }
 
 var fieldIDToName_SearchOptions = map[int32]string{
@@ -3415,5 +3475,5 @@ var fieldIDToName_PostFilterOptions = map[int32]string{
 	3: "OnlyTitle",
 	4: "OnlyText",
 	5: "OnlyTag",
-	6: "Status",
+	6: "OnlyStatus",
 }
