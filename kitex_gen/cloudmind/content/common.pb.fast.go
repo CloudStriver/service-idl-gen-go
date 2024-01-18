@@ -1077,7 +1077,7 @@ func (x *Post) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	if err != nil {
 		return offset, err
 	}
-	x.Tag = append(x.Tag, v)
+	x.Tags = append(x.Tags, v)
 	return offset, err
 }
 
@@ -2084,11 +2084,11 @@ func (x *Post) fastWriteField4(buf []byte) (offset int) {
 }
 
 func (x *Post) fastWriteField5(buf []byte) (offset int) {
-	if len(x.Tag) == 0 {
+	if len(x.Tags) == 0 {
 		return offset
 	}
-	for i := range x.GetTag() {
-		offset += fastpb.WriteString(buf[offset:], 5, x.GetTag()[i])
+	for i := range x.GetTags() {
+		offset += fastpb.WriteString(buf[offset:], 5, x.GetTags()[i])
 	}
 	return offset
 }
@@ -3070,11 +3070,11 @@ func (x *Post) sizeField4() (n int) {
 }
 
 func (x *Post) sizeField5() (n int) {
-	if len(x.Tag) == 0 {
+	if len(x.Tags) == 0 {
 		return n
 	}
-	for i := range x.GetTag() {
-		n += fastpb.SizeString(5, x.GetTag()[i])
+	for i := range x.GetTags() {
+		n += fastpb.SizeString(5, x.GetTags()[i])
 	}
 	return n
 }
@@ -3362,7 +3362,7 @@ var fieldIDToName_Post = map[int32]string{
 	2: "UserId",
 	3: "Title",
 	4: "Text",
-	5: "Tag",
+	5: "Tags",
 	6: "Status",
 	7: "Url",
 	8: "CreateTime",

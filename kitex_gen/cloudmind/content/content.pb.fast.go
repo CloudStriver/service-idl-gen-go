@@ -1878,7 +1878,7 @@ func (x *UpdatePostReq) fastReadField1(buf []byte, _type int8) (offset int, err 
 	if err != nil {
 		return offset, err
 	}
-	x.Post = &v
+	x.PostInfo = &v
 	return offset, nil
 }
 
@@ -3195,10 +3195,10 @@ func (x *UpdatePostReq) FastWrite(buf []byte) (offset int) {
 }
 
 func (x *UpdatePostReq) fastWriteField1(buf []byte) (offset int) {
-	if x.Post == nil {
+	if x.PostInfo == nil {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetPost())
+	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetPostInfo())
 	return offset
 }
 
@@ -4446,10 +4446,10 @@ func (x *UpdatePostReq) Size() (n int) {
 }
 
 func (x *UpdatePostReq) sizeField1() (n int) {
-	if x.Post == nil {
+	if x.PostInfo == nil {
 		return n
 	}
-	n += fastpb.SizeMessage(1, x.GetPost())
+	n += fastpb.SizeMessage(1, x.GetPostInfo())
 	return n
 }
 
@@ -4812,7 +4812,7 @@ var fieldIDToName_DeletePostReq = map[int32]string{
 var fieldIDToName_DeletePostResp = map[int32]string{}
 
 var fieldIDToName_UpdatePostReq = map[int32]string{
-	1: "Post",
+	1: "PostInfo",
 }
 
 var fieldIDToName_UpdatePostResp = map[int32]string{}
