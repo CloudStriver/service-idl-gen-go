@@ -627,6 +627,11 @@ func (x *FileFilterOptions) FastRead(buf []byte, _type int8, number int32) (offs
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 7:
+		offset, err = x.fastReadField7(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -665,11 +670,17 @@ func (x *FileFilterOptions) fastReadField4(buf []byte, _type int8) (offset int, 
 }
 
 func (x *FileFilterOptions) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	x.IsDel, offset, err = fastpb.ReadInt64(buf, _type)
+	tmp, offset, err := fastpb.ReadString(buf, _type)
+	x.OnlyTag = &tmp
 	return offset, err
 }
 
 func (x *FileFilterOptions) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+	x.IsDel, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *FileFilterOptions) fastReadField7(buf []byte, _type int8) (offset int, err error) {
 	x.DocumentType, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
@@ -1733,6 +1744,7 @@ func (x *FileFilterOptions) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField4(buf[offset:])
 	offset += x.fastWriteField5(buf[offset:])
 	offset += x.fastWriteField6(buf[offset:])
+	offset += x.fastWriteField7(buf[offset:])
 	return offset
 }
 
@@ -1769,18 +1781,26 @@ func (x *FileFilterOptions) fastWriteField4(buf []byte) (offset int) {
 }
 
 func (x *FileFilterOptions) fastWriteField5(buf []byte) (offset int) {
-	if x.IsDel == 0 {
+	if x.OnlyTag == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetIsDel())
+	offset += fastpb.WriteString(buf[offset:], 5, x.GetOnlyTag())
 	return offset
 }
 
 func (x *FileFilterOptions) fastWriteField6(buf []byte) (offset int) {
+	if x.IsDel == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetIsDel())
+	return offset
+}
+
+func (x *FileFilterOptions) fastWriteField7(buf []byte) (offset int) {
 	if x.DocumentType == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetDocumentType())
+	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetDocumentType())
 	return offset
 }
 
@@ -2719,6 +2739,7 @@ func (x *FileFilterOptions) Size() (n int) {
 	n += x.sizeField4()
 	n += x.sizeField5()
 	n += x.sizeField6()
+	n += x.sizeField7()
 	return n
 }
 
@@ -2755,18 +2776,26 @@ func (x *FileFilterOptions) sizeField4() (n int) {
 }
 
 func (x *FileFilterOptions) sizeField5() (n int) {
-	if x.IsDel == 0 {
+	if x.OnlyTag == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(5, x.GetIsDel())
+	n += fastpb.SizeString(5, x.GetOnlyTag())
 	return n
 }
 
 func (x *FileFilterOptions) sizeField6() (n int) {
+	if x.IsDel == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(6, x.GetIsDel())
+	return n
+}
+
+func (x *FileFilterOptions) sizeField7() (n int) {
 	if x.DocumentType == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(6, x.GetDocumentType())
+	n += fastpb.SizeInt64(7, x.GetDocumentType())
 	return n
 }
 
@@ -3314,8 +3343,9 @@ var fieldIDToName_FileFilterOptions = map[int32]string{
 	2: "OnlyFileId",
 	3: "OnlyFatherId",
 	4: "OnlyFileType",
-	5: "IsDel",
-	6: "DocumentType",
+	5: "OnlyTag",
+	6: "IsDel",
+	7: "DocumentType",
 }
 
 var fieldIDToName_ShareFileFilterOptions = map[int32]string{

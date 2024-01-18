@@ -759,6 +759,11 @@ SkipFieldError:
 
 func (x *DeleteFileReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	case 2:
 		offset, err = x.fastReadField2(buf, _type)
 		if err != nil {
@@ -785,6 +790,11 @@ SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 ReadFieldError:
 	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_DeleteFileReq[number], err)
+}
+
+func (x *DeleteFileReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.FileId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
 }
 
 func (x *DeleteFileReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
@@ -2528,9 +2538,18 @@ func (x *DeleteFileReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
+	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
+	return offset
+}
+
+func (x *DeleteFileReq) fastWriteField1(buf []byte) (offset int) {
+	if x.FileId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetFileId())
 	return offset
 }
 
@@ -3779,9 +3798,18 @@ func (x *DeleteFileReq) Size() (n int) {
 	if x == nil {
 		return n
 	}
+	n += x.sizeField1()
 	n += x.sizeField2()
 	n += x.sizeField3()
 	n += x.sizeField4()
+	return n
+}
+
+func (x *DeleteFileReq) sizeField1() (n int) {
+	if x.FileId == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetFileId())
 	return n
 }
 
@@ -4660,6 +4688,7 @@ var fieldIDToName_AddFileToPublicSpaceReq = map[int32]string{
 var fieldIDToName_AddFileToPublicSpaceResp = map[int32]string{}
 
 var fieldIDToName_DeleteFileReq = map[int32]string{
+	1: "FileId",
 	2: "UserId",
 	3: "DeleteType",
 	4: "ClearCommunity",
