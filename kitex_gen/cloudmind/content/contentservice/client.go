@@ -24,8 +24,6 @@ type Client interface {
 	AddFileToPublicSpace(ctx context.Context, Req *content.AddFileToPublicSpaceReq, callOptions ...callopt.Option) (r *content.AddFileToPublicSpaceResp, err error)
 	DeleteFile(ctx context.Context, Req *content.DeleteFileReq, callOptions ...callopt.Option) (r *content.DeleteFileResp, err error)
 	RecoverRecycleBinFile(ctx context.Context, Req *content.RecoverRecycleBinFileReq, callOptions ...callopt.Option) (r *content.RecoverRecycleBinFileResp, err error)
-	DeleteExpiredFiles(ctx context.Context, Req *content.DeleteExpiredFilesReq, callOptions ...callopt.Option) (r *content.DeleteExpiredFilesResp, err error)
-	DeleteExpiredShareCodes(ctx context.Context, Req *content.DeleteExpiredShareCodesReq, callOptions ...callopt.Option) (r *content.DeleteExpiredShareCodesResp, err error)
 	GetLabel(ctx context.Context, Req *content.GetLabelReq, callOptions ...callopt.Option) (r *content.GetLabelResp, err error)
 	CreateLabel(ctx context.Context, Req *content.CreateLabelReq, callOptions ...callopt.Option) (r *content.CreateLabelResp, err error)
 	UpdateLabel(ctx context.Context, Req *content.UpdateLabelReq, callOptions ...callopt.Option) (r *content.UpdateLabelResp, err error)
@@ -140,16 +138,6 @@ func (p *kContentServiceClient) DeleteFile(ctx context.Context, Req *content.Del
 func (p *kContentServiceClient) RecoverRecycleBinFile(ctx context.Context, Req *content.RecoverRecycleBinFileReq, callOptions ...callopt.Option) (r *content.RecoverRecycleBinFileResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.RecoverRecycleBinFile(ctx, Req)
-}
-
-func (p *kContentServiceClient) DeleteExpiredFiles(ctx context.Context, Req *content.DeleteExpiredFilesReq, callOptions ...callopt.Option) (r *content.DeleteExpiredFilesResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.DeleteExpiredFiles(ctx, Req)
-}
-
-func (p *kContentServiceClient) DeleteExpiredShareCodes(ctx context.Context, Req *content.DeleteExpiredShareCodesReq, callOptions ...callopt.Option) (r *content.DeleteExpiredShareCodesResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.DeleteExpiredShareCodes(ctx, Req)
 }
 
 func (p *kContentServiceClient) GetLabel(ctx context.Context, Req *content.GetLabelReq, callOptions ...callopt.Option) (r *content.GetLabelResp, err error) {

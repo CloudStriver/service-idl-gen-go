@@ -21,41 +21,39 @@ func NewServiceInfo() *kitex.ServiceInfo {
 	serviceName := "ContentService"
 	handlerType := (*content.ContentService)(nil)
 	methods := map[string]kitex.MethodInfo{
-		"GetFileIsExist":          kitex.NewMethodInfo(getFileIsExistHandler, newGetFileIsExistArgs, newGetFileIsExistResult, false),
-		"GetFile":                 kitex.NewMethodInfo(getFileHandler, newGetFileArgs, newGetFileResult, false),
-		"GetFileList":             kitex.NewMethodInfo(getFileListHandler, newGetFileListArgs, newGetFileListResult, false),
-		"GetFileCount":            kitex.NewMethodInfo(getFileCountHandler, newGetFileCountArgs, newGetFileCountResult, false),
-		"GetFileBySharingCode":    kitex.NewMethodInfo(getFileBySharingCodeHandler, newGetFileBySharingCodeArgs, newGetFileBySharingCodeResult, false),
-		"GetFolderSize":           kitex.NewMethodInfo(getFolderSizeHandler, newGetFolderSizeArgs, newGetFolderSizeResult, false),
-		"CreateFolder":            kitex.NewMethodInfo(createFolderHandler, newCreateFolderArgs, newCreateFolderResult, false),
-		"UpdateFile":              kitex.NewMethodInfo(updateFileHandler, newUpdateFileArgs, newUpdateFileResult, false),
-		"MoveFile":                kitex.NewMethodInfo(moveFileHandler, newMoveFileArgs, newMoveFileResult, false),
-		"SaveFileToPrivateSpace":  kitex.NewMethodInfo(saveFileToPrivateSpaceHandler, newSaveFileToPrivateSpaceArgs, newSaveFileToPrivateSpaceResult, false),
-		"AddFileToPublicSpace":    kitex.NewMethodInfo(addFileToPublicSpaceHandler, newAddFileToPublicSpaceArgs, newAddFileToPublicSpaceResult, false),
-		"DeleteFile":              kitex.NewMethodInfo(deleteFileHandler, newDeleteFileArgs, newDeleteFileResult, false),
-		"RecoverRecycleBinFile":   kitex.NewMethodInfo(recoverRecycleBinFileHandler, newRecoverRecycleBinFileArgs, newRecoverRecycleBinFileResult, false),
-		"DeleteExpiredFiles":      kitex.NewMethodInfo(deleteExpiredFilesHandler, newDeleteExpiredFilesArgs, newDeleteExpiredFilesResult, false),
-		"DeleteExpiredShareCodes": kitex.NewMethodInfo(deleteExpiredShareCodesHandler, newDeleteExpiredShareCodesArgs, newDeleteExpiredShareCodesResult, false),
-		"GetLabel":                kitex.NewMethodInfo(getLabelHandler, newGetLabelArgs, newGetLabelResult, false),
-		"CreateLabel":             kitex.NewMethodInfo(createLabelHandler, newCreateLabelArgs, newCreateLabelResult, false),
-		"UpdateLabel":             kitex.NewMethodInfo(updateLabelHandler, newUpdateLabelArgs, newUpdateLabelResult, false),
-		"DeleteLabel":             kitex.NewMethodInfo(deleteLabelHandler, newDeleteLabelArgs, newDeleteLabelResult, false),
-		"GetShareList":            kitex.NewMethodInfo(getShareListHandler, newGetShareListArgs, newGetShareListResult, false),
-		"CreateShareCode":         kitex.NewMethodInfo(createShareCodeHandler, newCreateShareCodeArgs, newCreateShareCodeResult, false),
-		"UpdateShareCode":         kitex.NewMethodInfo(updateShareCodeHandler, newUpdateShareCodeArgs, newUpdateShareCodeResult, false),
-		"DeleteShareCode":         kitex.NewMethodInfo(deleteShareCodeHandler, newDeleteShareCodeArgs, newDeleteShareCodeResult, false),
-		"ParsingShareCode":        kitex.NewMethodInfo(parsingShareCodeHandler, newParsingShareCodeArgs, newParsingShareCodeResult, false),
-		"UpdateUser":              kitex.NewMethodInfo(updateUserHandler, newUpdateUserArgs, newUpdateUserResult, false),
-		"GetUser":                 kitex.NewMethodInfo(getUserHandler, newGetUserArgs, newGetUserResult, false),
-		"GetUserDetail":           kitex.NewMethodInfo(getUserDetailHandler, newGetUserDetailArgs, newGetUserDetailResult, false),
-		"SearchUser":              kitex.NewMethodInfo(searchUserHandler, newSearchUserArgs, newSearchUserResult, false),
-		"CreateUser":              kitex.NewMethodInfo(createUserHandler, newCreateUserArgs, newCreateUserResult, false),
-		"DeleteUser":              kitex.NewMethodInfo(deleteUserHandler, newDeleteUserArgs, newDeleteUserResult, false),
-		"CreatePost":              kitex.NewMethodInfo(createPostHandler, newCreatePostArgs, newCreatePostResult, false),
-		"DeletePost":              kitex.NewMethodInfo(deletePostHandler, newDeletePostArgs, newDeletePostResult, false),
-		"UpdatePost":              kitex.NewMethodInfo(updatePostHandler, newUpdatePostArgs, newUpdatePostResult, false),
-		"GetPost":                 kitex.NewMethodInfo(getPostHandler, newGetPostArgs, newGetPostResult, false),
-		"GetPosts":                kitex.NewMethodInfo(getPostsHandler, newGetPostsArgs, newGetPostsResult, false),
+		"GetFileIsExist":         kitex.NewMethodInfo(getFileIsExistHandler, newGetFileIsExistArgs, newGetFileIsExistResult, false),
+		"GetFile":                kitex.NewMethodInfo(getFileHandler, newGetFileArgs, newGetFileResult, false),
+		"GetFileList":            kitex.NewMethodInfo(getFileListHandler, newGetFileListArgs, newGetFileListResult, false),
+		"GetFileCount":           kitex.NewMethodInfo(getFileCountHandler, newGetFileCountArgs, newGetFileCountResult, false),
+		"GetFileBySharingCode":   kitex.NewMethodInfo(getFileBySharingCodeHandler, newGetFileBySharingCodeArgs, newGetFileBySharingCodeResult, false),
+		"GetFolderSize":          kitex.NewMethodInfo(getFolderSizeHandler, newGetFolderSizeArgs, newGetFolderSizeResult, false),
+		"CreateFolder":           kitex.NewMethodInfo(createFolderHandler, newCreateFolderArgs, newCreateFolderResult, false),
+		"UpdateFile":             kitex.NewMethodInfo(updateFileHandler, newUpdateFileArgs, newUpdateFileResult, false),
+		"MoveFile":               kitex.NewMethodInfo(moveFileHandler, newMoveFileArgs, newMoveFileResult, false),
+		"SaveFileToPrivateSpace": kitex.NewMethodInfo(saveFileToPrivateSpaceHandler, newSaveFileToPrivateSpaceArgs, newSaveFileToPrivateSpaceResult, false),
+		"AddFileToPublicSpace":   kitex.NewMethodInfo(addFileToPublicSpaceHandler, newAddFileToPublicSpaceArgs, newAddFileToPublicSpaceResult, false),
+		"DeleteFile":             kitex.NewMethodInfo(deleteFileHandler, newDeleteFileArgs, newDeleteFileResult, false),
+		"RecoverRecycleBinFile":  kitex.NewMethodInfo(recoverRecycleBinFileHandler, newRecoverRecycleBinFileArgs, newRecoverRecycleBinFileResult, false),
+		"GetLabel":               kitex.NewMethodInfo(getLabelHandler, newGetLabelArgs, newGetLabelResult, false),
+		"CreateLabel":            kitex.NewMethodInfo(createLabelHandler, newCreateLabelArgs, newCreateLabelResult, false),
+		"UpdateLabel":            kitex.NewMethodInfo(updateLabelHandler, newUpdateLabelArgs, newUpdateLabelResult, false),
+		"DeleteLabel":            kitex.NewMethodInfo(deleteLabelHandler, newDeleteLabelArgs, newDeleteLabelResult, false),
+		"GetShareList":           kitex.NewMethodInfo(getShareListHandler, newGetShareListArgs, newGetShareListResult, false),
+		"CreateShareCode":        kitex.NewMethodInfo(createShareCodeHandler, newCreateShareCodeArgs, newCreateShareCodeResult, false),
+		"UpdateShareCode":        kitex.NewMethodInfo(updateShareCodeHandler, newUpdateShareCodeArgs, newUpdateShareCodeResult, false),
+		"DeleteShareCode":        kitex.NewMethodInfo(deleteShareCodeHandler, newDeleteShareCodeArgs, newDeleteShareCodeResult, false),
+		"ParsingShareCode":       kitex.NewMethodInfo(parsingShareCodeHandler, newParsingShareCodeArgs, newParsingShareCodeResult, false),
+		"UpdateUser":             kitex.NewMethodInfo(updateUserHandler, newUpdateUserArgs, newUpdateUserResult, false),
+		"GetUser":                kitex.NewMethodInfo(getUserHandler, newGetUserArgs, newGetUserResult, false),
+		"GetUserDetail":          kitex.NewMethodInfo(getUserDetailHandler, newGetUserDetailArgs, newGetUserDetailResult, false),
+		"SearchUser":             kitex.NewMethodInfo(searchUserHandler, newSearchUserArgs, newSearchUserResult, false),
+		"CreateUser":             kitex.NewMethodInfo(createUserHandler, newCreateUserArgs, newCreateUserResult, false),
+		"DeleteUser":             kitex.NewMethodInfo(deleteUserHandler, newDeleteUserArgs, newDeleteUserResult, false),
+		"CreatePost":             kitex.NewMethodInfo(createPostHandler, newCreatePostArgs, newCreatePostResult, false),
+		"DeletePost":             kitex.NewMethodInfo(deletePostHandler, newDeletePostArgs, newDeletePostResult, false),
+		"UpdatePost":             kitex.NewMethodInfo(updatePostHandler, newUpdatePostArgs, newUpdatePostResult, false),
+		"GetPost":                kitex.NewMethodInfo(getPostHandler, newGetPostArgs, newGetPostResult, false),
+		"GetPosts":               kitex.NewMethodInfo(getPostsHandler, newGetPostsArgs, newGetPostsResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName":     "cloudmind.content",
@@ -2058,312 +2056,6 @@ func (p *RecoverRecycleBinFileResult) IsSetSuccess() bool {
 }
 
 func (p *RecoverRecycleBinFileResult) GetResult() interface{} {
-	return p.Success
-}
-
-func deleteExpiredFilesHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	switch s := arg.(type) {
-	case *streaming.Args:
-		st := s.Stream
-		req := new(content.DeleteExpiredFilesReq)
-		if err := st.RecvMsg(req); err != nil {
-			return err
-		}
-		resp, err := handler.(content.ContentService).DeleteExpiredFiles(ctx, req)
-		if err != nil {
-			return err
-		}
-		if err := st.SendMsg(resp); err != nil {
-			return err
-		}
-	case *DeleteExpiredFilesArgs:
-		success, err := handler.(content.ContentService).DeleteExpiredFiles(ctx, s.Req)
-		if err != nil {
-			return err
-		}
-		realResult := result.(*DeleteExpiredFilesResult)
-		realResult.Success = success
-	}
-	return nil
-}
-func newDeleteExpiredFilesArgs() interface{} {
-	return &DeleteExpiredFilesArgs{}
-}
-
-func newDeleteExpiredFilesResult() interface{} {
-	return &DeleteExpiredFilesResult{}
-}
-
-type DeleteExpiredFilesArgs struct {
-	Req *content.DeleteExpiredFilesReq
-}
-
-func (p *DeleteExpiredFilesArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetReq() {
-		p.Req = new(content.DeleteExpiredFilesReq)
-	}
-	return p.Req.FastRead(buf, _type, number)
-}
-
-func (p *DeleteExpiredFilesArgs) FastWrite(buf []byte) (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.FastWrite(buf)
-}
-
-func (p *DeleteExpiredFilesArgs) Size() (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.Size()
-}
-
-func (p *DeleteExpiredFilesArgs) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetReq() {
-		return out, nil
-	}
-	return proto.Marshal(p.Req)
-}
-
-func (p *DeleteExpiredFilesArgs) Unmarshal(in []byte) error {
-	msg := new(content.DeleteExpiredFilesReq)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Req = msg
-	return nil
-}
-
-var DeleteExpiredFilesArgs_Req_DEFAULT *content.DeleteExpiredFilesReq
-
-func (p *DeleteExpiredFilesArgs) GetReq() *content.DeleteExpiredFilesReq {
-	if !p.IsSetReq() {
-		return DeleteExpiredFilesArgs_Req_DEFAULT
-	}
-	return p.Req
-}
-
-func (p *DeleteExpiredFilesArgs) IsSetReq() bool {
-	return p.Req != nil
-}
-
-func (p *DeleteExpiredFilesArgs) GetFirstArgument() interface{} {
-	return p.Req
-}
-
-type DeleteExpiredFilesResult struct {
-	Success *content.DeleteExpiredFilesResp
-}
-
-var DeleteExpiredFilesResult_Success_DEFAULT *content.DeleteExpiredFilesResp
-
-func (p *DeleteExpiredFilesResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetSuccess() {
-		p.Success = new(content.DeleteExpiredFilesResp)
-	}
-	return p.Success.FastRead(buf, _type, number)
-}
-
-func (p *DeleteExpiredFilesResult) FastWrite(buf []byte) (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.FastWrite(buf)
-}
-
-func (p *DeleteExpiredFilesResult) Size() (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.Size()
-}
-
-func (p *DeleteExpiredFilesResult) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetSuccess() {
-		return out, nil
-	}
-	return proto.Marshal(p.Success)
-}
-
-func (p *DeleteExpiredFilesResult) Unmarshal(in []byte) error {
-	msg := new(content.DeleteExpiredFilesResp)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Success = msg
-	return nil
-}
-
-func (p *DeleteExpiredFilesResult) GetSuccess() *content.DeleteExpiredFilesResp {
-	if !p.IsSetSuccess() {
-		return DeleteExpiredFilesResult_Success_DEFAULT
-	}
-	return p.Success
-}
-
-func (p *DeleteExpiredFilesResult) SetSuccess(x interface{}) {
-	p.Success = x.(*content.DeleteExpiredFilesResp)
-}
-
-func (p *DeleteExpiredFilesResult) IsSetSuccess() bool {
-	return p.Success != nil
-}
-
-func (p *DeleteExpiredFilesResult) GetResult() interface{} {
-	return p.Success
-}
-
-func deleteExpiredShareCodesHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	switch s := arg.(type) {
-	case *streaming.Args:
-		st := s.Stream
-		req := new(content.DeleteExpiredShareCodesReq)
-		if err := st.RecvMsg(req); err != nil {
-			return err
-		}
-		resp, err := handler.(content.ContentService).DeleteExpiredShareCodes(ctx, req)
-		if err != nil {
-			return err
-		}
-		if err := st.SendMsg(resp); err != nil {
-			return err
-		}
-	case *DeleteExpiredShareCodesArgs:
-		success, err := handler.(content.ContentService).DeleteExpiredShareCodes(ctx, s.Req)
-		if err != nil {
-			return err
-		}
-		realResult := result.(*DeleteExpiredShareCodesResult)
-		realResult.Success = success
-	}
-	return nil
-}
-func newDeleteExpiredShareCodesArgs() interface{} {
-	return &DeleteExpiredShareCodesArgs{}
-}
-
-func newDeleteExpiredShareCodesResult() interface{} {
-	return &DeleteExpiredShareCodesResult{}
-}
-
-type DeleteExpiredShareCodesArgs struct {
-	Req *content.DeleteExpiredShareCodesReq
-}
-
-func (p *DeleteExpiredShareCodesArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetReq() {
-		p.Req = new(content.DeleteExpiredShareCodesReq)
-	}
-	return p.Req.FastRead(buf, _type, number)
-}
-
-func (p *DeleteExpiredShareCodesArgs) FastWrite(buf []byte) (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.FastWrite(buf)
-}
-
-func (p *DeleteExpiredShareCodesArgs) Size() (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.Size()
-}
-
-func (p *DeleteExpiredShareCodesArgs) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetReq() {
-		return out, nil
-	}
-	return proto.Marshal(p.Req)
-}
-
-func (p *DeleteExpiredShareCodesArgs) Unmarshal(in []byte) error {
-	msg := new(content.DeleteExpiredShareCodesReq)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Req = msg
-	return nil
-}
-
-var DeleteExpiredShareCodesArgs_Req_DEFAULT *content.DeleteExpiredShareCodesReq
-
-func (p *DeleteExpiredShareCodesArgs) GetReq() *content.DeleteExpiredShareCodesReq {
-	if !p.IsSetReq() {
-		return DeleteExpiredShareCodesArgs_Req_DEFAULT
-	}
-	return p.Req
-}
-
-func (p *DeleteExpiredShareCodesArgs) IsSetReq() bool {
-	return p.Req != nil
-}
-
-func (p *DeleteExpiredShareCodesArgs) GetFirstArgument() interface{} {
-	return p.Req
-}
-
-type DeleteExpiredShareCodesResult struct {
-	Success *content.DeleteExpiredShareCodesResp
-}
-
-var DeleteExpiredShareCodesResult_Success_DEFAULT *content.DeleteExpiredShareCodesResp
-
-func (p *DeleteExpiredShareCodesResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetSuccess() {
-		p.Success = new(content.DeleteExpiredShareCodesResp)
-	}
-	return p.Success.FastRead(buf, _type, number)
-}
-
-func (p *DeleteExpiredShareCodesResult) FastWrite(buf []byte) (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.FastWrite(buf)
-}
-
-func (p *DeleteExpiredShareCodesResult) Size() (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.Size()
-}
-
-func (p *DeleteExpiredShareCodesResult) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetSuccess() {
-		return out, nil
-	}
-	return proto.Marshal(p.Success)
-}
-
-func (p *DeleteExpiredShareCodesResult) Unmarshal(in []byte) error {
-	msg := new(content.DeleteExpiredShareCodesResp)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Success = msg
-	return nil
-}
-
-func (p *DeleteExpiredShareCodesResult) GetSuccess() *content.DeleteExpiredShareCodesResp {
-	if !p.IsSetSuccess() {
-		return DeleteExpiredShareCodesResult_Success_DEFAULT
-	}
-	return p.Success
-}
-
-func (p *DeleteExpiredShareCodesResult) SetSuccess(x interface{}) {
-	p.Success = x.(*content.DeleteExpiredShareCodesResp)
-}
-
-func (p *DeleteExpiredShareCodesResult) IsSetSuccess() bool {
-	return p.Success != nil
-}
-
-func (p *DeleteExpiredShareCodesResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -5562,26 +5254,6 @@ func (p *kClient) RecoverRecycleBinFile(ctx context.Context, Req *content.Recove
 	_args.Req = Req
 	var _result RecoverRecycleBinFileResult
 	if err = p.c.Call(ctx, "RecoverRecycleBinFile", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
-}
-
-func (p *kClient) DeleteExpiredFiles(ctx context.Context, Req *content.DeleteExpiredFilesReq) (r *content.DeleteExpiredFilesResp, err error) {
-	var _args DeleteExpiredFilesArgs
-	_args.Req = Req
-	var _result DeleteExpiredFilesResult
-	if err = p.c.Call(ctx, "DeleteExpiredFiles", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
-}
-
-func (p *kClient) DeleteExpiredShareCodes(ctx context.Context, Req *content.DeleteExpiredShareCodesReq) (r *content.DeleteExpiredShareCodesResp, err error) {
-	var _args DeleteExpiredShareCodesArgs
-	_args.Req = Req
-	var _result DeleteExpiredShareCodesResult
-	if err = p.c.Call(ctx, "DeleteExpiredShareCodes", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
