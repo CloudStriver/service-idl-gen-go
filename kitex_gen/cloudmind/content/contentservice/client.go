@@ -41,6 +41,11 @@ type Client interface {
 	SearchUser(ctx context.Context, Req *content.SearchUserReq, callOptions ...callopt.Option) (r *content.SearchUserResp, err error)
 	CreateUser(ctx context.Context, Req *content.CreateUserReq, callOptions ...callopt.Option) (r *content.CreateUserResp, err error)
 	DeleteUser(ctx context.Context, Req *content.DeleteUserReq, callOptions ...callopt.Option) (r *content.DeleteUserResp, err error)
+	CreatePost(ctx context.Context, Req *content.CreatePostReq, callOptions ...callopt.Option) (r *content.CreatePostResp, err error)
+	DeletePost(ctx context.Context, Req *content.DeletePostReq, callOptions ...callopt.Option) (r *content.DeletePostResp, err error)
+	UpdatePost(ctx context.Context, Req *content.UpdatePostReq, callOptions ...callopt.Option) (r *content.UpdatePostResp, err error)
+	GetPost(ctx context.Context, Req *content.GetPostReq, callOptions ...callopt.Option) (r *content.GetPostResp, err error)
+	GetPosts(ctx context.Context, Req *content.GetPostsReq, callOptions ...callopt.Option) (r *content.GetPostsResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -220,4 +225,29 @@ func (p *kContentServiceClient) CreateUser(ctx context.Context, Req *content.Cre
 func (p *kContentServiceClient) DeleteUser(ctx context.Context, Req *content.DeleteUserReq, callOptions ...callopt.Option) (r *content.DeleteUserResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.DeleteUser(ctx, Req)
+}
+
+func (p *kContentServiceClient) CreatePost(ctx context.Context, Req *content.CreatePostReq, callOptions ...callopt.Option) (r *content.CreatePostResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreatePost(ctx, Req)
+}
+
+func (p *kContentServiceClient) DeletePost(ctx context.Context, Req *content.DeletePostReq, callOptions ...callopt.Option) (r *content.DeletePostResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeletePost(ctx, Req)
+}
+
+func (p *kContentServiceClient) UpdatePost(ctx context.Context, Req *content.UpdatePostReq, callOptions ...callopt.Option) (r *content.UpdatePostResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.UpdatePost(ctx, Req)
+}
+
+func (p *kContentServiceClient) GetPost(ctx context.Context, Req *content.GetPostReq, callOptions ...callopt.Option) (r *content.GetPostResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetPost(ctx, Req)
+}
+
+func (p *kContentServiceClient) GetPosts(ctx context.Context, Req *content.GetPostsReq, callOptions ...callopt.Option) (r *content.GetPostsResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetPosts(ctx, Req)
 }
