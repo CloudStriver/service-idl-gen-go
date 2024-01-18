@@ -1208,7 +1208,7 @@ func (x *PostInfo) fastReadField4(buf []byte, _type int8) (offset int, err error
 			if err != nil {
 				return offset, err
 			}
-			x.Tag = append(x.Tag, v)
+			x.Tags = append(x.Tags, v)
 			return offset, err
 		})
 	return offset, err
@@ -2219,13 +2219,13 @@ func (x *PostInfo) fastWriteField3(buf []byte) (offset int) {
 }
 
 func (x *PostInfo) fastWriteField4(buf []byte) (offset int) {
-	if len(x.Tag) == 0 {
+	if len(x.Tags) == 0 {
 		return offset
 	}
-	offset += fastpb.WriteListPacked(buf[offset:], 4, len(x.GetTag()),
+	offset += fastpb.WriteListPacked(buf[offset:], 4, len(x.GetTags()),
 		func(buf []byte, numTagOrKey, numIdxOrVal int32) int {
 			offset := 0
-			offset += fastpb.WriteInt64(buf[offset:], numTagOrKey, x.GetTag()[numIdxOrVal])
+			offset += fastpb.WriteInt64(buf[offset:], numTagOrKey, x.GetTags()[numIdxOrVal])
 			return offset
 		})
 	return offset
@@ -3222,13 +3222,13 @@ func (x *PostInfo) sizeField3() (n int) {
 }
 
 func (x *PostInfo) sizeField4() (n int) {
-	if len(x.Tag) == 0 {
+	if len(x.Tags) == 0 {
 		return n
 	}
-	n += fastpb.SizeListPacked(4, len(x.GetTag()),
+	n += fastpb.SizeListPacked(4, len(x.GetTags()),
 		func(numTagOrKey, numIdxOrVal int32) int {
 			n := 0
-			n += fastpb.SizeInt64(numTagOrKey, x.GetTag()[numIdxOrVal])
+			n += fastpb.SizeInt64(numTagOrKey, x.GetTags()[numIdxOrVal])
 			return n
 		})
 	return n
@@ -3442,7 +3442,7 @@ var fieldIDToName_PostInfo = map[int32]string{
 	1: "UserId",
 	2: "Title",
 	3: "Text",
-	4: "Tag",
+	4: "Tags",
 	5: "Status",
 	6: "Url",
 }
