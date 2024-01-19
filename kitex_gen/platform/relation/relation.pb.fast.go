@@ -34,12 +34,12 @@ ReadFieldError:
 }
 
 func (x *CreateRelationReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v RelationInfo
+	var v Relation
 	offset, err = fastpb.ReadMessage(buf, _type, &v)
 	if err != nil {
 		return offset, err
 	}
-	x.RelationInfo = &v
+	x.Relation = &v
 	return offset, nil
 }
 
@@ -77,12 +77,12 @@ ReadFieldError:
 }
 
 func (x *GetRelationReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v RelationInfo
+	var v Relation
 	offset, err = fastpb.ReadMessage(buf, _type, &v)
 	if err != nil {
 		return offset, err
 	}
-	x.RelationInfo = &v
+	x.Relation = &v
 	return offset, nil
 }
 
@@ -132,12 +132,12 @@ ReadFieldError:
 }
 
 func (x *DeleteRelationReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v RelationInfo
+	var v Relation
 	offset, err = fastpb.ReadMessage(buf, _type, &v)
 	if err != nil {
 		return offset, err
 	}
-	x.RelationInfo = &v
+	x.Relation = &v
 	return offset, nil
 }
 
@@ -451,10 +451,10 @@ func (x *CreateRelationReq) FastWrite(buf []byte) (offset int) {
 }
 
 func (x *CreateRelationReq) fastWriteField1(buf []byte) (offset int) {
-	if x.RelationInfo == nil {
+	if x.Relation == nil {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetRelationInfo())
+	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetRelation())
 	return offset
 }
 
@@ -474,10 +474,10 @@ func (x *GetRelationReq) FastWrite(buf []byte) (offset int) {
 }
 
 func (x *GetRelationReq) fastWriteField1(buf []byte) (offset int) {
-	if x.RelationInfo == nil {
+	if x.Relation == nil {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetRelationInfo())
+	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetRelation())
 	return offset
 }
 
@@ -506,10 +506,10 @@ func (x *DeleteRelationReq) FastWrite(buf []byte) (offset int) {
 }
 
 func (x *DeleteRelationReq) fastWriteField1(buf []byte) (offset int) {
-	if x.RelationInfo == nil {
+	if x.Relation == nil {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetRelationInfo())
+	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetRelation())
 	return offset
 }
 
@@ -717,10 +717,10 @@ func (x *CreateRelationReq) Size() (n int) {
 }
 
 func (x *CreateRelationReq) sizeField1() (n int) {
-	if x.RelationInfo == nil {
+	if x.Relation == nil {
 		return n
 	}
-	n += fastpb.SizeMessage(1, x.GetRelationInfo())
+	n += fastpb.SizeMessage(1, x.GetRelation())
 	return n
 }
 
@@ -740,10 +740,10 @@ func (x *GetRelationReq) Size() (n int) {
 }
 
 func (x *GetRelationReq) sizeField1() (n int) {
-	if x.RelationInfo == nil {
+	if x.Relation == nil {
 		return n
 	}
-	n += fastpb.SizeMessage(1, x.GetRelationInfo())
+	n += fastpb.SizeMessage(1, x.GetRelation())
 	return n
 }
 
@@ -772,10 +772,10 @@ func (x *DeleteRelationReq) Size() (n int) {
 }
 
 func (x *DeleteRelationReq) sizeField1() (n int) {
-	if x.RelationInfo == nil {
+	if x.Relation == nil {
 		return n
 	}
-	n += fastpb.SizeMessage(1, x.GetRelationInfo())
+	n += fastpb.SizeMessage(1, x.GetRelation())
 	return n
 }
 
@@ -975,13 +975,13 @@ func (x *GetRelationCountResp) sizeField1() (n int) {
 }
 
 var fieldIDToName_CreateRelationReq = map[int32]string{
-	1: "RelationInfo",
+	1: "Relation",
 }
 
 var fieldIDToName_CreateRelationResp = map[int32]string{}
 
 var fieldIDToName_GetRelationReq = map[int32]string{
-	1: "RelationInfo",
+	1: "Relation",
 }
 
 var fieldIDToName_GetRelationResp = map[int32]string{
@@ -989,7 +989,7 @@ var fieldIDToName_GetRelationResp = map[int32]string{
 }
 
 var fieldIDToName_DeleteRelationReq = map[int32]string{
-	1: "RelationInfo",
+	1: "Relation",
 }
 
 var fieldIDToName_DeleteRelationResp = map[int32]string{}
