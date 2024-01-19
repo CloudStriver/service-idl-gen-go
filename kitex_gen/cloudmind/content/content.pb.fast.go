@@ -854,16 +854,6 @@ func (x *RecoverRecycleBinFileReq) FastRead(buf []byte, _type int8, number int32
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 3:
-		offset, err = x.fastReadField3(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 4:
-		offset, err = x.fastReadField4(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -884,21 +874,6 @@ func (x *RecoverRecycleBinFileReq) fastReadField1(buf []byte, _type int8) (offse
 
 func (x *RecoverRecycleBinFileReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
 	x.UserId, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *RecoverRecycleBinFileReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	var v int32
-	v, offset, err = fastpb.ReadInt32(buf, _type)
-	if err != nil {
-		return offset, err
-	}
-	x.DeleteType = IsDel(v)
-	return offset, nil
-}
-
-func (x *RecoverRecycleBinFileReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	x.ClearCommunity, offset, err = fastpb.ReadBool(buf, _type)
 	return offset, err
 }
 
@@ -1434,11 +1409,6 @@ func (x *DeleteShareFileReq) fastReadField2(buf []byte, _type int8) (offset int,
 
 func (x *DeleteShareFileResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
-	case 1:
-		offset, err = x.fastReadField1(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -1448,13 +1418,6 @@ func (x *DeleteShareFileResp) FastRead(buf []byte, _type int8, number int32) (of
 	return offset, nil
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
-ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_DeleteShareFileResp[number], err)
-}
-
-func (x *DeleteShareFileResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	x.Ok, offset, err = fastpb.ReadBool(buf, _type)
-	return offset, err
 }
 
 func (x *UpdateUserReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -2599,8 +2562,6 @@ func (x *RecoverRecycleBinFileReq) FastWrite(buf []byte) (offset int) {
 	}
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
-	offset += x.fastWriteField3(buf[offset:])
-	offset += x.fastWriteField4(buf[offset:])
 	return offset
 }
 
@@ -2617,22 +2578,6 @@ func (x *RecoverRecycleBinFileReq) fastWriteField2(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 2, x.GetUserId())
-	return offset
-}
-
-func (x *RecoverRecycleBinFileReq) fastWriteField3(buf []byte) (offset int) {
-	if x.DeleteType == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt32(buf[offset:], 3, int32(x.GetDeleteType()))
-	return offset
-}
-
-func (x *RecoverRecycleBinFileReq) fastWriteField4(buf []byte) (offset int) {
-	if !x.ClearCommunity {
-		return offset
-	}
-	offset += fastpb.WriteBool(buf[offset:], 4, x.GetClearCommunity())
 	return offset
 }
 
@@ -2953,15 +2898,6 @@ func (x *DeleteShareFileResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
-	offset += x.fastWriteField1(buf[offset:])
-	return offset
-}
-
-func (x *DeleteShareFileResp) fastWriteField1(buf []byte) (offset int) {
-	if !x.Ok {
-		return offset
-	}
-	offset += fastpb.WriteBool(buf[offset:], 1, x.GetOk())
 	return offset
 }
 
@@ -3859,8 +3795,6 @@ func (x *RecoverRecycleBinFileReq) Size() (n int) {
 	}
 	n += x.sizeField1()
 	n += x.sizeField2()
-	n += x.sizeField3()
-	n += x.sizeField4()
 	return n
 }
 
@@ -3877,22 +3811,6 @@ func (x *RecoverRecycleBinFileReq) sizeField2() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(2, x.GetUserId())
-	return n
-}
-
-func (x *RecoverRecycleBinFileReq) sizeField3() (n int) {
-	if x.DeleteType == 0 {
-		return n
-	}
-	n += fastpb.SizeInt32(3, int32(x.GetDeleteType()))
-	return n
-}
-
-func (x *RecoverRecycleBinFileReq) sizeField4() (n int) {
-	if !x.ClearCommunity {
-		return n
-	}
-	n += fastpb.SizeBool(4, x.GetClearCommunity())
 	return n
 }
 
@@ -4213,15 +4131,6 @@ func (x *DeleteShareFileResp) Size() (n int) {
 	if x == nil {
 		return n
 	}
-	n += x.sizeField1()
-	return n
-}
-
-func (x *DeleteShareFileResp) sizeField1() (n int) {
-	if !x.Ok {
-		return n
-	}
-	n += fastpb.SizeBool(1, x.GetOk())
 	return n
 }
 
@@ -4701,8 +4610,6 @@ var fieldIDToName_DeleteFileResp = map[int32]string{
 var fieldIDToName_RecoverRecycleBinFileReq = map[int32]string{
 	1: "FileId",
 	2: "UserId",
-	3: "DeleteType",
-	4: "ClearCommunity",
 }
 
 var fieldIDToName_RecoverRecycleBinFileResp = map[int32]string{}
@@ -4779,9 +4686,7 @@ var fieldIDToName_DeleteShareFileReq = map[int32]string{
 	2: "UserId",
 }
 
-var fieldIDToName_DeleteShareFileResp = map[int32]string{
-	1: "Ok",
-}
+var fieldIDToName_DeleteShareFileResp = map[int32]string{}
 
 var fieldIDToName_UpdateUserReq = map[int32]string{
 	1: "UserDetailInfo",
