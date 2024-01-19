@@ -692,8 +692,12 @@ func (x *FileFilterOptions) fastReadField4(buf []byte, _type int8) (offset int, 
 }
 
 func (x *FileFilterOptions) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadString(buf, _type)
-	x.OnlyTag = &tmp
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.OnlyTags = append(x.OnlyTags, v)
 	return offset, err
 }
 
@@ -1821,10 +1825,12 @@ func (x *FileFilterOptions) fastWriteField4(buf []byte) (offset int) {
 }
 
 func (x *FileFilterOptions) fastWriteField5(buf []byte) (offset int) {
-	if x.OnlyTag == nil {
+	if len(x.OnlyTags) == 0 {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 5, x.GetOnlyTag())
+	for i := range x.GetOnlyTags() {
+		offset += fastpb.WriteString(buf[offset:], 5, x.GetOnlyTags()[i])
+	}
 	return offset
 }
 
@@ -2834,10 +2840,12 @@ func (x *FileFilterOptions) sizeField4() (n int) {
 }
 
 func (x *FileFilterOptions) sizeField5() (n int) {
-	if x.OnlyTag == nil {
+	if len(x.OnlyTags) == 0 {
 		return n
 	}
-	n += fastpb.SizeString(5, x.GetOnlyTag())
+	for i := range x.GetOnlyTags() {
+		n += fastpb.SizeString(5, x.GetOnlyTags()[i])
+	}
 	return n
 }
 
@@ -3403,7 +3411,7 @@ var fieldIDToName_FileFilterOptions = map[int32]string{
 	2: "OnlyFileId",
 	3: "OnlyFatherId",
 	4: "OnlyFileType",
-	5: "OnlyTag",
+	5: "OnlyTags",
 	6: "IsDel",
 	7: "DocumentType",
 }
