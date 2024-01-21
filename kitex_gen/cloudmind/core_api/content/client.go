@@ -13,6 +13,37 @@ import (
 type Client interface {
 	UpdateUser(ctx context.Context, Req *core_api.UpdateUserReq, callOptions ...callopt.Option) (r *core_api.UpdateUserResp, err error)
 	SearchUser(ctx context.Context, Req *core_api.SearchUserReq, callOptions ...callopt.Option) (r *core_api.SearchUserResp, err error)
+	GetUser(ctx context.Context, Req *core_api.GetUserReq, callOptions ...callopt.Option) (r *core_api.GetUserResp, err error)
+	CreateUser(ctx context.Context, Req *core_api.CreateUserReq, callOptions ...callopt.Option) (r *core_api.CreateUserResp, err error)
+	GetUserDetail(ctx context.Context, Req *core_api.GetUserDetailReq, callOptions ...callopt.Option) (r *core_api.GetUserDetailResp, err error)
+	DeleteUser(ctx context.Context, Req *core_api.DeleteUserReq, callOptions ...callopt.Option) (r *core_api.DeleteUserResp, err error)
+	GetFileIsExist(ctx context.Context, Req *core_api.GetFileIsExistReq, callOptions ...callopt.Option) (r *core_api.GetFileIsExistResp, err error)
+	GetFile(ctx context.Context, Req *core_api.GetFileReq, callOptions ...callopt.Option) (r *core_api.GetFileResp, err error)
+	GetFileList(ctx context.Context, Req *core_api.GetFileListReq, callOptions ...callopt.Option) (r *core_api.GetFileListResp, err error)
+	GetFolderSize(ctx context.Context, Req *core_api.GetFolderSizeReq, callOptions ...callopt.Option) (r *core_api.GetFolderSizeResp, err error)
+	GetFileBySharingCode(ctx context.Context, Req *core_api.GetFileIsExistReq, callOptions ...callopt.Option) (r *core_api.GetFileIsExistResp, err error)
+	CreateFolder(ctx context.Context, Req *core_api.CreateFolderReq, callOptions ...callopt.Option) (r *core_api.GetFileIsExistResp, err error)
+	UpdateFile(ctx context.Context, Req *core_api.UpdateFileReq, callOptions ...callopt.Option) (r *core_api.UpdateFileResp, err error)
+	MoveFile(ctx context.Context, Req *core_api.MoveFileReq, callOptions ...callopt.Option) (r *core_api.MoveFileResp, err error)
+	SaveFileToPrivateSpace(ctx context.Context, Req *core_api.SaveFileToPrivateSpaceReq, callOptions ...callopt.Option) (r *core_api.SaveFileToPrivateSpaceResp, err error)
+	AddFileToPublicSpace(ctx context.Context, Req *core_api.AddFileToPublicSpaceReq, callOptions ...callopt.Option) (r *core_api.AddFileToPublicSpaceResp, err error)
+	DeleteFile(ctx context.Context, Req *core_api.DeleteFileReq, callOptions ...callopt.Option) (r *core_api.DeleteFileResp, err error)
+	RecoverRecycleBinFile(ctx context.Context, Req *core_api.RecoverRecycleBinFileReq, callOptions ...callopt.Option) (r *core_api.RecoverRecycleBinFileResp, err error)
+	CreateLabel(ctx context.Context, Req *core_api.CreateLabelReq, callOptions ...callopt.Option) (r *core_api.CreateLabelResp, err error)
+	UpdateLabel(ctx context.Context, Req *core_api.UpdateLabelReq, callOptions ...callopt.Option) (r *core_api.UpdateLabelResp, err error)
+	GetLabel(ctx context.Context, Req *core_api.GetLabelReq, callOptions ...callopt.Option) (r *core_api.GetLabelResp, err error)
+	DeleteLabel(ctx context.Context, Req *core_api.DeleteLabelReq, callOptions ...callopt.Option) (r *core_api.DeleteLabelResp, err error)
+	CreateShareCode(ctx context.Context, Req *core_api.CreateShareCodeReq, callOptions ...callopt.Option) (r *core_api.CreateShareCodeResp, err error)
+	GetShareList(ctx context.Context, Req *core_api.GetShareListReq, callOptions ...callopt.Option) (r *core_api.GetShareListResp, err error)
+	UpdateShareCode(ctx context.Context, Req *core_api.UpdateShareCodeReq, callOptions ...callopt.Option) (r *core_api.UpdateShareCodeResp, err error)
+	DeleteShareCode(ctx context.Context, Req *core_api.DeleteShareCodeReq, callOptions ...callopt.Option) (r *core_api.DeleteShareCodeResp, err error)
+	ParsingShareCode(ctx context.Context, Req *core_api.ParsingShareCodeReq, callOptions ...callopt.Option) (r *core_api.ParsingShareCodeResp, err error)
+	DeleteShareFile(ctx context.Context, Req *core_api.DeleteShareFileReq, callOptions ...callopt.Option) (r *core_api.DeleteShareFileResp, err error)
+	CreatePost(ctx context.Context, Req *core_api.CreatePostReq, callOptions ...callopt.Option) (r *core_api.CreatePostResp, err error)
+	DeletePost(ctx context.Context, Req *core_api.DeletePostReq, callOptions ...callopt.Option) (r *core_api.DeletePostResp, err error)
+	UpdatePost(ctx context.Context, Req *core_api.UpdatePostReq, callOptions ...callopt.Option) (r *core_api.UpdatePostResp, err error)
+	GetPost(ctx context.Context, Req *core_api.GetPostReq, callOptions ...callopt.Option) (r *core_api.GetPostResp, err error)
+	GetPosts(ctx context.Context, Req *core_api.GetPostsReq, callOptions ...callopt.Option) (r *core_api.GetPostsResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -52,4 +83,159 @@ func (p *kContentClient) UpdateUser(ctx context.Context, Req *core_api.UpdateUse
 func (p *kContentClient) SearchUser(ctx context.Context, Req *core_api.SearchUserReq, callOptions ...callopt.Option) (r *core_api.SearchUserResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.SearchUser(ctx, Req)
+}
+
+func (p *kContentClient) GetUser(ctx context.Context, Req *core_api.GetUserReq, callOptions ...callopt.Option) (r *core_api.GetUserResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetUser(ctx, Req)
+}
+
+func (p *kContentClient) CreateUser(ctx context.Context, Req *core_api.CreateUserReq, callOptions ...callopt.Option) (r *core_api.CreateUserResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateUser(ctx, Req)
+}
+
+func (p *kContentClient) GetUserDetail(ctx context.Context, Req *core_api.GetUserDetailReq, callOptions ...callopt.Option) (r *core_api.GetUserDetailResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetUserDetail(ctx, Req)
+}
+
+func (p *kContentClient) DeleteUser(ctx context.Context, Req *core_api.DeleteUserReq, callOptions ...callopt.Option) (r *core_api.DeleteUserResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteUser(ctx, Req)
+}
+
+func (p *kContentClient) GetFileIsExist(ctx context.Context, Req *core_api.GetFileIsExistReq, callOptions ...callopt.Option) (r *core_api.GetFileIsExistResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetFileIsExist(ctx, Req)
+}
+
+func (p *kContentClient) GetFile(ctx context.Context, Req *core_api.GetFileReq, callOptions ...callopt.Option) (r *core_api.GetFileResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetFile(ctx, Req)
+}
+
+func (p *kContentClient) GetFileList(ctx context.Context, Req *core_api.GetFileListReq, callOptions ...callopt.Option) (r *core_api.GetFileListResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetFileList(ctx, Req)
+}
+
+func (p *kContentClient) GetFolderSize(ctx context.Context, Req *core_api.GetFolderSizeReq, callOptions ...callopt.Option) (r *core_api.GetFolderSizeResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetFolderSize(ctx, Req)
+}
+
+func (p *kContentClient) GetFileBySharingCode(ctx context.Context, Req *core_api.GetFileIsExistReq, callOptions ...callopt.Option) (r *core_api.GetFileIsExistResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetFileBySharingCode(ctx, Req)
+}
+
+func (p *kContentClient) CreateFolder(ctx context.Context, Req *core_api.CreateFolderReq, callOptions ...callopt.Option) (r *core_api.GetFileIsExistResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateFolder(ctx, Req)
+}
+
+func (p *kContentClient) UpdateFile(ctx context.Context, Req *core_api.UpdateFileReq, callOptions ...callopt.Option) (r *core_api.UpdateFileResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.UpdateFile(ctx, Req)
+}
+
+func (p *kContentClient) MoveFile(ctx context.Context, Req *core_api.MoveFileReq, callOptions ...callopt.Option) (r *core_api.MoveFileResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.MoveFile(ctx, Req)
+}
+
+func (p *kContentClient) SaveFileToPrivateSpace(ctx context.Context, Req *core_api.SaveFileToPrivateSpaceReq, callOptions ...callopt.Option) (r *core_api.SaveFileToPrivateSpaceResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.SaveFileToPrivateSpace(ctx, Req)
+}
+
+func (p *kContentClient) AddFileToPublicSpace(ctx context.Context, Req *core_api.AddFileToPublicSpaceReq, callOptions ...callopt.Option) (r *core_api.AddFileToPublicSpaceResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.AddFileToPublicSpace(ctx, Req)
+}
+
+func (p *kContentClient) DeleteFile(ctx context.Context, Req *core_api.DeleteFileReq, callOptions ...callopt.Option) (r *core_api.DeleteFileResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteFile(ctx, Req)
+}
+
+func (p *kContentClient) RecoverRecycleBinFile(ctx context.Context, Req *core_api.RecoverRecycleBinFileReq, callOptions ...callopt.Option) (r *core_api.RecoverRecycleBinFileResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.RecoverRecycleBinFile(ctx, Req)
+}
+
+func (p *kContentClient) CreateLabel(ctx context.Context, Req *core_api.CreateLabelReq, callOptions ...callopt.Option) (r *core_api.CreateLabelResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateLabel(ctx, Req)
+}
+
+func (p *kContentClient) UpdateLabel(ctx context.Context, Req *core_api.UpdateLabelReq, callOptions ...callopt.Option) (r *core_api.UpdateLabelResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.UpdateLabel(ctx, Req)
+}
+
+func (p *kContentClient) GetLabel(ctx context.Context, Req *core_api.GetLabelReq, callOptions ...callopt.Option) (r *core_api.GetLabelResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetLabel(ctx, Req)
+}
+
+func (p *kContentClient) DeleteLabel(ctx context.Context, Req *core_api.DeleteLabelReq, callOptions ...callopt.Option) (r *core_api.DeleteLabelResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteLabel(ctx, Req)
+}
+
+func (p *kContentClient) CreateShareCode(ctx context.Context, Req *core_api.CreateShareCodeReq, callOptions ...callopt.Option) (r *core_api.CreateShareCodeResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateShareCode(ctx, Req)
+}
+
+func (p *kContentClient) GetShareList(ctx context.Context, Req *core_api.GetShareListReq, callOptions ...callopt.Option) (r *core_api.GetShareListResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetShareList(ctx, Req)
+}
+
+func (p *kContentClient) UpdateShareCode(ctx context.Context, Req *core_api.UpdateShareCodeReq, callOptions ...callopt.Option) (r *core_api.UpdateShareCodeResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.UpdateShareCode(ctx, Req)
+}
+
+func (p *kContentClient) DeleteShareCode(ctx context.Context, Req *core_api.DeleteShareCodeReq, callOptions ...callopt.Option) (r *core_api.DeleteShareCodeResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteShareCode(ctx, Req)
+}
+
+func (p *kContentClient) ParsingShareCode(ctx context.Context, Req *core_api.ParsingShareCodeReq, callOptions ...callopt.Option) (r *core_api.ParsingShareCodeResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.ParsingShareCode(ctx, Req)
+}
+
+func (p *kContentClient) DeleteShareFile(ctx context.Context, Req *core_api.DeleteShareFileReq, callOptions ...callopt.Option) (r *core_api.DeleteShareFileResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteShareFile(ctx, Req)
+}
+
+func (p *kContentClient) CreatePost(ctx context.Context, Req *core_api.CreatePostReq, callOptions ...callopt.Option) (r *core_api.CreatePostResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreatePost(ctx, Req)
+}
+
+func (p *kContentClient) DeletePost(ctx context.Context, Req *core_api.DeletePostReq, callOptions ...callopt.Option) (r *core_api.DeletePostResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeletePost(ctx, Req)
+}
+
+func (p *kContentClient) UpdatePost(ctx context.Context, Req *core_api.UpdatePostReq, callOptions ...callopt.Option) (r *core_api.UpdatePostResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.UpdatePost(ctx, Req)
+}
+
+func (p *kContentClient) GetPost(ctx context.Context, Req *core_api.GetPostReq, callOptions ...callopt.Option) (r *core_api.GetPostResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetPost(ctx, Req)
+}
+
+func (p *kContentClient) GetPosts(ctx context.Context, Req *core_api.GetPostsReq, callOptions ...callopt.Option) (r *core_api.GetPostsResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetPosts(ctx, Req)
 }
