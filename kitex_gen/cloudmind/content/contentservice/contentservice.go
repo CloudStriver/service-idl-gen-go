@@ -45,7 +45,6 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"ParsingShareCode":       kitex.NewMethodInfo(parsingShareCodeHandler, newParsingShareCodeArgs, newParsingShareCodeResult, false),
 		"UpdateUser":             kitex.NewMethodInfo(updateUserHandler, newUpdateUserArgs, newUpdateUserResult, false),
 		"GetUser":                kitex.NewMethodInfo(getUserHandler, newGetUserArgs, newGetUserResult, false),
-		"GetUserDetail":          kitex.NewMethodInfo(getUserDetailHandler, newGetUserDetailArgs, newGetUserDetailResult, false),
 		"SearchUser":             kitex.NewMethodInfo(searchUserHandler, newSearchUserArgs, newSearchUserResult, false),
 		"CreateUser":             kitex.NewMethodInfo(createUserHandler, newCreateUserArgs, newCreateUserResult, false),
 		"DeleteUser":             kitex.NewMethodInfo(deleteUserHandler, newDeleteUserArgs, newDeleteUserResult, false),
@@ -54,6 +53,21 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"UpdatePost":             kitex.NewMethodInfo(updatePostHandler, newUpdatePostArgs, newUpdatePostResult, false),
 		"GetPost":                kitex.NewMethodInfo(getPostHandler, newGetPostArgs, newGetPostResult, false),
 		"GetPosts":               kitex.NewMethodInfo(getPostsHandler, newGetPostsArgs, newGetPostsResult, false),
+		"CreateProduct":          kitex.NewMethodInfo(createProductHandler, newCreateProductArgs, newCreateProductResult, false),
+		"DeleteProduct":          kitex.NewMethodInfo(deleteProductHandler, newDeleteProductArgs, newDeleteProductResult, false),
+		"UpdateProduct":          kitex.NewMethodInfo(updateProductHandler, newUpdateProductArgs, newUpdateProductResult, false),
+		"GetProduct":             kitex.NewMethodInfo(getProductHandler, newGetProductArgs, newGetProductResult, false),
+		"GetProducts":            kitex.NewMethodInfo(getProductsHandler, newGetProductsArgs, newGetProductsResult, false),
+		"CreateCoupon":           kitex.NewMethodInfo(createCouponHandler, newCreateCouponArgs, newCreateCouponResult, false),
+		"DeleteCoupon":           kitex.NewMethodInfo(deleteCouponHandler, newDeleteCouponArgs, newDeleteCouponResult, false),
+		"UpdateCoupon":           kitex.NewMethodInfo(updateCouponHandler, newUpdateCouponArgs, newUpdateCouponResult, false),
+		"GetCoupon":              kitex.NewMethodInfo(getCouponHandler, newGetCouponArgs, newGetCouponResult, false),
+		"GetCoupons":             kitex.NewMethodInfo(getCouponsHandler, newGetCouponsArgs, newGetCouponsResult, false),
+		"CreateOrder":            kitex.NewMethodInfo(createOrderHandler, newCreateOrderArgs, newCreateOrderResult, false),
+		"DeleteOrder":            kitex.NewMethodInfo(deleteOrderHandler, newDeleteOrderArgs, newDeleteOrderResult, false),
+		"UpdateOrder":            kitex.NewMethodInfo(updateOrderHandler, newUpdateOrderArgs, newUpdateOrderResult, false),
+		"GetOrder":               kitex.NewMethodInfo(getOrderHandler, newGetOrderArgs, newGetOrderResult, false),
+		"GetOrders":              kitex.NewMethodInfo(getOrdersHandler, newGetOrdersArgs, newGetOrdersResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName":     "cloudmind.content",
@@ -3742,159 +3756,6 @@ func (p *GetUserResult) GetResult() interface{} {
 	return p.Success
 }
 
-func getUserDetailHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	switch s := arg.(type) {
-	case *streaming.Args:
-		st := s.Stream
-		req := new(content.GetUserDetailReq)
-		if err := st.RecvMsg(req); err != nil {
-			return err
-		}
-		resp, err := handler.(content.ContentService).GetUserDetail(ctx, req)
-		if err != nil {
-			return err
-		}
-		if err := st.SendMsg(resp); err != nil {
-			return err
-		}
-	case *GetUserDetailArgs:
-		success, err := handler.(content.ContentService).GetUserDetail(ctx, s.Req)
-		if err != nil {
-			return err
-		}
-		realResult := result.(*GetUserDetailResult)
-		realResult.Success = success
-	}
-	return nil
-}
-func newGetUserDetailArgs() interface{} {
-	return &GetUserDetailArgs{}
-}
-
-func newGetUserDetailResult() interface{} {
-	return &GetUserDetailResult{}
-}
-
-type GetUserDetailArgs struct {
-	Req *content.GetUserDetailReq
-}
-
-func (p *GetUserDetailArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetReq() {
-		p.Req = new(content.GetUserDetailReq)
-	}
-	return p.Req.FastRead(buf, _type, number)
-}
-
-func (p *GetUserDetailArgs) FastWrite(buf []byte) (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.FastWrite(buf)
-}
-
-func (p *GetUserDetailArgs) Size() (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.Size()
-}
-
-func (p *GetUserDetailArgs) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetReq() {
-		return out, nil
-	}
-	return proto.Marshal(p.Req)
-}
-
-func (p *GetUserDetailArgs) Unmarshal(in []byte) error {
-	msg := new(content.GetUserDetailReq)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Req = msg
-	return nil
-}
-
-var GetUserDetailArgs_Req_DEFAULT *content.GetUserDetailReq
-
-func (p *GetUserDetailArgs) GetReq() *content.GetUserDetailReq {
-	if !p.IsSetReq() {
-		return GetUserDetailArgs_Req_DEFAULT
-	}
-	return p.Req
-}
-
-func (p *GetUserDetailArgs) IsSetReq() bool {
-	return p.Req != nil
-}
-
-func (p *GetUserDetailArgs) GetFirstArgument() interface{} {
-	return p.Req
-}
-
-type GetUserDetailResult struct {
-	Success *content.GetUserDetailResp
-}
-
-var GetUserDetailResult_Success_DEFAULT *content.GetUserDetailResp
-
-func (p *GetUserDetailResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetSuccess() {
-		p.Success = new(content.GetUserDetailResp)
-	}
-	return p.Success.FastRead(buf, _type, number)
-}
-
-func (p *GetUserDetailResult) FastWrite(buf []byte) (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.FastWrite(buf)
-}
-
-func (p *GetUserDetailResult) Size() (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.Size()
-}
-
-func (p *GetUserDetailResult) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetSuccess() {
-		return out, nil
-	}
-	return proto.Marshal(p.Success)
-}
-
-func (p *GetUserDetailResult) Unmarshal(in []byte) error {
-	msg := new(content.GetUserDetailResp)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Success = msg
-	return nil
-}
-
-func (p *GetUserDetailResult) GetSuccess() *content.GetUserDetailResp {
-	if !p.IsSetSuccess() {
-		return GetUserDetailResult_Success_DEFAULT
-	}
-	return p.Success
-}
-
-func (p *GetUserDetailResult) SetSuccess(x interface{}) {
-	p.Success = x.(*content.GetUserDetailResp)
-}
-
-func (p *GetUserDetailResult) IsSetSuccess() bool {
-	return p.Success != nil
-}
-
-func (p *GetUserDetailResult) GetResult() interface{} {
-	return p.Success
-}
-
 func searchUserHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
@@ -5119,6 +4980,2301 @@ func (p *GetPostsResult) GetResult() interface{} {
 	return p.Success
 }
 
+func createProductHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.CreateProductReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).CreateProduct(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *CreateProductArgs:
+		success, err := handler.(content.ContentService).CreateProduct(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*CreateProductResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newCreateProductArgs() interface{} {
+	return &CreateProductArgs{}
+}
+
+func newCreateProductResult() interface{} {
+	return &CreateProductResult{}
+}
+
+type CreateProductArgs struct {
+	Req *content.CreateProductReq
+}
+
+func (p *CreateProductArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.CreateProductReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *CreateProductArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *CreateProductArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *CreateProductArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *CreateProductArgs) Unmarshal(in []byte) error {
+	msg := new(content.CreateProductReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var CreateProductArgs_Req_DEFAULT *content.CreateProductReq
+
+func (p *CreateProductArgs) GetReq() *content.CreateProductReq {
+	if !p.IsSetReq() {
+		return CreateProductArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *CreateProductArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *CreateProductArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type CreateProductResult struct {
+	Success *content.CreateProductResp
+}
+
+var CreateProductResult_Success_DEFAULT *content.CreateProductResp
+
+func (p *CreateProductResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.CreateProductResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *CreateProductResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *CreateProductResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *CreateProductResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *CreateProductResult) Unmarshal(in []byte) error {
+	msg := new(content.CreateProductResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *CreateProductResult) GetSuccess() *content.CreateProductResp {
+	if !p.IsSetSuccess() {
+		return CreateProductResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *CreateProductResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.CreateProductResp)
+}
+
+func (p *CreateProductResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *CreateProductResult) GetResult() interface{} {
+	return p.Success
+}
+
+func deleteProductHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.DeleteProductReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).DeleteProduct(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *DeleteProductArgs:
+		success, err := handler.(content.ContentService).DeleteProduct(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*DeleteProductResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newDeleteProductArgs() interface{} {
+	return &DeleteProductArgs{}
+}
+
+func newDeleteProductResult() interface{} {
+	return &DeleteProductResult{}
+}
+
+type DeleteProductArgs struct {
+	Req *content.DeleteProductReq
+}
+
+func (p *DeleteProductArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.DeleteProductReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *DeleteProductArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *DeleteProductArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *DeleteProductArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *DeleteProductArgs) Unmarshal(in []byte) error {
+	msg := new(content.DeleteProductReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var DeleteProductArgs_Req_DEFAULT *content.DeleteProductReq
+
+func (p *DeleteProductArgs) GetReq() *content.DeleteProductReq {
+	if !p.IsSetReq() {
+		return DeleteProductArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *DeleteProductArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *DeleteProductArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type DeleteProductResult struct {
+	Success *content.DeleteProductResp
+}
+
+var DeleteProductResult_Success_DEFAULT *content.DeleteProductResp
+
+func (p *DeleteProductResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.DeleteProductResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *DeleteProductResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *DeleteProductResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *DeleteProductResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *DeleteProductResult) Unmarshal(in []byte) error {
+	msg := new(content.DeleteProductResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *DeleteProductResult) GetSuccess() *content.DeleteProductResp {
+	if !p.IsSetSuccess() {
+		return DeleteProductResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *DeleteProductResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.DeleteProductResp)
+}
+
+func (p *DeleteProductResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *DeleteProductResult) GetResult() interface{} {
+	return p.Success
+}
+
+func updateProductHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.UpdateProductReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).UpdateProduct(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *UpdateProductArgs:
+		success, err := handler.(content.ContentService).UpdateProduct(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*UpdateProductResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newUpdateProductArgs() interface{} {
+	return &UpdateProductArgs{}
+}
+
+func newUpdateProductResult() interface{} {
+	return &UpdateProductResult{}
+}
+
+type UpdateProductArgs struct {
+	Req *content.UpdateProductReq
+}
+
+func (p *UpdateProductArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.UpdateProductReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *UpdateProductArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *UpdateProductArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *UpdateProductArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *UpdateProductArgs) Unmarshal(in []byte) error {
+	msg := new(content.UpdateProductReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var UpdateProductArgs_Req_DEFAULT *content.UpdateProductReq
+
+func (p *UpdateProductArgs) GetReq() *content.UpdateProductReq {
+	if !p.IsSetReq() {
+		return UpdateProductArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *UpdateProductArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *UpdateProductArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type UpdateProductResult struct {
+	Success *content.UpdateProductResp
+}
+
+var UpdateProductResult_Success_DEFAULT *content.UpdateProductResp
+
+func (p *UpdateProductResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.UpdateProductResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *UpdateProductResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *UpdateProductResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *UpdateProductResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *UpdateProductResult) Unmarshal(in []byte) error {
+	msg := new(content.UpdateProductResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *UpdateProductResult) GetSuccess() *content.UpdateProductResp {
+	if !p.IsSetSuccess() {
+		return UpdateProductResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *UpdateProductResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.UpdateProductResp)
+}
+
+func (p *UpdateProductResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *UpdateProductResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getProductHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.GetProductReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).GetProduct(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetProductArgs:
+		success, err := handler.(content.ContentService).GetProduct(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetProductResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetProductArgs() interface{} {
+	return &GetProductArgs{}
+}
+
+func newGetProductResult() interface{} {
+	return &GetProductResult{}
+}
+
+type GetProductArgs struct {
+	Req *content.GetProductReq
+}
+
+func (p *GetProductArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.GetProductReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetProductArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetProductArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetProductArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetProductArgs) Unmarshal(in []byte) error {
+	msg := new(content.GetProductReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetProductArgs_Req_DEFAULT *content.GetProductReq
+
+func (p *GetProductArgs) GetReq() *content.GetProductReq {
+	if !p.IsSetReq() {
+		return GetProductArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetProductArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetProductArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetProductResult struct {
+	Success *content.GetProductResp
+}
+
+var GetProductResult_Success_DEFAULT *content.GetProductResp
+
+func (p *GetProductResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.GetProductResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetProductResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetProductResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetProductResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetProductResult) Unmarshal(in []byte) error {
+	msg := new(content.GetProductResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetProductResult) GetSuccess() *content.GetProductResp {
+	if !p.IsSetSuccess() {
+		return GetProductResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetProductResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.GetProductResp)
+}
+
+func (p *GetProductResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetProductResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getProductsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.GetProductsReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).GetProducts(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetProductsArgs:
+		success, err := handler.(content.ContentService).GetProducts(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetProductsResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetProductsArgs() interface{} {
+	return &GetProductsArgs{}
+}
+
+func newGetProductsResult() interface{} {
+	return &GetProductsResult{}
+}
+
+type GetProductsArgs struct {
+	Req *content.GetProductsReq
+}
+
+func (p *GetProductsArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.GetProductsReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetProductsArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetProductsArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetProductsArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetProductsArgs) Unmarshal(in []byte) error {
+	msg := new(content.GetProductsReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetProductsArgs_Req_DEFAULT *content.GetProductsReq
+
+func (p *GetProductsArgs) GetReq() *content.GetProductsReq {
+	if !p.IsSetReq() {
+		return GetProductsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetProductsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetProductsArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetProductsResult struct {
+	Success *content.GetProductsResp
+}
+
+var GetProductsResult_Success_DEFAULT *content.GetProductsResp
+
+func (p *GetProductsResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.GetProductsResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetProductsResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetProductsResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetProductsResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetProductsResult) Unmarshal(in []byte) error {
+	msg := new(content.GetProductsResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetProductsResult) GetSuccess() *content.GetProductsResp {
+	if !p.IsSetSuccess() {
+		return GetProductsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetProductsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.GetProductsResp)
+}
+
+func (p *GetProductsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetProductsResult) GetResult() interface{} {
+	return p.Success
+}
+
+func createCouponHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.CreateCouponReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).CreateCoupon(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *CreateCouponArgs:
+		success, err := handler.(content.ContentService).CreateCoupon(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*CreateCouponResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newCreateCouponArgs() interface{} {
+	return &CreateCouponArgs{}
+}
+
+func newCreateCouponResult() interface{} {
+	return &CreateCouponResult{}
+}
+
+type CreateCouponArgs struct {
+	Req *content.CreateCouponReq
+}
+
+func (p *CreateCouponArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.CreateCouponReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *CreateCouponArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *CreateCouponArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *CreateCouponArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *CreateCouponArgs) Unmarshal(in []byte) error {
+	msg := new(content.CreateCouponReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var CreateCouponArgs_Req_DEFAULT *content.CreateCouponReq
+
+func (p *CreateCouponArgs) GetReq() *content.CreateCouponReq {
+	if !p.IsSetReq() {
+		return CreateCouponArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *CreateCouponArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *CreateCouponArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type CreateCouponResult struct {
+	Success *content.CreateCouponResp
+}
+
+var CreateCouponResult_Success_DEFAULT *content.CreateCouponResp
+
+func (p *CreateCouponResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.CreateCouponResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *CreateCouponResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *CreateCouponResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *CreateCouponResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *CreateCouponResult) Unmarshal(in []byte) error {
+	msg := new(content.CreateCouponResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *CreateCouponResult) GetSuccess() *content.CreateCouponResp {
+	if !p.IsSetSuccess() {
+		return CreateCouponResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *CreateCouponResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.CreateCouponResp)
+}
+
+func (p *CreateCouponResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *CreateCouponResult) GetResult() interface{} {
+	return p.Success
+}
+
+func deleteCouponHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.DeleteCouponReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).DeleteCoupon(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *DeleteCouponArgs:
+		success, err := handler.(content.ContentService).DeleteCoupon(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*DeleteCouponResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newDeleteCouponArgs() interface{} {
+	return &DeleteCouponArgs{}
+}
+
+func newDeleteCouponResult() interface{} {
+	return &DeleteCouponResult{}
+}
+
+type DeleteCouponArgs struct {
+	Req *content.DeleteCouponReq
+}
+
+func (p *DeleteCouponArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.DeleteCouponReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *DeleteCouponArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *DeleteCouponArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *DeleteCouponArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *DeleteCouponArgs) Unmarshal(in []byte) error {
+	msg := new(content.DeleteCouponReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var DeleteCouponArgs_Req_DEFAULT *content.DeleteCouponReq
+
+func (p *DeleteCouponArgs) GetReq() *content.DeleteCouponReq {
+	if !p.IsSetReq() {
+		return DeleteCouponArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *DeleteCouponArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *DeleteCouponArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type DeleteCouponResult struct {
+	Success *content.DeleteCouponResp
+}
+
+var DeleteCouponResult_Success_DEFAULT *content.DeleteCouponResp
+
+func (p *DeleteCouponResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.DeleteCouponResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *DeleteCouponResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *DeleteCouponResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *DeleteCouponResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *DeleteCouponResult) Unmarshal(in []byte) error {
+	msg := new(content.DeleteCouponResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *DeleteCouponResult) GetSuccess() *content.DeleteCouponResp {
+	if !p.IsSetSuccess() {
+		return DeleteCouponResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *DeleteCouponResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.DeleteCouponResp)
+}
+
+func (p *DeleteCouponResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *DeleteCouponResult) GetResult() interface{} {
+	return p.Success
+}
+
+func updateCouponHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.UpdateCouponReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).UpdateCoupon(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *UpdateCouponArgs:
+		success, err := handler.(content.ContentService).UpdateCoupon(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*UpdateCouponResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newUpdateCouponArgs() interface{} {
+	return &UpdateCouponArgs{}
+}
+
+func newUpdateCouponResult() interface{} {
+	return &UpdateCouponResult{}
+}
+
+type UpdateCouponArgs struct {
+	Req *content.UpdateCouponReq
+}
+
+func (p *UpdateCouponArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.UpdateCouponReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *UpdateCouponArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *UpdateCouponArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *UpdateCouponArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *UpdateCouponArgs) Unmarshal(in []byte) error {
+	msg := new(content.UpdateCouponReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var UpdateCouponArgs_Req_DEFAULT *content.UpdateCouponReq
+
+func (p *UpdateCouponArgs) GetReq() *content.UpdateCouponReq {
+	if !p.IsSetReq() {
+		return UpdateCouponArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *UpdateCouponArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *UpdateCouponArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type UpdateCouponResult struct {
+	Success *content.UpdateCouponResp
+}
+
+var UpdateCouponResult_Success_DEFAULT *content.UpdateCouponResp
+
+func (p *UpdateCouponResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.UpdateCouponResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *UpdateCouponResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *UpdateCouponResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *UpdateCouponResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *UpdateCouponResult) Unmarshal(in []byte) error {
+	msg := new(content.UpdateCouponResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *UpdateCouponResult) GetSuccess() *content.UpdateCouponResp {
+	if !p.IsSetSuccess() {
+		return UpdateCouponResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *UpdateCouponResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.UpdateCouponResp)
+}
+
+func (p *UpdateCouponResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *UpdateCouponResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getCouponHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.GetCouponReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).GetCoupon(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetCouponArgs:
+		success, err := handler.(content.ContentService).GetCoupon(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetCouponResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetCouponArgs() interface{} {
+	return &GetCouponArgs{}
+}
+
+func newGetCouponResult() interface{} {
+	return &GetCouponResult{}
+}
+
+type GetCouponArgs struct {
+	Req *content.GetCouponReq
+}
+
+func (p *GetCouponArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.GetCouponReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetCouponArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetCouponArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetCouponArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetCouponArgs) Unmarshal(in []byte) error {
+	msg := new(content.GetCouponReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetCouponArgs_Req_DEFAULT *content.GetCouponReq
+
+func (p *GetCouponArgs) GetReq() *content.GetCouponReq {
+	if !p.IsSetReq() {
+		return GetCouponArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetCouponArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetCouponArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetCouponResult struct {
+	Success *content.GetCouponResp
+}
+
+var GetCouponResult_Success_DEFAULT *content.GetCouponResp
+
+func (p *GetCouponResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.GetCouponResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetCouponResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetCouponResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetCouponResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetCouponResult) Unmarshal(in []byte) error {
+	msg := new(content.GetCouponResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetCouponResult) GetSuccess() *content.GetCouponResp {
+	if !p.IsSetSuccess() {
+		return GetCouponResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetCouponResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.GetCouponResp)
+}
+
+func (p *GetCouponResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetCouponResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getCouponsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.GetCouponsReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).GetCoupons(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetCouponsArgs:
+		success, err := handler.(content.ContentService).GetCoupons(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetCouponsResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetCouponsArgs() interface{} {
+	return &GetCouponsArgs{}
+}
+
+func newGetCouponsResult() interface{} {
+	return &GetCouponsResult{}
+}
+
+type GetCouponsArgs struct {
+	Req *content.GetCouponsReq
+}
+
+func (p *GetCouponsArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.GetCouponsReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetCouponsArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetCouponsArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetCouponsArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetCouponsArgs) Unmarshal(in []byte) error {
+	msg := new(content.GetCouponsReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetCouponsArgs_Req_DEFAULT *content.GetCouponsReq
+
+func (p *GetCouponsArgs) GetReq() *content.GetCouponsReq {
+	if !p.IsSetReq() {
+		return GetCouponsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetCouponsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetCouponsArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetCouponsResult struct {
+	Success *content.GetCouponsResp
+}
+
+var GetCouponsResult_Success_DEFAULT *content.GetCouponsResp
+
+func (p *GetCouponsResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.GetCouponsResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetCouponsResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetCouponsResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetCouponsResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetCouponsResult) Unmarshal(in []byte) error {
+	msg := new(content.GetCouponsResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetCouponsResult) GetSuccess() *content.GetCouponsResp {
+	if !p.IsSetSuccess() {
+		return GetCouponsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetCouponsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.GetCouponsResp)
+}
+
+func (p *GetCouponsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetCouponsResult) GetResult() interface{} {
+	return p.Success
+}
+
+func createOrderHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.CreateOrderReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).CreateOrder(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *CreateOrderArgs:
+		success, err := handler.(content.ContentService).CreateOrder(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*CreateOrderResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newCreateOrderArgs() interface{} {
+	return &CreateOrderArgs{}
+}
+
+func newCreateOrderResult() interface{} {
+	return &CreateOrderResult{}
+}
+
+type CreateOrderArgs struct {
+	Req *content.CreateOrderReq
+}
+
+func (p *CreateOrderArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.CreateOrderReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *CreateOrderArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *CreateOrderArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *CreateOrderArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *CreateOrderArgs) Unmarshal(in []byte) error {
+	msg := new(content.CreateOrderReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var CreateOrderArgs_Req_DEFAULT *content.CreateOrderReq
+
+func (p *CreateOrderArgs) GetReq() *content.CreateOrderReq {
+	if !p.IsSetReq() {
+		return CreateOrderArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *CreateOrderArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *CreateOrderArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type CreateOrderResult struct {
+	Success *content.CreateOrderResp
+}
+
+var CreateOrderResult_Success_DEFAULT *content.CreateOrderResp
+
+func (p *CreateOrderResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.CreateOrderResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *CreateOrderResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *CreateOrderResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *CreateOrderResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *CreateOrderResult) Unmarshal(in []byte) error {
+	msg := new(content.CreateOrderResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *CreateOrderResult) GetSuccess() *content.CreateOrderResp {
+	if !p.IsSetSuccess() {
+		return CreateOrderResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *CreateOrderResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.CreateOrderResp)
+}
+
+func (p *CreateOrderResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *CreateOrderResult) GetResult() interface{} {
+	return p.Success
+}
+
+func deleteOrderHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.DeleteOrderReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).DeleteOrder(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *DeleteOrderArgs:
+		success, err := handler.(content.ContentService).DeleteOrder(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*DeleteOrderResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newDeleteOrderArgs() interface{} {
+	return &DeleteOrderArgs{}
+}
+
+func newDeleteOrderResult() interface{} {
+	return &DeleteOrderResult{}
+}
+
+type DeleteOrderArgs struct {
+	Req *content.DeleteOrderReq
+}
+
+func (p *DeleteOrderArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.DeleteOrderReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *DeleteOrderArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *DeleteOrderArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *DeleteOrderArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *DeleteOrderArgs) Unmarshal(in []byte) error {
+	msg := new(content.DeleteOrderReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var DeleteOrderArgs_Req_DEFAULT *content.DeleteOrderReq
+
+func (p *DeleteOrderArgs) GetReq() *content.DeleteOrderReq {
+	if !p.IsSetReq() {
+		return DeleteOrderArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *DeleteOrderArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *DeleteOrderArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type DeleteOrderResult struct {
+	Success *content.DeleteOrderResp
+}
+
+var DeleteOrderResult_Success_DEFAULT *content.DeleteOrderResp
+
+func (p *DeleteOrderResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.DeleteOrderResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *DeleteOrderResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *DeleteOrderResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *DeleteOrderResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *DeleteOrderResult) Unmarshal(in []byte) error {
+	msg := new(content.DeleteOrderResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *DeleteOrderResult) GetSuccess() *content.DeleteOrderResp {
+	if !p.IsSetSuccess() {
+		return DeleteOrderResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *DeleteOrderResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.DeleteOrderResp)
+}
+
+func (p *DeleteOrderResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *DeleteOrderResult) GetResult() interface{} {
+	return p.Success
+}
+
+func updateOrderHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.UpdateOrderReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).UpdateOrder(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *UpdateOrderArgs:
+		success, err := handler.(content.ContentService).UpdateOrder(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*UpdateOrderResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newUpdateOrderArgs() interface{} {
+	return &UpdateOrderArgs{}
+}
+
+func newUpdateOrderResult() interface{} {
+	return &UpdateOrderResult{}
+}
+
+type UpdateOrderArgs struct {
+	Req *content.UpdateOrderReq
+}
+
+func (p *UpdateOrderArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.UpdateOrderReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *UpdateOrderArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *UpdateOrderArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *UpdateOrderArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *UpdateOrderArgs) Unmarshal(in []byte) error {
+	msg := new(content.UpdateOrderReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var UpdateOrderArgs_Req_DEFAULT *content.UpdateOrderReq
+
+func (p *UpdateOrderArgs) GetReq() *content.UpdateOrderReq {
+	if !p.IsSetReq() {
+		return UpdateOrderArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *UpdateOrderArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *UpdateOrderArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type UpdateOrderResult struct {
+	Success *content.UpdateOrderResp
+}
+
+var UpdateOrderResult_Success_DEFAULT *content.UpdateOrderResp
+
+func (p *UpdateOrderResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.UpdateOrderResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *UpdateOrderResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *UpdateOrderResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *UpdateOrderResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *UpdateOrderResult) Unmarshal(in []byte) error {
+	msg := new(content.UpdateOrderResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *UpdateOrderResult) GetSuccess() *content.UpdateOrderResp {
+	if !p.IsSetSuccess() {
+		return UpdateOrderResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *UpdateOrderResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.UpdateOrderResp)
+}
+
+func (p *UpdateOrderResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *UpdateOrderResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getOrderHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.GetOrderReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).GetOrder(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetOrderArgs:
+		success, err := handler.(content.ContentService).GetOrder(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetOrderResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetOrderArgs() interface{} {
+	return &GetOrderArgs{}
+}
+
+func newGetOrderResult() interface{} {
+	return &GetOrderResult{}
+}
+
+type GetOrderArgs struct {
+	Req *content.GetOrderReq
+}
+
+func (p *GetOrderArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.GetOrderReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetOrderArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetOrderArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetOrderArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetOrderArgs) Unmarshal(in []byte) error {
+	msg := new(content.GetOrderReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetOrderArgs_Req_DEFAULT *content.GetOrderReq
+
+func (p *GetOrderArgs) GetReq() *content.GetOrderReq {
+	if !p.IsSetReq() {
+		return GetOrderArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetOrderArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetOrderArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetOrderResult struct {
+	Success *content.GetOrderResp
+}
+
+var GetOrderResult_Success_DEFAULT *content.GetOrderResp
+
+func (p *GetOrderResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.GetOrderResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetOrderResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetOrderResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetOrderResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetOrderResult) Unmarshal(in []byte) error {
+	msg := new(content.GetOrderResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetOrderResult) GetSuccess() *content.GetOrderResp {
+	if !p.IsSetSuccess() {
+		return GetOrderResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetOrderResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.GetOrderResp)
+}
+
+func (p *GetOrderResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetOrderResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getOrdersHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.GetOrdersReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).GetOrders(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetOrdersArgs:
+		success, err := handler.(content.ContentService).GetOrders(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetOrdersResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetOrdersArgs() interface{} {
+	return &GetOrdersArgs{}
+}
+
+func newGetOrdersResult() interface{} {
+	return &GetOrdersResult{}
+}
+
+type GetOrdersArgs struct {
+	Req *content.GetOrdersReq
+}
+
+func (p *GetOrdersArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.GetOrdersReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetOrdersArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetOrdersArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetOrdersArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetOrdersArgs) Unmarshal(in []byte) error {
+	msg := new(content.GetOrdersReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetOrdersArgs_Req_DEFAULT *content.GetOrdersReq
+
+func (p *GetOrdersArgs) GetReq() *content.GetOrdersReq {
+	if !p.IsSetReq() {
+		return GetOrdersArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetOrdersArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetOrdersArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetOrdersResult struct {
+	Success *content.GetOrdersResp
+}
+
+var GetOrdersResult_Success_DEFAULT *content.GetOrdersResp
+
+func (p *GetOrdersResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.GetOrdersResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetOrdersResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetOrdersResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetOrdersResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetOrdersResult) Unmarshal(in []byte) error {
+	msg := new(content.GetOrdersResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetOrdersResult) GetSuccess() *content.GetOrdersResp {
+	if !p.IsSetSuccess() {
+		return GetOrdersResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetOrdersResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.GetOrdersResp)
+}
+
+func (p *GetOrdersResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetOrdersResult) GetResult() interface{} {
+	return p.Success
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -5369,16 +7525,6 @@ func (p *kClient) GetUser(ctx context.Context, Req *content.GetUserReq) (r *cont
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) GetUserDetail(ctx context.Context, Req *content.GetUserDetailReq) (r *content.GetUserDetailResp, err error) {
-	var _args GetUserDetailArgs
-	_args.Req = Req
-	var _result GetUserDetailResult
-	if err = p.c.Call(ctx, "GetUserDetail", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
-}
-
 func (p *kClient) SearchUser(ctx context.Context, Req *content.SearchUserReq) (r *content.SearchUserResp, err error) {
 	var _args SearchUserArgs
 	_args.Req = Req
@@ -5454,6 +7600,156 @@ func (p *kClient) GetPosts(ctx context.Context, Req *content.GetPostsReq) (r *co
 	_args.Req = Req
 	var _result GetPostsResult
 	if err = p.c.Call(ctx, "GetPosts", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CreateProduct(ctx context.Context, Req *content.CreateProductReq) (r *content.CreateProductResp, err error) {
+	var _args CreateProductArgs
+	_args.Req = Req
+	var _result CreateProductResult
+	if err = p.c.Call(ctx, "CreateProduct", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) DeleteProduct(ctx context.Context, Req *content.DeleteProductReq) (r *content.DeleteProductResp, err error) {
+	var _args DeleteProductArgs
+	_args.Req = Req
+	var _result DeleteProductResult
+	if err = p.c.Call(ctx, "DeleteProduct", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) UpdateProduct(ctx context.Context, Req *content.UpdateProductReq) (r *content.UpdateProductResp, err error) {
+	var _args UpdateProductArgs
+	_args.Req = Req
+	var _result UpdateProductResult
+	if err = p.c.Call(ctx, "UpdateProduct", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetProduct(ctx context.Context, Req *content.GetProductReq) (r *content.GetProductResp, err error) {
+	var _args GetProductArgs
+	_args.Req = Req
+	var _result GetProductResult
+	if err = p.c.Call(ctx, "GetProduct", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetProducts(ctx context.Context, Req *content.GetProductsReq) (r *content.GetProductsResp, err error) {
+	var _args GetProductsArgs
+	_args.Req = Req
+	var _result GetProductsResult
+	if err = p.c.Call(ctx, "GetProducts", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CreateCoupon(ctx context.Context, Req *content.CreateCouponReq) (r *content.CreateCouponResp, err error) {
+	var _args CreateCouponArgs
+	_args.Req = Req
+	var _result CreateCouponResult
+	if err = p.c.Call(ctx, "CreateCoupon", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) DeleteCoupon(ctx context.Context, Req *content.DeleteCouponReq) (r *content.DeleteCouponResp, err error) {
+	var _args DeleteCouponArgs
+	_args.Req = Req
+	var _result DeleteCouponResult
+	if err = p.c.Call(ctx, "DeleteCoupon", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) UpdateCoupon(ctx context.Context, Req *content.UpdateCouponReq) (r *content.UpdateCouponResp, err error) {
+	var _args UpdateCouponArgs
+	_args.Req = Req
+	var _result UpdateCouponResult
+	if err = p.c.Call(ctx, "UpdateCoupon", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetCoupon(ctx context.Context, Req *content.GetCouponReq) (r *content.GetCouponResp, err error) {
+	var _args GetCouponArgs
+	_args.Req = Req
+	var _result GetCouponResult
+	if err = p.c.Call(ctx, "GetCoupon", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetCoupons(ctx context.Context, Req *content.GetCouponsReq) (r *content.GetCouponsResp, err error) {
+	var _args GetCouponsArgs
+	_args.Req = Req
+	var _result GetCouponsResult
+	if err = p.c.Call(ctx, "GetCoupons", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CreateOrder(ctx context.Context, Req *content.CreateOrderReq) (r *content.CreateOrderResp, err error) {
+	var _args CreateOrderArgs
+	_args.Req = Req
+	var _result CreateOrderResult
+	if err = p.c.Call(ctx, "CreateOrder", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) DeleteOrder(ctx context.Context, Req *content.DeleteOrderReq) (r *content.DeleteOrderResp, err error) {
+	var _args DeleteOrderArgs
+	_args.Req = Req
+	var _result DeleteOrderResult
+	if err = p.c.Call(ctx, "DeleteOrder", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) UpdateOrder(ctx context.Context, Req *content.UpdateOrderReq) (r *content.UpdateOrderResp, err error) {
+	var _args UpdateOrderArgs
+	_args.Req = Req
+	var _result UpdateOrderResult
+	if err = p.c.Call(ctx, "UpdateOrder", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetOrder(ctx context.Context, Req *content.GetOrderReq) (r *content.GetOrderResp, err error) {
+	var _args GetOrderArgs
+	_args.Req = Req
+	var _result GetOrderResult
+	if err = p.c.Call(ctx, "GetOrder", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetOrders(ctx context.Context, Req *content.GetOrdersReq) (r *content.GetOrdersResp, err error) {
+	var _args GetOrdersArgs
+	_args.Req = Req
+	var _result GetOrdersResult
+	if err = p.c.Call(ctx, "GetOrders", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
