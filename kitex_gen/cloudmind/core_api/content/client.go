@@ -14,9 +14,7 @@ type Client interface {
 	UpdateUser(ctx context.Context, Req *core_api.UpdateUserReq, callOptions ...callopt.Option) (r *core_api.UpdateUserResp, err error)
 	SearchUser(ctx context.Context, Req *core_api.SearchUserReq, callOptions ...callopt.Option) (r *core_api.SearchUserResp, err error)
 	GetUser(ctx context.Context, Req *core_api.GetUserReq, callOptions ...callopt.Option) (r *core_api.GetUserResp, err error)
-	CreateUser(ctx context.Context, Req *core_api.CreateUserReq, callOptions ...callopt.Option) (r *core_api.CreateUserResp, err error)
 	GetUserDetail(ctx context.Context, Req *core_api.GetUserDetailReq, callOptions ...callopt.Option) (r *core_api.GetUserDetailResp, err error)
-	DeleteUser(ctx context.Context, Req *core_api.DeleteUserReq, callOptions ...callopt.Option) (r *core_api.DeleteUserResp, err error)
 	GetFileIsExist(ctx context.Context, Req *core_api.GetFileIsExistReq, callOptions ...callopt.Option) (r *core_api.GetFileIsExistResp, err error)
 	GetFile(ctx context.Context, Req *core_api.GetFileReq, callOptions ...callopt.Option) (r *core_api.GetFileResp, err error)
 	GetFileList(ctx context.Context, Req *core_api.GetFileListReq, callOptions ...callopt.Option) (r *core_api.GetFileListResp, err error)
@@ -42,7 +40,6 @@ type Client interface {
 	CreatePost(ctx context.Context, Req *core_api.CreatePostReq, callOptions ...callopt.Option) (r *core_api.CreatePostResp, err error)
 	DeletePost(ctx context.Context, Req *core_api.DeletePostReq, callOptions ...callopt.Option) (r *core_api.DeletePostResp, err error)
 	UpdatePost(ctx context.Context, Req *core_api.UpdatePostReq, callOptions ...callopt.Option) (r *core_api.UpdatePostResp, err error)
-	GetPost(ctx context.Context, Req *core_api.GetPostReq, callOptions ...callopt.Option) (r *core_api.GetPostResp, err error)
 	GetPosts(ctx context.Context, Req *core_api.GetPostsReq, callOptions ...callopt.Option) (r *core_api.GetPostsResp, err error)
 }
 
@@ -90,19 +87,9 @@ func (p *kContentClient) GetUser(ctx context.Context, Req *core_api.GetUserReq, 
 	return p.kClient.GetUser(ctx, Req)
 }
 
-func (p *kContentClient) CreateUser(ctx context.Context, Req *core_api.CreateUserReq, callOptions ...callopt.Option) (r *core_api.CreateUserResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.CreateUser(ctx, Req)
-}
-
 func (p *kContentClient) GetUserDetail(ctx context.Context, Req *core_api.GetUserDetailReq, callOptions ...callopt.Option) (r *core_api.GetUserDetailResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetUserDetail(ctx, Req)
-}
-
-func (p *kContentClient) DeleteUser(ctx context.Context, Req *core_api.DeleteUserReq, callOptions ...callopt.Option) (r *core_api.DeleteUserResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.DeleteUser(ctx, Req)
 }
 
 func (p *kContentClient) GetFileIsExist(ctx context.Context, Req *core_api.GetFileIsExistReq, callOptions ...callopt.Option) (r *core_api.GetFileIsExistResp, err error) {
@@ -228,11 +215,6 @@ func (p *kContentClient) DeletePost(ctx context.Context, Req *core_api.DeletePos
 func (p *kContentClient) UpdatePost(ctx context.Context, Req *core_api.UpdatePostReq, callOptions ...callopt.Option) (r *core_api.UpdatePostResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.UpdatePost(ctx, Req)
-}
-
-func (p *kContentClient) GetPost(ctx context.Context, Req *core_api.GetPostReq, callOptions ...callopt.Option) (r *core_api.GetPostResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.GetPost(ctx, Req)
 }
 
 func (p *kContentClient) GetPosts(ctx context.Context, Req *core_api.GetPostsReq, callOptions ...callopt.Option) (r *core_api.GetPostsResp, err error) {

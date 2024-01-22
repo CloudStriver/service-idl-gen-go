@@ -719,6 +719,16 @@ func (x *SearchField) FastRead(buf []byte, _type int8, number int32) (offset int
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 6:
+		offset, err = x.fastReadField6(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 7:
+		offset, err = x.fastReadField7(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -759,6 +769,18 @@ func (x *SearchField) fastReadField4(buf []byte, _type int8) (offset int, err er
 func (x *SearchField) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadString(buf, _type)
 	x.Title = &tmp
+	return offset, err
+}
+
+func (x *SearchField) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadString(buf, _type)
+	x.Description = &tmp
+	return offset, err
+}
+
+func (x *SearchField) fastReadField7(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadString(buf, _type)
+	x.ProductName = &tmp
 	return offset, err
 }
 
@@ -902,12 +924,13 @@ func (x *FileFilterOptions) fastReadField5(buf []byte, _type int8) (offset int, 
 
 func (x *FileFilterOptions) fastReadField6(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
-	x.IsDel = &tmp
+	x.OnlyIsDel = &tmp
 	return offset, err
 }
 
 func (x *FileFilterOptions) fastReadField7(buf []byte, _type int8) (offset int, err error) {
-	x.DocumentType, offset, err = fastpb.ReadInt64(buf, _type)
+	tmp, offset, err := fastpb.ReadInt64(buf, _type)
+	x.OnlyDocumentType = &tmp
 	return offset, err
 }
 
@@ -1090,6 +1113,106 @@ func (x *UserInfo) fastReadField3(buf []byte, _type int8) (offset int, err error
 	return offset, err
 }
 
+func (x *PostCount) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_PostCount[number], err)
+}
+
+func (x *PostCount) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.ViewCount, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *PostCount) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.LikeCount, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *PostCount) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.CommentCount, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *PostCount) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	x.ShareCount, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *PostCount) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	x.CollectCount, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *PostRelation) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_PostRelation[number], err)
+}
+
+func (x *PostRelation) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.Liked, offset, err = fastpb.ReadBool(buf, _type)
+	return offset, err
+}
+
+func (x *PostRelation) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.Collected, offset, err = fastpb.ReadBool(buf, _type)
+	return offset, err
+}
+
 func (x *Post) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
@@ -1137,6 +1260,16 @@ func (x *Post) FastRead(buf []byte, _type int8, number int32) (offset int, err e
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 10:
+		offset, err = x.fastReadField10(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 11:
+		offset, err = x.fastReadField11(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -1156,21 +1289,16 @@ func (x *Post) fastReadField1(buf []byte, _type int8) (offset int, err error) {
 }
 
 func (x *Post) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.UserId, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *Post) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	x.Title, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
-func (x *Post) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+func (x *Post) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	x.Text, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
-func (x *Post) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+func (x *Post) fastReadField4(buf []byte, _type int8) (offset int, err error) {
 	var v string
 	v, offset, err = fastpb.ReadString(buf, _type)
 	if err != nil {
@@ -1180,22 +1308,52 @@ func (x *Post) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	return offset, err
 }
 
-func (x *Post) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+func (x *Post) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	x.Status, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
-func (x *Post) fastReadField7(buf []byte, _type int8) (offset int, err error) {
+func (x *Post) fastReadField6(buf []byte, _type int8) (offset int, err error) {
 	x.Url, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
+func (x *Post) fastReadField7(buf []byte, _type int8) (offset int, err error) {
+	var v User
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Author = &v
+	return offset, nil
+}
+
 func (x *Post) fastReadField8(buf []byte, _type int8) (offset int, err error) {
+	var v PostCount
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.PostCount = &v
+	return offset, nil
+}
+
+func (x *Post) fastReadField9(buf []byte, _type int8) (offset int, err error) {
+	var v PostRelation
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.PostRelation = &v
+	return offset, nil
+}
+
+func (x *Post) fastReadField10(buf []byte, _type int8) (offset int, err error) {
 	x.CreateTime, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
-func (x *Post) fastReadField9(buf []byte, _type int8) (offset int, err error) {
+func (x *Post) fastReadField11(buf []byte, _type int8) (offset int, err error) {
 	x.UpdateTime, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
@@ -1312,16 +1470,6 @@ func (x *PostFilterOptions) FastRead(buf []byte, _type int8, number int32) (offs
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 5:
-		offset, err = x.fastReadField5(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 6:
-		offset, err = x.fastReadField6(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -1342,32 +1490,24 @@ func (x *PostFilterOptions) fastReadField1(buf []byte, _type int8) (offset int, 
 }
 
 func (x *PostFilterOptions) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadString(buf, _type)
-	x.OnlyPostId = &tmp
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.OnlyTags = append(x.OnlyTags, v)
 	return offset, err
 }
 
 func (x *PostFilterOptions) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadString(buf, _type)
-	x.OnlyTitle = &tmp
+	tmp, offset, err := fastpb.ReadInt64(buf, _type)
+	x.OnlyStatus = &tmp
 	return offset, err
 }
 
 func (x *PostFilterOptions) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadString(buf, _type)
-	x.OnlyText = &tmp
-	return offset, err
-}
-
-func (x *PostFilterOptions) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadString(buf, _type)
-	x.OnlyTag = &tmp
-	return offset, err
-}
-
-func (x *PostFilterOptions) fastReadField6(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
-	x.OnlyStatus = &tmp
+	x.OnlySetRelation = &tmp
 	return offset, err
 }
 
@@ -1919,6 +2059,8 @@ func (x *SearchField) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
 	offset += x.fastWriteField5(buf[offset:])
+	offset += x.fastWriteField6(buf[offset:])
+	offset += x.fastWriteField7(buf[offset:])
 	return offset
 }
 
@@ -1959,6 +2101,22 @@ func (x *SearchField) fastWriteField5(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 5, x.GetTitle())
+	return offset
+}
+
+func (x *SearchField) fastWriteField6(buf []byte) (offset int) {
+	if x.Description == nil {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 6, x.GetDescription())
+	return offset
+}
+
+func (x *SearchField) fastWriteField7(buf []byte) (offset int) {
+	if x.ProductName == nil {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 7, x.GetProductName())
 	return offset
 }
 
@@ -2046,18 +2204,18 @@ func (x *FileFilterOptions) fastWriteField5(buf []byte) (offset int) {
 }
 
 func (x *FileFilterOptions) fastWriteField6(buf []byte) (offset int) {
-	if x.IsDel == nil {
+	if x.OnlyIsDel == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetIsDel())
+	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetOnlyIsDel())
 	return offset
 }
 
 func (x *FileFilterOptions) fastWriteField7(buf []byte) (offset int) {
-	if x.DocumentType == 0 {
+	if x.OnlyDocumentType == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetDocumentType())
+	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetOnlyDocumentType())
 	return offset
 }
 
@@ -2206,6 +2364,83 @@ func (x *UserInfo) fastWriteField3(buf []byte) (offset int) {
 	return offset
 }
 
+func (x *PostCount) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
+	return offset
+}
+
+func (x *PostCount) fastWriteField1(buf []byte) (offset int) {
+	if x.ViewCount == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 1, x.GetViewCount())
+	return offset
+}
+
+func (x *PostCount) fastWriteField2(buf []byte) (offset int) {
+	if x.LikeCount == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetLikeCount())
+	return offset
+}
+
+func (x *PostCount) fastWriteField3(buf []byte) (offset int) {
+	if x.CommentCount == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetCommentCount())
+	return offset
+}
+
+func (x *PostCount) fastWriteField4(buf []byte) (offset int) {
+	if x.ShareCount == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetShareCount())
+	return offset
+}
+
+func (x *PostCount) fastWriteField5(buf []byte) (offset int) {
+	if x.CollectCount == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetCollectCount())
+	return offset
+}
+
+func (x *PostRelation) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	return offset
+}
+
+func (x *PostRelation) fastWriteField1(buf []byte) (offset int) {
+	if !x.Liked {
+		return offset
+	}
+	offset += fastpb.WriteBool(buf[offset:], 1, x.GetLiked())
+	return offset
+}
+
+func (x *PostRelation) fastWriteField2(buf []byte) (offset int) {
+	if !x.Collected {
+		return offset
+	}
+	offset += fastpb.WriteBool(buf[offset:], 2, x.GetCollected())
+	return offset
+}
+
 func (x *Post) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -2219,6 +2454,8 @@ func (x *Post) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField7(buf[offset:])
 	offset += x.fastWriteField8(buf[offset:])
 	offset += x.fastWriteField9(buf[offset:])
+	offset += x.fastWriteField10(buf[offset:])
+	offset += x.fastWriteField11(buf[offset:])
 	return offset
 }
 
@@ -2231,68 +2468,84 @@ func (x *Post) fastWriteField1(buf []byte) (offset int) {
 }
 
 func (x *Post) fastWriteField2(buf []byte) (offset int) {
-	if x.UserId == "" {
+	if x.Title == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetUserId())
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetTitle())
 	return offset
 }
 
 func (x *Post) fastWriteField3(buf []byte) (offset int) {
-	if x.Title == "" {
+	if x.Text == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 3, x.GetTitle())
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetText())
 	return offset
 }
 
 func (x *Post) fastWriteField4(buf []byte) (offset int) {
-	if x.Text == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 4, x.GetText())
-	return offset
-}
-
-func (x *Post) fastWriteField5(buf []byte) (offset int) {
 	if len(x.Tags) == 0 {
 		return offset
 	}
 	for i := range x.GetTags() {
-		offset += fastpb.WriteString(buf[offset:], 5, x.GetTags()[i])
+		offset += fastpb.WriteString(buf[offset:], 4, x.GetTags()[i])
 	}
+	return offset
+}
+
+func (x *Post) fastWriteField5(buf []byte) (offset int) {
+	if x.Status == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetStatus())
 	return offset
 }
 
 func (x *Post) fastWriteField6(buf []byte) (offset int) {
-	if x.Status == 0 {
+	if x.Url == "" {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetStatus())
+	offset += fastpb.WriteString(buf[offset:], 6, x.GetUrl())
 	return offset
 }
 
 func (x *Post) fastWriteField7(buf []byte) (offset int) {
-	if x.Url == "" {
+	if x.Author == nil {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 7, x.GetUrl())
+	offset += fastpb.WriteMessage(buf[offset:], 7, x.GetAuthor())
 	return offset
 }
 
 func (x *Post) fastWriteField8(buf []byte) (offset int) {
-	if x.CreateTime == 0 {
+	if x.PostCount == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 8, x.GetCreateTime())
+	offset += fastpb.WriteMessage(buf[offset:], 8, x.GetPostCount())
 	return offset
 }
 
 func (x *Post) fastWriteField9(buf []byte) (offset int) {
+	if x.PostRelation == nil {
+		return offset
+	}
+	offset += fastpb.WriteMessage(buf[offset:], 9, x.GetPostRelation())
+	return offset
+}
+
+func (x *Post) fastWriteField10(buf []byte) (offset int) {
+	if x.CreateTime == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 10, x.GetCreateTime())
+	return offset
+}
+
+func (x *Post) fastWriteField11(buf []byte) (offset int) {
 	if x.UpdateTime == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 9, x.GetUpdateTime())
+	offset += fastpb.WriteInt64(buf[offset:], 11, x.GetUpdateTime())
 	return offset
 }
 
@@ -2376,8 +2629,6 @@ func (x *PostFilterOptions) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
-	offset += x.fastWriteField5(buf[offset:])
-	offset += x.fastWriteField6(buf[offset:])
 	return offset
 }
 
@@ -2390,42 +2641,28 @@ func (x *PostFilterOptions) fastWriteField1(buf []byte) (offset int) {
 }
 
 func (x *PostFilterOptions) fastWriteField2(buf []byte) (offset int) {
-	if x.OnlyPostId == nil {
+	if len(x.OnlyTags) == 0 {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetOnlyPostId())
+	for i := range x.GetOnlyTags() {
+		offset += fastpb.WriteString(buf[offset:], 2, x.GetOnlyTags()[i])
+	}
 	return offset
 }
 
 func (x *PostFilterOptions) fastWriteField3(buf []byte) (offset int) {
-	if x.OnlyTitle == nil {
+	if x.OnlyStatus == nil {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 3, x.GetOnlyTitle())
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetOnlyStatus())
 	return offset
 }
 
 func (x *PostFilterOptions) fastWriteField4(buf []byte) (offset int) {
-	if x.OnlyText == nil {
+	if x.OnlySetRelation == nil {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 4, x.GetOnlyText())
-	return offset
-}
-
-func (x *PostFilterOptions) fastWriteField5(buf []byte) (offset int) {
-	if x.OnlyTag == nil {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 5, x.GetOnlyTag())
-	return offset
-}
-
-func (x *PostFilterOptions) fastWriteField6(buf []byte) (offset int) {
-	if x.OnlyStatus == nil {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetOnlyStatus())
+	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetOnlySetRelation())
 	return offset
 }
 
@@ -2977,6 +3214,8 @@ func (x *SearchField) Size() (n int) {
 	n += x.sizeField3()
 	n += x.sizeField4()
 	n += x.sizeField5()
+	n += x.sizeField6()
+	n += x.sizeField7()
 	return n
 }
 
@@ -3017,6 +3256,22 @@ func (x *SearchField) sizeField5() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(5, x.GetTitle())
+	return n
+}
+
+func (x *SearchField) sizeField6() (n int) {
+	if x.Description == nil {
+		return n
+	}
+	n += fastpb.SizeString(6, x.GetDescription())
+	return n
+}
+
+func (x *SearchField) sizeField7() (n int) {
+	if x.ProductName == nil {
+		return n
+	}
+	n += fastpb.SizeString(7, x.GetProductName())
 	return n
 }
 
@@ -3104,18 +3359,18 @@ func (x *FileFilterOptions) sizeField5() (n int) {
 }
 
 func (x *FileFilterOptions) sizeField6() (n int) {
-	if x.IsDel == nil {
+	if x.OnlyIsDel == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(6, x.GetIsDel())
+	n += fastpb.SizeInt64(6, x.GetOnlyIsDel())
 	return n
 }
 
 func (x *FileFilterOptions) sizeField7() (n int) {
-	if x.DocumentType == 0 {
+	if x.OnlyDocumentType == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(7, x.GetDocumentType())
+	n += fastpb.SizeInt64(7, x.GetOnlyDocumentType())
 	return n
 }
 
@@ -3264,6 +3519,83 @@ func (x *UserInfo) sizeField3() (n int) {
 	return n
 }
 
+func (x *PostCount) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
+	return n
+}
+
+func (x *PostCount) sizeField1() (n int) {
+	if x.ViewCount == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(1, x.GetViewCount())
+	return n
+}
+
+func (x *PostCount) sizeField2() (n int) {
+	if x.LikeCount == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(2, x.GetLikeCount())
+	return n
+}
+
+func (x *PostCount) sizeField3() (n int) {
+	if x.CommentCount == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(3, x.GetCommentCount())
+	return n
+}
+
+func (x *PostCount) sizeField4() (n int) {
+	if x.ShareCount == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(4, x.GetShareCount())
+	return n
+}
+
+func (x *PostCount) sizeField5() (n int) {
+	if x.CollectCount == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(5, x.GetCollectCount())
+	return n
+}
+
+func (x *PostRelation) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	return n
+}
+
+func (x *PostRelation) sizeField1() (n int) {
+	if !x.Liked {
+		return n
+	}
+	n += fastpb.SizeBool(1, x.GetLiked())
+	return n
+}
+
+func (x *PostRelation) sizeField2() (n int) {
+	if !x.Collected {
+		return n
+	}
+	n += fastpb.SizeBool(2, x.GetCollected())
+	return n
+}
+
 func (x *Post) Size() (n int) {
 	if x == nil {
 		return n
@@ -3277,6 +3609,8 @@ func (x *Post) Size() (n int) {
 	n += x.sizeField7()
 	n += x.sizeField8()
 	n += x.sizeField9()
+	n += x.sizeField10()
+	n += x.sizeField11()
 	return n
 }
 
@@ -3289,68 +3623,84 @@ func (x *Post) sizeField1() (n int) {
 }
 
 func (x *Post) sizeField2() (n int) {
-	if x.UserId == "" {
+	if x.Title == "" {
 		return n
 	}
-	n += fastpb.SizeString(2, x.GetUserId())
+	n += fastpb.SizeString(2, x.GetTitle())
 	return n
 }
 
 func (x *Post) sizeField3() (n int) {
-	if x.Title == "" {
+	if x.Text == "" {
 		return n
 	}
-	n += fastpb.SizeString(3, x.GetTitle())
+	n += fastpb.SizeString(3, x.GetText())
 	return n
 }
 
 func (x *Post) sizeField4() (n int) {
-	if x.Text == "" {
-		return n
-	}
-	n += fastpb.SizeString(4, x.GetText())
-	return n
-}
-
-func (x *Post) sizeField5() (n int) {
 	if len(x.Tags) == 0 {
 		return n
 	}
 	for i := range x.GetTags() {
-		n += fastpb.SizeString(5, x.GetTags()[i])
+		n += fastpb.SizeString(4, x.GetTags()[i])
 	}
+	return n
+}
+
+func (x *Post) sizeField5() (n int) {
+	if x.Status == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(5, x.GetStatus())
 	return n
 }
 
 func (x *Post) sizeField6() (n int) {
-	if x.Status == 0 {
+	if x.Url == "" {
 		return n
 	}
-	n += fastpb.SizeInt64(6, x.GetStatus())
+	n += fastpb.SizeString(6, x.GetUrl())
 	return n
 }
 
 func (x *Post) sizeField7() (n int) {
-	if x.Url == "" {
+	if x.Author == nil {
 		return n
 	}
-	n += fastpb.SizeString(7, x.GetUrl())
+	n += fastpb.SizeMessage(7, x.GetAuthor())
 	return n
 }
 
 func (x *Post) sizeField8() (n int) {
-	if x.CreateTime == 0 {
+	if x.PostCount == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(8, x.GetCreateTime())
+	n += fastpb.SizeMessage(8, x.GetPostCount())
 	return n
 }
 
 func (x *Post) sizeField9() (n int) {
+	if x.PostRelation == nil {
+		return n
+	}
+	n += fastpb.SizeMessage(9, x.GetPostRelation())
+	return n
+}
+
+func (x *Post) sizeField10() (n int) {
+	if x.CreateTime == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(10, x.GetCreateTime())
+	return n
+}
+
+func (x *Post) sizeField11() (n int) {
 	if x.UpdateTime == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(9, x.GetUpdateTime())
+	n += fastpb.SizeInt64(11, x.GetUpdateTime())
 	return n
 }
 
@@ -3434,8 +3784,6 @@ func (x *PostFilterOptions) Size() (n int) {
 	n += x.sizeField2()
 	n += x.sizeField3()
 	n += x.sizeField4()
-	n += x.sizeField5()
-	n += x.sizeField6()
 	return n
 }
 
@@ -3448,42 +3796,28 @@ func (x *PostFilterOptions) sizeField1() (n int) {
 }
 
 func (x *PostFilterOptions) sizeField2() (n int) {
-	if x.OnlyPostId == nil {
+	if len(x.OnlyTags) == 0 {
 		return n
 	}
-	n += fastpb.SizeString(2, x.GetOnlyPostId())
+	for i := range x.GetOnlyTags() {
+		n += fastpb.SizeString(2, x.GetOnlyTags()[i])
+	}
 	return n
 }
 
 func (x *PostFilterOptions) sizeField3() (n int) {
-	if x.OnlyTitle == nil {
+	if x.OnlyStatus == nil {
 		return n
 	}
-	n += fastpb.SizeString(3, x.GetOnlyTitle())
+	n += fastpb.SizeInt64(3, x.GetOnlyStatus())
 	return n
 }
 
 func (x *PostFilterOptions) sizeField4() (n int) {
-	if x.OnlyText == nil {
+	if x.OnlySetRelation == nil {
 		return n
 	}
-	n += fastpb.SizeString(4, x.GetOnlyText())
-	return n
-}
-
-func (x *PostFilterOptions) sizeField5() (n int) {
-	if x.OnlyTag == nil {
-		return n
-	}
-	n += fastpb.SizeString(5, x.GetOnlyTag())
-	return n
-}
-
-func (x *PostFilterOptions) sizeField6() (n int) {
-	if x.OnlyStatus == nil {
-		return n
-	}
-	n += fastpb.SizeInt64(6, x.GetOnlyStatus())
+	n += fastpb.SizeInt64(4, x.GetOnlySetRelation())
 	return n
 }
 
@@ -3570,6 +3904,8 @@ var fieldIDToName_SearchField = map[int32]string{
 	3: "Tag",
 	4: "Text",
 	5: "Title",
+	6: "Description",
+	7: "ProductName",
 }
 
 var fieldIDToName_SearchOptions = map[int32]string{
@@ -3583,8 +3919,8 @@ var fieldIDToName_FileFilterOptions = map[int32]string{
 	3: "OnlyFatherId",
 	4: "OnlyFileType",
 	5: "OnlyTags",
-	6: "IsDel",
-	7: "DocumentType",
+	6: "OnlyIsDel",
+	7: "OnlyDocumentType",
 	8: "OnlySetRelation",
 	9: "OnlyMd5",
 }
@@ -3610,16 +3946,31 @@ var fieldIDToName_UserInfo = map[int32]string{
 	3: "Sex",
 }
 
+var fieldIDToName_PostCount = map[int32]string{
+	1: "ViewCount",
+	2: "LikeCount",
+	3: "CommentCount",
+	4: "ShareCount",
+	5: "CollectCount",
+}
+
+var fieldIDToName_PostRelation = map[int32]string{
+	1: "Liked",
+	2: "Collected",
+}
+
 var fieldIDToName_Post = map[int32]string{
-	1: "PostId",
-	2: "UserId",
-	3: "Title",
-	4: "Text",
-	5: "Tags",
-	6: "Status",
-	7: "Url",
-	8: "CreateTime",
-	9: "UpdateTime",
+	1:  "PostId",
+	2:  "Title",
+	3:  "Text",
+	4:  "Tags",
+	5:  "Status",
+	6:  "Url",
+	7:  "Author",
+	8:  "PostCount",
+	9:  "PostRelation",
+	10: "CreateTime",
+	11: "UpdateTime",
 }
 
 var fieldIDToName_PostInfo = map[int32]string{
@@ -3634,11 +3985,9 @@ var fieldIDToName_PostInfo = map[int32]string{
 
 var fieldIDToName_PostFilterOptions = map[int32]string{
 	1: "OnlyUserId",
-	2: "OnlyPostId",
-	3: "OnlyTitle",
-	4: "OnlyText",
-	5: "OnlyTag",
-	6: "OnlyStatus",
+	2: "OnlyTags",
+	3: "OnlyStatus",
+	4: "OnlySetRelation",
 }
 
 var _ = sts.File_cloudmind_sts_common_proto

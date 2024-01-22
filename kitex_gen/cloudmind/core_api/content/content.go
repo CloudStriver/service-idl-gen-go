@@ -24,9 +24,7 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"UpdateUser":             kitex.NewMethodInfo(updateUserHandler, newUpdateUserArgs, newUpdateUserResult, false),
 		"SearchUser":             kitex.NewMethodInfo(searchUserHandler, newSearchUserArgs, newSearchUserResult, false),
 		"GetUser":                kitex.NewMethodInfo(getUserHandler, newGetUserArgs, newGetUserResult, false),
-		"CreateUser":             kitex.NewMethodInfo(createUserHandler, newCreateUserArgs, newCreateUserResult, false),
 		"GetUserDetail":          kitex.NewMethodInfo(getUserDetailHandler, newGetUserDetailArgs, newGetUserDetailResult, false),
-		"DeleteUser":             kitex.NewMethodInfo(deleteUserHandler, newDeleteUserArgs, newDeleteUserResult, false),
 		"GetFileIsExist":         kitex.NewMethodInfo(getFileIsExistHandler, newGetFileIsExistArgs, newGetFileIsExistResult, false),
 		"GetFile":                kitex.NewMethodInfo(getFileHandler, newGetFileArgs, newGetFileResult, false),
 		"GetFileList":            kitex.NewMethodInfo(getFileListHandler, newGetFileListArgs, newGetFileListResult, false),
@@ -52,7 +50,6 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"CreatePost":             kitex.NewMethodInfo(createPostHandler, newCreatePostArgs, newCreatePostResult, false),
 		"DeletePost":             kitex.NewMethodInfo(deletePostHandler, newDeletePostArgs, newDeletePostResult, false),
 		"UpdatePost":             kitex.NewMethodInfo(updatePostHandler, newUpdatePostArgs, newUpdatePostResult, false),
-		"GetPost":                kitex.NewMethodInfo(getPostHandler, newGetPostArgs, newGetPostResult, false),
 		"GetPosts":               kitex.NewMethodInfo(getPostsHandler, newGetPostsArgs, newGetPostsResult, false),
 	}
 	extra := map[string]interface{}{
@@ -529,159 +526,6 @@ func (p *GetUserResult) GetResult() interface{} {
 	return p.Success
 }
 
-func createUserHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	switch s := arg.(type) {
-	case *streaming.Args:
-		st := s.Stream
-		req := new(core_api.CreateUserReq)
-		if err := st.RecvMsg(req); err != nil {
-			return err
-		}
-		resp, err := handler.(core_api.Content).CreateUser(ctx, req)
-		if err != nil {
-			return err
-		}
-		if err := st.SendMsg(resp); err != nil {
-			return err
-		}
-	case *CreateUserArgs:
-		success, err := handler.(core_api.Content).CreateUser(ctx, s.Req)
-		if err != nil {
-			return err
-		}
-		realResult := result.(*CreateUserResult)
-		realResult.Success = success
-	}
-	return nil
-}
-func newCreateUserArgs() interface{} {
-	return &CreateUserArgs{}
-}
-
-func newCreateUserResult() interface{} {
-	return &CreateUserResult{}
-}
-
-type CreateUserArgs struct {
-	Req *core_api.CreateUserReq
-}
-
-func (p *CreateUserArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetReq() {
-		p.Req = new(core_api.CreateUserReq)
-	}
-	return p.Req.FastRead(buf, _type, number)
-}
-
-func (p *CreateUserArgs) FastWrite(buf []byte) (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.FastWrite(buf)
-}
-
-func (p *CreateUserArgs) Size() (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.Size()
-}
-
-func (p *CreateUserArgs) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetReq() {
-		return out, nil
-	}
-	return proto.Marshal(p.Req)
-}
-
-func (p *CreateUserArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.CreateUserReq)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Req = msg
-	return nil
-}
-
-var CreateUserArgs_Req_DEFAULT *core_api.CreateUserReq
-
-func (p *CreateUserArgs) GetReq() *core_api.CreateUserReq {
-	if !p.IsSetReq() {
-		return CreateUserArgs_Req_DEFAULT
-	}
-	return p.Req
-}
-
-func (p *CreateUserArgs) IsSetReq() bool {
-	return p.Req != nil
-}
-
-func (p *CreateUserArgs) GetFirstArgument() interface{} {
-	return p.Req
-}
-
-type CreateUserResult struct {
-	Success *core_api.CreateUserResp
-}
-
-var CreateUserResult_Success_DEFAULT *core_api.CreateUserResp
-
-func (p *CreateUserResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetSuccess() {
-		p.Success = new(core_api.CreateUserResp)
-	}
-	return p.Success.FastRead(buf, _type, number)
-}
-
-func (p *CreateUserResult) FastWrite(buf []byte) (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.FastWrite(buf)
-}
-
-func (p *CreateUserResult) Size() (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.Size()
-}
-
-func (p *CreateUserResult) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetSuccess() {
-		return out, nil
-	}
-	return proto.Marshal(p.Success)
-}
-
-func (p *CreateUserResult) Unmarshal(in []byte) error {
-	msg := new(core_api.CreateUserResp)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Success = msg
-	return nil
-}
-
-func (p *CreateUserResult) GetSuccess() *core_api.CreateUserResp {
-	if !p.IsSetSuccess() {
-		return CreateUserResult_Success_DEFAULT
-	}
-	return p.Success
-}
-
-func (p *CreateUserResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.CreateUserResp)
-}
-
-func (p *CreateUserResult) IsSetSuccess() bool {
-	return p.Success != nil
-}
-
-func (p *CreateUserResult) GetResult() interface{} {
-	return p.Success
-}
-
 func getUserDetailHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
@@ -832,159 +676,6 @@ func (p *GetUserDetailResult) IsSetSuccess() bool {
 }
 
 func (p *GetUserDetailResult) GetResult() interface{} {
-	return p.Success
-}
-
-func deleteUserHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	switch s := arg.(type) {
-	case *streaming.Args:
-		st := s.Stream
-		req := new(core_api.DeleteUserReq)
-		if err := st.RecvMsg(req); err != nil {
-			return err
-		}
-		resp, err := handler.(core_api.Content).DeleteUser(ctx, req)
-		if err != nil {
-			return err
-		}
-		if err := st.SendMsg(resp); err != nil {
-			return err
-		}
-	case *DeleteUserArgs:
-		success, err := handler.(core_api.Content).DeleteUser(ctx, s.Req)
-		if err != nil {
-			return err
-		}
-		realResult := result.(*DeleteUserResult)
-		realResult.Success = success
-	}
-	return nil
-}
-func newDeleteUserArgs() interface{} {
-	return &DeleteUserArgs{}
-}
-
-func newDeleteUserResult() interface{} {
-	return &DeleteUserResult{}
-}
-
-type DeleteUserArgs struct {
-	Req *core_api.DeleteUserReq
-}
-
-func (p *DeleteUserArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetReq() {
-		p.Req = new(core_api.DeleteUserReq)
-	}
-	return p.Req.FastRead(buf, _type, number)
-}
-
-func (p *DeleteUserArgs) FastWrite(buf []byte) (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.FastWrite(buf)
-}
-
-func (p *DeleteUserArgs) Size() (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.Size()
-}
-
-func (p *DeleteUserArgs) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetReq() {
-		return out, nil
-	}
-	return proto.Marshal(p.Req)
-}
-
-func (p *DeleteUserArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.DeleteUserReq)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Req = msg
-	return nil
-}
-
-var DeleteUserArgs_Req_DEFAULT *core_api.DeleteUserReq
-
-func (p *DeleteUserArgs) GetReq() *core_api.DeleteUserReq {
-	if !p.IsSetReq() {
-		return DeleteUserArgs_Req_DEFAULT
-	}
-	return p.Req
-}
-
-func (p *DeleteUserArgs) IsSetReq() bool {
-	return p.Req != nil
-}
-
-func (p *DeleteUserArgs) GetFirstArgument() interface{} {
-	return p.Req
-}
-
-type DeleteUserResult struct {
-	Success *core_api.DeleteUserResp
-}
-
-var DeleteUserResult_Success_DEFAULT *core_api.DeleteUserResp
-
-func (p *DeleteUserResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetSuccess() {
-		p.Success = new(core_api.DeleteUserResp)
-	}
-	return p.Success.FastRead(buf, _type, number)
-}
-
-func (p *DeleteUserResult) FastWrite(buf []byte) (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.FastWrite(buf)
-}
-
-func (p *DeleteUserResult) Size() (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.Size()
-}
-
-func (p *DeleteUserResult) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetSuccess() {
-		return out, nil
-	}
-	return proto.Marshal(p.Success)
-}
-
-func (p *DeleteUserResult) Unmarshal(in []byte) error {
-	msg := new(core_api.DeleteUserResp)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Success = msg
-	return nil
-}
-
-func (p *DeleteUserResult) GetSuccess() *core_api.DeleteUserResp {
-	if !p.IsSetSuccess() {
-		return DeleteUserResult_Success_DEFAULT
-	}
-	return p.Success
-}
-
-func (p *DeleteUserResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.DeleteUserResp)
-}
-
-func (p *DeleteUserResult) IsSetSuccess() bool {
-	return p.Success != nil
-}
-
-func (p *DeleteUserResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -4813,159 +4504,6 @@ func (p *UpdatePostResult) GetResult() interface{} {
 	return p.Success
 }
 
-func getPostHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	switch s := arg.(type) {
-	case *streaming.Args:
-		st := s.Stream
-		req := new(core_api.GetPostReq)
-		if err := st.RecvMsg(req); err != nil {
-			return err
-		}
-		resp, err := handler.(core_api.Content).GetPost(ctx, req)
-		if err != nil {
-			return err
-		}
-		if err := st.SendMsg(resp); err != nil {
-			return err
-		}
-	case *GetPostArgs:
-		success, err := handler.(core_api.Content).GetPost(ctx, s.Req)
-		if err != nil {
-			return err
-		}
-		realResult := result.(*GetPostResult)
-		realResult.Success = success
-	}
-	return nil
-}
-func newGetPostArgs() interface{} {
-	return &GetPostArgs{}
-}
-
-func newGetPostResult() interface{} {
-	return &GetPostResult{}
-}
-
-type GetPostArgs struct {
-	Req *core_api.GetPostReq
-}
-
-func (p *GetPostArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetReq() {
-		p.Req = new(core_api.GetPostReq)
-	}
-	return p.Req.FastRead(buf, _type, number)
-}
-
-func (p *GetPostArgs) FastWrite(buf []byte) (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.FastWrite(buf)
-}
-
-func (p *GetPostArgs) Size() (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.Size()
-}
-
-func (p *GetPostArgs) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetReq() {
-		return out, nil
-	}
-	return proto.Marshal(p.Req)
-}
-
-func (p *GetPostArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.GetPostReq)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Req = msg
-	return nil
-}
-
-var GetPostArgs_Req_DEFAULT *core_api.GetPostReq
-
-func (p *GetPostArgs) GetReq() *core_api.GetPostReq {
-	if !p.IsSetReq() {
-		return GetPostArgs_Req_DEFAULT
-	}
-	return p.Req
-}
-
-func (p *GetPostArgs) IsSetReq() bool {
-	return p.Req != nil
-}
-
-func (p *GetPostArgs) GetFirstArgument() interface{} {
-	return p.Req
-}
-
-type GetPostResult struct {
-	Success *core_api.GetPostResp
-}
-
-var GetPostResult_Success_DEFAULT *core_api.GetPostResp
-
-func (p *GetPostResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetSuccess() {
-		p.Success = new(core_api.GetPostResp)
-	}
-	return p.Success.FastRead(buf, _type, number)
-}
-
-func (p *GetPostResult) FastWrite(buf []byte) (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.FastWrite(buf)
-}
-
-func (p *GetPostResult) Size() (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.Size()
-}
-
-func (p *GetPostResult) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetSuccess() {
-		return out, nil
-	}
-	return proto.Marshal(p.Success)
-}
-
-func (p *GetPostResult) Unmarshal(in []byte) error {
-	msg := new(core_api.GetPostResp)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Success = msg
-	return nil
-}
-
-func (p *GetPostResult) GetSuccess() *core_api.GetPostResp {
-	if !p.IsSetSuccess() {
-		return GetPostResult_Success_DEFAULT
-	}
-	return p.Success
-}
-
-func (p *GetPostResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.GetPostResp)
-}
-
-func (p *GetPostResult) IsSetSuccess() bool {
-	return p.Success != nil
-}
-
-func (p *GetPostResult) GetResult() interface{} {
-	return p.Success
-}
-
 func getPostsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
@@ -5159,31 +4697,11 @@ func (p *kClient) GetUser(ctx context.Context, Req *core_api.GetUserReq) (r *cor
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) CreateUser(ctx context.Context, Req *core_api.CreateUserReq) (r *core_api.CreateUserResp, err error) {
-	var _args CreateUserArgs
-	_args.Req = Req
-	var _result CreateUserResult
-	if err = p.c.Call(ctx, "CreateUser", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
-}
-
 func (p *kClient) GetUserDetail(ctx context.Context, Req *core_api.GetUserDetailReq) (r *core_api.GetUserDetailResp, err error) {
 	var _args GetUserDetailArgs
 	_args.Req = Req
 	var _result GetUserDetailResult
 	if err = p.c.Call(ctx, "GetUserDetail", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
-}
-
-func (p *kClient) DeleteUser(ctx context.Context, Req *core_api.DeleteUserReq) (r *core_api.DeleteUserResp, err error) {
-	var _args DeleteUserArgs
-	_args.Req = Req
-	var _result DeleteUserResult
-	if err = p.c.Call(ctx, "DeleteUser", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
@@ -5434,16 +4952,6 @@ func (p *kClient) UpdatePost(ctx context.Context, Req *core_api.UpdatePostReq) (
 	_args.Req = Req
 	var _result UpdatePostResult
 	if err = p.c.Call(ctx, "UpdatePost", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
-}
-
-func (p *kClient) GetPost(ctx context.Context, Req *core_api.GetPostReq) (r *core_api.GetPostResp, err error) {
-	var _args GetPostArgs
-	_args.Req = Req
-	var _result GetPostResult
-	if err = p.c.Call(ctx, "GetPost", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
