@@ -1344,26 +1344,16 @@ func (x *Post) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 }
 
 func (x *Post) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	var v string
-	v, offset, err = fastpb.ReadString(buf, _type)
-	if err != nil {
-		return offset, err
-	}
-	x.Tags = append(x.Tags, v)
-	return offset, err
-}
-
-func (x *Post) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	x.Status, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
-func (x *Post) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+func (x *Post) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	x.Url, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
-func (x *Post) fastReadField7(buf []byte, _type int8) (offset int, err error) {
+func (x *Post) fastReadField6(buf []byte, _type int8) (offset int, err error) {
 	var v User
 	offset, err = fastpb.ReadMessage(buf, _type, &v)
 	if err != nil {
@@ -1371,6 +1361,16 @@ func (x *Post) fastReadField7(buf []byte, _type int8) (offset int, err error) {
 	}
 	x.Author = &v
 	return offset, nil
+}
+
+func (x *Post) fastReadField7(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Tags = append(x.Tags, v)
+	return offset, err
 }
 
 func (x *Post) fastReadField8(buf []byte, _type int8) (offset int, err error) {
@@ -2556,36 +2556,36 @@ func (x *Post) fastWriteField3(buf []byte) (offset int) {
 }
 
 func (x *Post) fastWriteField4(buf []byte) (offset int) {
-	if len(x.Tags) == 0 {
+	if x.Status == 0 {
 		return offset
 	}
-	for i := range x.GetTags() {
-		offset += fastpb.WriteString(buf[offset:], 4, x.GetTags()[i])
-	}
+	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetStatus())
 	return offset
 }
 
 func (x *Post) fastWriteField5(buf []byte) (offset int) {
-	if x.Status == 0 {
+	if x.Url == "" {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetStatus())
+	offset += fastpb.WriteString(buf[offset:], 5, x.GetUrl())
 	return offset
 }
 
 func (x *Post) fastWriteField6(buf []byte) (offset int) {
-	if x.Url == "" {
+	if x.Author == nil {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 6, x.GetUrl())
+	offset += fastpb.WriteMessage(buf[offset:], 6, x.GetAuthor())
 	return offset
 }
 
 func (x *Post) fastWriteField7(buf []byte) (offset int) {
-	if x.Author == nil {
+	if len(x.Tags) == 0 {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 7, x.GetAuthor())
+	for i := range x.GetTags() {
+		offset += fastpb.WriteString(buf[offset:], 7, x.GetTags()[i])
+	}
 	return offset
 }
 
@@ -3738,36 +3738,36 @@ func (x *Post) sizeField3() (n int) {
 }
 
 func (x *Post) sizeField4() (n int) {
-	if len(x.Tags) == 0 {
+	if x.Status == 0 {
 		return n
 	}
-	for i := range x.GetTags() {
-		n += fastpb.SizeString(4, x.GetTags()[i])
-	}
+	n += fastpb.SizeInt64(4, x.GetStatus())
 	return n
 }
 
 func (x *Post) sizeField5() (n int) {
-	if x.Status == 0 {
+	if x.Url == "" {
 		return n
 	}
-	n += fastpb.SizeInt64(5, x.GetStatus())
+	n += fastpb.SizeString(5, x.GetUrl())
 	return n
 }
 
 func (x *Post) sizeField6() (n int) {
-	if x.Url == "" {
+	if x.Author == nil {
 		return n
 	}
-	n += fastpb.SizeString(6, x.GetUrl())
+	n += fastpb.SizeMessage(6, x.GetAuthor())
 	return n
 }
 
 func (x *Post) sizeField7() (n int) {
-	if x.Author == nil {
+	if len(x.Tags) == 0 {
 		return n
 	}
-	n += fastpb.SizeMessage(7, x.GetAuthor())
+	for i := range x.GetTags() {
+		n += fastpb.SizeString(7, x.GetTags()[i])
+	}
 	return n
 }
 
@@ -4065,10 +4065,10 @@ var fieldIDToName_Post = map[int32]string{
 	1:  "PostId",
 	2:  "Title",
 	3:  "Text",
-	4:  "Tags",
-	5:  "Status",
-	6:  "Url",
-	7:  "Author",
+	4:  "Status",
+	5:  "Url",
+	6:  "Author",
+	7:  "Tags",
 	8:  "PostCount",
 	9:  "PostRelation",
 	10: "CreateTime",

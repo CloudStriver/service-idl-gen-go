@@ -38,6 +38,7 @@ type Client interface {
 	DeletePost(ctx context.Context, Req *core_api.DeletePostReq, callOptions ...callopt.Option) (r *core_api.DeletePostResp, err error)
 	UpdatePost(ctx context.Context, Req *core_api.UpdatePostReq, callOptions ...callopt.Option) (r *core_api.UpdatePostResp, err error)
 	GetPosts(ctx context.Context, Req *core_api.GetPostsReq, callOptions ...callopt.Option) (r *core_api.GetPostsResp, err error)
+	GetPost(ctx context.Context, Req *core_api.GetPostReq, callOptions ...callopt.Option) (r *core_api.GetPostResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -202,4 +203,9 @@ func (p *kContentClient) UpdatePost(ctx context.Context, Req *core_api.UpdatePos
 func (p *kContentClient) GetPosts(ctx context.Context, Req *core_api.GetPostsReq, callOptions ...callopt.Option) (r *core_api.GetPostsResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetPosts(ctx, Req)
+}
+
+func (p *kContentClient) GetPost(ctx context.Context, Req *core_api.GetPostReq, callOptions ...callopt.Option) (r *core_api.GetPostResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetPost(ctx, Req)
 }
