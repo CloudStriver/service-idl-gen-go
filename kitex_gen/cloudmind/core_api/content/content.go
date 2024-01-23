@@ -25,10 +25,8 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"SearchUser":             kitex.NewMethodInfo(searchUserHandler, newSearchUserArgs, newSearchUserResult, false),
 		"GetUser":                kitex.NewMethodInfo(getUserHandler, newGetUserArgs, newGetUserResult, false),
 		"GetUserDetail":          kitex.NewMethodInfo(getUserDetailHandler, newGetUserDetailArgs, newGetUserDetailResult, false),
-		"GetFileIsExist":         kitex.NewMethodInfo(getFileIsExistHandler, newGetFileIsExistArgs, newGetFileIsExistResult, false),
 		"GetFile":                kitex.NewMethodInfo(getFileHandler, newGetFileArgs, newGetFileResult, false),
 		"GetFileList":            kitex.NewMethodInfo(getFileListHandler, newGetFileListArgs, newGetFileListResult, false),
-		"GetFolderSize":          kitex.NewMethodInfo(getFolderSizeHandler, newGetFolderSizeArgs, newGetFolderSizeResult, false),
 		"GetFileBySharingCode":   kitex.NewMethodInfo(getFileBySharingCodeHandler, newGetFileBySharingCodeArgs, newGetFileBySharingCodeResult, false),
 		"CreateFolder":           kitex.NewMethodInfo(createFolderHandler, newCreateFolderArgs, newCreateFolderResult, false),
 		"UpdateFile":             kitex.NewMethodInfo(updateFileHandler, newUpdateFileArgs, newUpdateFileResult, false),
@@ -46,7 +44,6 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"UpdateShareCode":        kitex.NewMethodInfo(updateShareCodeHandler, newUpdateShareCodeArgs, newUpdateShareCodeResult, false),
 		"DeleteShareCode":        kitex.NewMethodInfo(deleteShareCodeHandler, newDeleteShareCodeArgs, newDeleteShareCodeResult, false),
 		"ParsingShareCode":       kitex.NewMethodInfo(parsingShareCodeHandler, newParsingShareCodeArgs, newParsingShareCodeResult, false),
-		"DeleteShareFile":        kitex.NewMethodInfo(deleteShareFileHandler, newDeleteShareFileArgs, newDeleteShareFileResult, false),
 		"CreatePost":             kitex.NewMethodInfo(createPostHandler, newCreatePostArgs, newCreatePostResult, false),
 		"DeletePost":             kitex.NewMethodInfo(deletePostHandler, newDeletePostArgs, newDeletePostResult, false),
 		"UpdatePost":             kitex.NewMethodInfo(updatePostHandler, newUpdatePostArgs, newUpdatePostResult, false),
@@ -679,159 +676,6 @@ func (p *GetUserDetailResult) GetResult() interface{} {
 	return p.Success
 }
 
-func getFileIsExistHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	switch s := arg.(type) {
-	case *streaming.Args:
-		st := s.Stream
-		req := new(core_api.GetFileIsExistReq)
-		if err := st.RecvMsg(req); err != nil {
-			return err
-		}
-		resp, err := handler.(core_api.Content).GetFileIsExist(ctx, req)
-		if err != nil {
-			return err
-		}
-		if err := st.SendMsg(resp); err != nil {
-			return err
-		}
-	case *GetFileIsExistArgs:
-		success, err := handler.(core_api.Content).GetFileIsExist(ctx, s.Req)
-		if err != nil {
-			return err
-		}
-		realResult := result.(*GetFileIsExistResult)
-		realResult.Success = success
-	}
-	return nil
-}
-func newGetFileIsExistArgs() interface{} {
-	return &GetFileIsExistArgs{}
-}
-
-func newGetFileIsExistResult() interface{} {
-	return &GetFileIsExistResult{}
-}
-
-type GetFileIsExistArgs struct {
-	Req *core_api.GetFileIsExistReq
-}
-
-func (p *GetFileIsExistArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetReq() {
-		p.Req = new(core_api.GetFileIsExistReq)
-	}
-	return p.Req.FastRead(buf, _type, number)
-}
-
-func (p *GetFileIsExistArgs) FastWrite(buf []byte) (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.FastWrite(buf)
-}
-
-func (p *GetFileIsExistArgs) Size() (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.Size()
-}
-
-func (p *GetFileIsExistArgs) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetReq() {
-		return out, nil
-	}
-	return proto.Marshal(p.Req)
-}
-
-func (p *GetFileIsExistArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.GetFileIsExistReq)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Req = msg
-	return nil
-}
-
-var GetFileIsExistArgs_Req_DEFAULT *core_api.GetFileIsExistReq
-
-func (p *GetFileIsExistArgs) GetReq() *core_api.GetFileIsExistReq {
-	if !p.IsSetReq() {
-		return GetFileIsExistArgs_Req_DEFAULT
-	}
-	return p.Req
-}
-
-func (p *GetFileIsExistArgs) IsSetReq() bool {
-	return p.Req != nil
-}
-
-func (p *GetFileIsExistArgs) GetFirstArgument() interface{} {
-	return p.Req
-}
-
-type GetFileIsExistResult struct {
-	Success *core_api.GetFileIsExistResp
-}
-
-var GetFileIsExistResult_Success_DEFAULT *core_api.GetFileIsExistResp
-
-func (p *GetFileIsExistResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetSuccess() {
-		p.Success = new(core_api.GetFileIsExistResp)
-	}
-	return p.Success.FastRead(buf, _type, number)
-}
-
-func (p *GetFileIsExistResult) FastWrite(buf []byte) (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.FastWrite(buf)
-}
-
-func (p *GetFileIsExistResult) Size() (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.Size()
-}
-
-func (p *GetFileIsExistResult) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetSuccess() {
-		return out, nil
-	}
-	return proto.Marshal(p.Success)
-}
-
-func (p *GetFileIsExistResult) Unmarshal(in []byte) error {
-	msg := new(core_api.GetFileIsExistResp)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Success = msg
-	return nil
-}
-
-func (p *GetFileIsExistResult) GetSuccess() *core_api.GetFileIsExistResp {
-	if !p.IsSetSuccess() {
-		return GetFileIsExistResult_Success_DEFAULT
-	}
-	return p.Success
-}
-
-func (p *GetFileIsExistResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.GetFileIsExistResp)
-}
-
-func (p *GetFileIsExistResult) IsSetSuccess() bool {
-	return p.Success != nil
-}
-
-func (p *GetFileIsExistResult) GetResult() interface{} {
-	return p.Success
-}
-
 func getFileHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
@@ -1135,159 +979,6 @@ func (p *GetFileListResult) IsSetSuccess() bool {
 }
 
 func (p *GetFileListResult) GetResult() interface{} {
-	return p.Success
-}
-
-func getFolderSizeHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	switch s := arg.(type) {
-	case *streaming.Args:
-		st := s.Stream
-		req := new(core_api.GetFolderSizeReq)
-		if err := st.RecvMsg(req); err != nil {
-			return err
-		}
-		resp, err := handler.(core_api.Content).GetFolderSize(ctx, req)
-		if err != nil {
-			return err
-		}
-		if err := st.SendMsg(resp); err != nil {
-			return err
-		}
-	case *GetFolderSizeArgs:
-		success, err := handler.(core_api.Content).GetFolderSize(ctx, s.Req)
-		if err != nil {
-			return err
-		}
-		realResult := result.(*GetFolderSizeResult)
-		realResult.Success = success
-	}
-	return nil
-}
-func newGetFolderSizeArgs() interface{} {
-	return &GetFolderSizeArgs{}
-}
-
-func newGetFolderSizeResult() interface{} {
-	return &GetFolderSizeResult{}
-}
-
-type GetFolderSizeArgs struct {
-	Req *core_api.GetFolderSizeReq
-}
-
-func (p *GetFolderSizeArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetReq() {
-		p.Req = new(core_api.GetFolderSizeReq)
-	}
-	return p.Req.FastRead(buf, _type, number)
-}
-
-func (p *GetFolderSizeArgs) FastWrite(buf []byte) (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.FastWrite(buf)
-}
-
-func (p *GetFolderSizeArgs) Size() (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.Size()
-}
-
-func (p *GetFolderSizeArgs) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetReq() {
-		return out, nil
-	}
-	return proto.Marshal(p.Req)
-}
-
-func (p *GetFolderSizeArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.GetFolderSizeReq)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Req = msg
-	return nil
-}
-
-var GetFolderSizeArgs_Req_DEFAULT *core_api.GetFolderSizeReq
-
-func (p *GetFolderSizeArgs) GetReq() *core_api.GetFolderSizeReq {
-	if !p.IsSetReq() {
-		return GetFolderSizeArgs_Req_DEFAULT
-	}
-	return p.Req
-}
-
-func (p *GetFolderSizeArgs) IsSetReq() bool {
-	return p.Req != nil
-}
-
-func (p *GetFolderSizeArgs) GetFirstArgument() interface{} {
-	return p.Req
-}
-
-type GetFolderSizeResult struct {
-	Success *core_api.GetFolderSizeResp
-}
-
-var GetFolderSizeResult_Success_DEFAULT *core_api.GetFolderSizeResp
-
-func (p *GetFolderSizeResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetSuccess() {
-		p.Success = new(core_api.GetFolderSizeResp)
-	}
-	return p.Success.FastRead(buf, _type, number)
-}
-
-func (p *GetFolderSizeResult) FastWrite(buf []byte) (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.FastWrite(buf)
-}
-
-func (p *GetFolderSizeResult) Size() (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.Size()
-}
-
-func (p *GetFolderSizeResult) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetSuccess() {
-		return out, nil
-	}
-	return proto.Marshal(p.Success)
-}
-
-func (p *GetFolderSizeResult) Unmarshal(in []byte) error {
-	msg := new(core_api.GetFolderSizeResp)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Success = msg
-	return nil
-}
-
-func (p *GetFolderSizeResult) GetSuccess() *core_api.GetFolderSizeResp {
-	if !p.IsSetSuccess() {
-		return GetFolderSizeResult_Success_DEFAULT
-	}
-	return p.Success
-}
-
-func (p *GetFolderSizeResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.GetFolderSizeResp)
-}
-
-func (p *GetFolderSizeResult) IsSetSuccess() bool {
-	return p.Success != nil
-}
-
-func (p *GetFolderSizeResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -3892,159 +3583,6 @@ func (p *ParsingShareCodeResult) GetResult() interface{} {
 	return p.Success
 }
 
-func deleteShareFileHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	switch s := arg.(type) {
-	case *streaming.Args:
-		st := s.Stream
-		req := new(core_api.DeleteShareFileReq)
-		if err := st.RecvMsg(req); err != nil {
-			return err
-		}
-		resp, err := handler.(core_api.Content).DeleteShareFile(ctx, req)
-		if err != nil {
-			return err
-		}
-		if err := st.SendMsg(resp); err != nil {
-			return err
-		}
-	case *DeleteShareFileArgs:
-		success, err := handler.(core_api.Content).DeleteShareFile(ctx, s.Req)
-		if err != nil {
-			return err
-		}
-		realResult := result.(*DeleteShareFileResult)
-		realResult.Success = success
-	}
-	return nil
-}
-func newDeleteShareFileArgs() interface{} {
-	return &DeleteShareFileArgs{}
-}
-
-func newDeleteShareFileResult() interface{} {
-	return &DeleteShareFileResult{}
-}
-
-type DeleteShareFileArgs struct {
-	Req *core_api.DeleteShareFileReq
-}
-
-func (p *DeleteShareFileArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetReq() {
-		p.Req = new(core_api.DeleteShareFileReq)
-	}
-	return p.Req.FastRead(buf, _type, number)
-}
-
-func (p *DeleteShareFileArgs) FastWrite(buf []byte) (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.FastWrite(buf)
-}
-
-func (p *DeleteShareFileArgs) Size() (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.Size()
-}
-
-func (p *DeleteShareFileArgs) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetReq() {
-		return out, nil
-	}
-	return proto.Marshal(p.Req)
-}
-
-func (p *DeleteShareFileArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.DeleteShareFileReq)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Req = msg
-	return nil
-}
-
-var DeleteShareFileArgs_Req_DEFAULT *core_api.DeleteShareFileReq
-
-func (p *DeleteShareFileArgs) GetReq() *core_api.DeleteShareFileReq {
-	if !p.IsSetReq() {
-		return DeleteShareFileArgs_Req_DEFAULT
-	}
-	return p.Req
-}
-
-func (p *DeleteShareFileArgs) IsSetReq() bool {
-	return p.Req != nil
-}
-
-func (p *DeleteShareFileArgs) GetFirstArgument() interface{} {
-	return p.Req
-}
-
-type DeleteShareFileResult struct {
-	Success *core_api.DeleteShareFileResp
-}
-
-var DeleteShareFileResult_Success_DEFAULT *core_api.DeleteShareFileResp
-
-func (p *DeleteShareFileResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetSuccess() {
-		p.Success = new(core_api.DeleteShareFileResp)
-	}
-	return p.Success.FastRead(buf, _type, number)
-}
-
-func (p *DeleteShareFileResult) FastWrite(buf []byte) (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.FastWrite(buf)
-}
-
-func (p *DeleteShareFileResult) Size() (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.Size()
-}
-
-func (p *DeleteShareFileResult) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetSuccess() {
-		return out, nil
-	}
-	return proto.Marshal(p.Success)
-}
-
-func (p *DeleteShareFileResult) Unmarshal(in []byte) error {
-	msg := new(core_api.DeleteShareFileResp)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Success = msg
-	return nil
-}
-
-func (p *DeleteShareFileResult) GetSuccess() *core_api.DeleteShareFileResp {
-	if !p.IsSetSuccess() {
-		return DeleteShareFileResult_Success_DEFAULT
-	}
-	return p.Success
-}
-
-func (p *DeleteShareFileResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.DeleteShareFileResp)
-}
-
-func (p *DeleteShareFileResult) IsSetSuccess() bool {
-	return p.Success != nil
-}
-
-func (p *DeleteShareFileResult) GetResult() interface{} {
-	return p.Success
-}
-
 func createPostHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
@@ -4707,16 +4245,6 @@ func (p *kClient) GetUserDetail(ctx context.Context, Req *core_api.GetUserDetail
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) GetFileIsExist(ctx context.Context, Req *core_api.GetFileIsExistReq) (r *core_api.GetFileIsExistResp, err error) {
-	var _args GetFileIsExistArgs
-	_args.Req = Req
-	var _result GetFileIsExistResult
-	if err = p.c.Call(ctx, "GetFileIsExist", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
-}
-
 func (p *kClient) GetFile(ctx context.Context, Req *core_api.GetFileReq) (r *core_api.GetFileResp, err error) {
 	var _args GetFileArgs
 	_args.Req = Req
@@ -4732,16 +4260,6 @@ func (p *kClient) GetFileList(ctx context.Context, Req *core_api.GetFileListReq)
 	_args.Req = Req
 	var _result GetFileListResult
 	if err = p.c.Call(ctx, "GetFileList", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
-}
-
-func (p *kClient) GetFolderSize(ctx context.Context, Req *core_api.GetFolderSizeReq) (r *core_api.GetFolderSizeResp, err error) {
-	var _args GetFolderSizeArgs
-	_args.Req = Req
-	var _result GetFolderSizeResult
-	if err = p.c.Call(ctx, "GetFolderSize", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
@@ -4912,16 +4430,6 @@ func (p *kClient) ParsingShareCode(ctx context.Context, Req *core_api.ParsingSha
 	_args.Req = Req
 	var _result ParsingShareCodeResult
 	if err = p.c.Call(ctx, "ParsingShareCode", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
-}
-
-func (p *kClient) DeleteShareFile(ctx context.Context, Req *core_api.DeleteShareFileReq) (r *core_api.DeleteShareFileResp, err error) {
-	var _args DeleteShareFileArgs
-	_args.Req = Req
-	var _result DeleteShareFileResult
-	if err = p.c.Call(ctx, "DeleteShareFile", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
