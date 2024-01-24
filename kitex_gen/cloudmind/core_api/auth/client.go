@@ -12,6 +12,7 @@ import (
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
 	Register(ctx context.Context, Req *core_api.RegisterReq, callOptions ...callopt.Option) (r *core_api.RegisterResp, err error)
+	CheckEmail(ctx context.Context, Req *core_api.CheckEmailReq, callOptions ...callopt.Option) (r *core_api.CheckEmailResp, err error)
 	EmailLogin(ctx context.Context, Req *core_api.EmailLoginReq, callOptions ...callopt.Option) (r *core_api.EmailLoginResp, err error)
 	GithubLogin(ctx context.Context, Req *core_api.GithubLoginReq, callOptions ...callopt.Option) (r *core_api.GithubLoginResp, err error)
 	GiteeLogin(ctx context.Context, Req *core_api.GiteeLoginReq, callOptions ...callopt.Option) (r *core_api.GiteeLoginResp, err error)
@@ -53,6 +54,11 @@ type kAuthClient struct {
 func (p *kAuthClient) Register(ctx context.Context, Req *core_api.RegisterReq, callOptions ...callopt.Option) (r *core_api.RegisterResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.Register(ctx, Req)
+}
+
+func (p *kAuthClient) CheckEmail(ctx context.Context, Req *core_api.CheckEmailReq, callOptions ...callopt.Option) (r *core_api.CheckEmailResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CheckEmail(ctx, Req)
 }
 
 func (p *kAuthClient) EmailLogin(ctx context.Context, Req *core_api.EmailLoginReq, callOptions ...callopt.Option) (r *core_api.EmailLoginResp, err error) {

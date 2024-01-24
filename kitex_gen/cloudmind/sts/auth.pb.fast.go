@@ -169,6 +169,11 @@ func (x *CheckEmailReq) fastReadField2(buf []byte, _type int8) (offset int, err 
 
 func (x *CheckEmailResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -178,6 +183,13 @@ func (x *CheckEmailResp) FastRead(buf []byte, _type int8, number int32) (offset 
 	return offset, nil
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CheckEmailResp[number], err)
+}
+
+func (x *CheckEmailResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.Ok, offset, err = fastpb.ReadBool(buf, _type)
+	return offset, err
 }
 
 func (x *CreateAuthReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -189,11 +201,6 @@ func (x *CreateAuthReq) FastRead(buf []byte, _type int8, number int32) (offset i
 		}
 	case 2:
 		offset, err = x.fastReadField2(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 3:
-		offset, err = x.fastReadField3(buf, _type)
 		if err != nil {
 			goto ReadFieldError
 		}
@@ -228,12 +235,6 @@ func (x *CreateAuthReq) fastReadField2(buf []byte, _type int8) (offset int, err 
 	}
 	x.UserInfo = &v
 	return offset, nil
-}
-
-func (x *CreateAuthReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadString(buf, _type)
-	x.Code = &tmp
-	return offset, err
 }
 
 func (x *CreateAuthResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -700,6 +701,15 @@ func (x *CheckEmailResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *CheckEmailResp) fastWriteField1(buf []byte) (offset int) {
+	if !x.Ok {
+		return offset
+	}
+	offset += fastpb.WriteBool(buf[offset:], 1, x.GetOk())
 	return offset
 }
 
@@ -709,7 +719,6 @@ func (x *CreateAuthReq) FastWrite(buf []byte) (offset int) {
 	}
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
-	offset += x.fastWriteField3(buf[offset:])
 	return offset
 }
 
@@ -726,14 +735,6 @@ func (x *CreateAuthReq) fastWriteField2(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteMessage(buf[offset:], 2, x.GetUserInfo())
-	return offset
-}
-
-func (x *CreateAuthReq) fastWriteField3(buf []byte) (offset int) {
-	if x.Code == nil {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 3, x.GetCode())
 	return offset
 }
 
@@ -1087,6 +1088,15 @@ func (x *CheckEmailResp) Size() (n int) {
 	if x == nil {
 		return n
 	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *CheckEmailResp) sizeField1() (n int) {
+	if !x.Ok {
+		return n
+	}
+	n += fastpb.SizeBool(1, x.GetOk())
 	return n
 }
 
@@ -1096,7 +1106,6 @@ func (x *CreateAuthReq) Size() (n int) {
 	}
 	n += x.sizeField1()
 	n += x.sizeField2()
-	n += x.sizeField3()
 	return n
 }
 
@@ -1113,14 +1122,6 @@ func (x *CreateAuthReq) sizeField2() (n int) {
 		return n
 	}
 	n += fastpb.SizeMessage(2, x.GetUserInfo())
-	return n
-}
-
-func (x *CreateAuthReq) sizeField3() (n int) {
-	if x.Code == nil {
-		return n
-	}
-	n += fastpb.SizeString(3, x.GetCode())
 	return n
 }
 
@@ -1392,12 +1393,13 @@ var fieldIDToName_CheckEmailReq = map[int32]string{
 	2: "Code",
 }
 
-var fieldIDToName_CheckEmailResp = map[int32]string{}
+var fieldIDToName_CheckEmailResp = map[int32]string{
+	1: "Ok",
+}
 
 var fieldIDToName_CreateAuthReq = map[int32]string{
 	1: "AuthInfo",
 	2: "UserInfo",
-	3: "Code",
 }
 
 var fieldIDToName_CreateAuthResp = map[int32]string{

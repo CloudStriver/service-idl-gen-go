@@ -200,11 +200,6 @@ func (x *EmailOptions) FastRead(buf []byte, _type int8, number int32) (offset in
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 2:
-		offset, err = x.fastReadField2(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -220,11 +215,6 @@ ReadFieldError:
 
 func (x *EmailOptions) fastReadField1(buf []byte, _type int8) (offset int, err error) {
 	x.Email, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *EmailOptions) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.Code, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -395,7 +385,6 @@ func (x *EmailOptions) FastWrite(buf []byte) (offset int) {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
-	offset += x.fastWriteField2(buf[offset:])
 	return offset
 }
 
@@ -404,14 +393,6 @@ func (x *EmailOptions) fastWriteField1(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 1, x.GetEmail())
-	return offset
-}
-
-func (x *EmailOptions) fastWriteField2(buf []byte) (offset int) {
-	if x.Code == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetCode())
 	return offset
 }
 
@@ -572,7 +553,6 @@ func (x *EmailOptions) Size() (n int) {
 		return n
 	}
 	n += x.sizeField1()
-	n += x.sizeField2()
 	return n
 }
 
@@ -581,14 +561,6 @@ func (x *EmailOptions) sizeField1() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(1, x.GetEmail())
-	return n
-}
-
-func (x *EmailOptions) sizeField2() (n int) {
-	if x.Code == "" {
-		return n
-	}
-	n += fastpb.SizeString(2, x.GetCode())
 	return n
 }
 
@@ -642,7 +614,6 @@ var fieldIDToName_AuthInfo = map[int32]string{
 
 var fieldIDToName_EmailOptions = map[int32]string{
 	1: "Email",
-	2: "Code",
 }
 
 var fieldIDToName_UserIdOptions = map[int32]string{

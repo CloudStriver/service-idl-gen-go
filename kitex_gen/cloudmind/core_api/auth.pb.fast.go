@@ -38,11 +38,6 @@ func (x *RegisterReq) FastRead(buf []byte, _type int8, number int32) (offset int
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 5:
-		offset, err = x.fastReadField5(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -73,11 +68,6 @@ func (x *RegisterReq) fastReadField3(buf []byte, _type int8) (offset int, err er
 
 func (x *RegisterReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
 	x.Password, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *RegisterReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	x.Code, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -618,6 +608,66 @@ SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 }
 
+func (x *CheckEmailReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CheckEmailReq[number], err)
+}
+
+func (x *CheckEmailReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.Email, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *CheckEmailReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.Code, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *CheckEmailResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CheckEmailResp[number], err)
+}
+
+func (x *CheckEmailResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.Ok, offset, err = fastpb.ReadBool(buf, _type)
+	return offset, err
+}
+
 func (x *RegisterReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -626,7 +676,6 @@ func (x *RegisterReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
-	offset += x.fastWriteField5(buf[offset:])
 	return offset
 }
 
@@ -659,14 +708,6 @@ func (x *RegisterReq) fastWriteField4(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 4, x.GetPassword())
-	return offset
-}
-
-func (x *RegisterReq) fastWriteField5(buf []byte) (offset int) {
-	if x.Code == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 5, x.GetCode())
 	return offset
 }
 
@@ -1050,6 +1091,47 @@ func (x *SetPasswordByPasswordResp) FastWrite(buf []byte) (offset int) {
 	return offset
 }
 
+func (x *CheckEmailReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	return offset
+}
+
+func (x *CheckEmailReq) fastWriteField1(buf []byte) (offset int) {
+	if x.Email == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetEmail())
+	return offset
+}
+
+func (x *CheckEmailReq) fastWriteField2(buf []byte) (offset int) {
+	if x.Code == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetCode())
+	return offset
+}
+
+func (x *CheckEmailResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *CheckEmailResp) fastWriteField1(buf []byte) (offset int) {
+	if !x.Ok {
+		return offset
+	}
+	offset += fastpb.WriteBool(buf[offset:], 1, x.GetOk())
+	return offset
+}
+
 func (x *RegisterReq) Size() (n int) {
 	if x == nil {
 		return n
@@ -1058,7 +1140,6 @@ func (x *RegisterReq) Size() (n int) {
 	n += x.sizeField2()
 	n += x.sizeField3()
 	n += x.sizeField4()
-	n += x.sizeField5()
 	return n
 }
 
@@ -1091,14 +1172,6 @@ func (x *RegisterReq) sizeField4() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(4, x.GetPassword())
-	return n
-}
-
-func (x *RegisterReq) sizeField5() (n int) {
-	if x.Code == "" {
-		return n
-	}
-	n += fastpb.SizeString(5, x.GetCode())
 	return n
 }
 
@@ -1482,12 +1555,52 @@ func (x *SetPasswordByPasswordResp) Size() (n int) {
 	return n
 }
 
+func (x *CheckEmailReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	return n
+}
+
+func (x *CheckEmailReq) sizeField1() (n int) {
+	if x.Email == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetEmail())
+	return n
+}
+
+func (x *CheckEmailReq) sizeField2() (n int) {
+	if x.Code == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetCode())
+	return n
+}
+
+func (x *CheckEmailResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *CheckEmailResp) sizeField1() (n int) {
+	if !x.Ok {
+		return n
+	}
+	n += fastpb.SizeBool(1, x.GetOk())
+	return n
+}
+
 var fieldIDToName_RegisterReq = map[int32]string{
 	1: "Name",
 	2: "Sex",
 	3: "Email",
 	4: "Password",
-	5: "Code",
 }
 
 var fieldIDToName_RegisterResp = map[int32]string{
@@ -1565,6 +1678,15 @@ var fieldIDToName_SetPasswordByPasswordReq = map[int32]string{
 }
 
 var fieldIDToName_SetPasswordByPasswordResp = map[int32]string{}
+
+var fieldIDToName_CheckEmailReq = map[int32]string{
+	1: "Email",
+	2: "Code",
+}
+
+var fieldIDToName_CheckEmailResp = map[int32]string{
+	1: "Ok",
+}
 
 var _ = sts.File_cloudmind_sts_common_proto
 var _ = content.File_cloudmind_content_common_proto

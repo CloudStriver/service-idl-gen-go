@@ -22,6 +22,7 @@ func NewServiceInfo() *kitex.ServiceInfo {
 	handlerType := (*core_api.Auth)(nil)
 	methods := map[string]kitex.MethodInfo{
 		"Register":              kitex.NewMethodInfo(registerHandler, newRegisterArgs, newRegisterResult, false),
+		"CheckEmail":            kitex.NewMethodInfo(checkEmailHandler, newCheckEmailArgs, newCheckEmailResult, false),
 		"EmailLogin":            kitex.NewMethodInfo(emailLoginHandler, newEmailLoginArgs, newEmailLoginResult, false),
 		"GithubLogin":           kitex.NewMethodInfo(githubLoginHandler, newGithubLoginArgs, newGithubLoginResult, false),
 		"GiteeLogin":            kitex.NewMethodInfo(giteeLoginHandler, newGiteeLoginArgs, newGiteeLoginResult, false),
@@ -195,6 +196,159 @@ func (p *RegisterResult) IsSetSuccess() bool {
 }
 
 func (p *RegisterResult) GetResult() interface{} {
+	return p.Success
+}
+
+func checkEmailHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.CheckEmailReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Auth).CheckEmail(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *CheckEmailArgs:
+		success, err := handler.(core_api.Auth).CheckEmail(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*CheckEmailResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newCheckEmailArgs() interface{} {
+	return &CheckEmailArgs{}
+}
+
+func newCheckEmailResult() interface{} {
+	return &CheckEmailResult{}
+}
+
+type CheckEmailArgs struct {
+	Req *core_api.CheckEmailReq
+}
+
+func (p *CheckEmailArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.CheckEmailReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *CheckEmailArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *CheckEmailArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *CheckEmailArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *CheckEmailArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.CheckEmailReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var CheckEmailArgs_Req_DEFAULT *core_api.CheckEmailReq
+
+func (p *CheckEmailArgs) GetReq() *core_api.CheckEmailReq {
+	if !p.IsSetReq() {
+		return CheckEmailArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *CheckEmailArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *CheckEmailArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type CheckEmailResult struct {
+	Success *core_api.CheckEmailResp
+}
+
+var CheckEmailResult_Success_DEFAULT *core_api.CheckEmailResp
+
+func (p *CheckEmailResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.CheckEmailResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *CheckEmailResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *CheckEmailResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *CheckEmailResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *CheckEmailResult) Unmarshal(in []byte) error {
+	msg := new(core_api.CheckEmailResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *CheckEmailResult) GetSuccess() *core_api.CheckEmailResp {
+	if !p.IsSetSuccess() {
+		return CheckEmailResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *CheckEmailResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.CheckEmailResp)
+}
+
+func (p *CheckEmailResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *CheckEmailResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -1284,6 +1438,16 @@ func (p *kClient) Register(ctx context.Context, Req *core_api.RegisterReq) (r *c
 	_args.Req = Req
 	var _result RegisterResult
 	if err = p.c.Call(ctx, "Register", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CheckEmail(ctx context.Context, Req *core_api.CheckEmailReq) (r *core_api.CheckEmailResp, err error) {
+	var _args CheckEmailArgs
+	_args.Req = Req
+	var _result CheckEmailResult
+	if err = p.c.Call(ctx, "CheckEmail", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
