@@ -41,7 +41,6 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"DeleteLabel":            kitex.NewMethodInfo(deleteLabelHandler, newDeleteLabelArgs, newDeleteLabelResult, false),
 		"CreateShareCode":        kitex.NewMethodInfo(createShareCodeHandler, newCreateShareCodeArgs, newCreateShareCodeResult, false),
 		"GetShareList":           kitex.NewMethodInfo(getShareListHandler, newGetShareListArgs, newGetShareListResult, false),
-		"UpdateShareCode":        kitex.NewMethodInfo(updateShareCodeHandler, newUpdateShareCodeArgs, newUpdateShareCodeResult, false),
 		"DeleteShareCode":        kitex.NewMethodInfo(deleteShareCodeHandler, newDeleteShareCodeArgs, newDeleteShareCodeResult, false),
 		"ParsingShareCode":       kitex.NewMethodInfo(parsingShareCodeHandler, newParsingShareCodeArgs, newParsingShareCodeResult, false),
 		"CreatePost":             kitex.NewMethodInfo(createPostHandler, newCreatePostArgs, newCreatePostResult, false),
@@ -987,7 +986,7 @@ func getFileBySharingCodeHandler(ctx context.Context, handler interface{}, arg, 
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(core_api.GetFileIsExistReq)
+		req := new(core_api.GetFileBySharingCodeReq)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
@@ -1017,12 +1016,12 @@ func newGetFileBySharingCodeResult() interface{} {
 }
 
 type GetFileBySharingCodeArgs struct {
-	Req *core_api.GetFileIsExistReq
+	Req *core_api.GetFileBySharingCodeReq
 }
 
 func (p *GetFileBySharingCodeArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(core_api.GetFileIsExistReq)
+		p.Req = new(core_api.GetFileBySharingCodeReq)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
@@ -1049,7 +1048,7 @@ func (p *GetFileBySharingCodeArgs) Marshal(out []byte) ([]byte, error) {
 }
 
 func (p *GetFileBySharingCodeArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.GetFileIsExistReq)
+	msg := new(core_api.GetFileBySharingCodeReq)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -1057,9 +1056,9 @@ func (p *GetFileBySharingCodeArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var GetFileBySharingCodeArgs_Req_DEFAULT *core_api.GetFileIsExistReq
+var GetFileBySharingCodeArgs_Req_DEFAULT *core_api.GetFileBySharingCodeReq
 
-func (p *GetFileBySharingCodeArgs) GetReq() *core_api.GetFileIsExistReq {
+func (p *GetFileBySharingCodeArgs) GetReq() *core_api.GetFileBySharingCodeReq {
 	if !p.IsSetReq() {
 		return GetFileBySharingCodeArgs_Req_DEFAULT
 	}
@@ -1075,14 +1074,14 @@ func (p *GetFileBySharingCodeArgs) GetFirstArgument() interface{} {
 }
 
 type GetFileBySharingCodeResult struct {
-	Success *core_api.GetFileIsExistResp
+	Success *core_api.GetFileBySharingCodeResp
 }
 
-var GetFileBySharingCodeResult_Success_DEFAULT *core_api.GetFileIsExistResp
+var GetFileBySharingCodeResult_Success_DEFAULT *core_api.GetFileBySharingCodeResp
 
 func (p *GetFileBySharingCodeResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(core_api.GetFileIsExistResp)
+		p.Success = new(core_api.GetFileBySharingCodeResp)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
@@ -1109,7 +1108,7 @@ func (p *GetFileBySharingCodeResult) Marshal(out []byte) ([]byte, error) {
 }
 
 func (p *GetFileBySharingCodeResult) Unmarshal(in []byte) error {
-	msg := new(core_api.GetFileIsExistResp)
+	msg := new(core_api.GetFileBySharingCodeResp)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -1117,7 +1116,7 @@ func (p *GetFileBySharingCodeResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *GetFileBySharingCodeResult) GetSuccess() *core_api.GetFileIsExistResp {
+func (p *GetFileBySharingCodeResult) GetSuccess() *core_api.GetFileBySharingCodeResp {
 	if !p.IsSetSuccess() {
 		return GetFileBySharingCodeResult_Success_DEFAULT
 	}
@@ -1125,7 +1124,7 @@ func (p *GetFileBySharingCodeResult) GetSuccess() *core_api.GetFileIsExistResp {
 }
 
 func (p *GetFileBySharingCodeResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.GetFileIsExistResp)
+	p.Success = x.(*core_api.GetFileBySharingCodeResp)
 }
 
 func (p *GetFileBySharingCodeResult) IsSetSuccess() bool {
@@ -1228,14 +1227,14 @@ func (p *CreateFolderArgs) GetFirstArgument() interface{} {
 }
 
 type CreateFolderResult struct {
-	Success *core_api.GetFileIsExistResp
+	Success *core_api.CreateShareCodeResp
 }
 
-var CreateFolderResult_Success_DEFAULT *core_api.GetFileIsExistResp
+var CreateFolderResult_Success_DEFAULT *core_api.CreateShareCodeResp
 
 func (p *CreateFolderResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(core_api.GetFileIsExistResp)
+		p.Success = new(core_api.CreateShareCodeResp)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
@@ -1262,7 +1261,7 @@ func (p *CreateFolderResult) Marshal(out []byte) ([]byte, error) {
 }
 
 func (p *CreateFolderResult) Unmarshal(in []byte) error {
-	msg := new(core_api.GetFileIsExistResp)
+	msg := new(core_api.CreateShareCodeResp)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -1270,7 +1269,7 @@ func (p *CreateFolderResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *CreateFolderResult) GetSuccess() *core_api.GetFileIsExistResp {
+func (p *CreateFolderResult) GetSuccess() *core_api.CreateShareCodeResp {
 	if !p.IsSetSuccess() {
 		return CreateFolderResult_Success_DEFAULT
 	}
@@ -1278,7 +1277,7 @@ func (p *CreateFolderResult) GetSuccess() *core_api.GetFileIsExistResp {
 }
 
 func (p *CreateFolderResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.GetFileIsExistResp)
+	p.Success = x.(*core_api.CreateShareCodeResp)
 }
 
 func (p *CreateFolderResult) IsSetSuccess() bool {
@@ -3125,159 +3124,6 @@ func (p *GetShareListResult) GetResult() interface{} {
 	return p.Success
 }
 
-func updateShareCodeHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	switch s := arg.(type) {
-	case *streaming.Args:
-		st := s.Stream
-		req := new(core_api.UpdateShareCodeReq)
-		if err := st.RecvMsg(req); err != nil {
-			return err
-		}
-		resp, err := handler.(core_api.Content).UpdateShareCode(ctx, req)
-		if err != nil {
-			return err
-		}
-		if err := st.SendMsg(resp); err != nil {
-			return err
-		}
-	case *UpdateShareCodeArgs:
-		success, err := handler.(core_api.Content).UpdateShareCode(ctx, s.Req)
-		if err != nil {
-			return err
-		}
-		realResult := result.(*UpdateShareCodeResult)
-		realResult.Success = success
-	}
-	return nil
-}
-func newUpdateShareCodeArgs() interface{} {
-	return &UpdateShareCodeArgs{}
-}
-
-func newUpdateShareCodeResult() interface{} {
-	return &UpdateShareCodeResult{}
-}
-
-type UpdateShareCodeArgs struct {
-	Req *core_api.UpdateShareCodeReq
-}
-
-func (p *UpdateShareCodeArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetReq() {
-		p.Req = new(core_api.UpdateShareCodeReq)
-	}
-	return p.Req.FastRead(buf, _type, number)
-}
-
-func (p *UpdateShareCodeArgs) FastWrite(buf []byte) (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.FastWrite(buf)
-}
-
-func (p *UpdateShareCodeArgs) Size() (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.Size()
-}
-
-func (p *UpdateShareCodeArgs) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetReq() {
-		return out, nil
-	}
-	return proto.Marshal(p.Req)
-}
-
-func (p *UpdateShareCodeArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.UpdateShareCodeReq)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Req = msg
-	return nil
-}
-
-var UpdateShareCodeArgs_Req_DEFAULT *core_api.UpdateShareCodeReq
-
-func (p *UpdateShareCodeArgs) GetReq() *core_api.UpdateShareCodeReq {
-	if !p.IsSetReq() {
-		return UpdateShareCodeArgs_Req_DEFAULT
-	}
-	return p.Req
-}
-
-func (p *UpdateShareCodeArgs) IsSetReq() bool {
-	return p.Req != nil
-}
-
-func (p *UpdateShareCodeArgs) GetFirstArgument() interface{} {
-	return p.Req
-}
-
-type UpdateShareCodeResult struct {
-	Success *core_api.UpdateShareCodeResp
-}
-
-var UpdateShareCodeResult_Success_DEFAULT *core_api.UpdateShareCodeResp
-
-func (p *UpdateShareCodeResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetSuccess() {
-		p.Success = new(core_api.UpdateShareCodeResp)
-	}
-	return p.Success.FastRead(buf, _type, number)
-}
-
-func (p *UpdateShareCodeResult) FastWrite(buf []byte) (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.FastWrite(buf)
-}
-
-func (p *UpdateShareCodeResult) Size() (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.Size()
-}
-
-func (p *UpdateShareCodeResult) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetSuccess() {
-		return out, nil
-	}
-	return proto.Marshal(p.Success)
-}
-
-func (p *UpdateShareCodeResult) Unmarshal(in []byte) error {
-	msg := new(core_api.UpdateShareCodeResp)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Success = msg
-	return nil
-}
-
-func (p *UpdateShareCodeResult) GetSuccess() *core_api.UpdateShareCodeResp {
-	if !p.IsSetSuccess() {
-		return UpdateShareCodeResult_Success_DEFAULT
-	}
-	return p.Success
-}
-
-func (p *UpdateShareCodeResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.UpdateShareCodeResp)
-}
-
-func (p *UpdateShareCodeResult) IsSetSuccess() bool {
-	return p.Success != nil
-}
-
-func (p *UpdateShareCodeResult) GetResult() interface{} {
-	return p.Success
-}
-
 func deleteShareCodeHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
@@ -4419,7 +4265,7 @@ func (p *kClient) GetFileList(ctx context.Context, Req *core_api.GetFileListReq)
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) GetFileBySharingCode(ctx context.Context, Req *core_api.GetFileIsExistReq) (r *core_api.GetFileIsExistResp, err error) {
+func (p *kClient) GetFileBySharingCode(ctx context.Context, Req *core_api.GetFileBySharingCodeReq) (r *core_api.GetFileBySharingCodeResp, err error) {
 	var _args GetFileBySharingCodeArgs
 	_args.Req = Req
 	var _result GetFileBySharingCodeResult
@@ -4429,7 +4275,7 @@ func (p *kClient) GetFileBySharingCode(ctx context.Context, Req *core_api.GetFil
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) CreateFolder(ctx context.Context, Req *core_api.CreateFolderReq) (r *core_api.GetFileIsExistResp, err error) {
+func (p *kClient) CreateFolder(ctx context.Context, Req *core_api.CreateFolderReq) (r *core_api.CreateShareCodeResp, err error) {
 	var _args CreateFolderArgs
 	_args.Req = Req
 	var _result CreateFolderResult
@@ -4554,16 +4400,6 @@ func (p *kClient) GetShareList(ctx context.Context, Req *core_api.GetShareListRe
 	_args.Req = Req
 	var _result GetShareListResult
 	if err = p.c.Call(ctx, "GetShareList", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
-}
-
-func (p *kClient) UpdateShareCode(ctx context.Context, Req *core_api.UpdateShareCodeReq) (r *core_api.UpdateShareCodeResp, err error) {
-	var _args UpdateShareCodeArgs
-	_args.Req = Req
-	var _result UpdateShareCodeResult
-	if err = p.c.Call(ctx, "UpdateShareCode", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

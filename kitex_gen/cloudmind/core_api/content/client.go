@@ -17,8 +17,8 @@ type Client interface {
 	GetUserDetail(ctx context.Context, Req *core_api.GetUserDetailReq, callOptions ...callopt.Option) (r *core_api.GetUserDetailResp, err error)
 	GetFile(ctx context.Context, Req *core_api.GetFileReq, callOptions ...callopt.Option) (r *core_api.GetFileResp, err error)
 	GetFileList(ctx context.Context, Req *core_api.GetFileListReq, callOptions ...callopt.Option) (r *core_api.GetFileListResp, err error)
-	GetFileBySharingCode(ctx context.Context, Req *core_api.GetFileIsExistReq, callOptions ...callopt.Option) (r *core_api.GetFileIsExistResp, err error)
-	CreateFolder(ctx context.Context, Req *core_api.CreateFolderReq, callOptions ...callopt.Option) (r *core_api.GetFileIsExistResp, err error)
+	GetFileBySharingCode(ctx context.Context, Req *core_api.GetFileBySharingCodeReq, callOptions ...callopt.Option) (r *core_api.GetFileBySharingCodeResp, err error)
+	CreateFolder(ctx context.Context, Req *core_api.CreateFolderReq, callOptions ...callopt.Option) (r *core_api.CreateShareCodeResp, err error)
 	UpdateFile(ctx context.Context, Req *core_api.UpdateFileReq, callOptions ...callopt.Option) (r *core_api.UpdateFileResp, err error)
 	MoveFile(ctx context.Context, Req *core_api.MoveFileReq, callOptions ...callopt.Option) (r *core_api.MoveFileResp, err error)
 	SaveFileToPrivateSpace(ctx context.Context, Req *core_api.SaveFileToPrivateSpaceReq, callOptions ...callopt.Option) (r *core_api.SaveFileToPrivateSpaceResp, err error)
@@ -31,7 +31,6 @@ type Client interface {
 	DeleteLabel(ctx context.Context, Req *core_api.DeleteLabelReq, callOptions ...callopt.Option) (r *core_api.DeleteLabelResp, err error)
 	CreateShareCode(ctx context.Context, Req *core_api.CreateShareCodeReq, callOptions ...callopt.Option) (r *core_api.CreateShareCodeResp, err error)
 	GetShareList(ctx context.Context, Req *core_api.GetShareListReq, callOptions ...callopt.Option) (r *core_api.GetShareListResp, err error)
-	UpdateShareCode(ctx context.Context, Req *core_api.UpdateShareCodeReq, callOptions ...callopt.Option) (r *core_api.UpdateShareCodeResp, err error)
 	DeleteShareCode(ctx context.Context, Req *core_api.DeleteShareCodeReq, callOptions ...callopt.Option) (r *core_api.DeleteShareCodeResp, err error)
 	ParsingShareCode(ctx context.Context, Req *core_api.ParsingShareCodeReq, callOptions ...callopt.Option) (r *core_api.ParsingShareCodeResp, err error)
 	CreatePost(ctx context.Context, Req *core_api.CreatePostReq, callOptions ...callopt.Option) (r *core_api.CreatePostResp, err error)
@@ -100,12 +99,12 @@ func (p *kContentClient) GetFileList(ctx context.Context, Req *core_api.GetFileL
 	return p.kClient.GetFileList(ctx, Req)
 }
 
-func (p *kContentClient) GetFileBySharingCode(ctx context.Context, Req *core_api.GetFileIsExistReq, callOptions ...callopt.Option) (r *core_api.GetFileIsExistResp, err error) {
+func (p *kContentClient) GetFileBySharingCode(ctx context.Context, Req *core_api.GetFileBySharingCodeReq, callOptions ...callopt.Option) (r *core_api.GetFileBySharingCodeResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetFileBySharingCode(ctx, Req)
 }
 
-func (p *kContentClient) CreateFolder(ctx context.Context, Req *core_api.CreateFolderReq, callOptions ...callopt.Option) (r *core_api.GetFileIsExistResp, err error) {
+func (p *kContentClient) CreateFolder(ctx context.Context, Req *core_api.CreateFolderReq, callOptions ...callopt.Option) (r *core_api.CreateShareCodeResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.CreateFolder(ctx, Req)
 }
@@ -168,11 +167,6 @@ func (p *kContentClient) CreateShareCode(ctx context.Context, Req *core_api.Crea
 func (p *kContentClient) GetShareList(ctx context.Context, Req *core_api.GetShareListReq, callOptions ...callopt.Option) (r *core_api.GetShareListResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetShareList(ctx, Req)
-}
-
-func (p *kContentClient) UpdateShareCode(ctx context.Context, Req *core_api.UpdateShareCodeReq, callOptions ...callopt.Option) (r *core_api.UpdateShareCodeResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.UpdateShareCode(ctx, Req)
 }
 
 func (p *kContentClient) DeleteShareCode(ctx context.Context, Req *core_api.DeleteShareCodeReq, callOptions ...callopt.Option) (r *core_api.DeleteShareCodeResp, err error) {

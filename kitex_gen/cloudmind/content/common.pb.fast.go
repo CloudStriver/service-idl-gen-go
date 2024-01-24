@@ -465,6 +465,11 @@ func (x *ShareCode) FastRead(buf []byte, _type int8, number int32) (offset int, 
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 6:
+		offset, err = x.fastReadField6(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -500,6 +505,11 @@ func (x *ShareCode) fastReadField4(buf []byte, _type int8) (offset int, err erro
 
 func (x *ShareCode) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	x.CreateAt, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *ShareCode) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+	x.Key, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -2086,6 +2096,7 @@ func (x *ShareCode) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
 	offset += x.fastWriteField5(buf[offset:])
+	offset += x.fastWriteField6(buf[offset:])
 	return offset
 }
 
@@ -2126,6 +2137,14 @@ func (x *ShareCode) fastWriteField5(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetCreateAt())
+	return offset
+}
+
+func (x *ShareCode) fastWriteField6(buf []byte) (offset int) {
+	if x.Key == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 6, x.GetKey())
 	return offset
 }
 
@@ -3435,6 +3454,7 @@ func (x *ShareCode) Size() (n int) {
 	n += x.sizeField3()
 	n += x.sizeField4()
 	n += x.sizeField5()
+	n += x.sizeField6()
 	return n
 }
 
@@ -3475,6 +3495,14 @@ func (x *ShareCode) sizeField5() (n int) {
 		return n
 	}
 	n += fastpb.SizeInt64(5, x.GetCreateAt())
+	return n
+}
+
+func (x *ShareCode) sizeField6() (n int) {
+	if x.Key == "" {
+		return n
+	}
+	n += fastpb.SizeString(6, x.GetKey())
 	return n
 }
 
@@ -4487,6 +4515,7 @@ var fieldIDToName_ShareCode = map[int32]string{
 	3: "Status",
 	4: "BrowseNumber",
 	5: "CreateAt",
+	6: "Key",
 }
 
 var fieldIDToName_SearchField = map[int32]string{
