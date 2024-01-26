@@ -11,6 +11,10 @@ import (
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
+	GetSliders(ctx context.Context, Req *system.GetSlidersReq, callOptions ...callopt.Option) (r *system.GetSlidersResp, err error)
+	CreateSlider(ctx context.Context, Req *system.CreateSliderReq, callOptions ...callopt.Option) (r *system.CreateSliderResp, err error)
+	UpdateSlider(ctx context.Context, Req *system.UpdateSliderReq, callOptions ...callopt.Option) (r *system.UpdateSliderResp, err error)
+	DeleteSlider(ctx context.Context, Req *system.DeleteSliderReq, callOptions ...callopt.Option) (r *system.DeleteSliderResp, err error)
 	GetNotifications(ctx context.Context, Req *system.GetNotificationsReq, callOptions ...callopt.Option) (r *system.GetNotificationsResp, err error)
 	CleanNotification(ctx context.Context, Req *system.CleanNotificationReq, callOptions ...callopt.Option) (r *system.CleanNotificationResp, err error)
 	GetNotificationCount(ctx context.Context, Req *system.GetNotificationCountReq, callOptions ...callopt.Option) (r *system.GetNotificationCountResp, err error)
@@ -46,6 +50,26 @@ func MustNewClient(destService string, opts ...client.Option) Client {
 
 type kSystemServiceClient struct {
 	*kClient
+}
+
+func (p *kSystemServiceClient) GetSliders(ctx context.Context, Req *system.GetSlidersReq, callOptions ...callopt.Option) (r *system.GetSlidersResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetSliders(ctx, Req)
+}
+
+func (p *kSystemServiceClient) CreateSlider(ctx context.Context, Req *system.CreateSliderReq, callOptions ...callopt.Option) (r *system.CreateSliderResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateSlider(ctx, Req)
+}
+
+func (p *kSystemServiceClient) UpdateSlider(ctx context.Context, Req *system.UpdateSliderReq, callOptions ...callopt.Option) (r *system.UpdateSliderResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.UpdateSlider(ctx, Req)
+}
+
+func (p *kSystemServiceClient) DeleteSlider(ctx context.Context, Req *system.DeleteSliderReq, callOptions ...callopt.Option) (r *system.DeleteSliderResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteSlider(ctx, Req)
 }
 
 func (p *kSystemServiceClient) GetNotifications(ctx context.Context, Req *system.GetNotificationsReq, callOptions ...callopt.Option) (r *system.GetNotificationsResp, err error) {
