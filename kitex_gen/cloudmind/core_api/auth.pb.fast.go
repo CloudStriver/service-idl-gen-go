@@ -514,11 +514,6 @@ func (x *SetPasswordByEmailReq) FastRead(buf []byte, _type int8, number int32) (
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 3:
-		offset, err = x.fastReadField3(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -538,11 +533,6 @@ func (x *SetPasswordByEmailReq) fastReadField1(buf []byte, _type int8) (offset i
 }
 
 func (x *SetPasswordByEmailReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.Code, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *SetPasswordByEmailReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	x.Password, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
@@ -1024,7 +1014,6 @@ func (x *SetPasswordByEmailReq) FastWrite(buf []byte) (offset int) {
 	}
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
-	offset += x.fastWriteField3(buf[offset:])
 	return offset
 }
 
@@ -1037,18 +1026,10 @@ func (x *SetPasswordByEmailReq) fastWriteField1(buf []byte) (offset int) {
 }
 
 func (x *SetPasswordByEmailReq) fastWriteField2(buf []byte) (offset int) {
-	if x.Code == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetCode())
-	return offset
-}
-
-func (x *SetPasswordByEmailReq) fastWriteField3(buf []byte) (offset int) {
 	if x.Password == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 3, x.GetPassword())
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetPassword())
 	return offset
 }
 
@@ -1488,7 +1469,6 @@ func (x *SetPasswordByEmailReq) Size() (n int) {
 	}
 	n += x.sizeField1()
 	n += x.sizeField2()
-	n += x.sizeField3()
 	return n
 }
 
@@ -1501,18 +1481,10 @@ func (x *SetPasswordByEmailReq) sizeField1() (n int) {
 }
 
 func (x *SetPasswordByEmailReq) sizeField2() (n int) {
-	if x.Code == "" {
-		return n
-	}
-	n += fastpb.SizeString(2, x.GetCode())
-	return n
-}
-
-func (x *SetPasswordByEmailReq) sizeField3() (n int) {
 	if x.Password == "" {
 		return n
 	}
-	n += fastpb.SizeString(3, x.GetPassword())
+	n += fastpb.SizeString(2, x.GetPassword())
 	return n
 }
 
@@ -1666,8 +1638,7 @@ var fieldIDToName_GetCaptchaResp = map[int32]string{
 
 var fieldIDToName_SetPasswordByEmailReq = map[int32]string{
 	1: "Email",
-	2: "Code",
-	3: "Password",
+	2: "Password",
 }
 
 var fieldIDToName_SetPasswordByEmailResp = map[int32]string{}
