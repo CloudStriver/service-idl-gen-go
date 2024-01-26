@@ -28,7 +28,7 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"GetFile":                kitex.NewMethodInfo(getFileHandler, newGetFileArgs, newGetFileResult, false),
 		"GetFileList":            kitex.NewMethodInfo(getFileListHandler, newGetFileListArgs, newGetFileListResult, false),
 		"GetFileBySharingCode":   kitex.NewMethodInfo(getFileBySharingCodeHandler, newGetFileBySharingCodeArgs, newGetFileBySharingCodeResult, false),
-		"CreateFolder":           kitex.NewMethodInfo(createFolderHandler, newCreateFolderArgs, newCreateFolderResult, false),
+		"CreateFile":             kitex.NewMethodInfo(createFileHandler, newCreateFileArgs, newCreateFileResult, false),
 		"UpdateFile":             kitex.NewMethodInfo(updateFileHandler, newUpdateFileArgs, newUpdateFileResult, false),
 		"MoveFile":               kitex.NewMethodInfo(moveFileHandler, newMoveFileArgs, newMoveFileResult, false),
 		"SaveFileToPrivateSpace": kitex.NewMethodInfo(saveFileToPrivateSpaceHandler, newSaveFileToPrivateSpaceArgs, newSaveFileToPrivateSpaceResult, false),
@@ -1135,73 +1135,73 @@ func (p *GetFileBySharingCodeResult) GetResult() interface{} {
 	return p.Success
 }
 
-func createFolderHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+func createFileHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(core_api.CreateFolderReq)
+		req := new(core_api.CreateFileReq)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
-		resp, err := handler.(core_api.Content).CreateFolder(ctx, req)
+		resp, err := handler.(core_api.Content).CreateFile(ctx, req)
 		if err != nil {
 			return err
 		}
 		if err := st.SendMsg(resp); err != nil {
 			return err
 		}
-	case *CreateFolderArgs:
-		success, err := handler.(core_api.Content).CreateFolder(ctx, s.Req)
+	case *CreateFileArgs:
+		success, err := handler.(core_api.Content).CreateFile(ctx, s.Req)
 		if err != nil {
 			return err
 		}
-		realResult := result.(*CreateFolderResult)
+		realResult := result.(*CreateFileResult)
 		realResult.Success = success
 	}
 	return nil
 }
-func newCreateFolderArgs() interface{} {
-	return &CreateFolderArgs{}
+func newCreateFileArgs() interface{} {
+	return &CreateFileArgs{}
 }
 
-func newCreateFolderResult() interface{} {
-	return &CreateFolderResult{}
+func newCreateFileResult() interface{} {
+	return &CreateFileResult{}
 }
 
-type CreateFolderArgs struct {
-	Req *core_api.CreateFolderReq
+type CreateFileArgs struct {
+	Req *core_api.CreateFileReq
 }
 
-func (p *CreateFolderArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *CreateFileArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(core_api.CreateFolderReq)
+		p.Req = new(core_api.CreateFileReq)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
 
-func (p *CreateFolderArgs) FastWrite(buf []byte) (n int) {
+func (p *CreateFileArgs) FastWrite(buf []byte) (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.FastWrite(buf)
 }
 
-func (p *CreateFolderArgs) Size() (n int) {
+func (p *CreateFileArgs) Size() (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.Size()
 }
 
-func (p *CreateFolderArgs) Marshal(out []byte) ([]byte, error) {
+func (p *CreateFileArgs) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetReq() {
 		return out, nil
 	}
 	return proto.Marshal(p.Req)
 }
 
-func (p *CreateFolderArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.CreateFolderReq)
+func (p *CreateFileArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.CreateFileReq)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -1209,59 +1209,59 @@ func (p *CreateFolderArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var CreateFolderArgs_Req_DEFAULT *core_api.CreateFolderReq
+var CreateFileArgs_Req_DEFAULT *core_api.CreateFileReq
 
-func (p *CreateFolderArgs) GetReq() *core_api.CreateFolderReq {
+func (p *CreateFileArgs) GetReq() *core_api.CreateFileReq {
 	if !p.IsSetReq() {
-		return CreateFolderArgs_Req_DEFAULT
+		return CreateFileArgs_Req_DEFAULT
 	}
 	return p.Req
 }
 
-func (p *CreateFolderArgs) IsSetReq() bool {
+func (p *CreateFileArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *CreateFolderArgs) GetFirstArgument() interface{} {
+func (p *CreateFileArgs) GetFirstArgument() interface{} {
 	return p.Req
 }
 
-type CreateFolderResult struct {
-	Success *core_api.CreateShareCodeResp
+type CreateFileResult struct {
+	Success *core_api.CreateFileResp
 }
 
-var CreateFolderResult_Success_DEFAULT *core_api.CreateShareCodeResp
+var CreateFileResult_Success_DEFAULT *core_api.CreateFileResp
 
-func (p *CreateFolderResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *CreateFileResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(core_api.CreateShareCodeResp)
+		p.Success = new(core_api.CreateFileResp)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
 
-func (p *CreateFolderResult) FastWrite(buf []byte) (n int) {
+func (p *CreateFileResult) FastWrite(buf []byte) (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.FastWrite(buf)
 }
 
-func (p *CreateFolderResult) Size() (n int) {
+func (p *CreateFileResult) Size() (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.Size()
 }
 
-func (p *CreateFolderResult) Marshal(out []byte) ([]byte, error) {
+func (p *CreateFileResult) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetSuccess() {
 		return out, nil
 	}
 	return proto.Marshal(p.Success)
 }
 
-func (p *CreateFolderResult) Unmarshal(in []byte) error {
-	msg := new(core_api.CreateShareCodeResp)
+func (p *CreateFileResult) Unmarshal(in []byte) error {
+	msg := new(core_api.CreateFileResp)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -1269,22 +1269,22 @@ func (p *CreateFolderResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *CreateFolderResult) GetSuccess() *core_api.CreateShareCodeResp {
+func (p *CreateFileResult) GetSuccess() *core_api.CreateFileResp {
 	if !p.IsSetSuccess() {
-		return CreateFolderResult_Success_DEFAULT
+		return CreateFileResult_Success_DEFAULT
 	}
 	return p.Success
 }
 
-func (p *CreateFolderResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.CreateShareCodeResp)
+func (p *CreateFileResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.CreateFileResp)
 }
 
-func (p *CreateFolderResult) IsSetSuccess() bool {
+func (p *CreateFileResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *CreateFolderResult) GetResult() interface{} {
+func (p *CreateFileResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -4275,11 +4275,11 @@ func (p *kClient) GetFileBySharingCode(ctx context.Context, Req *core_api.GetFil
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) CreateFolder(ctx context.Context, Req *core_api.CreateFolderReq) (r *core_api.CreateShareCodeResp, err error) {
-	var _args CreateFolderArgs
+func (p *kClient) CreateFile(ctx context.Context, Req *core_api.CreateFileReq) (r *core_api.CreateFileResp, err error) {
+	var _args CreateFileArgs
 	_args.Req = Req
-	var _result CreateFolderResult
-	if err = p.c.Call(ctx, "CreateFolder", &_args, &_result); err != nil {
+	var _result CreateFileResult
+	if err = p.c.Call(ctx, "CreateFile", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

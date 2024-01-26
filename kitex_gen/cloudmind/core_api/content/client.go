@@ -18,7 +18,7 @@ type Client interface {
 	GetFile(ctx context.Context, Req *core_api.GetFileReq, callOptions ...callopt.Option) (r *core_api.GetFileResp, err error)
 	GetFileList(ctx context.Context, Req *core_api.GetFileListReq, callOptions ...callopt.Option) (r *core_api.GetFileListResp, err error)
 	GetFileBySharingCode(ctx context.Context, Req *core_api.GetFileBySharingCodeReq, callOptions ...callopt.Option) (r *core_api.GetFileBySharingCodeResp, err error)
-	CreateFolder(ctx context.Context, Req *core_api.CreateFolderReq, callOptions ...callopt.Option) (r *core_api.CreateShareCodeResp, err error)
+	CreateFile(ctx context.Context, Req *core_api.CreateFileReq, callOptions ...callopt.Option) (r *core_api.CreateFileResp, err error)
 	UpdateFile(ctx context.Context, Req *core_api.UpdateFileReq, callOptions ...callopt.Option) (r *core_api.UpdateFileResp, err error)
 	MoveFile(ctx context.Context, Req *core_api.MoveFileReq, callOptions ...callopt.Option) (r *core_api.MoveFileResp, err error)
 	SaveFileToPrivateSpace(ctx context.Context, Req *core_api.SaveFileToPrivateSpaceReq, callOptions ...callopt.Option) (r *core_api.SaveFileToPrivateSpaceResp, err error)
@@ -104,9 +104,9 @@ func (p *kContentClient) GetFileBySharingCode(ctx context.Context, Req *core_api
 	return p.kClient.GetFileBySharingCode(ctx, Req)
 }
 
-func (p *kContentClient) CreateFolder(ctx context.Context, Req *core_api.CreateFolderReq, callOptions ...callopt.Option) (r *core_api.CreateShareCodeResp, err error) {
+func (p *kContentClient) CreateFile(ctx context.Context, Req *core_api.CreateFileReq, callOptions ...callopt.Option) (r *core_api.CreateFileResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.CreateFolder(ctx, Req)
+	return p.kClient.CreateFile(ctx, Req)
 }
 
 func (p *kContentClient) UpdateFile(ctx context.Context, Req *core_api.UpdateFileReq, callOptions ...callopt.Option) (r *core_api.UpdateFileResp, err error) {

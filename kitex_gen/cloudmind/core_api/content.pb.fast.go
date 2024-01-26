@@ -432,7 +432,7 @@ func (x *GetFileBySharingCodeResp) fastReadField3(buf []byte, _type int8) (offse
 	return offset, err
 }
 
-func (x *CreateFolderReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *CreateFileReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
@@ -449,10 +449,10 @@ func (x *CreateFolderReq) FastRead(buf []byte, _type int8, number int32) (offset
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CreateFolderReq[number], err)
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CreateFileReq[number], err)
 }
 
-func (x *CreateFolderReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+func (x *CreateFileReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
 	var v File
 	offset, err = fastpb.ReadMessage(buf, _type, &v)
 	if err != nil {
@@ -462,7 +462,7 @@ func (x *CreateFolderReq) fastReadField1(buf []byte, _type int8) (offset int, er
 	return offset, nil
 }
 
-func (x *CreateFolderResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *CreateFileResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
@@ -479,10 +479,10 @@ func (x *CreateFolderResp) FastRead(buf []byte, _type int8, number int32) (offse
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CreateFolderResp[number], err)
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CreateFileResp[number], err)
 }
 
-func (x *CreateFolderResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+func (x *CreateFileResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
 	x.FileId, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
@@ -2084,7 +2084,7 @@ func (x *GetFileBySharingCodeResp) fastWriteField3(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *CreateFolderReq) FastWrite(buf []byte) (offset int) {
+func (x *CreateFileReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
@@ -2092,7 +2092,7 @@ func (x *CreateFolderReq) FastWrite(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *CreateFolderReq) fastWriteField1(buf []byte) (offset int) {
+func (x *CreateFileReq) fastWriteField1(buf []byte) (offset int) {
 	if x.File == nil {
 		return offset
 	}
@@ -2100,7 +2100,7 @@ func (x *CreateFolderReq) fastWriteField1(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *CreateFolderResp) FastWrite(buf []byte) (offset int) {
+func (x *CreateFileResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
@@ -2108,7 +2108,7 @@ func (x *CreateFolderResp) FastWrite(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *CreateFolderResp) fastWriteField1(buf []byte) (offset int) {
+func (x *CreateFileResp) fastWriteField1(buf []byte) (offset int) {
 	if x.FileId == "" {
 		return offset
 	}
@@ -3189,7 +3189,7 @@ func (x *GetFileBySharingCodeResp) sizeField3() (n int) {
 	return n
 }
 
-func (x *CreateFolderReq) Size() (n int) {
+func (x *CreateFileReq) Size() (n int) {
 	if x == nil {
 		return n
 	}
@@ -3197,7 +3197,7 @@ func (x *CreateFolderReq) Size() (n int) {
 	return n
 }
 
-func (x *CreateFolderReq) sizeField1() (n int) {
+func (x *CreateFileReq) sizeField1() (n int) {
 	if x.File == nil {
 		return n
 	}
@@ -3205,7 +3205,7 @@ func (x *CreateFolderReq) sizeField1() (n int) {
 	return n
 }
 
-func (x *CreateFolderResp) Size() (n int) {
+func (x *CreateFileResp) Size() (n int) {
 	if x == nil {
 		return n
 	}
@@ -3213,7 +3213,7 @@ func (x *CreateFolderResp) Size() (n int) {
 	return n
 }
 
-func (x *CreateFolderResp) sizeField1() (n int) {
+func (x *CreateFileResp) sizeField1() (n int) {
 	if x.FileId == "" {
 		return n
 	}
@@ -4079,11 +4079,11 @@ var fieldIDToName_GetFileBySharingCodeResp = map[int32]string{
 	3: "Token",
 }
 
-var fieldIDToName_CreateFolderReq = map[int32]string{
+var fieldIDToName_CreateFileReq = map[int32]string{
 	1: "File",
 }
 
-var fieldIDToName_CreateFolderResp = map[int32]string{
+var fieldIDToName_CreateFileResp = map[int32]string{
 	1: "FileId",
 }
 
