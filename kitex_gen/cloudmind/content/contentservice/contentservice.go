@@ -27,8 +27,8 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"GetFileCount":           kitex.NewMethodInfo(getFileCountHandler, newGetFileCountArgs, newGetFileCountResult, false),
 		"GetFileBySharingCode":   kitex.NewMethodInfo(getFileBySharingCodeHandler, newGetFileBySharingCodeArgs, newGetFileBySharingCodeResult, false),
 		"GetFolderSize":          kitex.NewMethodInfo(getFolderSizeHandler, newGetFolderSizeArgs, newGetFolderSizeResult, false),
-		"CreateFolder":           kitex.NewMethodInfo(createFolderHandler, newCreateFolderArgs, newCreateFolderResult, false),
 		"UpdateFile":             kitex.NewMethodInfo(updateFileHandler, newUpdateFileArgs, newUpdateFileResult, false),
+		"CreateFile":             kitex.NewMethodInfo(createFileHandler, newCreateFileArgs, newCreateFileResult, false),
 		"MoveFile":               kitex.NewMethodInfo(moveFileHandler, newMoveFileArgs, newMoveFileResult, false),
 		"SaveFileToPrivateSpace": kitex.NewMethodInfo(saveFileToPrivateSpaceHandler, newSaveFileToPrivateSpaceArgs, newSaveFileToPrivateSpaceResult, false),
 		"AddFileToPublicSpace":   kitex.NewMethodInfo(addFileToPublicSpaceHandler, newAddFileToPublicSpaceArgs, newAddFileToPublicSpaceResult, false),
@@ -1002,159 +1002,6 @@ func (p *GetFolderSizeResult) GetResult() interface{} {
 	return p.Success
 }
 
-func createFolderHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	switch s := arg.(type) {
-	case *streaming.Args:
-		st := s.Stream
-		req := new(content.CreateFolderReq)
-		if err := st.RecvMsg(req); err != nil {
-			return err
-		}
-		resp, err := handler.(content.ContentService).CreateFolder(ctx, req)
-		if err != nil {
-			return err
-		}
-		if err := st.SendMsg(resp); err != nil {
-			return err
-		}
-	case *CreateFolderArgs:
-		success, err := handler.(content.ContentService).CreateFolder(ctx, s.Req)
-		if err != nil {
-			return err
-		}
-		realResult := result.(*CreateFolderResult)
-		realResult.Success = success
-	}
-	return nil
-}
-func newCreateFolderArgs() interface{} {
-	return &CreateFolderArgs{}
-}
-
-func newCreateFolderResult() interface{} {
-	return &CreateFolderResult{}
-}
-
-type CreateFolderArgs struct {
-	Req *content.CreateFolderReq
-}
-
-func (p *CreateFolderArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetReq() {
-		p.Req = new(content.CreateFolderReq)
-	}
-	return p.Req.FastRead(buf, _type, number)
-}
-
-func (p *CreateFolderArgs) FastWrite(buf []byte) (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.FastWrite(buf)
-}
-
-func (p *CreateFolderArgs) Size() (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.Size()
-}
-
-func (p *CreateFolderArgs) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetReq() {
-		return out, nil
-	}
-	return proto.Marshal(p.Req)
-}
-
-func (p *CreateFolderArgs) Unmarshal(in []byte) error {
-	msg := new(content.CreateFolderReq)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Req = msg
-	return nil
-}
-
-var CreateFolderArgs_Req_DEFAULT *content.CreateFolderReq
-
-func (p *CreateFolderArgs) GetReq() *content.CreateFolderReq {
-	if !p.IsSetReq() {
-		return CreateFolderArgs_Req_DEFAULT
-	}
-	return p.Req
-}
-
-func (p *CreateFolderArgs) IsSetReq() bool {
-	return p.Req != nil
-}
-
-func (p *CreateFolderArgs) GetFirstArgument() interface{} {
-	return p.Req
-}
-
-type CreateFolderResult struct {
-	Success *content.CreateFolderResp
-}
-
-var CreateFolderResult_Success_DEFAULT *content.CreateFolderResp
-
-func (p *CreateFolderResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetSuccess() {
-		p.Success = new(content.CreateFolderResp)
-	}
-	return p.Success.FastRead(buf, _type, number)
-}
-
-func (p *CreateFolderResult) FastWrite(buf []byte) (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.FastWrite(buf)
-}
-
-func (p *CreateFolderResult) Size() (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.Size()
-}
-
-func (p *CreateFolderResult) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetSuccess() {
-		return out, nil
-	}
-	return proto.Marshal(p.Success)
-}
-
-func (p *CreateFolderResult) Unmarshal(in []byte) error {
-	msg := new(content.CreateFolderResp)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Success = msg
-	return nil
-}
-
-func (p *CreateFolderResult) GetSuccess() *content.CreateFolderResp {
-	if !p.IsSetSuccess() {
-		return CreateFolderResult_Success_DEFAULT
-	}
-	return p.Success
-}
-
-func (p *CreateFolderResult) SetSuccess(x interface{}) {
-	p.Success = x.(*content.CreateFolderResp)
-}
-
-func (p *CreateFolderResult) IsSetSuccess() bool {
-	return p.Success != nil
-}
-
-func (p *CreateFolderResult) GetResult() interface{} {
-	return p.Success
-}
-
 func updateFileHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
@@ -1305,6 +1152,159 @@ func (p *UpdateFileResult) IsSetSuccess() bool {
 }
 
 func (p *UpdateFileResult) GetResult() interface{} {
+	return p.Success
+}
+
+func createFileHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.CreateFileReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).CreateFile(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *CreateFileArgs:
+		success, err := handler.(content.ContentService).CreateFile(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*CreateFileResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newCreateFileArgs() interface{} {
+	return &CreateFileArgs{}
+}
+
+func newCreateFileResult() interface{} {
+	return &CreateFileResult{}
+}
+
+type CreateFileArgs struct {
+	Req *content.CreateFileReq
+}
+
+func (p *CreateFileArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.CreateFileReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *CreateFileArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *CreateFileArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *CreateFileArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *CreateFileArgs) Unmarshal(in []byte) error {
+	msg := new(content.CreateFileReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var CreateFileArgs_Req_DEFAULT *content.CreateFileReq
+
+func (p *CreateFileArgs) GetReq() *content.CreateFileReq {
+	if !p.IsSetReq() {
+		return CreateFileArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *CreateFileArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *CreateFileArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type CreateFileResult struct {
+	Success *content.CreateFileResp
+}
+
+var CreateFileResult_Success_DEFAULT *content.CreateFileResp
+
+func (p *CreateFileResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.CreateFileResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *CreateFileResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *CreateFileResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *CreateFileResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *CreateFileResult) Unmarshal(in []byte) error {
+	msg := new(content.CreateFileResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *CreateFileResult) GetSuccess() *content.CreateFileResp {
+	if !p.IsSetSuccess() {
+		return CreateFileResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *CreateFileResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.CreateFileResp)
+}
+
+func (p *CreateFileResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *CreateFileResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -7345,21 +7345,21 @@ func (p *kClient) GetFolderSize(ctx context.Context, Req *content.GetFolderSizeR
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) CreateFolder(ctx context.Context, Req *content.CreateFolderReq) (r *content.CreateFolderResp, err error) {
-	var _args CreateFolderArgs
-	_args.Req = Req
-	var _result CreateFolderResult
-	if err = p.c.Call(ctx, "CreateFolder", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
-}
-
 func (p *kClient) UpdateFile(ctx context.Context, Req *content.UpdateFileReq) (r *content.UpdateFileResp, err error) {
 	var _args UpdateFileArgs
 	_args.Req = Req
 	var _result UpdateFileResult
 	if err = p.c.Call(ctx, "UpdateFile", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CreateFile(ctx context.Context, Req *content.CreateFileReq) (r *content.CreateFileResp, err error) {
+	var _args CreateFileArgs
+	_args.Req = Req
+	var _result CreateFileResult
+	if err = p.c.Call(ctx, "CreateFile", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

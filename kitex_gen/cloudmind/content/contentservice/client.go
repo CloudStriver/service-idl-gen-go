@@ -17,8 +17,8 @@ type Client interface {
 	GetFileCount(ctx context.Context, Req *content.GetFileCountReq, callOptions ...callopt.Option) (r *content.GetFileCountResp, err error)
 	GetFileBySharingCode(ctx context.Context, Req *content.GetFileBySharingCodeReq, callOptions ...callopt.Option) (r *content.GetFileBySharingCodeResp, err error)
 	GetFolderSize(ctx context.Context, Req *content.GetFolderSizeReq, callOptions ...callopt.Option) (r *content.GetFolderSizeResp, err error)
-	CreateFolder(ctx context.Context, Req *content.CreateFolderReq, callOptions ...callopt.Option) (r *content.CreateFolderResp, err error)
 	UpdateFile(ctx context.Context, Req *content.UpdateFileReq, callOptions ...callopt.Option) (r *content.UpdateFileResp, err error)
+	CreateFile(ctx context.Context, Req *content.CreateFileReq, callOptions ...callopt.Option) (r *content.CreateFileResp, err error)
 	MoveFile(ctx context.Context, Req *content.MoveFileReq, callOptions ...callopt.Option) (r *content.MoveFileResp, err error)
 	SaveFileToPrivateSpace(ctx context.Context, Req *content.SaveFileToPrivateSpaceReq, callOptions ...callopt.Option) (r *content.SaveFileToPrivateSpaceResp, err error)
 	AddFileToPublicSpace(ctx context.Context, Req *content.AddFileToPublicSpaceReq, callOptions ...callopt.Option) (r *content.AddFileToPublicSpaceResp, err error)
@@ -119,14 +119,14 @@ func (p *kContentServiceClient) GetFolderSize(ctx context.Context, Req *content.
 	return p.kClient.GetFolderSize(ctx, Req)
 }
 
-func (p *kContentServiceClient) CreateFolder(ctx context.Context, Req *content.CreateFolderReq, callOptions ...callopt.Option) (r *content.CreateFolderResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.CreateFolder(ctx, Req)
-}
-
 func (p *kContentServiceClient) UpdateFile(ctx context.Context, Req *content.UpdateFileReq, callOptions ...callopt.Option) (r *content.UpdateFileResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.UpdateFile(ctx, Req)
+}
+
+func (p *kContentServiceClient) CreateFile(ctx context.Context, Req *content.CreateFileReq, callOptions ...callopt.Option) (r *content.CreateFileResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateFile(ctx, Req)
 }
 
 func (p *kContentServiceClient) MoveFile(ctx context.Context, Req *content.MoveFileReq, callOptions ...callopt.Option) (r *content.MoveFileResp, err error) {
