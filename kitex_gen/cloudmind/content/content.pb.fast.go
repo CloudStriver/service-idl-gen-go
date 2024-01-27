@@ -988,6 +988,101 @@ func (x *GetLabelResp) fastReadField1(buf []byte, _type int8) (offset int, err e
 	return offset, nil
 }
 
+func (x *GetLabelsReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetLabelsReq[number], err)
+}
+
+func (x *GetLabelsReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v LabelFilterOptions
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.LabelFilterOptions = &v
+	return offset, nil
+}
+
+func (x *GetLabelsReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	var v basic.PaginationOptions
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.PaginationOptions = &v
+	return offset, nil
+}
+
+func (x *GetLabelsResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetLabelsResp[number], err)
+}
+
+func (x *GetLabelsResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v Label
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Labels = append(x.Labels, &v)
+	return offset, nil
+}
+
+func (x *GetLabelsResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.Total, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *GetLabelsResp) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.Token, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
 func (x *UpdateLabelReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
@@ -3435,6 +3530,67 @@ func (x *GetLabelResp) fastWriteField1(buf []byte) (offset int) {
 	return offset
 }
 
+func (x *GetLabelsReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	return offset
+}
+
+func (x *GetLabelsReq) fastWriteField1(buf []byte) (offset int) {
+	if x.LabelFilterOptions == nil {
+		return offset
+	}
+	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetLabelFilterOptions())
+	return offset
+}
+
+func (x *GetLabelsReq) fastWriteField2(buf []byte) (offset int) {
+	if x.PaginationOptions == nil {
+		return offset
+	}
+	offset += fastpb.WriteMessage(buf[offset:], 2, x.GetPaginationOptions())
+	return offset
+}
+
+func (x *GetLabelsResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	return offset
+}
+
+func (x *GetLabelsResp) fastWriteField1(buf []byte) (offset int) {
+	if x.Labels == nil {
+		return offset
+	}
+	for i := range x.GetLabels() {
+		offset += fastpb.WriteMessage(buf[offset:], 1, x.GetLabels()[i])
+	}
+	return offset
+}
+
+func (x *GetLabelsResp) fastWriteField2(buf []byte) (offset int) {
+	if x.Total == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetTotal())
+	return offset
+}
+
+func (x *GetLabelsResp) fastWriteField3(buf []byte) (offset int) {
+	if x.Token == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetToken())
+	return offset
+}
+
 func (x *UpdateLabelReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -5126,6 +5282,67 @@ func (x *GetLabelResp) sizeField1() (n int) {
 	return n
 }
 
+func (x *GetLabelsReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	return n
+}
+
+func (x *GetLabelsReq) sizeField1() (n int) {
+	if x.LabelFilterOptions == nil {
+		return n
+	}
+	n += fastpb.SizeMessage(1, x.GetLabelFilterOptions())
+	return n
+}
+
+func (x *GetLabelsReq) sizeField2() (n int) {
+	if x.PaginationOptions == nil {
+		return n
+	}
+	n += fastpb.SizeMessage(2, x.GetPaginationOptions())
+	return n
+}
+
+func (x *GetLabelsResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	return n
+}
+
+func (x *GetLabelsResp) sizeField1() (n int) {
+	if x.Labels == nil {
+		return n
+	}
+	for i := range x.GetLabels() {
+		n += fastpb.SizeMessage(1, x.GetLabels()[i])
+	}
+	return n
+}
+
+func (x *GetLabelsResp) sizeField2() (n int) {
+	if x.Total == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(2, x.GetTotal())
+	return n
+}
+
+func (x *GetLabelsResp) sizeField3() (n int) {
+	if x.Token == "" {
+		return n
+	}
+	n += fastpb.SizeString(3, x.GetToken())
+	return n
+}
+
 func (x *UpdateLabelReq) Size() (n int) {
 	if x == nil {
 		return n
@@ -6334,6 +6551,17 @@ var fieldIDToName_GetLabelReq = map[int32]string{
 
 var fieldIDToName_GetLabelResp = map[int32]string{
 	1: "Label",
+}
+
+var fieldIDToName_GetLabelsReq = map[int32]string{
+	1: "LabelFilterOptions",
+	2: "PaginationOptions",
+}
+
+var fieldIDToName_GetLabelsResp = map[int32]string{
+	1: "Labels",
+	2: "Total",
+	3: "Token",
 }
 
 var fieldIDToName_UpdateLabelReq = map[int32]string{

@@ -25,6 +25,7 @@ type Client interface {
 	DeleteFile(ctx context.Context, Req *content.DeleteFileReq, callOptions ...callopt.Option) (r *content.DeleteFileResp, err error)
 	RecoverRecycleBinFile(ctx context.Context, Req *content.RecoverRecycleBinFileReq, callOptions ...callopt.Option) (r *content.RecoverRecycleBinFileResp, err error)
 	GetLabel(ctx context.Context, Req *content.GetLabelReq, callOptions ...callopt.Option) (r *content.GetLabelResp, err error)
+	GetLabels(ctx context.Context, Req *content.GetLabelsReq, callOptions ...callopt.Option) (r *content.GetLabelsResp, err error)
 	CreateLabel(ctx context.Context, Req *content.CreateLabelReq, callOptions ...callopt.Option) (r *content.CreateLabelResp, err error)
 	UpdateLabel(ctx context.Context, Req *content.UpdateLabelReq, callOptions ...callopt.Option) (r *content.UpdateLabelResp, err error)
 	DeleteLabel(ctx context.Context, Req *content.DeleteLabelReq, callOptions ...callopt.Option) (r *content.DeleteLabelResp, err error)
@@ -157,6 +158,11 @@ func (p *kContentServiceClient) RecoverRecycleBinFile(ctx context.Context, Req *
 func (p *kContentServiceClient) GetLabel(ctx context.Context, Req *content.GetLabelReq, callOptions ...callopt.Option) (r *content.GetLabelResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetLabel(ctx, Req)
+}
+
+func (p *kContentServiceClient) GetLabels(ctx context.Context, Req *content.GetLabelsReq, callOptions ...callopt.Option) (r *content.GetLabelsResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetLabels(ctx, Req)
 }
 
 func (p *kContentServiceClient) CreateLabel(ctx context.Context, Req *content.CreateLabelReq, callOptions ...callopt.Option) (r *content.CreateLabelResp, err error) {

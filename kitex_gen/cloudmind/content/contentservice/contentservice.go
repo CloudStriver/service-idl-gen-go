@@ -35,6 +35,7 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"DeleteFile":             kitex.NewMethodInfo(deleteFileHandler, newDeleteFileArgs, newDeleteFileResult, false),
 		"RecoverRecycleBinFile":  kitex.NewMethodInfo(recoverRecycleBinFileHandler, newRecoverRecycleBinFileArgs, newRecoverRecycleBinFileResult, false),
 		"GetLabel":               kitex.NewMethodInfo(getLabelHandler, newGetLabelArgs, newGetLabelResult, false),
+		"GetLabels":              kitex.NewMethodInfo(getLabelsHandler, newGetLabelsArgs, newGetLabelsResult, false),
 		"CreateLabel":            kitex.NewMethodInfo(createLabelHandler, newCreateLabelArgs, newCreateLabelResult, false),
 		"UpdateLabel":            kitex.NewMethodInfo(updateLabelHandler, newUpdateLabelArgs, newUpdateLabelResult, false),
 		"DeleteLabel":            kitex.NewMethodInfo(deleteLabelHandler, newDeleteLabelArgs, newDeleteLabelResult, false),
@@ -2223,6 +2224,159 @@ func (p *GetLabelResult) IsSetSuccess() bool {
 }
 
 func (p *GetLabelResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getLabelsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.GetLabelsReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).GetLabels(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetLabelsArgs:
+		success, err := handler.(content.ContentService).GetLabels(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetLabelsResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetLabelsArgs() interface{} {
+	return &GetLabelsArgs{}
+}
+
+func newGetLabelsResult() interface{} {
+	return &GetLabelsResult{}
+}
+
+type GetLabelsArgs struct {
+	Req *content.GetLabelsReq
+}
+
+func (p *GetLabelsArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.GetLabelsReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetLabelsArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetLabelsArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetLabelsArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetLabelsArgs) Unmarshal(in []byte) error {
+	msg := new(content.GetLabelsReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetLabelsArgs_Req_DEFAULT *content.GetLabelsReq
+
+func (p *GetLabelsArgs) GetReq() *content.GetLabelsReq {
+	if !p.IsSetReq() {
+		return GetLabelsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetLabelsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetLabelsArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetLabelsResult struct {
+	Success *content.GetLabelsResp
+}
+
+var GetLabelsResult_Success_DEFAULT *content.GetLabelsResp
+
+func (p *GetLabelsResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.GetLabelsResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetLabelsResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetLabelsResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetLabelsResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetLabelsResult) Unmarshal(in []byte) error {
+	msg := new(content.GetLabelsResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetLabelsResult) GetSuccess() *content.GetLabelsResp {
+	if !p.IsSetSuccess() {
+		return GetLabelsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetLabelsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.GetLabelsResp)
+}
+
+func (p *GetLabelsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetLabelsResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -7420,6 +7574,16 @@ func (p *kClient) GetLabel(ctx context.Context, Req *content.GetLabelReq) (r *co
 	_args.Req = Req
 	var _result GetLabelResult
 	if err = p.c.Call(ctx, "GetLabel", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetLabels(ctx context.Context, Req *content.GetLabelsReq) (r *content.GetLabelsResp, err error) {
+	var _args GetLabelsArgs
+	_args.Req = Req
+	var _result GetLabelsResult
+	if err = p.c.Call(ctx, "GetLabels", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

@@ -1747,6 +1747,19 @@ func (x *CouponFilterOptions) fastReadField5(buf []byte, _type int8) (offset int
 	return offset, err
 }
 
+func (x *LabelFilterOptions) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+}
+
 func (x *File) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -3102,6 +3115,13 @@ func (x *CouponFilterOptions) fastWriteField5(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetOnlyStatus())
+	return offset
+}
+
+func (x *LabelFilterOptions) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
 	return offset
 }
 
@@ -4463,6 +4483,13 @@ func (x *CouponFilterOptions) sizeField5() (n int) {
 	return n
 }
 
+func (x *LabelFilterOptions) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	return n
+}
+
 var fieldIDToName_File = map[int32]string{
 	1:  "FileId",
 	2:  "UserId",
@@ -4650,3 +4677,5 @@ var fieldIDToName_CouponFilterOptions = map[int32]string{
 	4: "OnlyProductType",
 	5: "OnlyStatus",
 }
+
+var fieldIDToName_LabelFilterOptions = map[int32]string{}
