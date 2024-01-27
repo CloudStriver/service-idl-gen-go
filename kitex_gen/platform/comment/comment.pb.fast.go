@@ -432,6 +432,16 @@ func (x *SetCommentAttrsReq) FastRead(buf []byte, _type int8, number int32) (off
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -463,6 +473,16 @@ func (x *SetCommentAttrsReq) fastReadField3(buf []byte, _type int8) (offset int,
 	}
 	x.Attrs = Attrs(v)
 	return offset, nil
+}
+
+func (x *SetCommentAttrsReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	x.SubjectId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *SetCommentAttrsReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	x.SortTime, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
 }
 
 func (x *SetCommentAttrsResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -1061,6 +1081,8 @@ func (x *SetCommentAttrsReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
 	return offset
 }
 
@@ -1085,6 +1107,22 @@ func (x *SetCommentAttrsReq) fastWriteField3(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteInt32(buf[offset:], 3, int32(x.GetAttrs()))
+	return offset
+}
+
+func (x *SetCommentAttrsReq) fastWriteField4(buf []byte) (offset int) {
+	if x.SubjectId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetSubjectId())
+	return offset
+}
+
+func (x *SetCommentAttrsReq) fastWriteField5(buf []byte) (offset int) {
+	if x.SortTime == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetSortTime())
 	return offset
 }
 
@@ -1547,6 +1585,8 @@ func (x *SetCommentAttrsReq) Size() (n int) {
 	n += x.sizeField1()
 	n += x.sizeField2()
 	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
 	return n
 }
 
@@ -1571,6 +1611,22 @@ func (x *SetCommentAttrsReq) sizeField3() (n int) {
 		return n
 	}
 	n += fastpb.SizeInt32(3, int32(x.GetAttrs()))
+	return n
+}
+
+func (x *SetCommentAttrsReq) sizeField4() (n int) {
+	if x.SubjectId == "" {
+		return n
+	}
+	n += fastpb.SizeString(4, x.GetSubjectId())
+	return n
+}
+
+func (x *SetCommentAttrsReq) sizeField5() (n int) {
+	if x.SortTime == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(5, x.GetSortTime())
 	return n
 }
 
@@ -1840,6 +1896,8 @@ var fieldIDToName_SetCommentAttrsReq = map[int32]string{
 	1: "Id",
 	2: "UserId",
 	3: "Attrs",
+	4: "SubjectId",
+	5: "SortTime",
 }
 
 var fieldIDToName_SetCommentAttrsResp = map[int32]string{}

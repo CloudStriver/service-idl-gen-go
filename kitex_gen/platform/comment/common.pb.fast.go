@@ -708,6 +708,11 @@ func (x *Subject) FastRead(buf []byte, _type int8, number int32) (offset int, er
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 8:
+		offset, err = x.fastReadField8(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -737,18 +742,23 @@ func (x *Subject) fastReadField3(buf []byte, _type int8) (offset int, err error)
 }
 
 func (x *Subject) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadInt64(buf, _type)
-	x.RootCount = &tmp
+	x.TopCommentId, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
 func (x *Subject) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
-	x.AllCount = &tmp
+	x.RootCount = &tmp
 	return offset, err
 }
 
 func (x *Subject) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadInt64(buf, _type)
+	x.AllCount = &tmp
+	return offset, err
+}
+
+func (x *Subject) fastReadField7(buf []byte, _type int8) (offset int, err error) {
 	var v int32
 	v, offset, err = fastpb.ReadInt32(buf, _type)
 	if err != nil {
@@ -758,7 +768,7 @@ func (x *Subject) fastReadField6(buf []byte, _type int8) (offset int, err error)
 	return offset, nil
 }
 
-func (x *Subject) fastReadField7(buf []byte, _type int8) (offset int, err error) {
+func (x *Subject) fastReadField8(buf []byte, _type int8) (offset int, err error) {
 	var v int32
 	v, offset, err = fastpb.ReadInt32(buf, _type)
 	if err != nil {
@@ -805,6 +815,11 @@ func (x *SubjectDetails) FastRead(buf []byte, _type int8, number int32) (offset 
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 8:
+		offset, err = x.fastReadField8(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -834,21 +849,26 @@ func (x *SubjectDetails) fastReadField3(buf []byte, _type int8) (offset int, err
 }
 
 func (x *SubjectDetails) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	x.RootCount, offset, err = fastpb.ReadInt64(buf, _type)
+	x.TopCommentId, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
 func (x *SubjectDetails) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	x.AllCount, offset, err = fastpb.ReadInt64(buf, _type)
+	x.RootCount, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
 func (x *SubjectDetails) fastReadField6(buf []byte, _type int8) (offset int, err error) {
-	x.State, offset, err = fastpb.ReadInt64(buf, _type)
+	x.AllCount, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
 func (x *SubjectDetails) fastReadField7(buf []byte, _type int8) (offset int, err error) {
+	x.State, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *SubjectDetails) fastReadField8(buf []byte, _type int8) (offset int, err error) {
 	x.Attrs, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
@@ -1444,6 +1464,7 @@ func (x *Subject) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField5(buf[offset:])
 	offset += x.fastWriteField6(buf[offset:])
 	offset += x.fastWriteField7(buf[offset:])
+	offset += x.fastWriteField8(buf[offset:])
 	return offset
 }
 
@@ -1472,34 +1493,42 @@ func (x *Subject) fastWriteField3(buf []byte) (offset int) {
 }
 
 func (x *Subject) fastWriteField4(buf []byte) (offset int) {
-	if x.RootCount == nil {
+	if x.TopCommentId == "" {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetRootCount())
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetTopCommentId())
 	return offset
 }
 
 func (x *Subject) fastWriteField5(buf []byte) (offset int) {
-	if x.AllCount == nil {
+	if x.RootCount == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetAllCount())
+	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetRootCount())
 	return offset
 }
 
 func (x *Subject) fastWriteField6(buf []byte) (offset int) {
-	if x.State == 0 {
+	if x.AllCount == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 6, int32(x.GetState()))
+	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetAllCount())
 	return offset
 }
 
 func (x *Subject) fastWriteField7(buf []byte) (offset int) {
+	if x.State == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 7, int32(x.GetState()))
+	return offset
+}
+
+func (x *Subject) fastWriteField8(buf []byte) (offset int) {
 	if x.Attrs == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 7, int32(x.GetAttrs()))
+	offset += fastpb.WriteInt32(buf[offset:], 8, int32(x.GetAttrs()))
 	return offset
 }
 
@@ -1514,6 +1543,7 @@ func (x *SubjectDetails) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField5(buf[offset:])
 	offset += x.fastWriteField6(buf[offset:])
 	offset += x.fastWriteField7(buf[offset:])
+	offset += x.fastWriteField8(buf[offset:])
 	return offset
 }
 
@@ -1542,34 +1572,42 @@ func (x *SubjectDetails) fastWriteField3(buf []byte) (offset int) {
 }
 
 func (x *SubjectDetails) fastWriteField4(buf []byte) (offset int) {
-	if x.RootCount == 0 {
+	if x.TopCommentId == "" {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetRootCount())
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetTopCommentId())
 	return offset
 }
 
 func (x *SubjectDetails) fastWriteField5(buf []byte) (offset int) {
-	if x.AllCount == 0 {
+	if x.RootCount == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetAllCount())
+	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetRootCount())
 	return offset
 }
 
 func (x *SubjectDetails) fastWriteField6(buf []byte) (offset int) {
-	if x.State == 0 {
+	if x.AllCount == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetState())
+	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetAllCount())
 	return offset
 }
 
 func (x *SubjectDetails) fastWriteField7(buf []byte) (offset int) {
+	if x.State == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetState())
+	return offset
+}
+
+func (x *SubjectDetails) fastWriteField8(buf []byte) (offset int) {
 	if x.Attrs == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetAttrs())
+	offset += fastpb.WriteInt64(buf[offset:], 8, x.GetAttrs())
 	return offset
 }
 
@@ -2152,6 +2190,7 @@ func (x *Subject) Size() (n int) {
 	n += x.sizeField5()
 	n += x.sizeField6()
 	n += x.sizeField7()
+	n += x.sizeField8()
 	return n
 }
 
@@ -2180,34 +2219,42 @@ func (x *Subject) sizeField3() (n int) {
 }
 
 func (x *Subject) sizeField4() (n int) {
-	if x.RootCount == nil {
+	if x.TopCommentId == "" {
 		return n
 	}
-	n += fastpb.SizeInt64(4, x.GetRootCount())
+	n += fastpb.SizeString(4, x.GetTopCommentId())
 	return n
 }
 
 func (x *Subject) sizeField5() (n int) {
-	if x.AllCount == nil {
+	if x.RootCount == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(5, x.GetAllCount())
+	n += fastpb.SizeInt64(5, x.GetRootCount())
 	return n
 }
 
 func (x *Subject) sizeField6() (n int) {
-	if x.State == 0 {
+	if x.AllCount == nil {
 		return n
 	}
-	n += fastpb.SizeInt32(6, int32(x.GetState()))
+	n += fastpb.SizeInt64(6, x.GetAllCount())
 	return n
 }
 
 func (x *Subject) sizeField7() (n int) {
+	if x.State == 0 {
+		return n
+	}
+	n += fastpb.SizeInt32(7, int32(x.GetState()))
+	return n
+}
+
+func (x *Subject) sizeField8() (n int) {
 	if x.Attrs == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(7, int32(x.GetAttrs()))
+	n += fastpb.SizeInt32(8, int32(x.GetAttrs()))
 	return n
 }
 
@@ -2222,6 +2269,7 @@ func (x *SubjectDetails) Size() (n int) {
 	n += x.sizeField5()
 	n += x.sizeField6()
 	n += x.sizeField7()
+	n += x.sizeField8()
 	return n
 }
 
@@ -2250,34 +2298,42 @@ func (x *SubjectDetails) sizeField3() (n int) {
 }
 
 func (x *SubjectDetails) sizeField4() (n int) {
-	if x.RootCount == 0 {
+	if x.TopCommentId == "" {
 		return n
 	}
-	n += fastpb.SizeInt64(4, x.GetRootCount())
+	n += fastpb.SizeString(4, x.GetTopCommentId())
 	return n
 }
 
 func (x *SubjectDetails) sizeField5() (n int) {
-	if x.AllCount == 0 {
+	if x.RootCount == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(5, x.GetAllCount())
+	n += fastpb.SizeInt64(5, x.GetRootCount())
 	return n
 }
 
 func (x *SubjectDetails) sizeField6() (n int) {
-	if x.State == 0 {
+	if x.AllCount == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(6, x.GetState())
+	n += fastpb.SizeInt64(6, x.GetAllCount())
 	return n
 }
 
 func (x *SubjectDetails) sizeField7() (n int) {
+	if x.State == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(7, x.GetState())
+	return n
+}
+
+func (x *SubjectDetails) sizeField8() (n int) {
 	if x.Attrs == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(7, x.GetAttrs())
+	n += fastpb.SizeInt64(8, x.GetAttrs())
 	return n
 }
 
@@ -2399,20 +2455,22 @@ var fieldIDToName_Subject = map[int32]string{
 	1: "Id",
 	2: "ItemId",
 	3: "UserId",
-	4: "RootCount",
-	5: "AllCount",
-	6: "State",
-	7: "Attrs",
+	4: "TopCommentId",
+	5: "RootCount",
+	6: "AllCount",
+	7: "State",
+	8: "Attrs",
 }
 
 var fieldIDToName_SubjectDetails = map[int32]string{
 	1: "Id",
 	2: "ItemId",
 	3: "UserId",
-	4: "RootCount",
-	5: "AllCount",
-	6: "State",
-	7: "Attrs",
+	4: "TopCommentId",
+	5: "RootCount",
+	6: "AllCount",
+	7: "State",
+	8: "Attrs",
 }
 
 var fieldIDToName_SubjectInfo = map[int32]string{
