@@ -18,8 +18,7 @@ type Client interface {
 	GetNotifications(ctx context.Context, Req *system.GetNotificationsReq, callOptions ...callopt.Option) (r *system.GetNotificationsResp, err error)
 	CleanNotification(ctx context.Context, Req *system.CleanNotificationReq, callOptions ...callopt.Option) (r *system.CleanNotificationResp, err error)
 	GetNotificationCount(ctx context.Context, Req *system.GetNotificationCountReq, callOptions ...callopt.Option) (r *system.GetNotificationCountResp, err error)
-	ReadNotification(ctx context.Context, Req *system.ReadNotificationReq, callOptions ...callopt.Option) (r *system.ReadNotificationResp, err error)
-	CreateNotification(ctx context.Context, Req *system.CreateNotificationReq, callOptions ...callopt.Option) (r *system.CreateNotificationResp, err error)
+	CreateNotifications(ctx context.Context, Req *system.CreateNotificationsReq, callOptions ...callopt.Option) (r *system.CreateNotificationsResp, err error)
 	ReadNotifications(ctx context.Context, Req *system.ReadNotificationsReq, callOptions ...callopt.Option) (r *system.ReadNotificationsResp, err error)
 }
 
@@ -87,14 +86,9 @@ func (p *kSystemServiceClient) GetNotificationCount(ctx context.Context, Req *sy
 	return p.kClient.GetNotificationCount(ctx, Req)
 }
 
-func (p *kSystemServiceClient) ReadNotification(ctx context.Context, Req *system.ReadNotificationReq, callOptions ...callopt.Option) (r *system.ReadNotificationResp, err error) {
+func (p *kSystemServiceClient) CreateNotifications(ctx context.Context, Req *system.CreateNotificationsReq, callOptions ...callopt.Option) (r *system.CreateNotificationsResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.ReadNotification(ctx, Req)
-}
-
-func (p *kSystemServiceClient) CreateNotification(ctx context.Context, Req *system.CreateNotificationReq, callOptions ...callopt.Option) (r *system.CreateNotificationResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.CreateNotification(ctx, Req)
+	return p.kClient.CreateNotifications(ctx, Req)
 }
 
 func (p *kSystemServiceClient) ReadNotifications(ctx context.Context, Req *system.ReadNotificationsReq, callOptions ...callopt.Option) (r *system.ReadNotificationsResp, err error) {
