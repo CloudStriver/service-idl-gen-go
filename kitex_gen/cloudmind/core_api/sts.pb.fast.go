@@ -69,6 +69,21 @@ func (x *ApplySignedUrlResp) FastRead(buf []byte, _type int8, number int32) (off
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -83,11 +98,26 @@ ReadFieldError:
 }
 
 func (x *ApplySignedUrlResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	x.Url, offset, err = fastpb.ReadString(buf, _type)
+	x.TmpSecretId, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
 func (x *ApplySignedUrlResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.TmpSecretKey, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *ApplySignedUrlResp) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.StartTime, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *ApplySignedUrlResp) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	x.ExpiredTime, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *ApplySignedUrlResp) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	x.SessionToken, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
@@ -132,22 +162,49 @@ func (x *ApplySignedUrlResp) FastWrite(buf []byte) (offset int) {
 	}
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
 	return offset
 }
 
 func (x *ApplySignedUrlResp) fastWriteField1(buf []byte) (offset int) {
-	if x.Url == "" {
+	if x.TmpSecretId == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 1, x.GetUrl())
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetTmpSecretId())
 	return offset
 }
 
 func (x *ApplySignedUrlResp) fastWriteField2(buf []byte) (offset int) {
+	if x.TmpSecretKey == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetTmpSecretKey())
+	return offset
+}
+
+func (x *ApplySignedUrlResp) fastWriteField3(buf []byte) (offset int) {
+	if x.StartTime == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetStartTime())
+	return offset
+}
+
+func (x *ApplySignedUrlResp) fastWriteField4(buf []byte) (offset int) {
+	if x.ExpiredTime == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetExpiredTime())
+	return offset
+}
+
+func (x *ApplySignedUrlResp) fastWriteField5(buf []byte) (offset int) {
 	if x.SessionToken == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetSessionToken())
+	offset += fastpb.WriteString(buf[offset:], 5, x.GetSessionToken())
 	return offset
 }
 
@@ -191,22 +248,49 @@ func (x *ApplySignedUrlResp) Size() (n int) {
 	}
 	n += x.sizeField1()
 	n += x.sizeField2()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
 	return n
 }
 
 func (x *ApplySignedUrlResp) sizeField1() (n int) {
-	if x.Url == "" {
+	if x.TmpSecretId == "" {
 		return n
 	}
-	n += fastpb.SizeString(1, x.GetUrl())
+	n += fastpb.SizeString(1, x.GetTmpSecretId())
 	return n
 }
 
 func (x *ApplySignedUrlResp) sizeField2() (n int) {
+	if x.TmpSecretKey == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetTmpSecretKey())
+	return n
+}
+
+func (x *ApplySignedUrlResp) sizeField3() (n int) {
+	if x.StartTime == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(3, x.GetStartTime())
+	return n
+}
+
+func (x *ApplySignedUrlResp) sizeField4() (n int) {
+	if x.ExpiredTime == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(4, x.GetExpiredTime())
+	return n
+}
+
+func (x *ApplySignedUrlResp) sizeField5() (n int) {
 	if x.SessionToken == "" {
 		return n
 	}
-	n += fastpb.SizeString(2, x.GetSessionToken())
+	n += fastpb.SizeString(5, x.GetSessionToken())
 	return n
 }
 
@@ -217,6 +301,9 @@ var fieldIDToName_ApplySignedUrlReq = map[int32]string{
 }
 
 var fieldIDToName_ApplySignedUrlResp = map[int32]string{
-	1: "Url",
-	2: "SessionToken",
+	1: "TmpSecretId",
+	2: "TmpSecretKey",
+	3: "StartTime",
+	4: "ExpiredTime",
+	5: "SessionToken",
 }
