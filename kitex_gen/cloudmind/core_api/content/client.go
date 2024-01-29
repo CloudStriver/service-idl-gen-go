@@ -16,7 +16,9 @@ type Client interface {
 	GetUser(ctx context.Context, Req *core_api.GetUserReq, callOptions ...callopt.Option) (r *core_api.GetUserResp, err error)
 	GetUserDetail(ctx context.Context, Req *core_api.GetUserDetailReq, callOptions ...callopt.Option) (r *core_api.GetUserDetailResp, err error)
 	GetFile(ctx context.Context, Req *core_api.GetFileReq, callOptions ...callopt.Option) (r *core_api.GetFileResp, err error)
-	GetFileList(ctx context.Context, Req *core_api.GetFileListReq, callOptions ...callopt.Option) (r *core_api.GetFileListResp, err error)
+	GetPrivateFiles(ctx context.Context, Req *core_api.GetPrivateFilesReq, callOptions ...callopt.Option) (r *core_api.GetPrivateFilesResp, err error)
+	GetPublicFiles(ctx context.Context, Req *core_api.GetPublicFilesReq, callOptions ...callopt.Option) (r *core_api.GetPublicFilesResp, err error)
+	GetRecycleBinFiles(ctx context.Context, Req *core_api.GetRecycleBinFilesReq, callOptions ...callopt.Option) (r *core_api.GetRecycleBinFilesResp, err error)
 	GetFileBySharingCode(ctx context.Context, Req *core_api.GetFileBySharingCodeReq, callOptions ...callopt.Option) (r *core_api.GetFileBySharingCodeResp, err error)
 	CreateFile(ctx context.Context, Req *core_api.CreateFileReq, callOptions ...callopt.Option) (r *core_api.CreateFileResp, err error)
 	UpdateFile(ctx context.Context, Req *core_api.UpdateFileReq, callOptions ...callopt.Option) (r *core_api.UpdateFileResp, err error)
@@ -25,10 +27,10 @@ type Client interface {
 	AddFileToPublicSpace(ctx context.Context, Req *core_api.AddFileToPublicSpaceReq, callOptions ...callopt.Option) (r *core_api.AddFileToPublicSpaceResp, err error)
 	DeleteFile(ctx context.Context, Req *core_api.DeleteFileReq, callOptions ...callopt.Option) (r *core_api.DeleteFileResp, err error)
 	RecoverRecycleBinFile(ctx context.Context, Req *core_api.RecoverRecycleBinFileReq, callOptions ...callopt.Option) (r *core_api.RecoverRecycleBinFileResp, err error)
-	CreateLabel(ctx context.Context, Req *core_api.CreateLabelReq, callOptions ...callopt.Option) (r *core_api.CreateLabelResp, err error)
-	UpdateLabel(ctx context.Context, Req *core_api.UpdateLabelReq, callOptions ...callopt.Option) (r *core_api.UpdateLabelResp, err error)
-	GetLabel(ctx context.Context, Req *core_api.GetLabelReq, callOptions ...callopt.Option) (r *core_api.GetLabelResp, err error)
-	DeleteLabel(ctx context.Context, Req *core_api.DeleteLabelReq, callOptions ...callopt.Option) (r *core_api.DeleteLabelResp, err error)
+	CreateZone(ctx context.Context, Req *core_api.CreateZoneReq, callOptions ...callopt.Option) (r *core_api.CreateZoneResp, err error)
+	UpdateZone(ctx context.Context, Req *core_api.UpdateZoneReq, callOptions ...callopt.Option) (r *core_api.UpdateZoneResp, err error)
+	GetZone(ctx context.Context, Req *core_api.GetZoneReq, callOptions ...callopt.Option) (r *core_api.GetZoneResp, err error)
+	DeleteZone(ctx context.Context, Req *core_api.DeleteZoneReq, callOptions ...callopt.Option) (r *core_api.DeleteZoneResp, err error)
 	CreateShareCode(ctx context.Context, Req *core_api.CreateShareCodeReq, callOptions ...callopt.Option) (r *core_api.CreateShareCodeResp, err error)
 	GetShareList(ctx context.Context, Req *core_api.GetShareListReq, callOptions ...callopt.Option) (r *core_api.GetShareListResp, err error)
 	DeleteShareCode(ctx context.Context, Req *core_api.DeleteShareCodeReq, callOptions ...callopt.Option) (r *core_api.DeleteShareCodeResp, err error)
@@ -94,9 +96,19 @@ func (p *kContentClient) GetFile(ctx context.Context, Req *core_api.GetFileReq, 
 	return p.kClient.GetFile(ctx, Req)
 }
 
-func (p *kContentClient) GetFileList(ctx context.Context, Req *core_api.GetFileListReq, callOptions ...callopt.Option) (r *core_api.GetFileListResp, err error) {
+func (p *kContentClient) GetPrivateFiles(ctx context.Context, Req *core_api.GetPrivateFilesReq, callOptions ...callopt.Option) (r *core_api.GetPrivateFilesResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.GetFileList(ctx, Req)
+	return p.kClient.GetPrivateFiles(ctx, Req)
+}
+
+func (p *kContentClient) GetPublicFiles(ctx context.Context, Req *core_api.GetPublicFilesReq, callOptions ...callopt.Option) (r *core_api.GetPublicFilesResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetPublicFiles(ctx, Req)
+}
+
+func (p *kContentClient) GetRecycleBinFiles(ctx context.Context, Req *core_api.GetRecycleBinFilesReq, callOptions ...callopt.Option) (r *core_api.GetRecycleBinFilesResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetRecycleBinFiles(ctx, Req)
 }
 
 func (p *kContentClient) GetFileBySharingCode(ctx context.Context, Req *core_api.GetFileBySharingCodeReq, callOptions ...callopt.Option) (r *core_api.GetFileBySharingCodeResp, err error) {
@@ -139,24 +151,24 @@ func (p *kContentClient) RecoverRecycleBinFile(ctx context.Context, Req *core_ap
 	return p.kClient.RecoverRecycleBinFile(ctx, Req)
 }
 
-func (p *kContentClient) CreateLabel(ctx context.Context, Req *core_api.CreateLabelReq, callOptions ...callopt.Option) (r *core_api.CreateLabelResp, err error) {
+func (p *kContentClient) CreateZone(ctx context.Context, Req *core_api.CreateZoneReq, callOptions ...callopt.Option) (r *core_api.CreateZoneResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.CreateLabel(ctx, Req)
+	return p.kClient.CreateZone(ctx, Req)
 }
 
-func (p *kContentClient) UpdateLabel(ctx context.Context, Req *core_api.UpdateLabelReq, callOptions ...callopt.Option) (r *core_api.UpdateLabelResp, err error) {
+func (p *kContentClient) UpdateZone(ctx context.Context, Req *core_api.UpdateZoneReq, callOptions ...callopt.Option) (r *core_api.UpdateZoneResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.UpdateLabel(ctx, Req)
+	return p.kClient.UpdateZone(ctx, Req)
 }
 
-func (p *kContentClient) GetLabel(ctx context.Context, Req *core_api.GetLabelReq, callOptions ...callopt.Option) (r *core_api.GetLabelResp, err error) {
+func (p *kContentClient) GetZone(ctx context.Context, Req *core_api.GetZoneReq, callOptions ...callopt.Option) (r *core_api.GetZoneResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.GetLabel(ctx, Req)
+	return p.kClient.GetZone(ctx, Req)
 }
 
-func (p *kContentClient) DeleteLabel(ctx context.Context, Req *core_api.DeleteLabelReq, callOptions ...callopt.Option) (r *core_api.DeleteLabelResp, err error) {
+func (p *kContentClient) DeleteZone(ctx context.Context, Req *core_api.DeleteZoneReq, callOptions ...callopt.Option) (r *core_api.DeleteZoneResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.DeleteLabel(ctx, Req)
+	return p.kClient.DeleteZone(ctx, Req)
 }
 
 func (p *kContentClient) CreateShareCode(ctx context.Context, Req *core_api.CreateShareCodeReq, callOptions ...callopt.Option) (r *core_api.CreateShareCodeResp, err error) {

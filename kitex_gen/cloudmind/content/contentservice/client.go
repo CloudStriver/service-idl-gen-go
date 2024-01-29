@@ -24,11 +24,11 @@ type Client interface {
 	AddFileToPublicSpace(ctx context.Context, Req *content.AddFileToPublicSpaceReq, callOptions ...callopt.Option) (r *content.AddFileToPublicSpaceResp, err error)
 	DeleteFile(ctx context.Context, Req *content.DeleteFileReq, callOptions ...callopt.Option) (r *content.DeleteFileResp, err error)
 	RecoverRecycleBinFile(ctx context.Context, Req *content.RecoverRecycleBinFileReq, callOptions ...callopt.Option) (r *content.RecoverRecycleBinFileResp, err error)
-	GetLabel(ctx context.Context, Req *content.GetLabelReq, callOptions ...callopt.Option) (r *content.GetLabelResp, err error)
-	GetLabels(ctx context.Context, Req *content.GetLabelsReq, callOptions ...callopt.Option) (r *content.GetLabelsResp, err error)
-	CreateLabel(ctx context.Context, Req *content.CreateLabelReq, callOptions ...callopt.Option) (r *content.CreateLabelResp, err error)
-	UpdateLabel(ctx context.Context, Req *content.UpdateLabelReq, callOptions ...callopt.Option) (r *content.UpdateLabelResp, err error)
-	DeleteLabel(ctx context.Context, Req *content.DeleteLabelReq, callOptions ...callopt.Option) (r *content.DeleteLabelResp, err error)
+	GetZone(ctx context.Context, Req *content.GetZoneReq, callOptions ...callopt.Option) (r *content.GetZoneResp, err error)
+	GetZones(ctx context.Context, Req *content.GetZonesReq, callOptions ...callopt.Option) (r *content.GetZonesResp, err error)
+	CreateZone(ctx context.Context, Req *content.CreateZoneReq, callOptions ...callopt.Option) (r *content.CreateZoneResp, err error)
+	UpdateZone(ctx context.Context, Req *content.UpdateZoneReq, callOptions ...callopt.Option) (r *content.UpdateZoneResp, err error)
+	DeleteZone(ctx context.Context, Req *content.DeleteZoneReq, callOptions ...callopt.Option) (r *content.DeleteZoneResp, err error)
 	GetShareList(ctx context.Context, Req *content.GetShareListReq, callOptions ...callopt.Option) (r *content.GetShareListResp, err error)
 	CreateShareCode(ctx context.Context, Req *content.CreateShareCodeReq, callOptions ...callopt.Option) (r *content.CreateShareCodeResp, err error)
 	UpdateShareCode(ctx context.Context, Req *content.UpdateShareCodeReq, callOptions ...callopt.Option) (r *content.UpdateShareCodeResp, err error)
@@ -155,29 +155,29 @@ func (p *kContentServiceClient) RecoverRecycleBinFile(ctx context.Context, Req *
 	return p.kClient.RecoverRecycleBinFile(ctx, Req)
 }
 
-func (p *kContentServiceClient) GetLabel(ctx context.Context, Req *content.GetLabelReq, callOptions ...callopt.Option) (r *content.GetLabelResp, err error) {
+func (p *kContentServiceClient) GetZone(ctx context.Context, Req *content.GetZoneReq, callOptions ...callopt.Option) (r *content.GetZoneResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.GetLabel(ctx, Req)
+	return p.kClient.GetZone(ctx, Req)
 }
 
-func (p *kContentServiceClient) GetLabels(ctx context.Context, Req *content.GetLabelsReq, callOptions ...callopt.Option) (r *content.GetLabelsResp, err error) {
+func (p *kContentServiceClient) GetZones(ctx context.Context, Req *content.GetZonesReq, callOptions ...callopt.Option) (r *content.GetZonesResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.GetLabels(ctx, Req)
+	return p.kClient.GetZones(ctx, Req)
 }
 
-func (p *kContentServiceClient) CreateLabel(ctx context.Context, Req *content.CreateLabelReq, callOptions ...callopt.Option) (r *content.CreateLabelResp, err error) {
+func (p *kContentServiceClient) CreateZone(ctx context.Context, Req *content.CreateZoneReq, callOptions ...callopt.Option) (r *content.CreateZoneResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.CreateLabel(ctx, Req)
+	return p.kClient.CreateZone(ctx, Req)
 }
 
-func (p *kContentServiceClient) UpdateLabel(ctx context.Context, Req *content.UpdateLabelReq, callOptions ...callopt.Option) (r *content.UpdateLabelResp, err error) {
+func (p *kContentServiceClient) UpdateZone(ctx context.Context, Req *content.UpdateZoneReq, callOptions ...callopt.Option) (r *content.UpdateZoneResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.UpdateLabel(ctx, Req)
+	return p.kClient.UpdateZone(ctx, Req)
 }
 
-func (p *kContentServiceClient) DeleteLabel(ctx context.Context, Req *content.DeleteLabelReq, callOptions ...callopt.Option) (r *content.DeleteLabelResp, err error) {
+func (p *kContentServiceClient) DeleteZone(ctx context.Context, Req *content.DeleteZoneReq, callOptions ...callopt.Option) (r *content.DeleteZoneResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.DeleteLabel(ctx, Req)
+	return p.kClient.DeleteZone(ctx, Req)
 }
 
 func (p *kContentServiceClient) GetShareList(ctx context.Context, Req *content.GetShareListReq, callOptions ...callopt.Option) (r *content.GetShareListResp, err error) {

@@ -878,7 +878,7 @@ SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 }
 
-func (x *CreateLabelReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *CreateZoneReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
@@ -895,20 +895,20 @@ func (x *CreateLabelReq) FastRead(buf []byte, _type int8, number int32) (offset 
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CreateLabelReq[number], err)
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CreateZoneReq[number], err)
 }
 
-func (x *CreateLabelReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v Label
+func (x *CreateZoneReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v Zone
 	offset, err = fastpb.ReadMessage(buf, _type, &v)
 	if err != nil {
 		return offset, err
 	}
-	x.Label = &v
+	x.Zone = &v
 	return offset, nil
 }
 
-func (x *CreateLabelResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *CreateZoneResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
@@ -925,15 +925,15 @@ func (x *CreateLabelResp) FastRead(buf []byte, _type int8, number int32) (offset
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CreateLabelResp[number], err)
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CreateZoneResp[number], err)
 }
 
-func (x *CreateLabelResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+func (x *CreateZoneResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
 	x.Id, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
-func (x *GetLabelReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *GetZoneReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
@@ -950,15 +950,15 @@ func (x *GetLabelReq) FastRead(buf []byte, _type int8, number int32) (offset int
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetLabelReq[number], err)
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetZoneReq[number], err)
 }
 
-func (x *GetLabelReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+func (x *GetZoneReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
 	x.Id, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
-func (x *GetLabelResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *GetZoneResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
@@ -975,20 +975,20 @@ func (x *GetLabelResp) FastRead(buf []byte, _type int8, number int32) (offset in
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetLabelResp[number], err)
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetZoneResp[number], err)
 }
 
-func (x *GetLabelResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v Label
+func (x *GetZoneResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v Zone
 	offset, err = fastpb.ReadMessage(buf, _type, &v)
 	if err != nil {
 		return offset, err
 	}
-	x.Label = &v
+	x.Zone = &v
 	return offset, nil
 }
 
-func (x *GetLabelsReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *GetZonesReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
@@ -1010,20 +1010,15 @@ func (x *GetLabelsReq) FastRead(buf []byte, _type int8, number int32) (offset in
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetLabelsReq[number], err)
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetZonesReq[number], err)
 }
 
-func (x *GetLabelsReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v LabelFilterOptions
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
-	if err != nil {
-		return offset, err
-	}
-	x.LabelFilterOptions = &v
-	return offset, nil
+func (x *GetZonesReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.FatherId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
 }
 
-func (x *GetLabelsReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+func (x *GetZonesReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
 	var v basic.PaginationOptions
 	offset, err = fastpb.ReadMessage(buf, _type, &v)
 	if err != nil {
@@ -1033,7 +1028,7 @@ func (x *GetLabelsReq) fastReadField2(buf []byte, _type int8) (offset int, err e
 	return offset, nil
 }
 
-func (x *GetLabelsResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *GetZonesResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
@@ -1060,30 +1055,30 @@ func (x *GetLabelsResp) FastRead(buf []byte, _type int8, number int32) (offset i
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetLabelsResp[number], err)
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetZonesResp[number], err)
 }
 
-func (x *GetLabelsResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v Label
+func (x *GetZonesResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v Zone
 	offset, err = fastpb.ReadMessage(buf, _type, &v)
 	if err != nil {
 		return offset, err
 	}
-	x.Labels = append(x.Labels, &v)
+	x.Zones = append(x.Zones, &v)
 	return offset, nil
 }
 
-func (x *GetLabelsResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+func (x *GetZonesResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
 	x.Total, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
-func (x *GetLabelsResp) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+func (x *GetZonesResp) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	x.Token, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
-func (x *UpdateLabelReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *UpdateZoneReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
@@ -1100,20 +1095,20 @@ func (x *UpdateLabelReq) FastRead(buf []byte, _type int8, number int32) (offset 
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_UpdateLabelReq[number], err)
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_UpdateZoneReq[number], err)
 }
 
-func (x *UpdateLabelReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v Label
+func (x *UpdateZoneReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v Zone
 	offset, err = fastpb.ReadMessage(buf, _type, &v)
 	if err != nil {
 		return offset, err
 	}
-	x.Label = &v
+	x.Zone = &v
 	return offset, nil
 }
 
-func (x *UpdateLabelResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *UpdateZoneResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
@@ -1126,7 +1121,7 @@ SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 }
 
-func (x *DeleteLabelReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *DeleteZoneReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
@@ -1143,15 +1138,15 @@ func (x *DeleteLabelReq) FastRead(buf []byte, _type int8, number int32) (offset 
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_DeleteLabelReq[number], err)
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_DeleteZoneReq[number], err)
 }
 
-func (x *DeleteLabelReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+func (x *DeleteZoneReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
 	x.Id, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
-func (x *DeleteLabelResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *DeleteZoneResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
@@ -3466,7 +3461,7 @@ func (x *RecoverRecycleBinFileResp) FastWrite(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *CreateLabelReq) FastWrite(buf []byte) (offset int) {
+func (x *CreateZoneReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
@@ -3474,15 +3469,15 @@ func (x *CreateLabelReq) FastWrite(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *CreateLabelReq) fastWriteField1(buf []byte) (offset int) {
-	if x.Label == nil {
+func (x *CreateZoneReq) fastWriteField1(buf []byte) (offset int) {
+	if x.Zone == nil {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetLabel())
+	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetZone())
 	return offset
 }
 
-func (x *CreateLabelResp) FastWrite(buf []byte) (offset int) {
+func (x *CreateZoneResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
@@ -3490,7 +3485,7 @@ func (x *CreateLabelResp) FastWrite(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *CreateLabelResp) fastWriteField1(buf []byte) (offset int) {
+func (x *CreateZoneResp) fastWriteField1(buf []byte) (offset int) {
 	if x.Id == "" {
 		return offset
 	}
@@ -3498,7 +3493,7 @@ func (x *CreateLabelResp) fastWriteField1(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *GetLabelReq) FastWrite(buf []byte) (offset int) {
+func (x *GetZoneReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
@@ -3506,7 +3501,7 @@ func (x *GetLabelReq) FastWrite(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *GetLabelReq) fastWriteField1(buf []byte) (offset int) {
+func (x *GetZoneReq) fastWriteField1(buf []byte) (offset int) {
 	if x.Id == "" {
 		return offset
 	}
@@ -3514,7 +3509,7 @@ func (x *GetLabelReq) fastWriteField1(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *GetLabelResp) FastWrite(buf []byte) (offset int) {
+func (x *GetZoneResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
@@ -3522,15 +3517,15 @@ func (x *GetLabelResp) FastWrite(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *GetLabelResp) fastWriteField1(buf []byte) (offset int) {
-	if x.Label == nil {
+func (x *GetZoneResp) fastWriteField1(buf []byte) (offset int) {
+	if x.Zone == nil {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetLabel())
+	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetZone())
 	return offset
 }
 
-func (x *GetLabelsReq) FastWrite(buf []byte) (offset int) {
+func (x *GetZonesReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
@@ -3539,15 +3534,15 @@ func (x *GetLabelsReq) FastWrite(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *GetLabelsReq) fastWriteField1(buf []byte) (offset int) {
-	if x.LabelFilterOptions == nil {
+func (x *GetZonesReq) fastWriteField1(buf []byte) (offset int) {
+	if x.FatherId == "" {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetLabelFilterOptions())
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetFatherId())
 	return offset
 }
 
-func (x *GetLabelsReq) fastWriteField2(buf []byte) (offset int) {
+func (x *GetZonesReq) fastWriteField2(buf []byte) (offset int) {
 	if x.PaginationOptions == nil {
 		return offset
 	}
@@ -3555,7 +3550,7 @@ func (x *GetLabelsReq) fastWriteField2(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *GetLabelsResp) FastWrite(buf []byte) (offset int) {
+func (x *GetZonesResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
@@ -3565,17 +3560,17 @@ func (x *GetLabelsResp) FastWrite(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *GetLabelsResp) fastWriteField1(buf []byte) (offset int) {
-	if x.Labels == nil {
+func (x *GetZonesResp) fastWriteField1(buf []byte) (offset int) {
+	if x.Zones == nil {
 		return offset
 	}
-	for i := range x.GetLabels() {
-		offset += fastpb.WriteMessage(buf[offset:], 1, x.GetLabels()[i])
+	for i := range x.GetZones() {
+		offset += fastpb.WriteMessage(buf[offset:], 1, x.GetZones()[i])
 	}
 	return offset
 }
 
-func (x *GetLabelsResp) fastWriteField2(buf []byte) (offset int) {
+func (x *GetZonesResp) fastWriteField2(buf []byte) (offset int) {
 	if x.Total == 0 {
 		return offset
 	}
@@ -3583,7 +3578,7 @@ func (x *GetLabelsResp) fastWriteField2(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *GetLabelsResp) fastWriteField3(buf []byte) (offset int) {
+func (x *GetZonesResp) fastWriteField3(buf []byte) (offset int) {
 	if x.Token == "" {
 		return offset
 	}
@@ -3591,7 +3586,7 @@ func (x *GetLabelsResp) fastWriteField3(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *UpdateLabelReq) FastWrite(buf []byte) (offset int) {
+func (x *UpdateZoneReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
@@ -3599,22 +3594,22 @@ func (x *UpdateLabelReq) FastWrite(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *UpdateLabelReq) fastWriteField1(buf []byte) (offset int) {
-	if x.Label == nil {
+func (x *UpdateZoneReq) fastWriteField1(buf []byte) (offset int) {
+	if x.Zone == nil {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetLabel())
+	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetZone())
 	return offset
 }
 
-func (x *UpdateLabelResp) FastWrite(buf []byte) (offset int) {
+func (x *UpdateZoneResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
 	return offset
 }
 
-func (x *DeleteLabelReq) FastWrite(buf []byte) (offset int) {
+func (x *DeleteZoneReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
@@ -3622,7 +3617,7 @@ func (x *DeleteLabelReq) FastWrite(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *DeleteLabelReq) fastWriteField1(buf []byte) (offset int) {
+func (x *DeleteZoneReq) fastWriteField1(buf []byte) (offset int) {
 	if x.Id == "" {
 		return offset
 	}
@@ -3630,7 +3625,7 @@ func (x *DeleteLabelReq) fastWriteField1(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *DeleteLabelResp) FastWrite(buf []byte) (offset int) {
+func (x *DeleteZoneResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
@@ -5218,7 +5213,7 @@ func (x *RecoverRecycleBinFileResp) Size() (n int) {
 	return n
 }
 
-func (x *CreateLabelReq) Size() (n int) {
+func (x *CreateZoneReq) Size() (n int) {
 	if x == nil {
 		return n
 	}
@@ -5226,15 +5221,15 @@ func (x *CreateLabelReq) Size() (n int) {
 	return n
 }
 
-func (x *CreateLabelReq) sizeField1() (n int) {
-	if x.Label == nil {
+func (x *CreateZoneReq) sizeField1() (n int) {
+	if x.Zone == nil {
 		return n
 	}
-	n += fastpb.SizeMessage(1, x.GetLabel())
+	n += fastpb.SizeMessage(1, x.GetZone())
 	return n
 }
 
-func (x *CreateLabelResp) Size() (n int) {
+func (x *CreateZoneResp) Size() (n int) {
 	if x == nil {
 		return n
 	}
@@ -5242,7 +5237,7 @@ func (x *CreateLabelResp) Size() (n int) {
 	return n
 }
 
-func (x *CreateLabelResp) sizeField1() (n int) {
+func (x *CreateZoneResp) sizeField1() (n int) {
 	if x.Id == "" {
 		return n
 	}
@@ -5250,7 +5245,7 @@ func (x *CreateLabelResp) sizeField1() (n int) {
 	return n
 }
 
-func (x *GetLabelReq) Size() (n int) {
+func (x *GetZoneReq) Size() (n int) {
 	if x == nil {
 		return n
 	}
@@ -5258,7 +5253,7 @@ func (x *GetLabelReq) Size() (n int) {
 	return n
 }
 
-func (x *GetLabelReq) sizeField1() (n int) {
+func (x *GetZoneReq) sizeField1() (n int) {
 	if x.Id == "" {
 		return n
 	}
@@ -5266,7 +5261,7 @@ func (x *GetLabelReq) sizeField1() (n int) {
 	return n
 }
 
-func (x *GetLabelResp) Size() (n int) {
+func (x *GetZoneResp) Size() (n int) {
 	if x == nil {
 		return n
 	}
@@ -5274,15 +5269,15 @@ func (x *GetLabelResp) Size() (n int) {
 	return n
 }
 
-func (x *GetLabelResp) sizeField1() (n int) {
-	if x.Label == nil {
+func (x *GetZoneResp) sizeField1() (n int) {
+	if x.Zone == nil {
 		return n
 	}
-	n += fastpb.SizeMessage(1, x.GetLabel())
+	n += fastpb.SizeMessage(1, x.GetZone())
 	return n
 }
 
-func (x *GetLabelsReq) Size() (n int) {
+func (x *GetZonesReq) Size() (n int) {
 	if x == nil {
 		return n
 	}
@@ -5291,15 +5286,15 @@ func (x *GetLabelsReq) Size() (n int) {
 	return n
 }
 
-func (x *GetLabelsReq) sizeField1() (n int) {
-	if x.LabelFilterOptions == nil {
+func (x *GetZonesReq) sizeField1() (n int) {
+	if x.FatherId == "" {
 		return n
 	}
-	n += fastpb.SizeMessage(1, x.GetLabelFilterOptions())
+	n += fastpb.SizeString(1, x.GetFatherId())
 	return n
 }
 
-func (x *GetLabelsReq) sizeField2() (n int) {
+func (x *GetZonesReq) sizeField2() (n int) {
 	if x.PaginationOptions == nil {
 		return n
 	}
@@ -5307,7 +5302,7 @@ func (x *GetLabelsReq) sizeField2() (n int) {
 	return n
 }
 
-func (x *GetLabelsResp) Size() (n int) {
+func (x *GetZonesResp) Size() (n int) {
 	if x == nil {
 		return n
 	}
@@ -5317,17 +5312,17 @@ func (x *GetLabelsResp) Size() (n int) {
 	return n
 }
 
-func (x *GetLabelsResp) sizeField1() (n int) {
-	if x.Labels == nil {
+func (x *GetZonesResp) sizeField1() (n int) {
+	if x.Zones == nil {
 		return n
 	}
-	for i := range x.GetLabels() {
-		n += fastpb.SizeMessage(1, x.GetLabels()[i])
+	for i := range x.GetZones() {
+		n += fastpb.SizeMessage(1, x.GetZones()[i])
 	}
 	return n
 }
 
-func (x *GetLabelsResp) sizeField2() (n int) {
+func (x *GetZonesResp) sizeField2() (n int) {
 	if x.Total == 0 {
 		return n
 	}
@@ -5335,7 +5330,7 @@ func (x *GetLabelsResp) sizeField2() (n int) {
 	return n
 }
 
-func (x *GetLabelsResp) sizeField3() (n int) {
+func (x *GetZonesResp) sizeField3() (n int) {
 	if x.Token == "" {
 		return n
 	}
@@ -5343,7 +5338,7 @@ func (x *GetLabelsResp) sizeField3() (n int) {
 	return n
 }
 
-func (x *UpdateLabelReq) Size() (n int) {
+func (x *UpdateZoneReq) Size() (n int) {
 	if x == nil {
 		return n
 	}
@@ -5351,22 +5346,22 @@ func (x *UpdateLabelReq) Size() (n int) {
 	return n
 }
 
-func (x *UpdateLabelReq) sizeField1() (n int) {
-	if x.Label == nil {
+func (x *UpdateZoneReq) sizeField1() (n int) {
+	if x.Zone == nil {
 		return n
 	}
-	n += fastpb.SizeMessage(1, x.GetLabel())
+	n += fastpb.SizeMessage(1, x.GetZone())
 	return n
 }
 
-func (x *UpdateLabelResp) Size() (n int) {
+func (x *UpdateZoneResp) Size() (n int) {
 	if x == nil {
 		return n
 	}
 	return n
 }
 
-func (x *DeleteLabelReq) Size() (n int) {
+func (x *DeleteZoneReq) Size() (n int) {
 	if x == nil {
 		return n
 	}
@@ -5374,7 +5369,7 @@ func (x *DeleteLabelReq) Size() (n int) {
 	return n
 }
 
-func (x *DeleteLabelReq) sizeField1() (n int) {
+func (x *DeleteZoneReq) sizeField1() (n int) {
 	if x.Id == "" {
 		return n
 	}
@@ -5382,7 +5377,7 @@ func (x *DeleteLabelReq) sizeField1() (n int) {
 	return n
 }
 
-func (x *DeleteLabelResp) Size() (n int) {
+func (x *DeleteZoneResp) Size() (n int) {
 	if x == nil {
 		return n
 	}
@@ -6537,44 +6532,44 @@ var fieldIDToName_RecoverRecycleBinFileReq = map[int32]string{
 
 var fieldIDToName_RecoverRecycleBinFileResp = map[int32]string{}
 
-var fieldIDToName_CreateLabelReq = map[int32]string{
-	1: "Label",
+var fieldIDToName_CreateZoneReq = map[int32]string{
+	1: "Zone",
 }
 
-var fieldIDToName_CreateLabelResp = map[int32]string{
+var fieldIDToName_CreateZoneResp = map[int32]string{
 	1: "Id",
 }
 
-var fieldIDToName_GetLabelReq = map[int32]string{
+var fieldIDToName_GetZoneReq = map[int32]string{
 	1: "Id",
 }
 
-var fieldIDToName_GetLabelResp = map[int32]string{
-	1: "Label",
+var fieldIDToName_GetZoneResp = map[int32]string{
+	1: "Zone",
 }
 
-var fieldIDToName_GetLabelsReq = map[int32]string{
-	1: "LabelFilterOptions",
+var fieldIDToName_GetZonesReq = map[int32]string{
+	1: "FatherId",
 	2: "PaginationOptions",
 }
 
-var fieldIDToName_GetLabelsResp = map[int32]string{
-	1: "Labels",
+var fieldIDToName_GetZonesResp = map[int32]string{
+	1: "Zones",
 	2: "Total",
 	3: "Token",
 }
 
-var fieldIDToName_UpdateLabelReq = map[int32]string{
-	1: "Label",
+var fieldIDToName_UpdateZoneReq = map[int32]string{
+	1: "Zone",
 }
 
-var fieldIDToName_UpdateLabelResp = map[int32]string{}
+var fieldIDToName_UpdateZoneResp = map[int32]string{}
 
-var fieldIDToName_DeleteLabelReq = map[int32]string{
+var fieldIDToName_DeleteZoneReq = map[int32]string{
 	1: "Id",
 }
 
-var fieldIDToName_DeleteLabelResp = map[int32]string{}
+var fieldIDToName_DeleteZoneResp = map[int32]string{}
 
 var fieldIDToName_CreateShareCodeReq = map[int32]string{
 	1: "ShareFile",

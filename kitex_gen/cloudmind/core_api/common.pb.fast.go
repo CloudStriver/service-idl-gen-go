@@ -328,22 +328,17 @@ func (x *File) fastReadField9(buf []byte, _type int8) (offset int, err error) {
 }
 
 func (x *File) fastReadField10(buf []byte, _type int8) (offset int, err error) {
-	var v string
-	v, offset, err = fastpb.ReadString(buf, _type)
-	if err != nil {
-		return offset, err
-	}
-	x.Tag = append(x.Tag, v)
+	x.Zone, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
 func (x *File) fastReadField11(buf []byte, _type int8) (offset int, err error) {
-	x.Description, offset, err = fastpb.ReadString(buf, _type)
+	x.SubZone, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
 func (x *File) fastReadField12(buf []byte, _type int8) (offset int, err error) {
-	x.UpdateAt, offset, err = fastpb.ReadInt64(buf, _type)
+	x.Description, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -424,6 +419,11 @@ func (x *FileInfo) FastRead(buf []byte, _type int8, number int32) (offset int, e
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 16:
+		offset, err = x.fastReadField16(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -488,26 +488,26 @@ func (x *FileInfo) fastReadField9(buf []byte, _type int8) (offset int, err error
 }
 
 func (x *FileInfo) fastReadField10(buf []byte, _type int8) (offset int, err error) {
-	var v string
-	v, offset, err = fastpb.ReadString(buf, _type)
-	if err != nil {
-		return offset, err
-	}
-	x.Tag = append(x.Tag, v)
+	x.Zone, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
 func (x *FileInfo) fastReadField11(buf []byte, _type int8) (offset int, err error) {
-	x.Description, offset, err = fastpb.ReadString(buf, _type)
+	x.SubZone, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
 func (x *FileInfo) fastReadField12(buf []byte, _type int8) (offset int, err error) {
-	x.UpdateAt, offset, err = fastpb.ReadInt64(buf, _type)
+	x.Description, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
 func (x *FileInfo) fastReadField13(buf []byte, _type int8) (offset int, err error) {
+	x.UpdateAt, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *FileInfo) fastReadField14(buf []byte, _type int8) (offset int, err error) {
 	var v User
 	offset, err = fastpb.ReadMessage(buf, _type, &v)
 	if err != nil {
@@ -517,7 +517,7 @@ func (x *FileInfo) fastReadField13(buf []byte, _type int8) (offset int, err erro
 	return offset, nil
 }
 
-func (x *FileInfo) fastReadField14(buf []byte, _type int8) (offset int, err error) {
+func (x *FileInfo) fastReadField15(buf []byte, _type int8) (offset int, err error) {
 	var v PostCount
 	offset, err = fastpb.ReadMessage(buf, _type, &v)
 	if err != nil {
@@ -527,7 +527,7 @@ func (x *FileInfo) fastReadField14(buf []byte, _type int8) (offset int, err erro
 	return offset, nil
 }
 
-func (x *FileInfo) fastReadField15(buf []byte, _type int8) (offset int, err error) {
+func (x *FileInfo) fastReadField16(buf []byte, _type int8) (offset int, err error) {
 	var v PostRelation
 	offset, err = fastpb.ReadMessage(buf, _type, &v)
 	if err != nil {
@@ -537,7 +537,7 @@ func (x *FileInfo) fastReadField15(buf []byte, _type int8) (offset int, err erro
 	return offset, nil
 }
 
-func (x *Label) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *Zone) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
@@ -559,15 +559,15 @@ func (x *Label) FastRead(buf []byte, _type int8, number int32) (offset int, err 
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_Label[number], err)
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_Zone[number], err)
 }
 
-func (x *Label) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+func (x *Zone) fastReadField1(buf []byte, _type int8) (offset int, err error) {
 	x.Id, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
-func (x *Label) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+func (x *Zone) fastReadField2(buf []byte, _type int8) (offset int, err error) {
 	x.Value, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
@@ -910,16 +910,6 @@ func (x *FileFilterOptions) FastRead(buf []byte, _type int8, number int32) (offs
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 8:
-		offset, err = x.fastReadField8(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 9:
-		offset, err = x.fastReadField9(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -976,18 +966,6 @@ func (x *FileFilterOptions) fastReadField6(buf []byte, _type int8) (offset int, 
 func (x *FileFilterOptions) fastReadField7(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
 	x.OnlyDocumentType = &tmp
-	return offset, err
-}
-
-func (x *FileFilterOptions) fastReadField8(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadInt64(buf, _type)
-	x.OnlySetRelation = &tmp
-	return offset, err
-}
-
-func (x *FileFilterOptions) fastReadField9(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadString(buf, _type)
-	x.OnlyMd5 = &tmp
 	return offset, err
 }
 
@@ -1795,28 +1773,26 @@ func (x *File) fastWriteField9(buf []byte) (offset int) {
 }
 
 func (x *File) fastWriteField10(buf []byte) (offset int) {
-	if len(x.Tag) == 0 {
+	if x.Zone == "" {
 		return offset
 	}
-	for i := range x.GetTag() {
-		offset += fastpb.WriteString(buf[offset:], 10, x.GetTag()[i])
-	}
+	offset += fastpb.WriteString(buf[offset:], 10, x.GetZone())
 	return offset
 }
 
 func (x *File) fastWriteField11(buf []byte) (offset int) {
-	if x.Description == "" {
+	if x.SubZone == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 11, x.GetDescription())
+	offset += fastpb.WriteString(buf[offset:], 11, x.GetSubZone())
 	return offset
 }
 
 func (x *File) fastWriteField12(buf []byte) (offset int) {
-	if x.UpdateAt == 0 {
+	if x.Description == "" {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 12, x.GetUpdateAt())
+	offset += fastpb.WriteString(buf[offset:], 12, x.GetDescription())
 	return offset
 }
 
@@ -1839,6 +1815,7 @@ func (x *FileInfo) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField13(buf[offset:])
 	offset += x.fastWriteField14(buf[offset:])
 	offset += x.fastWriteField15(buf[offset:])
+	offset += x.fastWriteField16(buf[offset:])
 	return offset
 }
 
@@ -1915,56 +1892,62 @@ func (x *FileInfo) fastWriteField9(buf []byte) (offset int) {
 }
 
 func (x *FileInfo) fastWriteField10(buf []byte) (offset int) {
-	if len(x.Tag) == 0 {
+	if x.Zone == "" {
 		return offset
 	}
-	for i := range x.GetTag() {
-		offset += fastpb.WriteString(buf[offset:], 10, x.GetTag()[i])
-	}
+	offset += fastpb.WriteString(buf[offset:], 10, x.GetZone())
 	return offset
 }
 
 func (x *FileInfo) fastWriteField11(buf []byte) (offset int) {
-	if x.Description == "" {
+	if x.SubZone == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 11, x.GetDescription())
+	offset += fastpb.WriteString(buf[offset:], 11, x.GetSubZone())
 	return offset
 }
 
 func (x *FileInfo) fastWriteField12(buf []byte) (offset int) {
-	if x.UpdateAt == 0 {
+	if x.Description == "" {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 12, x.GetUpdateAt())
+	offset += fastpb.WriteString(buf[offset:], 12, x.GetDescription())
 	return offset
 }
 
 func (x *FileInfo) fastWriteField13(buf []byte) (offset int) {
-	if x.Author == nil {
+	if x.UpdateAt == 0 {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 13, x.GetAuthor())
+	offset += fastpb.WriteInt64(buf[offset:], 13, x.GetUpdateAt())
 	return offset
 }
 
 func (x *FileInfo) fastWriteField14(buf []byte) (offset int) {
-	if x.FileCount == nil {
+	if x.Author == nil {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 14, x.GetFileCount())
+	offset += fastpb.WriteMessage(buf[offset:], 14, x.GetAuthor())
 	return offset
 }
 
 func (x *FileInfo) fastWriteField15(buf []byte) (offset int) {
-	if x.FileRelation == nil {
+	if x.FileCount == nil {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 15, x.GetFileRelation())
+	offset += fastpb.WriteMessage(buf[offset:], 15, x.GetFileCount())
 	return offset
 }
 
-func (x *Label) FastWrite(buf []byte) (offset int) {
+func (x *FileInfo) fastWriteField16(buf []byte) (offset int) {
+	if x.FileRelation == nil {
+		return offset
+	}
+	offset += fastpb.WriteMessage(buf[offset:], 16, x.GetFileRelation())
+	return offset
+}
+
+func (x *Zone) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
@@ -1973,7 +1956,7 @@ func (x *Label) FastWrite(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *Label) fastWriteField1(buf []byte) (offset int) {
+func (x *Zone) fastWriteField1(buf []byte) (offset int) {
 	if x.Id == "" {
 		return offset
 	}
@@ -1981,7 +1964,7 @@ func (x *Label) fastWriteField1(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *Label) fastWriteField2(buf []byte) (offset int) {
+func (x *Zone) fastWriteField2(buf []byte) (offset int) {
 	if x.Value == "" {
 		return offset
 	}
@@ -2228,8 +2211,6 @@ func (x *FileFilterOptions) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField5(buf[offset:])
 	offset += x.fastWriteField6(buf[offset:])
 	offset += x.fastWriteField7(buf[offset:])
-	offset += x.fastWriteField8(buf[offset:])
-	offset += x.fastWriteField9(buf[offset:])
 	return offset
 }
 
@@ -2288,22 +2269,6 @@ func (x *FileFilterOptions) fastWriteField7(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetOnlyDocumentType())
-	return offset
-}
-
-func (x *FileFilterOptions) fastWriteField8(buf []byte) (offset int) {
-	if x.OnlySetRelation == nil {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 8, x.GetOnlySetRelation())
-	return offset
-}
-
-func (x *FileFilterOptions) fastWriteField9(buf []byte) (offset int) {
-	if x.OnlyMd5 == nil {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 9, x.GetOnlyMd5())
 	return offset
 }
 
@@ -2977,28 +2942,26 @@ func (x *File) sizeField9() (n int) {
 }
 
 func (x *File) sizeField10() (n int) {
-	if len(x.Tag) == 0 {
+	if x.Zone == "" {
 		return n
 	}
-	for i := range x.GetTag() {
-		n += fastpb.SizeString(10, x.GetTag()[i])
-	}
+	n += fastpb.SizeString(10, x.GetZone())
 	return n
 }
 
 func (x *File) sizeField11() (n int) {
-	if x.Description == "" {
+	if x.SubZone == "" {
 		return n
 	}
-	n += fastpb.SizeString(11, x.GetDescription())
+	n += fastpb.SizeString(11, x.GetSubZone())
 	return n
 }
 
 func (x *File) sizeField12() (n int) {
-	if x.UpdateAt == 0 {
+	if x.Description == "" {
 		return n
 	}
-	n += fastpb.SizeInt64(12, x.GetUpdateAt())
+	n += fastpb.SizeString(12, x.GetDescription())
 	return n
 }
 
@@ -3021,6 +2984,7 @@ func (x *FileInfo) Size() (n int) {
 	n += x.sizeField13()
 	n += x.sizeField14()
 	n += x.sizeField15()
+	n += x.sizeField16()
 	return n
 }
 
@@ -3097,56 +3061,62 @@ func (x *FileInfo) sizeField9() (n int) {
 }
 
 func (x *FileInfo) sizeField10() (n int) {
-	if len(x.Tag) == 0 {
+	if x.Zone == "" {
 		return n
 	}
-	for i := range x.GetTag() {
-		n += fastpb.SizeString(10, x.GetTag()[i])
-	}
+	n += fastpb.SizeString(10, x.GetZone())
 	return n
 }
 
 func (x *FileInfo) sizeField11() (n int) {
-	if x.Description == "" {
+	if x.SubZone == "" {
 		return n
 	}
-	n += fastpb.SizeString(11, x.GetDescription())
+	n += fastpb.SizeString(11, x.GetSubZone())
 	return n
 }
 
 func (x *FileInfo) sizeField12() (n int) {
-	if x.UpdateAt == 0 {
+	if x.Description == "" {
 		return n
 	}
-	n += fastpb.SizeInt64(12, x.GetUpdateAt())
+	n += fastpb.SizeString(12, x.GetDescription())
 	return n
 }
 
 func (x *FileInfo) sizeField13() (n int) {
-	if x.Author == nil {
+	if x.UpdateAt == 0 {
 		return n
 	}
-	n += fastpb.SizeMessage(13, x.GetAuthor())
+	n += fastpb.SizeInt64(13, x.GetUpdateAt())
 	return n
 }
 
 func (x *FileInfo) sizeField14() (n int) {
-	if x.FileCount == nil {
+	if x.Author == nil {
 		return n
 	}
-	n += fastpb.SizeMessage(14, x.GetFileCount())
+	n += fastpb.SizeMessage(14, x.GetAuthor())
 	return n
 }
 
 func (x *FileInfo) sizeField15() (n int) {
-	if x.FileRelation == nil {
+	if x.FileCount == nil {
 		return n
 	}
-	n += fastpb.SizeMessage(15, x.GetFileRelation())
+	n += fastpb.SizeMessage(15, x.GetFileCount())
 	return n
 }
 
-func (x *Label) Size() (n int) {
+func (x *FileInfo) sizeField16() (n int) {
+	if x.FileRelation == nil {
+		return n
+	}
+	n += fastpb.SizeMessage(16, x.GetFileRelation())
+	return n
+}
+
+func (x *Zone) Size() (n int) {
 	if x == nil {
 		return n
 	}
@@ -3155,7 +3125,7 @@ func (x *Label) Size() (n int) {
 	return n
 }
 
-func (x *Label) sizeField1() (n int) {
+func (x *Zone) sizeField1() (n int) {
 	if x.Id == "" {
 		return n
 	}
@@ -3163,7 +3133,7 @@ func (x *Label) sizeField1() (n int) {
 	return n
 }
 
-func (x *Label) sizeField2() (n int) {
+func (x *Zone) sizeField2() (n int) {
 	if x.Value == "" {
 		return n
 	}
@@ -3410,8 +3380,6 @@ func (x *FileFilterOptions) Size() (n int) {
 	n += x.sizeField5()
 	n += x.sizeField6()
 	n += x.sizeField7()
-	n += x.sizeField8()
-	n += x.sizeField9()
 	return n
 }
 
@@ -3470,22 +3438,6 @@ func (x *FileFilterOptions) sizeField7() (n int) {
 		return n
 	}
 	n += fastpb.SizeInt64(7, x.GetOnlyDocumentType())
-	return n
-}
-
-func (x *FileFilterOptions) sizeField8() (n int) {
-	if x.OnlySetRelation == nil {
-		return n
-	}
-	n += fastpb.SizeInt64(8, x.GetOnlySetRelation())
-	return n
-}
-
-func (x *FileFilterOptions) sizeField9() (n int) {
-	if x.OnlyMd5 == nil {
-		return n
-	}
-	n += fastpb.SizeString(9, x.GetOnlyMd5())
 	return n
 }
 
@@ -3953,9 +3905,9 @@ var fieldIDToName_File = map[int32]string{
 	7:  "SpaceSize",
 	8:  "Md5",
 	9:  "IsDel",
-	10: "Tag",
-	11: "Description",
-	12: "UpdateAt",
+	10: "Zone",
+	11: "SubZone",
+	12: "Description",
 }
 
 var fieldIDToName_FileInfo = map[int32]string{
@@ -3968,15 +3920,16 @@ var fieldIDToName_FileInfo = map[int32]string{
 	7:  "SpaceSize",
 	8:  "Md5",
 	9:  "IsDel",
-	10: "Tag",
-	11: "Description",
-	12: "UpdateAt",
-	13: "Author",
-	14: "FileCount",
-	15: "FileRelation",
+	10: "Zone",
+	11: "SubZone",
+	12: "Description",
+	13: "UpdateAt",
+	14: "Author",
+	15: "FileCount",
+	16: "FileRelation",
 }
 
-var fieldIDToName_Label = map[int32]string{
+var fieldIDToName_Zone = map[int32]string{
 	1: "Id",
 	2: "Value",
 }
@@ -4023,8 +3976,6 @@ var fieldIDToName_FileFilterOptions = map[int32]string{
 	5: "OnlyTags",
 	6: "OnlyIsDel",
 	7: "OnlyDocumentType",
-	8: "OnlySetRelation",
-	9: "OnlyMd5",
 }
 
 var fieldIDToName_ShareFileFilterOptions = map[int32]string{

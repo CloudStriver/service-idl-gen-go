@@ -26,7 +26,9 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"GetUser":                kitex.NewMethodInfo(getUserHandler, newGetUserArgs, newGetUserResult, false),
 		"GetUserDetail":          kitex.NewMethodInfo(getUserDetailHandler, newGetUserDetailArgs, newGetUserDetailResult, false),
 		"GetFile":                kitex.NewMethodInfo(getFileHandler, newGetFileArgs, newGetFileResult, false),
-		"GetFileList":            kitex.NewMethodInfo(getFileListHandler, newGetFileListArgs, newGetFileListResult, false),
+		"GetPrivateFiles":        kitex.NewMethodInfo(getPrivateFilesHandler, newGetPrivateFilesArgs, newGetPrivateFilesResult, false),
+		"GetPublicFiles":         kitex.NewMethodInfo(getPublicFilesHandler, newGetPublicFilesArgs, newGetPublicFilesResult, false),
+		"GetRecycleBinFiles":     kitex.NewMethodInfo(getRecycleBinFilesHandler, newGetRecycleBinFilesArgs, newGetRecycleBinFilesResult, false),
 		"GetFileBySharingCode":   kitex.NewMethodInfo(getFileBySharingCodeHandler, newGetFileBySharingCodeArgs, newGetFileBySharingCodeResult, false),
 		"CreateFile":             kitex.NewMethodInfo(createFileHandler, newCreateFileArgs, newCreateFileResult, false),
 		"UpdateFile":             kitex.NewMethodInfo(updateFileHandler, newUpdateFileArgs, newUpdateFileResult, false),
@@ -35,10 +37,10 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"AddFileToPublicSpace":   kitex.NewMethodInfo(addFileToPublicSpaceHandler, newAddFileToPublicSpaceArgs, newAddFileToPublicSpaceResult, false),
 		"DeleteFile":             kitex.NewMethodInfo(deleteFileHandler, newDeleteFileArgs, newDeleteFileResult, false),
 		"RecoverRecycleBinFile":  kitex.NewMethodInfo(recoverRecycleBinFileHandler, newRecoverRecycleBinFileArgs, newRecoverRecycleBinFileResult, false),
-		"CreateLabel":            kitex.NewMethodInfo(createLabelHandler, newCreateLabelArgs, newCreateLabelResult, false),
-		"UpdateLabel":            kitex.NewMethodInfo(updateLabelHandler, newUpdateLabelArgs, newUpdateLabelResult, false),
-		"GetLabel":               kitex.NewMethodInfo(getLabelHandler, newGetLabelArgs, newGetLabelResult, false),
-		"DeleteLabel":            kitex.NewMethodInfo(deleteLabelHandler, newDeleteLabelArgs, newDeleteLabelResult, false),
+		"CreateZone":             kitex.NewMethodInfo(createZoneHandler, newCreateZoneArgs, newCreateZoneResult, false),
+		"UpdateZone":             kitex.NewMethodInfo(updateZoneHandler, newUpdateZoneArgs, newUpdateZoneResult, false),
+		"GetZone":                kitex.NewMethodInfo(getZoneHandler, newGetZoneArgs, newGetZoneResult, false),
+		"DeleteZone":             kitex.NewMethodInfo(deleteZoneHandler, newDeleteZoneArgs, newDeleteZoneResult, false),
 		"CreateShareCode":        kitex.NewMethodInfo(createShareCodeHandler, newCreateShareCodeArgs, newCreateShareCodeResult, false),
 		"GetShareList":           kitex.NewMethodInfo(getShareListHandler, newGetShareListArgs, newGetShareListResult, false),
 		"DeleteShareCode":        kitex.NewMethodInfo(deleteShareCodeHandler, newDeleteShareCodeArgs, newDeleteShareCodeResult, false),
@@ -829,73 +831,73 @@ func (p *GetFileResult) GetResult() interface{} {
 	return p.Success
 }
 
-func getFileListHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+func getPrivateFilesHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(core_api.GetFileListReq)
+		req := new(core_api.GetPrivateFilesReq)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
-		resp, err := handler.(core_api.Content).GetFileList(ctx, req)
+		resp, err := handler.(core_api.Content).GetPrivateFiles(ctx, req)
 		if err != nil {
 			return err
 		}
 		if err := st.SendMsg(resp); err != nil {
 			return err
 		}
-	case *GetFileListArgs:
-		success, err := handler.(core_api.Content).GetFileList(ctx, s.Req)
+	case *GetPrivateFilesArgs:
+		success, err := handler.(core_api.Content).GetPrivateFiles(ctx, s.Req)
 		if err != nil {
 			return err
 		}
-		realResult := result.(*GetFileListResult)
+		realResult := result.(*GetPrivateFilesResult)
 		realResult.Success = success
 	}
 	return nil
 }
-func newGetFileListArgs() interface{} {
-	return &GetFileListArgs{}
+func newGetPrivateFilesArgs() interface{} {
+	return &GetPrivateFilesArgs{}
 }
 
-func newGetFileListResult() interface{} {
-	return &GetFileListResult{}
+func newGetPrivateFilesResult() interface{} {
+	return &GetPrivateFilesResult{}
 }
 
-type GetFileListArgs struct {
-	Req *core_api.GetFileListReq
+type GetPrivateFilesArgs struct {
+	Req *core_api.GetPrivateFilesReq
 }
 
-func (p *GetFileListArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *GetPrivateFilesArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(core_api.GetFileListReq)
+		p.Req = new(core_api.GetPrivateFilesReq)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
 
-func (p *GetFileListArgs) FastWrite(buf []byte) (n int) {
+func (p *GetPrivateFilesArgs) FastWrite(buf []byte) (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.FastWrite(buf)
 }
 
-func (p *GetFileListArgs) Size() (n int) {
+func (p *GetPrivateFilesArgs) Size() (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.Size()
 }
 
-func (p *GetFileListArgs) Marshal(out []byte) ([]byte, error) {
+func (p *GetPrivateFilesArgs) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetReq() {
 		return out, nil
 	}
 	return proto.Marshal(p.Req)
 }
 
-func (p *GetFileListArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.GetFileListReq)
+func (p *GetPrivateFilesArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.GetPrivateFilesReq)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -903,59 +905,59 @@ func (p *GetFileListArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var GetFileListArgs_Req_DEFAULT *core_api.GetFileListReq
+var GetPrivateFilesArgs_Req_DEFAULT *core_api.GetPrivateFilesReq
 
-func (p *GetFileListArgs) GetReq() *core_api.GetFileListReq {
+func (p *GetPrivateFilesArgs) GetReq() *core_api.GetPrivateFilesReq {
 	if !p.IsSetReq() {
-		return GetFileListArgs_Req_DEFAULT
+		return GetPrivateFilesArgs_Req_DEFAULT
 	}
 	return p.Req
 }
 
-func (p *GetFileListArgs) IsSetReq() bool {
+func (p *GetPrivateFilesArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *GetFileListArgs) GetFirstArgument() interface{} {
+func (p *GetPrivateFilesArgs) GetFirstArgument() interface{} {
 	return p.Req
 }
 
-type GetFileListResult struct {
-	Success *core_api.GetFileListResp
+type GetPrivateFilesResult struct {
+	Success *core_api.GetPrivateFilesResp
 }
 
-var GetFileListResult_Success_DEFAULT *core_api.GetFileListResp
+var GetPrivateFilesResult_Success_DEFAULT *core_api.GetPrivateFilesResp
 
-func (p *GetFileListResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *GetPrivateFilesResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(core_api.GetFileListResp)
+		p.Success = new(core_api.GetPrivateFilesResp)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
 
-func (p *GetFileListResult) FastWrite(buf []byte) (n int) {
+func (p *GetPrivateFilesResult) FastWrite(buf []byte) (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.FastWrite(buf)
 }
 
-func (p *GetFileListResult) Size() (n int) {
+func (p *GetPrivateFilesResult) Size() (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.Size()
 }
 
-func (p *GetFileListResult) Marshal(out []byte) ([]byte, error) {
+func (p *GetPrivateFilesResult) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetSuccess() {
 		return out, nil
 	}
 	return proto.Marshal(p.Success)
 }
 
-func (p *GetFileListResult) Unmarshal(in []byte) error {
-	msg := new(core_api.GetFileListResp)
+func (p *GetPrivateFilesResult) Unmarshal(in []byte) error {
+	msg := new(core_api.GetPrivateFilesResp)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -963,22 +965,328 @@ func (p *GetFileListResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *GetFileListResult) GetSuccess() *core_api.GetFileListResp {
+func (p *GetPrivateFilesResult) GetSuccess() *core_api.GetPrivateFilesResp {
 	if !p.IsSetSuccess() {
-		return GetFileListResult_Success_DEFAULT
+		return GetPrivateFilesResult_Success_DEFAULT
 	}
 	return p.Success
 }
 
-func (p *GetFileListResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.GetFileListResp)
+func (p *GetPrivateFilesResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.GetPrivateFilesResp)
 }
 
-func (p *GetFileListResult) IsSetSuccess() bool {
+func (p *GetPrivateFilesResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *GetFileListResult) GetResult() interface{} {
+func (p *GetPrivateFilesResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getPublicFilesHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.GetPublicFilesReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Content).GetPublicFiles(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetPublicFilesArgs:
+		success, err := handler.(core_api.Content).GetPublicFiles(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetPublicFilesResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetPublicFilesArgs() interface{} {
+	return &GetPublicFilesArgs{}
+}
+
+func newGetPublicFilesResult() interface{} {
+	return &GetPublicFilesResult{}
+}
+
+type GetPublicFilesArgs struct {
+	Req *core_api.GetPublicFilesReq
+}
+
+func (p *GetPublicFilesArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.GetPublicFilesReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetPublicFilesArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetPublicFilesArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetPublicFilesArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetPublicFilesArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.GetPublicFilesReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetPublicFilesArgs_Req_DEFAULT *core_api.GetPublicFilesReq
+
+func (p *GetPublicFilesArgs) GetReq() *core_api.GetPublicFilesReq {
+	if !p.IsSetReq() {
+		return GetPublicFilesArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetPublicFilesArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetPublicFilesArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetPublicFilesResult struct {
+	Success *core_api.GetPublicFilesResp
+}
+
+var GetPublicFilesResult_Success_DEFAULT *core_api.GetPublicFilesResp
+
+func (p *GetPublicFilesResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.GetPublicFilesResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetPublicFilesResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetPublicFilesResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetPublicFilesResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetPublicFilesResult) Unmarshal(in []byte) error {
+	msg := new(core_api.GetPublicFilesResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetPublicFilesResult) GetSuccess() *core_api.GetPublicFilesResp {
+	if !p.IsSetSuccess() {
+		return GetPublicFilesResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetPublicFilesResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.GetPublicFilesResp)
+}
+
+func (p *GetPublicFilesResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetPublicFilesResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getRecycleBinFilesHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.GetRecycleBinFilesReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Content).GetRecycleBinFiles(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetRecycleBinFilesArgs:
+		success, err := handler.(core_api.Content).GetRecycleBinFiles(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetRecycleBinFilesResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetRecycleBinFilesArgs() interface{} {
+	return &GetRecycleBinFilesArgs{}
+}
+
+func newGetRecycleBinFilesResult() interface{} {
+	return &GetRecycleBinFilesResult{}
+}
+
+type GetRecycleBinFilesArgs struct {
+	Req *core_api.GetRecycleBinFilesReq
+}
+
+func (p *GetRecycleBinFilesArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.GetRecycleBinFilesReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetRecycleBinFilesArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetRecycleBinFilesArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetRecycleBinFilesArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetRecycleBinFilesArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.GetRecycleBinFilesReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetRecycleBinFilesArgs_Req_DEFAULT *core_api.GetRecycleBinFilesReq
+
+func (p *GetRecycleBinFilesArgs) GetReq() *core_api.GetRecycleBinFilesReq {
+	if !p.IsSetReq() {
+		return GetRecycleBinFilesArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetRecycleBinFilesArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetRecycleBinFilesArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetRecycleBinFilesResult struct {
+	Success *core_api.GetRecycleBinFilesResp
+}
+
+var GetRecycleBinFilesResult_Success_DEFAULT *core_api.GetRecycleBinFilesResp
+
+func (p *GetRecycleBinFilesResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.GetRecycleBinFilesResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetRecycleBinFilesResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetRecycleBinFilesResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetRecycleBinFilesResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetRecycleBinFilesResult) Unmarshal(in []byte) error {
+	msg := new(core_api.GetRecycleBinFilesResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetRecycleBinFilesResult) GetSuccess() *core_api.GetRecycleBinFilesResp {
+	if !p.IsSetSuccess() {
+		return GetRecycleBinFilesResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetRecycleBinFilesResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.GetRecycleBinFilesResp)
+}
+
+func (p *GetRecycleBinFilesResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetRecycleBinFilesResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -2206,73 +2514,73 @@ func (p *RecoverRecycleBinFileResult) GetResult() interface{} {
 	return p.Success
 }
 
-func createLabelHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+func createZoneHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(core_api.CreateLabelReq)
+		req := new(core_api.CreateZoneReq)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
-		resp, err := handler.(core_api.Content).CreateLabel(ctx, req)
+		resp, err := handler.(core_api.Content).CreateZone(ctx, req)
 		if err != nil {
 			return err
 		}
 		if err := st.SendMsg(resp); err != nil {
 			return err
 		}
-	case *CreateLabelArgs:
-		success, err := handler.(core_api.Content).CreateLabel(ctx, s.Req)
+	case *CreateZoneArgs:
+		success, err := handler.(core_api.Content).CreateZone(ctx, s.Req)
 		if err != nil {
 			return err
 		}
-		realResult := result.(*CreateLabelResult)
+		realResult := result.(*CreateZoneResult)
 		realResult.Success = success
 	}
 	return nil
 }
-func newCreateLabelArgs() interface{} {
-	return &CreateLabelArgs{}
+func newCreateZoneArgs() interface{} {
+	return &CreateZoneArgs{}
 }
 
-func newCreateLabelResult() interface{} {
-	return &CreateLabelResult{}
+func newCreateZoneResult() interface{} {
+	return &CreateZoneResult{}
 }
 
-type CreateLabelArgs struct {
-	Req *core_api.CreateLabelReq
+type CreateZoneArgs struct {
+	Req *core_api.CreateZoneReq
 }
 
-func (p *CreateLabelArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *CreateZoneArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(core_api.CreateLabelReq)
+		p.Req = new(core_api.CreateZoneReq)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
 
-func (p *CreateLabelArgs) FastWrite(buf []byte) (n int) {
+func (p *CreateZoneArgs) FastWrite(buf []byte) (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.FastWrite(buf)
 }
 
-func (p *CreateLabelArgs) Size() (n int) {
+func (p *CreateZoneArgs) Size() (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.Size()
 }
 
-func (p *CreateLabelArgs) Marshal(out []byte) ([]byte, error) {
+func (p *CreateZoneArgs) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetReq() {
 		return out, nil
 	}
 	return proto.Marshal(p.Req)
 }
 
-func (p *CreateLabelArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.CreateLabelReq)
+func (p *CreateZoneArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.CreateZoneReq)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -2280,59 +2588,59 @@ func (p *CreateLabelArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var CreateLabelArgs_Req_DEFAULT *core_api.CreateLabelReq
+var CreateZoneArgs_Req_DEFAULT *core_api.CreateZoneReq
 
-func (p *CreateLabelArgs) GetReq() *core_api.CreateLabelReq {
+func (p *CreateZoneArgs) GetReq() *core_api.CreateZoneReq {
 	if !p.IsSetReq() {
-		return CreateLabelArgs_Req_DEFAULT
+		return CreateZoneArgs_Req_DEFAULT
 	}
 	return p.Req
 }
 
-func (p *CreateLabelArgs) IsSetReq() bool {
+func (p *CreateZoneArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *CreateLabelArgs) GetFirstArgument() interface{} {
+func (p *CreateZoneArgs) GetFirstArgument() interface{} {
 	return p.Req
 }
 
-type CreateLabelResult struct {
-	Success *core_api.CreateLabelResp
+type CreateZoneResult struct {
+	Success *core_api.CreateZoneResp
 }
 
-var CreateLabelResult_Success_DEFAULT *core_api.CreateLabelResp
+var CreateZoneResult_Success_DEFAULT *core_api.CreateZoneResp
 
-func (p *CreateLabelResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *CreateZoneResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(core_api.CreateLabelResp)
+		p.Success = new(core_api.CreateZoneResp)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
 
-func (p *CreateLabelResult) FastWrite(buf []byte) (n int) {
+func (p *CreateZoneResult) FastWrite(buf []byte) (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.FastWrite(buf)
 }
 
-func (p *CreateLabelResult) Size() (n int) {
+func (p *CreateZoneResult) Size() (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.Size()
 }
 
-func (p *CreateLabelResult) Marshal(out []byte) ([]byte, error) {
+func (p *CreateZoneResult) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetSuccess() {
 		return out, nil
 	}
 	return proto.Marshal(p.Success)
 }
 
-func (p *CreateLabelResult) Unmarshal(in []byte) error {
-	msg := new(core_api.CreateLabelResp)
+func (p *CreateZoneResult) Unmarshal(in []byte) error {
+	msg := new(core_api.CreateZoneResp)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -2340,92 +2648,92 @@ func (p *CreateLabelResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *CreateLabelResult) GetSuccess() *core_api.CreateLabelResp {
+func (p *CreateZoneResult) GetSuccess() *core_api.CreateZoneResp {
 	if !p.IsSetSuccess() {
-		return CreateLabelResult_Success_DEFAULT
+		return CreateZoneResult_Success_DEFAULT
 	}
 	return p.Success
 }
 
-func (p *CreateLabelResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.CreateLabelResp)
+func (p *CreateZoneResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.CreateZoneResp)
 }
 
-func (p *CreateLabelResult) IsSetSuccess() bool {
+func (p *CreateZoneResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *CreateLabelResult) GetResult() interface{} {
+func (p *CreateZoneResult) GetResult() interface{} {
 	return p.Success
 }
 
-func updateLabelHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+func updateZoneHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(core_api.UpdateLabelReq)
+		req := new(core_api.UpdateZoneReq)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
-		resp, err := handler.(core_api.Content).UpdateLabel(ctx, req)
+		resp, err := handler.(core_api.Content).UpdateZone(ctx, req)
 		if err != nil {
 			return err
 		}
 		if err := st.SendMsg(resp); err != nil {
 			return err
 		}
-	case *UpdateLabelArgs:
-		success, err := handler.(core_api.Content).UpdateLabel(ctx, s.Req)
+	case *UpdateZoneArgs:
+		success, err := handler.(core_api.Content).UpdateZone(ctx, s.Req)
 		if err != nil {
 			return err
 		}
-		realResult := result.(*UpdateLabelResult)
+		realResult := result.(*UpdateZoneResult)
 		realResult.Success = success
 	}
 	return nil
 }
-func newUpdateLabelArgs() interface{} {
-	return &UpdateLabelArgs{}
+func newUpdateZoneArgs() interface{} {
+	return &UpdateZoneArgs{}
 }
 
-func newUpdateLabelResult() interface{} {
-	return &UpdateLabelResult{}
+func newUpdateZoneResult() interface{} {
+	return &UpdateZoneResult{}
 }
 
-type UpdateLabelArgs struct {
-	Req *core_api.UpdateLabelReq
+type UpdateZoneArgs struct {
+	Req *core_api.UpdateZoneReq
 }
 
-func (p *UpdateLabelArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *UpdateZoneArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(core_api.UpdateLabelReq)
+		p.Req = new(core_api.UpdateZoneReq)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
 
-func (p *UpdateLabelArgs) FastWrite(buf []byte) (n int) {
+func (p *UpdateZoneArgs) FastWrite(buf []byte) (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.FastWrite(buf)
 }
 
-func (p *UpdateLabelArgs) Size() (n int) {
+func (p *UpdateZoneArgs) Size() (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.Size()
 }
 
-func (p *UpdateLabelArgs) Marshal(out []byte) ([]byte, error) {
+func (p *UpdateZoneArgs) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetReq() {
 		return out, nil
 	}
 	return proto.Marshal(p.Req)
 }
 
-func (p *UpdateLabelArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.UpdateLabelReq)
+func (p *UpdateZoneArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.UpdateZoneReq)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -2433,59 +2741,59 @@ func (p *UpdateLabelArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var UpdateLabelArgs_Req_DEFAULT *core_api.UpdateLabelReq
+var UpdateZoneArgs_Req_DEFAULT *core_api.UpdateZoneReq
 
-func (p *UpdateLabelArgs) GetReq() *core_api.UpdateLabelReq {
+func (p *UpdateZoneArgs) GetReq() *core_api.UpdateZoneReq {
 	if !p.IsSetReq() {
-		return UpdateLabelArgs_Req_DEFAULT
+		return UpdateZoneArgs_Req_DEFAULT
 	}
 	return p.Req
 }
 
-func (p *UpdateLabelArgs) IsSetReq() bool {
+func (p *UpdateZoneArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *UpdateLabelArgs) GetFirstArgument() interface{} {
+func (p *UpdateZoneArgs) GetFirstArgument() interface{} {
 	return p.Req
 }
 
-type UpdateLabelResult struct {
-	Success *core_api.UpdateLabelResp
+type UpdateZoneResult struct {
+	Success *core_api.UpdateZoneResp
 }
 
-var UpdateLabelResult_Success_DEFAULT *core_api.UpdateLabelResp
+var UpdateZoneResult_Success_DEFAULT *core_api.UpdateZoneResp
 
-func (p *UpdateLabelResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *UpdateZoneResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(core_api.UpdateLabelResp)
+		p.Success = new(core_api.UpdateZoneResp)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
 
-func (p *UpdateLabelResult) FastWrite(buf []byte) (n int) {
+func (p *UpdateZoneResult) FastWrite(buf []byte) (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.FastWrite(buf)
 }
 
-func (p *UpdateLabelResult) Size() (n int) {
+func (p *UpdateZoneResult) Size() (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.Size()
 }
 
-func (p *UpdateLabelResult) Marshal(out []byte) ([]byte, error) {
+func (p *UpdateZoneResult) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetSuccess() {
 		return out, nil
 	}
 	return proto.Marshal(p.Success)
 }
 
-func (p *UpdateLabelResult) Unmarshal(in []byte) error {
-	msg := new(core_api.UpdateLabelResp)
+func (p *UpdateZoneResult) Unmarshal(in []byte) error {
+	msg := new(core_api.UpdateZoneResp)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -2493,92 +2801,92 @@ func (p *UpdateLabelResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *UpdateLabelResult) GetSuccess() *core_api.UpdateLabelResp {
+func (p *UpdateZoneResult) GetSuccess() *core_api.UpdateZoneResp {
 	if !p.IsSetSuccess() {
-		return UpdateLabelResult_Success_DEFAULT
+		return UpdateZoneResult_Success_DEFAULT
 	}
 	return p.Success
 }
 
-func (p *UpdateLabelResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.UpdateLabelResp)
+func (p *UpdateZoneResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.UpdateZoneResp)
 }
 
-func (p *UpdateLabelResult) IsSetSuccess() bool {
+func (p *UpdateZoneResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *UpdateLabelResult) GetResult() interface{} {
+func (p *UpdateZoneResult) GetResult() interface{} {
 	return p.Success
 }
 
-func getLabelHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+func getZoneHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(core_api.GetLabelReq)
+		req := new(core_api.GetZoneReq)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
-		resp, err := handler.(core_api.Content).GetLabel(ctx, req)
+		resp, err := handler.(core_api.Content).GetZone(ctx, req)
 		if err != nil {
 			return err
 		}
 		if err := st.SendMsg(resp); err != nil {
 			return err
 		}
-	case *GetLabelArgs:
-		success, err := handler.(core_api.Content).GetLabel(ctx, s.Req)
+	case *GetZoneArgs:
+		success, err := handler.(core_api.Content).GetZone(ctx, s.Req)
 		if err != nil {
 			return err
 		}
-		realResult := result.(*GetLabelResult)
+		realResult := result.(*GetZoneResult)
 		realResult.Success = success
 	}
 	return nil
 }
-func newGetLabelArgs() interface{} {
-	return &GetLabelArgs{}
+func newGetZoneArgs() interface{} {
+	return &GetZoneArgs{}
 }
 
-func newGetLabelResult() interface{} {
-	return &GetLabelResult{}
+func newGetZoneResult() interface{} {
+	return &GetZoneResult{}
 }
 
-type GetLabelArgs struct {
-	Req *core_api.GetLabelReq
+type GetZoneArgs struct {
+	Req *core_api.GetZoneReq
 }
 
-func (p *GetLabelArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *GetZoneArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(core_api.GetLabelReq)
+		p.Req = new(core_api.GetZoneReq)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
 
-func (p *GetLabelArgs) FastWrite(buf []byte) (n int) {
+func (p *GetZoneArgs) FastWrite(buf []byte) (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.FastWrite(buf)
 }
 
-func (p *GetLabelArgs) Size() (n int) {
+func (p *GetZoneArgs) Size() (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.Size()
 }
 
-func (p *GetLabelArgs) Marshal(out []byte) ([]byte, error) {
+func (p *GetZoneArgs) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetReq() {
 		return out, nil
 	}
 	return proto.Marshal(p.Req)
 }
 
-func (p *GetLabelArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.GetLabelReq)
+func (p *GetZoneArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.GetZoneReq)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -2586,59 +2894,59 @@ func (p *GetLabelArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var GetLabelArgs_Req_DEFAULT *core_api.GetLabelReq
+var GetZoneArgs_Req_DEFAULT *core_api.GetZoneReq
 
-func (p *GetLabelArgs) GetReq() *core_api.GetLabelReq {
+func (p *GetZoneArgs) GetReq() *core_api.GetZoneReq {
 	if !p.IsSetReq() {
-		return GetLabelArgs_Req_DEFAULT
+		return GetZoneArgs_Req_DEFAULT
 	}
 	return p.Req
 }
 
-func (p *GetLabelArgs) IsSetReq() bool {
+func (p *GetZoneArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *GetLabelArgs) GetFirstArgument() interface{} {
+func (p *GetZoneArgs) GetFirstArgument() interface{} {
 	return p.Req
 }
 
-type GetLabelResult struct {
-	Success *core_api.GetLabelResp
+type GetZoneResult struct {
+	Success *core_api.GetZoneResp
 }
 
-var GetLabelResult_Success_DEFAULT *core_api.GetLabelResp
+var GetZoneResult_Success_DEFAULT *core_api.GetZoneResp
 
-func (p *GetLabelResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *GetZoneResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(core_api.GetLabelResp)
+		p.Success = new(core_api.GetZoneResp)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
 
-func (p *GetLabelResult) FastWrite(buf []byte) (n int) {
+func (p *GetZoneResult) FastWrite(buf []byte) (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.FastWrite(buf)
 }
 
-func (p *GetLabelResult) Size() (n int) {
+func (p *GetZoneResult) Size() (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.Size()
 }
 
-func (p *GetLabelResult) Marshal(out []byte) ([]byte, error) {
+func (p *GetZoneResult) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetSuccess() {
 		return out, nil
 	}
 	return proto.Marshal(p.Success)
 }
 
-func (p *GetLabelResult) Unmarshal(in []byte) error {
-	msg := new(core_api.GetLabelResp)
+func (p *GetZoneResult) Unmarshal(in []byte) error {
+	msg := new(core_api.GetZoneResp)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -2646,92 +2954,92 @@ func (p *GetLabelResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *GetLabelResult) GetSuccess() *core_api.GetLabelResp {
+func (p *GetZoneResult) GetSuccess() *core_api.GetZoneResp {
 	if !p.IsSetSuccess() {
-		return GetLabelResult_Success_DEFAULT
+		return GetZoneResult_Success_DEFAULT
 	}
 	return p.Success
 }
 
-func (p *GetLabelResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.GetLabelResp)
+func (p *GetZoneResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.GetZoneResp)
 }
 
-func (p *GetLabelResult) IsSetSuccess() bool {
+func (p *GetZoneResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *GetLabelResult) GetResult() interface{} {
+func (p *GetZoneResult) GetResult() interface{} {
 	return p.Success
 }
 
-func deleteLabelHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+func deleteZoneHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(core_api.DeleteLabelReq)
+		req := new(core_api.DeleteZoneReq)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
-		resp, err := handler.(core_api.Content).DeleteLabel(ctx, req)
+		resp, err := handler.(core_api.Content).DeleteZone(ctx, req)
 		if err != nil {
 			return err
 		}
 		if err := st.SendMsg(resp); err != nil {
 			return err
 		}
-	case *DeleteLabelArgs:
-		success, err := handler.(core_api.Content).DeleteLabel(ctx, s.Req)
+	case *DeleteZoneArgs:
+		success, err := handler.(core_api.Content).DeleteZone(ctx, s.Req)
 		if err != nil {
 			return err
 		}
-		realResult := result.(*DeleteLabelResult)
+		realResult := result.(*DeleteZoneResult)
 		realResult.Success = success
 	}
 	return nil
 }
-func newDeleteLabelArgs() interface{} {
-	return &DeleteLabelArgs{}
+func newDeleteZoneArgs() interface{} {
+	return &DeleteZoneArgs{}
 }
 
-func newDeleteLabelResult() interface{} {
-	return &DeleteLabelResult{}
+func newDeleteZoneResult() interface{} {
+	return &DeleteZoneResult{}
 }
 
-type DeleteLabelArgs struct {
-	Req *core_api.DeleteLabelReq
+type DeleteZoneArgs struct {
+	Req *core_api.DeleteZoneReq
 }
 
-func (p *DeleteLabelArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *DeleteZoneArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(core_api.DeleteLabelReq)
+		p.Req = new(core_api.DeleteZoneReq)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
 
-func (p *DeleteLabelArgs) FastWrite(buf []byte) (n int) {
+func (p *DeleteZoneArgs) FastWrite(buf []byte) (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.FastWrite(buf)
 }
 
-func (p *DeleteLabelArgs) Size() (n int) {
+func (p *DeleteZoneArgs) Size() (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.Size()
 }
 
-func (p *DeleteLabelArgs) Marshal(out []byte) ([]byte, error) {
+func (p *DeleteZoneArgs) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetReq() {
 		return out, nil
 	}
 	return proto.Marshal(p.Req)
 }
 
-func (p *DeleteLabelArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.DeleteLabelReq)
+func (p *DeleteZoneArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.DeleteZoneReq)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -2739,59 +3047,59 @@ func (p *DeleteLabelArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var DeleteLabelArgs_Req_DEFAULT *core_api.DeleteLabelReq
+var DeleteZoneArgs_Req_DEFAULT *core_api.DeleteZoneReq
 
-func (p *DeleteLabelArgs) GetReq() *core_api.DeleteLabelReq {
+func (p *DeleteZoneArgs) GetReq() *core_api.DeleteZoneReq {
 	if !p.IsSetReq() {
-		return DeleteLabelArgs_Req_DEFAULT
+		return DeleteZoneArgs_Req_DEFAULT
 	}
 	return p.Req
 }
 
-func (p *DeleteLabelArgs) IsSetReq() bool {
+func (p *DeleteZoneArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *DeleteLabelArgs) GetFirstArgument() interface{} {
+func (p *DeleteZoneArgs) GetFirstArgument() interface{} {
 	return p.Req
 }
 
-type DeleteLabelResult struct {
-	Success *core_api.DeleteLabelResp
+type DeleteZoneResult struct {
+	Success *core_api.DeleteZoneResp
 }
 
-var DeleteLabelResult_Success_DEFAULT *core_api.DeleteLabelResp
+var DeleteZoneResult_Success_DEFAULT *core_api.DeleteZoneResp
 
-func (p *DeleteLabelResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *DeleteZoneResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(core_api.DeleteLabelResp)
+		p.Success = new(core_api.DeleteZoneResp)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
 
-func (p *DeleteLabelResult) FastWrite(buf []byte) (n int) {
+func (p *DeleteZoneResult) FastWrite(buf []byte) (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.FastWrite(buf)
 }
 
-func (p *DeleteLabelResult) Size() (n int) {
+func (p *DeleteZoneResult) Size() (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.Size()
 }
 
-func (p *DeleteLabelResult) Marshal(out []byte) ([]byte, error) {
+func (p *DeleteZoneResult) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetSuccess() {
 		return out, nil
 	}
 	return proto.Marshal(p.Success)
 }
 
-func (p *DeleteLabelResult) Unmarshal(in []byte) error {
-	msg := new(core_api.DeleteLabelResp)
+func (p *DeleteZoneResult) Unmarshal(in []byte) error {
+	msg := new(core_api.DeleteZoneResp)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -2799,22 +3107,22 @@ func (p *DeleteLabelResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *DeleteLabelResult) GetSuccess() *core_api.DeleteLabelResp {
+func (p *DeleteZoneResult) GetSuccess() *core_api.DeleteZoneResp {
 	if !p.IsSetSuccess() {
-		return DeleteLabelResult_Success_DEFAULT
+		return DeleteZoneResult_Success_DEFAULT
 	}
 	return p.Success
 }
 
-func (p *DeleteLabelResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.DeleteLabelResp)
+func (p *DeleteZoneResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.DeleteZoneResp)
 }
 
-func (p *DeleteLabelResult) IsSetSuccess() bool {
+func (p *DeleteZoneResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *DeleteLabelResult) GetResult() interface{} {
+func (p *DeleteZoneResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -4255,11 +4563,31 @@ func (p *kClient) GetFile(ctx context.Context, Req *core_api.GetFileReq) (r *cor
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) GetFileList(ctx context.Context, Req *core_api.GetFileListReq) (r *core_api.GetFileListResp, err error) {
-	var _args GetFileListArgs
+func (p *kClient) GetPrivateFiles(ctx context.Context, Req *core_api.GetPrivateFilesReq) (r *core_api.GetPrivateFilesResp, err error) {
+	var _args GetPrivateFilesArgs
 	_args.Req = Req
-	var _result GetFileListResult
-	if err = p.c.Call(ctx, "GetFileList", &_args, &_result); err != nil {
+	var _result GetPrivateFilesResult
+	if err = p.c.Call(ctx, "GetPrivateFiles", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetPublicFiles(ctx context.Context, Req *core_api.GetPublicFilesReq) (r *core_api.GetPublicFilesResp, err error) {
+	var _args GetPublicFilesArgs
+	_args.Req = Req
+	var _result GetPublicFilesResult
+	if err = p.c.Call(ctx, "GetPublicFiles", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetRecycleBinFiles(ctx context.Context, Req *core_api.GetRecycleBinFilesReq) (r *core_api.GetRecycleBinFilesResp, err error) {
+	var _args GetRecycleBinFilesArgs
+	_args.Req = Req
+	var _result GetRecycleBinFilesResult
+	if err = p.c.Call(ctx, "GetRecycleBinFiles", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
@@ -4345,41 +4673,41 @@ func (p *kClient) RecoverRecycleBinFile(ctx context.Context, Req *core_api.Recov
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) CreateLabel(ctx context.Context, Req *core_api.CreateLabelReq) (r *core_api.CreateLabelResp, err error) {
-	var _args CreateLabelArgs
+func (p *kClient) CreateZone(ctx context.Context, Req *core_api.CreateZoneReq) (r *core_api.CreateZoneResp, err error) {
+	var _args CreateZoneArgs
 	_args.Req = Req
-	var _result CreateLabelResult
-	if err = p.c.Call(ctx, "CreateLabel", &_args, &_result); err != nil {
+	var _result CreateZoneResult
+	if err = p.c.Call(ctx, "CreateZone", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) UpdateLabel(ctx context.Context, Req *core_api.UpdateLabelReq) (r *core_api.UpdateLabelResp, err error) {
-	var _args UpdateLabelArgs
+func (p *kClient) UpdateZone(ctx context.Context, Req *core_api.UpdateZoneReq) (r *core_api.UpdateZoneResp, err error) {
+	var _args UpdateZoneArgs
 	_args.Req = Req
-	var _result UpdateLabelResult
-	if err = p.c.Call(ctx, "UpdateLabel", &_args, &_result); err != nil {
+	var _result UpdateZoneResult
+	if err = p.c.Call(ctx, "UpdateZone", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) GetLabel(ctx context.Context, Req *core_api.GetLabelReq) (r *core_api.GetLabelResp, err error) {
-	var _args GetLabelArgs
+func (p *kClient) GetZone(ctx context.Context, Req *core_api.GetZoneReq) (r *core_api.GetZoneResp, err error) {
+	var _args GetZoneArgs
 	_args.Req = Req
-	var _result GetLabelResult
-	if err = p.c.Call(ctx, "GetLabel", &_args, &_result); err != nil {
+	var _result GetZoneResult
+	if err = p.c.Call(ctx, "GetZone", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) DeleteLabel(ctx context.Context, Req *core_api.DeleteLabelReq) (r *core_api.DeleteLabelResp, err error) {
-	var _args DeleteLabelArgs
+func (p *kClient) DeleteZone(ctx context.Context, Req *core_api.DeleteZoneReq) (r *core_api.DeleteZoneResp, err error) {
+	var _args DeleteZoneArgs
 	_args.Req = Req
-	var _result DeleteLabelResult
-	if err = p.c.Call(ctx, "DeleteLabel", &_args, &_result); err != nil {
+	var _result DeleteZoneResult
+	if err = p.c.Call(ctx, "DeleteZone", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
