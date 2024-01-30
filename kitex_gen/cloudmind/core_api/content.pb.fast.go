@@ -747,11 +747,6 @@ func (x *MoveFileReq) FastRead(buf []byte, _type int8, number int32) (offset int
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 3:
-		offset, err = x.fastReadField3(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -766,16 +761,11 @@ ReadFieldError:
 }
 
 func (x *MoveFileReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	x.UserId, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *MoveFileReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
 	x.FileId, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
-func (x *MoveFileReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+func (x *MoveFileReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
 	x.FatherId, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
@@ -2469,31 +2459,22 @@ func (x *MoveFileReq) FastWrite(buf []byte) (offset int) {
 	}
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
-	offset += x.fastWriteField3(buf[offset:])
 	return offset
 }
 
 func (x *MoveFileReq) fastWriteField1(buf []byte) (offset int) {
-	if x.UserId == "" {
+	if x.FileId == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 1, x.GetUserId())
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetFileId())
 	return offset
 }
 
 func (x *MoveFileReq) fastWriteField2(buf []byte) (offset int) {
-	if x.FileId == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetFileId())
-	return offset
-}
-
-func (x *MoveFileReq) fastWriteField3(buf []byte) (offset int) {
 	if x.FatherId == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 3, x.GetFatherId())
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetFatherId())
 	return offset
 }
 
@@ -3696,31 +3677,22 @@ func (x *MoveFileReq) Size() (n int) {
 	}
 	n += x.sizeField1()
 	n += x.sizeField2()
-	n += x.sizeField3()
 	return n
 }
 
 func (x *MoveFileReq) sizeField1() (n int) {
-	if x.UserId == "" {
+	if x.FileId == "" {
 		return n
 	}
-	n += fastpb.SizeString(1, x.GetUserId())
+	n += fastpb.SizeString(1, x.GetFileId())
 	return n
 }
 
 func (x *MoveFileReq) sizeField2() (n int) {
-	if x.FileId == "" {
-		return n
-	}
-	n += fastpb.SizeString(2, x.GetFileId())
-	return n
-}
-
-func (x *MoveFileReq) sizeField3() (n int) {
 	if x.FatherId == "" {
 		return n
 	}
-	n += fastpb.SizeString(3, x.GetFatherId())
+	n += fastpb.SizeString(2, x.GetFatherId())
 	return n
 }
 
@@ -4554,9 +4526,8 @@ var fieldIDToName_UpdateFileReq = map[int32]string{
 var fieldIDToName_UpdateFileResp = map[int32]string{}
 
 var fieldIDToName_MoveFileReq = map[int32]string{
-	1: "UserId",
-	2: "FileId",
-	3: "FatherId",
+	1: "FileId",
+	2: "FatherId",
 }
 
 var fieldIDToName_MoveFileResp = map[int32]string{}
