@@ -234,6 +234,11 @@ func (x *GetPrivateFilesReq) FastRead(buf []byte, _type int8, number int32) (off
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -275,6 +280,12 @@ func (x *GetPrivateFilesReq) fastReadField3(buf []byte, _type int8) (offset int,
 	}
 	x.PaginationOptions = &v
 	return offset, nil
+}
+
+func (x *GetPrivateFilesReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadInt64(buf, _type)
+	x.SortType = &tmp
+	return offset, err
 }
 
 func (x *GetPrivateFilesResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -344,6 +355,11 @@ func (x *GetPublicFilesReq) FastRead(buf []byte, _type int8, number int32) (offs
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -385,6 +401,12 @@ func (x *GetPublicFilesReq) fastReadField3(buf []byte, _type int8) (offset int, 
 	}
 	x.PaginationOptions = &v
 	return offset, nil
+}
+
+func (x *GetPublicFilesReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadInt64(buf, _type)
+	x.SortType = &tmp
+	return offset, err
 }
 
 func (x *GetPublicFilesResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -2134,6 +2156,7 @@ func (x *GetPrivateFilesReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
 	return offset
 }
 
@@ -2158,6 +2181,14 @@ func (x *GetPrivateFilesReq) fastWriteField3(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteMessage(buf[offset:], 3, x.GetPaginationOptions())
+	return offset
+}
+
+func (x *GetPrivateFilesReq) fastWriteField4(buf []byte) (offset int) {
+	if x.SortType == nil {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetSortType())
 	return offset
 }
 
@@ -2204,6 +2235,7 @@ func (x *GetPublicFilesReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
 	return offset
 }
 
@@ -2228,6 +2260,14 @@ func (x *GetPublicFilesReq) fastWriteField3(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteMessage(buf[offset:], 3, x.GetPaginationOptions())
+	return offset
+}
+
+func (x *GetPublicFilesReq) fastWriteField4(buf []byte) (offset int) {
+	if x.SortType == nil {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetSortType())
 	return offset
 }
 
@@ -3352,6 +3392,7 @@ func (x *GetPrivateFilesReq) Size() (n int) {
 	n += x.sizeField1()
 	n += x.sizeField2()
 	n += x.sizeField3()
+	n += x.sizeField4()
 	return n
 }
 
@@ -3376,6 +3417,14 @@ func (x *GetPrivateFilesReq) sizeField3() (n int) {
 		return n
 	}
 	n += fastpb.SizeMessage(3, x.GetPaginationOptions())
+	return n
+}
+
+func (x *GetPrivateFilesReq) sizeField4() (n int) {
+	if x.SortType == nil {
+		return n
+	}
+	n += fastpb.SizeInt64(4, x.GetSortType())
 	return n
 }
 
@@ -3422,6 +3471,7 @@ func (x *GetPublicFilesReq) Size() (n int) {
 	n += x.sizeField1()
 	n += x.sizeField2()
 	n += x.sizeField3()
+	n += x.sizeField4()
 	return n
 }
 
@@ -3446,6 +3496,14 @@ func (x *GetPublicFilesReq) sizeField3() (n int) {
 		return n
 	}
 	n += fastpb.SizeMessage(3, x.GetPaginationOptions())
+	return n
+}
+
+func (x *GetPublicFilesReq) sizeField4() (n int) {
+	if x.SortType == nil {
+		return n
+	}
+	n += fastpb.SizeInt64(4, x.GetSortType())
 	return n
 }
 
@@ -4468,6 +4526,7 @@ var fieldIDToName_GetPrivateFilesReq = map[int32]string{
 	1: "SearchOptions",
 	2: "FilterOptions",
 	3: "PaginationOptions",
+	4: "SortType",
 }
 
 var fieldIDToName_GetPrivateFilesResp = map[int32]string{
@@ -4480,6 +4539,7 @@ var fieldIDToName_GetPublicFilesReq = map[int32]string{
 	1: "SearchOptions",
 	2: "FilterOptions",
 	3: "PaginationOptions",
+	4: "SortType",
 }
 
 var fieldIDToName_GetPublicFilesResp = map[int32]string{
