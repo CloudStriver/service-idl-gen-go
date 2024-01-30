@@ -150,6 +150,11 @@ func (x *GetFileListReq) FastRead(buf []byte, _type int8, number int32) (offset 
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -190,6 +195,16 @@ func (x *GetFileListReq) fastReadField3(buf []byte, _type int8) (offset int, err
 		return offset, err
 	}
 	x.PaginationOptions = &v
+	return offset, nil
+}
+
+func (x *GetFileListReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	var v int32
+	v, offset, err = fastpb.ReadInt32(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.SortOptions = SortOptions(v).Enum()
 	return offset, nil
 }
 
@@ -2995,6 +3010,7 @@ func (x *GetFileListReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
 	return offset
 }
 
@@ -3019,6 +3035,14 @@ func (x *GetFileListReq) fastWriteField3(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteMessage(buf[offset:], 3, x.GetPaginationOptions())
+	return offset
+}
+
+func (x *GetFileListReq) fastWriteField4(buf []byte) (offset int) {
+	if x.SortOptions == nil {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 4, int32(x.GetSortOptions()))
 	return offset
 }
 
@@ -4747,6 +4771,7 @@ func (x *GetFileListReq) Size() (n int) {
 	n += x.sizeField1()
 	n += x.sizeField2()
 	n += x.sizeField3()
+	n += x.sizeField4()
 	return n
 }
 
@@ -4771,6 +4796,14 @@ func (x *GetFileListReq) sizeField3() (n int) {
 		return n
 	}
 	n += fastpb.SizeMessage(3, x.GetPaginationOptions())
+	return n
+}
+
+func (x *GetFileListReq) sizeField4() (n int) {
+	if x.SortOptions == nil {
+		return n
+	}
+	n += fastpb.SizeInt32(4, int32(x.GetSortOptions()))
 	return n
 }
 
@@ -6440,6 +6473,7 @@ var fieldIDToName_GetFileListReq = map[int32]string{
 	1: "SearchOptions",
 	2: "FilterOptions",
 	3: "PaginationOptions",
+	4: "SortOptions",
 }
 
 var fieldIDToName_GetFileListResp = map[int32]string{
