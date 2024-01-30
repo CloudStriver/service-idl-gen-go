@@ -14,10 +14,9 @@ type Client interface {
 	UpdateBalance(ctx context.Context, Req *trade.UpdateBalanceReq, callOptions ...callopt.Option) (r *trade.UpdateBalanceResp, err error)
 	GetBalance(ctx context.Context, Req *trade.GetBalanceReq, callOptions ...callopt.Option) (r *trade.GetBalanceResp, err error)
 	CreateBalance(ctx context.Context, Req *trade.CreateBalanceReq, callOptions ...callopt.Option) (r *trade.CreateBalanceResp, err error)
-	UpdateStock(ctx context.Context, Req *trade.UpdateStockReq, callOptions ...callopt.Option) (r *trade.UpdateStockResp, err error)
+	AddStock(ctx context.Context, Req *trade.AddStockReq, callOptions ...callopt.Option) (r *trade.AddStockResp, err error)
 	GetStock(ctx context.Context, Req *trade.GetStockReq, callOptions ...callopt.Option) (r *trade.GetStockResp, err error)
 	GetStocks(ctx context.Context, Req *trade.GetStocksReq, callOptions ...callopt.Option) (r *trade.GetStocksResp, err error)
-	CreateStock(ctx context.Context, Req *trade.CreateStockReq, callOptions ...callopt.Option) (r *trade.CreateStockResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -64,9 +63,9 @@ func (p *kTradeServiceClient) CreateBalance(ctx context.Context, Req *trade.Crea
 	return p.kClient.CreateBalance(ctx, Req)
 }
 
-func (p *kTradeServiceClient) UpdateStock(ctx context.Context, Req *trade.UpdateStockReq, callOptions ...callopt.Option) (r *trade.UpdateStockResp, err error) {
+func (p *kTradeServiceClient) AddStock(ctx context.Context, Req *trade.AddStockReq, callOptions ...callopt.Option) (r *trade.AddStockResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.UpdateStock(ctx, Req)
+	return p.kClient.AddStock(ctx, Req)
 }
 
 func (p *kTradeServiceClient) GetStock(ctx context.Context, Req *trade.GetStockReq, callOptions ...callopt.Option) (r *trade.GetStockResp, err error) {
@@ -77,9 +76,4 @@ func (p *kTradeServiceClient) GetStock(ctx context.Context, Req *trade.GetStockR
 func (p *kTradeServiceClient) GetStocks(ctx context.Context, Req *trade.GetStocksReq, callOptions ...callopt.Option) (r *trade.GetStocksResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetStocks(ctx, Req)
-}
-
-func (p *kTradeServiceClient) CreateStock(ctx context.Context, Req *trade.CreateStockReq, callOptions ...callopt.Option) (r *trade.CreateStockResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.CreateStock(ctx, Req)
 }

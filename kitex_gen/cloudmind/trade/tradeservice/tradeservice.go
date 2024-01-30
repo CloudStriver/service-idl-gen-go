@@ -24,10 +24,9 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"UpdateBalance": kitex.NewMethodInfo(updateBalanceHandler, newUpdateBalanceArgs, newUpdateBalanceResult, false),
 		"GetBalance":    kitex.NewMethodInfo(getBalanceHandler, newGetBalanceArgs, newGetBalanceResult, false),
 		"CreateBalance": kitex.NewMethodInfo(createBalanceHandler, newCreateBalanceArgs, newCreateBalanceResult, false),
-		"UpdateStock":   kitex.NewMethodInfo(updateStockHandler, newUpdateStockArgs, newUpdateStockResult, false),
+		"AddStock":      kitex.NewMethodInfo(addStockHandler, newAddStockArgs, newAddStockResult, false),
 		"GetStock":      kitex.NewMethodInfo(getStockHandler, newGetStockArgs, newGetStockResult, false),
 		"GetStocks":     kitex.NewMethodInfo(getStocksHandler, newGetStocksArgs, newGetStocksResult, false),
-		"CreateStock":   kitex.NewMethodInfo(createStockHandler, newCreateStockArgs, newCreateStockResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName":     "cloudmind.trade",
@@ -503,73 +502,73 @@ func (p *CreateBalanceResult) GetResult() interface{} {
 	return p.Success
 }
 
-func updateStockHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+func addStockHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(trade.UpdateStockReq)
+		req := new(trade.AddStockReq)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
-		resp, err := handler.(trade.TradeService).UpdateStock(ctx, req)
+		resp, err := handler.(trade.TradeService).AddStock(ctx, req)
 		if err != nil {
 			return err
 		}
 		if err := st.SendMsg(resp); err != nil {
 			return err
 		}
-	case *UpdateStockArgs:
-		success, err := handler.(trade.TradeService).UpdateStock(ctx, s.Req)
+	case *AddStockArgs:
+		success, err := handler.(trade.TradeService).AddStock(ctx, s.Req)
 		if err != nil {
 			return err
 		}
-		realResult := result.(*UpdateStockResult)
+		realResult := result.(*AddStockResult)
 		realResult.Success = success
 	}
 	return nil
 }
-func newUpdateStockArgs() interface{} {
-	return &UpdateStockArgs{}
+func newAddStockArgs() interface{} {
+	return &AddStockArgs{}
 }
 
-func newUpdateStockResult() interface{} {
-	return &UpdateStockResult{}
+func newAddStockResult() interface{} {
+	return &AddStockResult{}
 }
 
-type UpdateStockArgs struct {
-	Req *trade.UpdateStockReq
+type AddStockArgs struct {
+	Req *trade.AddStockReq
 }
 
-func (p *UpdateStockArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *AddStockArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(trade.UpdateStockReq)
+		p.Req = new(trade.AddStockReq)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
 
-func (p *UpdateStockArgs) FastWrite(buf []byte) (n int) {
+func (p *AddStockArgs) FastWrite(buf []byte) (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.FastWrite(buf)
 }
 
-func (p *UpdateStockArgs) Size() (n int) {
+func (p *AddStockArgs) Size() (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.Size()
 }
 
-func (p *UpdateStockArgs) Marshal(out []byte) ([]byte, error) {
+func (p *AddStockArgs) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetReq() {
 		return out, nil
 	}
 	return proto.Marshal(p.Req)
 }
 
-func (p *UpdateStockArgs) Unmarshal(in []byte) error {
-	msg := new(trade.UpdateStockReq)
+func (p *AddStockArgs) Unmarshal(in []byte) error {
+	msg := new(trade.AddStockReq)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -577,59 +576,59 @@ func (p *UpdateStockArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var UpdateStockArgs_Req_DEFAULT *trade.UpdateStockReq
+var AddStockArgs_Req_DEFAULT *trade.AddStockReq
 
-func (p *UpdateStockArgs) GetReq() *trade.UpdateStockReq {
+func (p *AddStockArgs) GetReq() *trade.AddStockReq {
 	if !p.IsSetReq() {
-		return UpdateStockArgs_Req_DEFAULT
+		return AddStockArgs_Req_DEFAULT
 	}
 	return p.Req
 }
 
-func (p *UpdateStockArgs) IsSetReq() bool {
+func (p *AddStockArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *UpdateStockArgs) GetFirstArgument() interface{} {
+func (p *AddStockArgs) GetFirstArgument() interface{} {
 	return p.Req
 }
 
-type UpdateStockResult struct {
-	Success *trade.UpdateStockResp
+type AddStockResult struct {
+	Success *trade.AddStockResp
 }
 
-var UpdateStockResult_Success_DEFAULT *trade.UpdateStockResp
+var AddStockResult_Success_DEFAULT *trade.AddStockResp
 
-func (p *UpdateStockResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *AddStockResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(trade.UpdateStockResp)
+		p.Success = new(trade.AddStockResp)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
 
-func (p *UpdateStockResult) FastWrite(buf []byte) (n int) {
+func (p *AddStockResult) FastWrite(buf []byte) (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.FastWrite(buf)
 }
 
-func (p *UpdateStockResult) Size() (n int) {
+func (p *AddStockResult) Size() (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.Size()
 }
 
-func (p *UpdateStockResult) Marshal(out []byte) ([]byte, error) {
+func (p *AddStockResult) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetSuccess() {
 		return out, nil
 	}
 	return proto.Marshal(p.Success)
 }
 
-func (p *UpdateStockResult) Unmarshal(in []byte) error {
-	msg := new(trade.UpdateStockResp)
+func (p *AddStockResult) Unmarshal(in []byte) error {
+	msg := new(trade.AddStockResp)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -637,22 +636,22 @@ func (p *UpdateStockResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *UpdateStockResult) GetSuccess() *trade.UpdateStockResp {
+func (p *AddStockResult) GetSuccess() *trade.AddStockResp {
 	if !p.IsSetSuccess() {
-		return UpdateStockResult_Success_DEFAULT
+		return AddStockResult_Success_DEFAULT
 	}
 	return p.Success
 }
 
-func (p *UpdateStockResult) SetSuccess(x interface{}) {
-	p.Success = x.(*trade.UpdateStockResp)
+func (p *AddStockResult) SetSuccess(x interface{}) {
+	p.Success = x.(*trade.AddStockResp)
 }
 
-func (p *UpdateStockResult) IsSetSuccess() bool {
+func (p *AddStockResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *UpdateStockResult) GetResult() interface{} {
+func (p *AddStockResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -962,159 +961,6 @@ func (p *GetStocksResult) GetResult() interface{} {
 	return p.Success
 }
 
-func createStockHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	switch s := arg.(type) {
-	case *streaming.Args:
-		st := s.Stream
-		req := new(trade.CreateStockReq)
-		if err := st.RecvMsg(req); err != nil {
-			return err
-		}
-		resp, err := handler.(trade.TradeService).CreateStock(ctx, req)
-		if err != nil {
-			return err
-		}
-		if err := st.SendMsg(resp); err != nil {
-			return err
-		}
-	case *CreateStockArgs:
-		success, err := handler.(trade.TradeService).CreateStock(ctx, s.Req)
-		if err != nil {
-			return err
-		}
-		realResult := result.(*CreateStockResult)
-		realResult.Success = success
-	}
-	return nil
-}
-func newCreateStockArgs() interface{} {
-	return &CreateStockArgs{}
-}
-
-func newCreateStockResult() interface{} {
-	return &CreateStockResult{}
-}
-
-type CreateStockArgs struct {
-	Req *trade.CreateStockReq
-}
-
-func (p *CreateStockArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetReq() {
-		p.Req = new(trade.CreateStockReq)
-	}
-	return p.Req.FastRead(buf, _type, number)
-}
-
-func (p *CreateStockArgs) FastWrite(buf []byte) (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.FastWrite(buf)
-}
-
-func (p *CreateStockArgs) Size() (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.Size()
-}
-
-func (p *CreateStockArgs) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetReq() {
-		return out, nil
-	}
-	return proto.Marshal(p.Req)
-}
-
-func (p *CreateStockArgs) Unmarshal(in []byte) error {
-	msg := new(trade.CreateStockReq)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Req = msg
-	return nil
-}
-
-var CreateStockArgs_Req_DEFAULT *trade.CreateStockReq
-
-func (p *CreateStockArgs) GetReq() *trade.CreateStockReq {
-	if !p.IsSetReq() {
-		return CreateStockArgs_Req_DEFAULT
-	}
-	return p.Req
-}
-
-func (p *CreateStockArgs) IsSetReq() bool {
-	return p.Req != nil
-}
-
-func (p *CreateStockArgs) GetFirstArgument() interface{} {
-	return p.Req
-}
-
-type CreateStockResult struct {
-	Success *trade.CreateStockResp
-}
-
-var CreateStockResult_Success_DEFAULT *trade.CreateStockResp
-
-func (p *CreateStockResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetSuccess() {
-		p.Success = new(trade.CreateStockResp)
-	}
-	return p.Success.FastRead(buf, _type, number)
-}
-
-func (p *CreateStockResult) FastWrite(buf []byte) (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.FastWrite(buf)
-}
-
-func (p *CreateStockResult) Size() (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.Size()
-}
-
-func (p *CreateStockResult) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetSuccess() {
-		return out, nil
-	}
-	return proto.Marshal(p.Success)
-}
-
-func (p *CreateStockResult) Unmarshal(in []byte) error {
-	msg := new(trade.CreateStockResp)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Success = msg
-	return nil
-}
-
-func (p *CreateStockResult) GetSuccess() *trade.CreateStockResp {
-	if !p.IsSetSuccess() {
-		return CreateStockResult_Success_DEFAULT
-	}
-	return p.Success
-}
-
-func (p *CreateStockResult) SetSuccess(x interface{}) {
-	p.Success = x.(*trade.CreateStockResp)
-}
-
-func (p *CreateStockResult) IsSetSuccess() bool {
-	return p.Success != nil
-}
-
-func (p *CreateStockResult) GetResult() interface{} {
-	return p.Success
-}
-
 type kClient struct {
 	c client.Client
 }
@@ -1155,11 +1001,11 @@ func (p *kClient) CreateBalance(ctx context.Context, Req *trade.CreateBalanceReq
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) UpdateStock(ctx context.Context, Req *trade.UpdateStockReq) (r *trade.UpdateStockResp, err error) {
-	var _args UpdateStockArgs
+func (p *kClient) AddStock(ctx context.Context, Req *trade.AddStockReq) (r *trade.AddStockResp, err error) {
+	var _args AddStockArgs
 	_args.Req = Req
-	var _result UpdateStockResult
-	if err = p.c.Call(ctx, "UpdateStock", &_args, &_result); err != nil {
+	var _result AddStockResult
+	if err = p.c.Call(ctx, "AddStock", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
@@ -1180,16 +1026,6 @@ func (p *kClient) GetStocks(ctx context.Context, Req *trade.GetStocksReq) (r *tr
 	_args.Req = Req
 	var _result GetStocksResult
 	if err = p.c.Call(ctx, "GetStocks", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
-}
-
-func (p *kClient) CreateStock(ctx context.Context, Req *trade.CreateStockReq) (r *trade.CreateStockResp, err error) {
-	var _args CreateStockArgs
-	_args.Req = Req
-	var _result CreateStockResult
-	if err = p.c.Call(ctx, "CreateStock", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

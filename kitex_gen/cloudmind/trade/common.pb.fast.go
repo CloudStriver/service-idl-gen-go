@@ -236,15 +236,10 @@ SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 }
 
-func (x *UpdateStockReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *AddStockReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 2:
-		offset, err = x.fastReadField2(buf, _type)
 		if err != nil {
 			goto ReadFieldError
 		}
@@ -263,25 +258,20 @@ func (x *UpdateStockReq) FastRead(buf []byte, _type int8, number int32) (offset 
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_UpdateStockReq[number], err)
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_AddStockReq[number], err)
 }
 
-func (x *UpdateStockReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+func (x *AddStockReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
 	x.ProductId, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
-func (x *UpdateStockReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.OldAmount, offset, err = fastpb.ReadInt64(buf, _type)
-	return offset, err
-}
-
-func (x *UpdateStockReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+func (x *AddStockReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	x.Amount, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
-func (x *UpdateStockResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *AddStockResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
@@ -406,54 +396,6 @@ func (x *GetStocksResp) fastReadField1(buf []byte, _type int8) (offset int, err 
 			return offset, err
 		})
 	return offset, err
-}
-
-func (x *CreateStockReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
-	switch number {
-	case 1:
-		offset, err = x.fastReadField1(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 2:
-		offset, err = x.fastReadField2(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	default:
-		offset, err = fastpb.Skip(buf, _type, number)
-		if err != nil {
-			goto SkipFieldError
-		}
-	}
-	return offset, nil
-SkipFieldError:
-	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
-ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CreateStockReq[number], err)
-}
-
-func (x *CreateStockReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	x.ProductId, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *CreateStockReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.Stock, offset, err = fastpb.ReadInt64(buf, _type)
-	return offset, err
-}
-
-func (x *CreateStockResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
-	switch number {
-	default:
-		offset, err = fastpb.Skip(buf, _type, number)
-		if err != nil {
-			goto SkipFieldError
-		}
-	}
-	return offset, nil
-SkipFieldError:
-	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 }
 
 func (x *Balance) FastWrite(buf []byte) (offset int) {
@@ -595,17 +537,16 @@ func (x *CreateBalanceResp) FastWrite(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *UpdateStockReq) FastWrite(buf []byte) (offset int) {
+func (x *AddStockReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
-	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
 	return offset
 }
 
-func (x *UpdateStockReq) fastWriteField1(buf []byte) (offset int) {
+func (x *AddStockReq) fastWriteField1(buf []byte) (offset int) {
 	if x.ProductId == "" {
 		return offset
 	}
@@ -613,15 +554,7 @@ func (x *UpdateStockReq) fastWriteField1(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *UpdateStockReq) fastWriteField2(buf []byte) (offset int) {
-	if x.OldAmount == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetOldAmount())
-	return offset
-}
-
-func (x *UpdateStockReq) fastWriteField3(buf []byte) (offset int) {
+func (x *AddStockReq) fastWriteField3(buf []byte) (offset int) {
 	if x.Amount == 0 {
 		return offset
 	}
@@ -629,7 +562,7 @@ func (x *UpdateStockReq) fastWriteField3(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *UpdateStockResp) FastWrite(buf []byte) (offset int) {
+func (x *AddStockResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
@@ -704,38 +637,6 @@ func (x *GetStocksResp) fastWriteField1(buf []byte) (offset int) {
 			offset += fastpb.WriteInt64(buf[offset:], numTagOrKey, x.GetStocks()[numIdxOrVal])
 			return offset
 		})
-	return offset
-}
-
-func (x *CreateStockReq) FastWrite(buf []byte) (offset int) {
-	if x == nil {
-		return offset
-	}
-	offset += x.fastWriteField1(buf[offset:])
-	offset += x.fastWriteField2(buf[offset:])
-	return offset
-}
-
-func (x *CreateStockReq) fastWriteField1(buf []byte) (offset int) {
-	if x.ProductId == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 1, x.GetProductId())
-	return offset
-}
-
-func (x *CreateStockReq) fastWriteField2(buf []byte) (offset int) {
-	if x.Stock == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetStock())
-	return offset
-}
-
-func (x *CreateStockResp) FastWrite(buf []byte) (offset int) {
-	if x == nil {
-		return offset
-	}
 	return offset
 }
 
@@ -878,17 +779,16 @@ func (x *CreateBalanceResp) Size() (n int) {
 	return n
 }
 
-func (x *UpdateStockReq) Size() (n int) {
+func (x *AddStockReq) Size() (n int) {
 	if x == nil {
 		return n
 	}
 	n += x.sizeField1()
-	n += x.sizeField2()
 	n += x.sizeField3()
 	return n
 }
 
-func (x *UpdateStockReq) sizeField1() (n int) {
+func (x *AddStockReq) sizeField1() (n int) {
 	if x.ProductId == "" {
 		return n
 	}
@@ -896,15 +796,7 @@ func (x *UpdateStockReq) sizeField1() (n int) {
 	return n
 }
 
-func (x *UpdateStockReq) sizeField2() (n int) {
-	if x.OldAmount == 0 {
-		return n
-	}
-	n += fastpb.SizeInt64(2, x.GetOldAmount())
-	return n
-}
-
-func (x *UpdateStockReq) sizeField3() (n int) {
+func (x *AddStockReq) sizeField3() (n int) {
 	if x.Amount == 0 {
 		return n
 	}
@@ -912,7 +804,7 @@ func (x *UpdateStockReq) sizeField3() (n int) {
 	return n
 }
 
-func (x *UpdateStockResp) Size() (n int) {
+func (x *AddStockResp) Size() (n int) {
 	if x == nil {
 		return n
 	}
@@ -990,38 +882,6 @@ func (x *GetStocksResp) sizeField1() (n int) {
 	return n
 }
 
-func (x *CreateStockReq) Size() (n int) {
-	if x == nil {
-		return n
-	}
-	n += x.sizeField1()
-	n += x.sizeField2()
-	return n
-}
-
-func (x *CreateStockReq) sizeField1() (n int) {
-	if x.ProductId == "" {
-		return n
-	}
-	n += fastpb.SizeString(1, x.GetProductId())
-	return n
-}
-
-func (x *CreateStockReq) sizeField2() (n int) {
-	if x.Stock == 0 {
-		return n
-	}
-	n += fastpb.SizeInt64(2, x.GetStock())
-	return n
-}
-
-func (x *CreateStockResp) Size() (n int) {
-	if x == nil {
-		return n
-	}
-	return n
-}
-
 var fieldIDToName_Balance = map[int32]string{
 	1: "Flow",
 	2: "Memory",
@@ -1051,13 +911,12 @@ var fieldIDToName_CreateBalanceReq = map[int32]string{
 
 var fieldIDToName_CreateBalanceResp = map[int32]string{}
 
-var fieldIDToName_UpdateStockReq = map[int32]string{
+var fieldIDToName_AddStockReq = map[int32]string{
 	1: "ProductId",
-	2: "OldAmount",
 	3: "Amount",
 }
 
-var fieldIDToName_UpdateStockResp = map[int32]string{}
+var fieldIDToName_AddStockResp = map[int32]string{}
 
 var fieldIDToName_GetStockReq = map[int32]string{
 	1: "ProductId",
@@ -1074,10 +933,3 @@ var fieldIDToName_GetStocksReq = map[int32]string{
 var fieldIDToName_GetStocksResp = map[int32]string{
 	1: "Stocks",
 }
-
-var fieldIDToName_CreateStockReq = map[int32]string{
-	1: "ProductId",
-	2: "Stock",
-}
-
-var fieldIDToName_CreateStockResp = map[int32]string{}
