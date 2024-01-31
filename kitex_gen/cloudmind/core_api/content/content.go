@@ -25,7 +25,8 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"SearchUser":             kitex.NewMethodInfo(searchUserHandler, newSearchUserArgs, newSearchUserResult, false),
 		"GetUser":                kitex.NewMethodInfo(getUserHandler, newGetUserArgs, newGetUserResult, false),
 		"GetUserDetail":          kitex.NewMethodInfo(getUserDetailHandler, newGetUserDetailArgs, newGetUserDetailResult, false),
-		"GetFile":                kitex.NewMethodInfo(getFileHandler, newGetFileArgs, newGetFileResult, false),
+		"GetPublicFile":          kitex.NewMethodInfo(getPublicFileHandler, newGetPublicFileArgs, newGetPublicFileResult, false),
+		"GetPrivateFile":         kitex.NewMethodInfo(getPrivateFileHandler, newGetPrivateFileArgs, newGetPrivateFileResult, false),
 		"GetPrivateFiles":        kitex.NewMethodInfo(getPrivateFilesHandler, newGetPrivateFilesArgs, newGetPrivateFilesResult, false),
 		"GetPublicFiles":         kitex.NewMethodInfo(getPublicFilesHandler, newGetPublicFilesArgs, newGetPublicFilesResult, false),
 		"GetRecycleBinFiles":     kitex.NewMethodInfo(getRecycleBinFilesHandler, newGetRecycleBinFilesArgs, newGetRecycleBinFilesResult, false),
@@ -678,7 +679,7 @@ func (p *GetUserDetailResult) GetResult() interface{} {
 	return p.Success
 }
 
-func getFileHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+func getPublicFileHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
@@ -686,64 +687,64 @@ func getFileHandler(ctx context.Context, handler interface{}, arg, result interf
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
-		resp, err := handler.(core_api.Content).GetFile(ctx, req)
+		resp, err := handler.(core_api.Content).GetPublicFile(ctx, req)
 		if err != nil {
 			return err
 		}
 		if err := st.SendMsg(resp); err != nil {
 			return err
 		}
-	case *GetFileArgs:
-		success, err := handler.(core_api.Content).GetFile(ctx, s.Req)
+	case *GetPublicFileArgs:
+		success, err := handler.(core_api.Content).GetPublicFile(ctx, s.Req)
 		if err != nil {
 			return err
 		}
-		realResult := result.(*GetFileResult)
+		realResult := result.(*GetPublicFileResult)
 		realResult.Success = success
 	}
 	return nil
 }
-func newGetFileArgs() interface{} {
-	return &GetFileArgs{}
+func newGetPublicFileArgs() interface{} {
+	return &GetPublicFileArgs{}
 }
 
-func newGetFileResult() interface{} {
-	return &GetFileResult{}
+func newGetPublicFileResult() interface{} {
+	return &GetPublicFileResult{}
 }
 
-type GetFileArgs struct {
+type GetPublicFileArgs struct {
 	Req *core_api.GetFileReq
 }
 
-func (p *GetFileArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *GetPublicFileArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
 		p.Req = new(core_api.GetFileReq)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
 
-func (p *GetFileArgs) FastWrite(buf []byte) (n int) {
+func (p *GetPublicFileArgs) FastWrite(buf []byte) (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.FastWrite(buf)
 }
 
-func (p *GetFileArgs) Size() (n int) {
+func (p *GetPublicFileArgs) Size() (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.Size()
 }
 
-func (p *GetFileArgs) Marshal(out []byte) ([]byte, error) {
+func (p *GetPublicFileArgs) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetReq() {
 		return out, nil
 	}
 	return proto.Marshal(p.Req)
 }
 
-func (p *GetFileArgs) Unmarshal(in []byte) error {
+func (p *GetPublicFileArgs) Unmarshal(in []byte) error {
 	msg := new(core_api.GetFileReq)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
@@ -752,58 +753,58 @@ func (p *GetFileArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var GetFileArgs_Req_DEFAULT *core_api.GetFileReq
+var GetPublicFileArgs_Req_DEFAULT *core_api.GetFileReq
 
-func (p *GetFileArgs) GetReq() *core_api.GetFileReq {
+func (p *GetPublicFileArgs) GetReq() *core_api.GetFileReq {
 	if !p.IsSetReq() {
-		return GetFileArgs_Req_DEFAULT
+		return GetPublicFileArgs_Req_DEFAULT
 	}
 	return p.Req
 }
 
-func (p *GetFileArgs) IsSetReq() bool {
+func (p *GetPublicFileArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *GetFileArgs) GetFirstArgument() interface{} {
+func (p *GetPublicFileArgs) GetFirstArgument() interface{} {
 	return p.Req
 }
 
-type GetFileResult struct {
+type GetPublicFileResult struct {
 	Success *core_api.GetFileResp
 }
 
-var GetFileResult_Success_DEFAULT *core_api.GetFileResp
+var GetPublicFileResult_Success_DEFAULT *core_api.GetFileResp
 
-func (p *GetFileResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *GetPublicFileResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
 		p.Success = new(core_api.GetFileResp)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
 
-func (p *GetFileResult) FastWrite(buf []byte) (n int) {
+func (p *GetPublicFileResult) FastWrite(buf []byte) (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.FastWrite(buf)
 }
 
-func (p *GetFileResult) Size() (n int) {
+func (p *GetPublicFileResult) Size() (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.Size()
 }
 
-func (p *GetFileResult) Marshal(out []byte) ([]byte, error) {
+func (p *GetPublicFileResult) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetSuccess() {
 		return out, nil
 	}
 	return proto.Marshal(p.Success)
 }
 
-func (p *GetFileResult) Unmarshal(in []byte) error {
+func (p *GetPublicFileResult) Unmarshal(in []byte) error {
 	msg := new(core_api.GetFileResp)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
@@ -812,22 +813,175 @@ func (p *GetFileResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *GetFileResult) GetSuccess() *core_api.GetFileResp {
+func (p *GetPublicFileResult) GetSuccess() *core_api.GetFileResp {
 	if !p.IsSetSuccess() {
-		return GetFileResult_Success_DEFAULT
+		return GetPublicFileResult_Success_DEFAULT
 	}
 	return p.Success
 }
 
-func (p *GetFileResult) SetSuccess(x interface{}) {
+func (p *GetPublicFileResult) SetSuccess(x interface{}) {
 	p.Success = x.(*core_api.GetFileResp)
 }
 
-func (p *GetFileResult) IsSetSuccess() bool {
+func (p *GetPublicFileResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *GetFileResult) GetResult() interface{} {
+func (p *GetPublicFileResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getPrivateFileHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.GetFileReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Content).GetPrivateFile(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetPrivateFileArgs:
+		success, err := handler.(core_api.Content).GetPrivateFile(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetPrivateFileResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetPrivateFileArgs() interface{} {
+	return &GetPrivateFileArgs{}
+}
+
+func newGetPrivateFileResult() interface{} {
+	return &GetPrivateFileResult{}
+}
+
+type GetPrivateFileArgs struct {
+	Req *core_api.GetFileReq
+}
+
+func (p *GetPrivateFileArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.GetFileReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetPrivateFileArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetPrivateFileArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetPrivateFileArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetPrivateFileArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.GetFileReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetPrivateFileArgs_Req_DEFAULT *core_api.GetFileReq
+
+func (p *GetPrivateFileArgs) GetReq() *core_api.GetFileReq {
+	if !p.IsSetReq() {
+		return GetPrivateFileArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetPrivateFileArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetPrivateFileArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetPrivateFileResult struct {
+	Success *core_api.GetFileResp
+}
+
+var GetPrivateFileResult_Success_DEFAULT *core_api.GetFileResp
+
+func (p *GetPrivateFileResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.GetFileResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetPrivateFileResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetPrivateFileResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetPrivateFileResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetPrivateFileResult) Unmarshal(in []byte) error {
+	msg := new(core_api.GetFileResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetPrivateFileResult) GetSuccess() *core_api.GetFileResp {
+	if !p.IsSetSuccess() {
+		return GetPrivateFileResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetPrivateFileResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.GetFileResp)
+}
+
+func (p *GetPrivateFileResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetPrivateFileResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -4553,11 +4707,21 @@ func (p *kClient) GetUserDetail(ctx context.Context, Req *core_api.GetUserDetail
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) GetFile(ctx context.Context, Req *core_api.GetFileReq) (r *core_api.GetFileResp, err error) {
-	var _args GetFileArgs
+func (p *kClient) GetPublicFile(ctx context.Context, Req *core_api.GetFileReq) (r *core_api.GetFileResp, err error) {
+	var _args GetPublicFileArgs
 	_args.Req = Req
-	var _result GetFileResult
-	if err = p.c.Call(ctx, "GetFile", &_args, &_result); err != nil {
+	var _result GetPublicFileResult
+	if err = p.c.Call(ctx, "GetPublicFile", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetPrivateFile(ctx context.Context, Req *core_api.GetFileReq) (r *core_api.GetFileResp, err error) {
+	var _args GetPrivateFileArgs
+	_args.Req = Req
+	var _result GetPrivateFileResult
+	if err = p.c.Call(ctx, "GetPrivateFile", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

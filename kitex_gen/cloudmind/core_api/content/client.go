@@ -15,7 +15,8 @@ type Client interface {
 	SearchUser(ctx context.Context, Req *core_api.SearchUserReq, callOptions ...callopt.Option) (r *core_api.SearchUserResp, err error)
 	GetUser(ctx context.Context, Req *core_api.GetUserReq, callOptions ...callopt.Option) (r *core_api.GetUserResp, err error)
 	GetUserDetail(ctx context.Context, Req *core_api.GetUserDetailReq, callOptions ...callopt.Option) (r *core_api.GetUserDetailResp, err error)
-	GetFile(ctx context.Context, Req *core_api.GetFileReq, callOptions ...callopt.Option) (r *core_api.GetFileResp, err error)
+	GetPublicFile(ctx context.Context, Req *core_api.GetFileReq, callOptions ...callopt.Option) (r *core_api.GetFileResp, err error)
+	GetPrivateFile(ctx context.Context, Req *core_api.GetFileReq, callOptions ...callopt.Option) (r *core_api.GetFileResp, err error)
 	GetPrivateFiles(ctx context.Context, Req *core_api.GetPrivateFilesReq, callOptions ...callopt.Option) (r *core_api.GetPrivateFilesResp, err error)
 	GetPublicFiles(ctx context.Context, Req *core_api.GetPublicFilesReq, callOptions ...callopt.Option) (r *core_api.GetPublicFilesResp, err error)
 	GetRecycleBinFiles(ctx context.Context, Req *core_api.GetRecycleBinFilesReq, callOptions ...callopt.Option) (r *core_api.GetRecycleBinFilesResp, err error)
@@ -91,9 +92,14 @@ func (p *kContentClient) GetUserDetail(ctx context.Context, Req *core_api.GetUse
 	return p.kClient.GetUserDetail(ctx, Req)
 }
 
-func (p *kContentClient) GetFile(ctx context.Context, Req *core_api.GetFileReq, callOptions ...callopt.Option) (r *core_api.GetFileResp, err error) {
+func (p *kContentClient) GetPublicFile(ctx context.Context, Req *core_api.GetFileReq, callOptions ...callopt.Option) (r *core_api.GetFileResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.GetFile(ctx, Req)
+	return p.kClient.GetPublicFile(ctx, Req)
+}
+
+func (p *kContentClient) GetPrivateFile(ctx context.Context, Req *core_api.GetFileReq, callOptions ...callopt.Option) (r *core_api.GetFileResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetPrivateFile(ctx, Req)
 }
 
 func (p *kContentClient) GetPrivateFiles(ctx context.Context, Req *core_api.GetPrivateFilesReq, callOptions ...callopt.Option) (r *core_api.GetPrivateFilesResp, err error) {
