@@ -123,7 +123,8 @@ func (x *File) fastReadField7(buf []byte, _type int8) (offset int, err error) {
 }
 
 func (x *File) fastReadField8(buf []byte, _type int8) (offset int, err error) {
-	x.SpaceSize, offset, err = fastpb.ReadInt64(buf, _type)
+	tmp, offset, err := fastpb.ReadInt64(buf, _type)
+	x.SpaceSize = &tmp
 	return offset, err
 }
 
@@ -1847,7 +1848,7 @@ func (x *File) fastWriteField7(buf []byte) (offset int) {
 }
 
 func (x *File) fastWriteField8(buf []byte) (offset int) {
-	if x.SpaceSize == 0 {
+	if x.SpaceSize == nil {
 		return offset
 	}
 	offset += fastpb.WriteInt64(buf[offset:], 8, x.GetSpaceSize())
@@ -3244,7 +3245,7 @@ func (x *File) sizeField7() (n int) {
 }
 
 func (x *File) sizeField8() (n int) {
-	if x.SpaceSize == 0 {
+	if x.SpaceSize == nil {
 		return n
 	}
 	n += fastpb.SizeInt64(8, x.GetSpaceSize())
