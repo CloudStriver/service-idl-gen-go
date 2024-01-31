@@ -34,11 +34,6 @@ func (x *File) FastRead(buf []byte, _type int8, number int32) (offset int, err e
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 5:
-		offset, err = x.fastReadField5(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	case 6:
 		offset, err = x.fastReadField6(buf, _type)
 		if err != nil {
@@ -113,18 +108,8 @@ func (x *File) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 }
 
 func (x *File) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	x.TypeString, offset, err = fastpb.ReadString(buf, _type)
+	x.Type, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
-}
-
-func (x *File) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	var v int32
-	v, offset, err = fastpb.ReadInt32(buf, _type)
-	if err != nil {
-		return offset, err
-	}
-	x.Type = Type(v)
-	return offset, nil
 }
 
 func (x *File) fastReadField6(buf []byte, _type int8) (offset int, err error) {
@@ -138,8 +123,7 @@ func (x *File) fastReadField7(buf []byte, _type int8) (offset int, err error) {
 }
 
 func (x *File) fastReadField8(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadInt64(buf, _type)
-	x.SpaceSize = &tmp
+	x.SpaceSize, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -192,11 +176,6 @@ func (x *FileInfo) FastRead(buf []byte, _type int8, number int32) (offset int, e
 		}
 	case 4:
 		offset, err = x.fastReadField4(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 5:
-		offset, err = x.fastReadField5(buf, _type)
 		if err != nil {
 			goto ReadFieldError
 		}
@@ -284,18 +263,8 @@ func (x *FileInfo) fastReadField3(buf []byte, _type int8) (offset int, err error
 }
 
 func (x *FileInfo) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	x.TypeString, offset, err = fastpb.ReadString(buf, _type)
+	x.Type, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
-}
-
-func (x *FileInfo) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	var v int32
-	v, offset, err = fastpb.ReadInt32(buf, _type)
-	if err != nil {
-		return offset, err
-	}
-	x.Type = Type(v)
-	return offset, nil
 }
 
 func (x *FileInfo) fastReadField6(buf []byte, _type int8) (offset int, err error) {
@@ -726,11 +695,6 @@ func (x *FileFilterOptions) FastRead(buf []byte, _type int8, number int32) (offs
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 4:
-		offset, err = x.fastReadField4(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	case 5:
 		offset, err = x.fastReadField5(buf, _type)
 		if err != nil {
@@ -787,12 +751,6 @@ func (x *FileFilterOptions) fastReadField3(buf []byte, _type int8) (offset int, 
 	return offset, err
 }
 
-func (x *FileFilterOptions) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadInt64(buf, _type)
-	x.OnlyFileType = &tmp
-	return offset, err
-}
-
 func (x *FileFilterOptions) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadString(buf, _type)
 	x.OnlyZone = &tmp
@@ -823,7 +781,7 @@ func (x *FileFilterOptions) fastReadField9(buf []byte, _type int8) (offset int, 
 	if err != nil {
 		return offset, err
 	}
-	x.OnlyTypeString = append(x.OnlyTypeString, v)
+	x.OnlyType = append(x.OnlyType, v)
 	return offset, err
 }
 
@@ -1828,7 +1786,6 @@ func (x *File) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
-	offset += x.fastWriteField5(buf[offset:])
 	offset += x.fastWriteField6(buf[offset:])
 	offset += x.fastWriteField7(buf[offset:])
 	offset += x.fastWriteField8(buf[offset:])
@@ -1866,18 +1823,10 @@ func (x *File) fastWriteField3(buf []byte) (offset int) {
 }
 
 func (x *File) fastWriteField4(buf []byte) (offset int) {
-	if x.TypeString == "" {
+	if x.Type == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 4, x.GetTypeString())
-	return offset
-}
-
-func (x *File) fastWriteField5(buf []byte) (offset int) {
-	if x.Type == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt32(buf[offset:], 5, int32(x.GetType()))
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetType())
 	return offset
 }
 
@@ -1898,7 +1847,7 @@ func (x *File) fastWriteField7(buf []byte) (offset int) {
 }
 
 func (x *File) fastWriteField8(buf []byte) (offset int) {
-	if x.SpaceSize == nil {
+	if x.SpaceSize == 0 {
 		return offset
 	}
 	offset += fastpb.WriteInt64(buf[offset:], 8, x.GetSpaceSize())
@@ -1961,7 +1910,6 @@ func (x *FileInfo) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
-	offset += x.fastWriteField5(buf[offset:])
 	offset += x.fastWriteField6(buf[offset:])
 	offset += x.fastWriteField7(buf[offset:])
 	offset += x.fastWriteField8(buf[offset:])
@@ -2001,18 +1949,10 @@ func (x *FileInfo) fastWriteField3(buf []byte) (offset int) {
 }
 
 func (x *FileInfo) fastWriteField4(buf []byte) (offset int) {
-	if x.TypeString == "" {
+	if x.Type == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 4, x.GetTypeString())
-	return offset
-}
-
-func (x *FileInfo) fastWriteField5(buf []byte) (offset int) {
-	if x.Type == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt32(buf[offset:], 5, int32(x.GetType()))
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetType())
 	return offset
 }
 
@@ -2382,7 +2322,6 @@ func (x *FileFilterOptions) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
-	offset += x.fastWriteField4(buf[offset:])
 	offset += x.fastWriteField5(buf[offset:])
 	offset += x.fastWriteField6(buf[offset:])
 	offset += x.fastWriteField7(buf[offset:])
@@ -2412,14 +2351,6 @@ func (x *FileFilterOptions) fastWriteField3(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 3, x.GetOnlyFatherId())
-	return offset
-}
-
-func (x *FileFilterOptions) fastWriteField4(buf []byte) (offset int) {
-	if x.OnlyFileType == nil {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetOnlyFileType())
 	return offset
 }
 
@@ -2456,11 +2387,11 @@ func (x *FileFilterOptions) fastWriteField8(buf []byte) (offset int) {
 }
 
 func (x *FileFilterOptions) fastWriteField9(buf []byte) (offset int) {
-	if len(x.OnlyTypeString) == 0 {
+	if len(x.OnlyType) == 0 {
 		return offset
 	}
-	for i := range x.GetOnlyTypeString() {
-		offset += fastpb.WriteString(buf[offset:], 9, x.GetOnlyTypeString()[i])
+	for i := range x.GetOnlyType() {
+		offset += fastpb.WriteString(buf[offset:], 9, x.GetOnlyType()[i])
 	}
 	return offset
 }
@@ -3252,7 +3183,6 @@ func (x *File) Size() (n int) {
 	n += x.sizeField2()
 	n += x.sizeField3()
 	n += x.sizeField4()
-	n += x.sizeField5()
 	n += x.sizeField6()
 	n += x.sizeField7()
 	n += x.sizeField8()
@@ -3290,18 +3220,10 @@ func (x *File) sizeField3() (n int) {
 }
 
 func (x *File) sizeField4() (n int) {
-	if x.TypeString == "" {
+	if x.Type == "" {
 		return n
 	}
-	n += fastpb.SizeString(4, x.GetTypeString())
-	return n
-}
-
-func (x *File) sizeField5() (n int) {
-	if x.Type == 0 {
-		return n
-	}
-	n += fastpb.SizeInt32(5, int32(x.GetType()))
+	n += fastpb.SizeString(4, x.GetType())
 	return n
 }
 
@@ -3322,7 +3244,7 @@ func (x *File) sizeField7() (n int) {
 }
 
 func (x *File) sizeField8() (n int) {
-	if x.SpaceSize == nil {
+	if x.SpaceSize == 0 {
 		return n
 	}
 	n += fastpb.SizeInt64(8, x.GetSpaceSize())
@@ -3385,7 +3307,6 @@ func (x *FileInfo) Size() (n int) {
 	n += x.sizeField2()
 	n += x.sizeField3()
 	n += x.sizeField4()
-	n += x.sizeField5()
 	n += x.sizeField6()
 	n += x.sizeField7()
 	n += x.sizeField8()
@@ -3425,18 +3346,10 @@ func (x *FileInfo) sizeField3() (n int) {
 }
 
 func (x *FileInfo) sizeField4() (n int) {
-	if x.TypeString == "" {
+	if x.Type == "" {
 		return n
 	}
-	n += fastpb.SizeString(4, x.GetTypeString())
-	return n
-}
-
-func (x *FileInfo) sizeField5() (n int) {
-	if x.Type == 0 {
-		return n
-	}
-	n += fastpb.SizeInt32(5, int32(x.GetType()))
+	n += fastpb.SizeString(4, x.GetType())
 	return n
 }
 
@@ -3806,7 +3719,6 @@ func (x *FileFilterOptions) Size() (n int) {
 	n += x.sizeField1()
 	n += x.sizeField2()
 	n += x.sizeField3()
-	n += x.sizeField4()
 	n += x.sizeField5()
 	n += x.sizeField6()
 	n += x.sizeField7()
@@ -3836,14 +3748,6 @@ func (x *FileFilterOptions) sizeField3() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(3, x.GetOnlyFatherId())
-	return n
-}
-
-func (x *FileFilterOptions) sizeField4() (n int) {
-	if x.OnlyFileType == nil {
-		return n
-	}
-	n += fastpb.SizeInt64(4, x.GetOnlyFileType())
 	return n
 }
 
@@ -3880,11 +3784,11 @@ func (x *FileFilterOptions) sizeField8() (n int) {
 }
 
 func (x *FileFilterOptions) sizeField9() (n int) {
-	if len(x.OnlyTypeString) == 0 {
+	if len(x.OnlyType) == 0 {
 		return n
 	}
-	for i := range x.GetOnlyTypeString() {
-		n += fastpb.SizeString(9, x.GetOnlyTypeString()[i])
+	for i := range x.GetOnlyType() {
+		n += fastpb.SizeString(9, x.GetOnlyType()[i])
 	}
 	return n
 }
@@ -4672,8 +4576,7 @@ var fieldIDToName_File = map[int32]string{
 	1:  "FileId",
 	2:  "UserId",
 	3:  "Name",
-	4:  "TypeString",
-	5:  "Type",
+	4:  "Type",
 	6:  "Path",
 	7:  "FatherId",
 	8:  "SpaceSize",
@@ -4689,8 +4592,7 @@ var fieldIDToName_FileInfo = map[int32]string{
 	1:  "FileId",
 	2:  "UserId",
 	3:  "Name",
-	4:  "TypeString",
-	5:  "Type",
+	4:  "Type",
 	6:  "Path",
 	7:  "FatherId",
 	8:  "SpaceSize",
@@ -4749,12 +4651,11 @@ var fieldIDToName_FileFilterOptions = map[int32]string{
 	1: "OnlyUserId",
 	2: "OnlyFileId",
 	3: "OnlyFatherId",
-	4: "OnlyFileType",
 	5: "OnlyZone",
 	6: "OnlySubZone",
 	7: "OnlyIsDel",
 	8: "OnlyDocumentType",
-	9: "OnlyTypeString",
+	9: "OnlyType",
 }
 
 var fieldIDToName_ShareFileFilterOptions = map[int32]string{
