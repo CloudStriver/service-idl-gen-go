@@ -35,6 +35,16 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"DeleteCommentSubject":    kitex.NewMethodInfo(deleteCommentSubjectHandler, newDeleteCommentSubjectArgs, newDeleteCommentSubjectResult, false),
 		"SetCommentSubjectState":  kitex.NewMethodInfo(setCommentSubjectStateHandler, newSetCommentSubjectStateArgs, newSetCommentSubjectStateResult, false),
 		"SetCommentSubjectAttrs":  kitex.NewMethodInfo(setCommentSubjectAttrsHandler, newSetCommentSubjectAttrsArgs, newSetCommentSubjectAttrsResult, false),
+		"CreateLabel":             kitex.NewMethodInfo(createLabelHandler, newCreateLabelArgs, newCreateLabelResult, false),
+		"DeleteLabel":             kitex.NewMethodInfo(deleteLabelHandler, newDeleteLabelArgs, newDeleteLabelResult, false),
+		"GetLabel":                kitex.NewMethodInfo(getLabelHandler, newGetLabelArgs, newGetLabelResult, false),
+		"GetLabelsInBatch":        kitex.NewMethodInfo(getLabelsInBatchHandler, newGetLabelsInBatchArgs, newGetLabelsInBatchResult, false),
+		"UpdateLabel":             kitex.NewMethodInfo(updateLabelHandler, newUpdateLabelArgs, newUpdateLabelResult, false),
+		"GetLabels":               kitex.NewMethodInfo(getLabelsHandler, newGetLabelsArgs, newGetLabelsResult, false),
+		"CreateObject":            kitex.NewMethodInfo(createObjectHandler, newCreateObjectArgs, newCreateObjectResult, false),
+		"DeleteObject":            kitex.NewMethodInfo(deleteObjectHandler, newDeleteObjectArgs, newDeleteObjectResult, false),
+		"GetObjects":              kitex.NewMethodInfo(getObjectsHandler, newGetObjectsArgs, newGetObjectsResult, false),
+		"UpdateObject":            kitex.NewMethodInfo(updateObjectHandler, newUpdateObjectArgs, newUpdateObjectResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName":     "platform.comment",
@@ -2193,6 +2203,1536 @@ func (p *SetCommentSubjectAttrsResult) GetResult() interface{} {
 	return p.Success
 }
 
+func createLabelHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(comment.CreateLabelReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(comment.CommentService).CreateLabel(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *CreateLabelArgs:
+		success, err := handler.(comment.CommentService).CreateLabel(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*CreateLabelResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newCreateLabelArgs() interface{} {
+	return &CreateLabelArgs{}
+}
+
+func newCreateLabelResult() interface{} {
+	return &CreateLabelResult{}
+}
+
+type CreateLabelArgs struct {
+	Req *comment.CreateLabelReq
+}
+
+func (p *CreateLabelArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(comment.CreateLabelReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *CreateLabelArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *CreateLabelArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *CreateLabelArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *CreateLabelArgs) Unmarshal(in []byte) error {
+	msg := new(comment.CreateLabelReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var CreateLabelArgs_Req_DEFAULT *comment.CreateLabelReq
+
+func (p *CreateLabelArgs) GetReq() *comment.CreateLabelReq {
+	if !p.IsSetReq() {
+		return CreateLabelArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *CreateLabelArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *CreateLabelArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type CreateLabelResult struct {
+	Success *comment.CreateLabelResp
+}
+
+var CreateLabelResult_Success_DEFAULT *comment.CreateLabelResp
+
+func (p *CreateLabelResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(comment.CreateLabelResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *CreateLabelResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *CreateLabelResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *CreateLabelResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *CreateLabelResult) Unmarshal(in []byte) error {
+	msg := new(comment.CreateLabelResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *CreateLabelResult) GetSuccess() *comment.CreateLabelResp {
+	if !p.IsSetSuccess() {
+		return CreateLabelResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *CreateLabelResult) SetSuccess(x interface{}) {
+	p.Success = x.(*comment.CreateLabelResp)
+}
+
+func (p *CreateLabelResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *CreateLabelResult) GetResult() interface{} {
+	return p.Success
+}
+
+func deleteLabelHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(comment.DeleteLabelReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(comment.CommentService).DeleteLabel(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *DeleteLabelArgs:
+		success, err := handler.(comment.CommentService).DeleteLabel(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*DeleteLabelResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newDeleteLabelArgs() interface{} {
+	return &DeleteLabelArgs{}
+}
+
+func newDeleteLabelResult() interface{} {
+	return &DeleteLabelResult{}
+}
+
+type DeleteLabelArgs struct {
+	Req *comment.DeleteLabelReq
+}
+
+func (p *DeleteLabelArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(comment.DeleteLabelReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *DeleteLabelArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *DeleteLabelArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *DeleteLabelArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *DeleteLabelArgs) Unmarshal(in []byte) error {
+	msg := new(comment.DeleteLabelReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var DeleteLabelArgs_Req_DEFAULT *comment.DeleteLabelReq
+
+func (p *DeleteLabelArgs) GetReq() *comment.DeleteLabelReq {
+	if !p.IsSetReq() {
+		return DeleteLabelArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *DeleteLabelArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *DeleteLabelArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type DeleteLabelResult struct {
+	Success *comment.DeleteLabelResp
+}
+
+var DeleteLabelResult_Success_DEFAULT *comment.DeleteLabelResp
+
+func (p *DeleteLabelResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(comment.DeleteLabelResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *DeleteLabelResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *DeleteLabelResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *DeleteLabelResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *DeleteLabelResult) Unmarshal(in []byte) error {
+	msg := new(comment.DeleteLabelResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *DeleteLabelResult) GetSuccess() *comment.DeleteLabelResp {
+	if !p.IsSetSuccess() {
+		return DeleteLabelResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *DeleteLabelResult) SetSuccess(x interface{}) {
+	p.Success = x.(*comment.DeleteLabelResp)
+}
+
+func (p *DeleteLabelResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *DeleteLabelResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getLabelHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(comment.GetLabelReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(comment.CommentService).GetLabel(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetLabelArgs:
+		success, err := handler.(comment.CommentService).GetLabel(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetLabelResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetLabelArgs() interface{} {
+	return &GetLabelArgs{}
+}
+
+func newGetLabelResult() interface{} {
+	return &GetLabelResult{}
+}
+
+type GetLabelArgs struct {
+	Req *comment.GetLabelReq
+}
+
+func (p *GetLabelArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(comment.GetLabelReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetLabelArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetLabelArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetLabelArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetLabelArgs) Unmarshal(in []byte) error {
+	msg := new(comment.GetLabelReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetLabelArgs_Req_DEFAULT *comment.GetLabelReq
+
+func (p *GetLabelArgs) GetReq() *comment.GetLabelReq {
+	if !p.IsSetReq() {
+		return GetLabelArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetLabelArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetLabelArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetLabelResult struct {
+	Success *comment.GetLabelResp
+}
+
+var GetLabelResult_Success_DEFAULT *comment.GetLabelResp
+
+func (p *GetLabelResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(comment.GetLabelResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetLabelResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetLabelResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetLabelResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetLabelResult) Unmarshal(in []byte) error {
+	msg := new(comment.GetLabelResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetLabelResult) GetSuccess() *comment.GetLabelResp {
+	if !p.IsSetSuccess() {
+		return GetLabelResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetLabelResult) SetSuccess(x interface{}) {
+	p.Success = x.(*comment.GetLabelResp)
+}
+
+func (p *GetLabelResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetLabelResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getLabelsInBatchHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(comment.GetLabelsInBatchReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(comment.CommentService).GetLabelsInBatch(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetLabelsInBatchArgs:
+		success, err := handler.(comment.CommentService).GetLabelsInBatch(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetLabelsInBatchResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetLabelsInBatchArgs() interface{} {
+	return &GetLabelsInBatchArgs{}
+}
+
+func newGetLabelsInBatchResult() interface{} {
+	return &GetLabelsInBatchResult{}
+}
+
+type GetLabelsInBatchArgs struct {
+	Req *comment.GetLabelsInBatchReq
+}
+
+func (p *GetLabelsInBatchArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(comment.GetLabelsInBatchReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetLabelsInBatchArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetLabelsInBatchArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetLabelsInBatchArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetLabelsInBatchArgs) Unmarshal(in []byte) error {
+	msg := new(comment.GetLabelsInBatchReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetLabelsInBatchArgs_Req_DEFAULT *comment.GetLabelsInBatchReq
+
+func (p *GetLabelsInBatchArgs) GetReq() *comment.GetLabelsInBatchReq {
+	if !p.IsSetReq() {
+		return GetLabelsInBatchArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetLabelsInBatchArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetLabelsInBatchArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetLabelsInBatchResult struct {
+	Success *comment.GetLabelsInBatchResp
+}
+
+var GetLabelsInBatchResult_Success_DEFAULT *comment.GetLabelsInBatchResp
+
+func (p *GetLabelsInBatchResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(comment.GetLabelsInBatchResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetLabelsInBatchResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetLabelsInBatchResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetLabelsInBatchResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetLabelsInBatchResult) Unmarshal(in []byte) error {
+	msg := new(comment.GetLabelsInBatchResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetLabelsInBatchResult) GetSuccess() *comment.GetLabelsInBatchResp {
+	if !p.IsSetSuccess() {
+		return GetLabelsInBatchResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetLabelsInBatchResult) SetSuccess(x interface{}) {
+	p.Success = x.(*comment.GetLabelsInBatchResp)
+}
+
+func (p *GetLabelsInBatchResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetLabelsInBatchResult) GetResult() interface{} {
+	return p.Success
+}
+
+func updateLabelHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(comment.UpdateLabelReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(comment.CommentService).UpdateLabel(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *UpdateLabelArgs:
+		success, err := handler.(comment.CommentService).UpdateLabel(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*UpdateLabelResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newUpdateLabelArgs() interface{} {
+	return &UpdateLabelArgs{}
+}
+
+func newUpdateLabelResult() interface{} {
+	return &UpdateLabelResult{}
+}
+
+type UpdateLabelArgs struct {
+	Req *comment.UpdateLabelReq
+}
+
+func (p *UpdateLabelArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(comment.UpdateLabelReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *UpdateLabelArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *UpdateLabelArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *UpdateLabelArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *UpdateLabelArgs) Unmarshal(in []byte) error {
+	msg := new(comment.UpdateLabelReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var UpdateLabelArgs_Req_DEFAULT *comment.UpdateLabelReq
+
+func (p *UpdateLabelArgs) GetReq() *comment.UpdateLabelReq {
+	if !p.IsSetReq() {
+		return UpdateLabelArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *UpdateLabelArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *UpdateLabelArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type UpdateLabelResult struct {
+	Success *comment.UpdateLabelResp
+}
+
+var UpdateLabelResult_Success_DEFAULT *comment.UpdateLabelResp
+
+func (p *UpdateLabelResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(comment.UpdateLabelResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *UpdateLabelResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *UpdateLabelResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *UpdateLabelResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *UpdateLabelResult) Unmarshal(in []byte) error {
+	msg := new(comment.UpdateLabelResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *UpdateLabelResult) GetSuccess() *comment.UpdateLabelResp {
+	if !p.IsSetSuccess() {
+		return UpdateLabelResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *UpdateLabelResult) SetSuccess(x interface{}) {
+	p.Success = x.(*comment.UpdateLabelResp)
+}
+
+func (p *UpdateLabelResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *UpdateLabelResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getLabelsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(comment.GetLabelsReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(comment.CommentService).GetLabels(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetLabelsArgs:
+		success, err := handler.(comment.CommentService).GetLabels(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetLabelsResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetLabelsArgs() interface{} {
+	return &GetLabelsArgs{}
+}
+
+func newGetLabelsResult() interface{} {
+	return &GetLabelsResult{}
+}
+
+type GetLabelsArgs struct {
+	Req *comment.GetLabelsReq
+}
+
+func (p *GetLabelsArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(comment.GetLabelsReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetLabelsArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetLabelsArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetLabelsArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetLabelsArgs) Unmarshal(in []byte) error {
+	msg := new(comment.GetLabelsReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetLabelsArgs_Req_DEFAULT *comment.GetLabelsReq
+
+func (p *GetLabelsArgs) GetReq() *comment.GetLabelsReq {
+	if !p.IsSetReq() {
+		return GetLabelsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetLabelsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetLabelsArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetLabelsResult struct {
+	Success *comment.GetLabelsResp
+}
+
+var GetLabelsResult_Success_DEFAULT *comment.GetLabelsResp
+
+func (p *GetLabelsResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(comment.GetLabelsResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetLabelsResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetLabelsResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetLabelsResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetLabelsResult) Unmarshal(in []byte) error {
+	msg := new(comment.GetLabelsResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetLabelsResult) GetSuccess() *comment.GetLabelsResp {
+	if !p.IsSetSuccess() {
+		return GetLabelsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetLabelsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*comment.GetLabelsResp)
+}
+
+func (p *GetLabelsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetLabelsResult) GetResult() interface{} {
+	return p.Success
+}
+
+func createObjectHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(comment.CreateObjectReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(comment.CommentService).CreateObject(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *CreateObjectArgs:
+		success, err := handler.(comment.CommentService).CreateObject(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*CreateObjectResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newCreateObjectArgs() interface{} {
+	return &CreateObjectArgs{}
+}
+
+func newCreateObjectResult() interface{} {
+	return &CreateObjectResult{}
+}
+
+type CreateObjectArgs struct {
+	Req *comment.CreateObjectReq
+}
+
+func (p *CreateObjectArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(comment.CreateObjectReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *CreateObjectArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *CreateObjectArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *CreateObjectArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *CreateObjectArgs) Unmarshal(in []byte) error {
+	msg := new(comment.CreateObjectReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var CreateObjectArgs_Req_DEFAULT *comment.CreateObjectReq
+
+func (p *CreateObjectArgs) GetReq() *comment.CreateObjectReq {
+	if !p.IsSetReq() {
+		return CreateObjectArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *CreateObjectArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *CreateObjectArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type CreateObjectResult struct {
+	Success *comment.CreateObjectResp
+}
+
+var CreateObjectResult_Success_DEFAULT *comment.CreateObjectResp
+
+func (p *CreateObjectResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(comment.CreateObjectResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *CreateObjectResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *CreateObjectResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *CreateObjectResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *CreateObjectResult) Unmarshal(in []byte) error {
+	msg := new(comment.CreateObjectResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *CreateObjectResult) GetSuccess() *comment.CreateObjectResp {
+	if !p.IsSetSuccess() {
+		return CreateObjectResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *CreateObjectResult) SetSuccess(x interface{}) {
+	p.Success = x.(*comment.CreateObjectResp)
+}
+
+func (p *CreateObjectResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *CreateObjectResult) GetResult() interface{} {
+	return p.Success
+}
+
+func deleteObjectHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(comment.DeleteObjectReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(comment.CommentService).DeleteObject(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *DeleteObjectArgs:
+		success, err := handler.(comment.CommentService).DeleteObject(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*DeleteObjectResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newDeleteObjectArgs() interface{} {
+	return &DeleteObjectArgs{}
+}
+
+func newDeleteObjectResult() interface{} {
+	return &DeleteObjectResult{}
+}
+
+type DeleteObjectArgs struct {
+	Req *comment.DeleteObjectReq
+}
+
+func (p *DeleteObjectArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(comment.DeleteObjectReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *DeleteObjectArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *DeleteObjectArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *DeleteObjectArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *DeleteObjectArgs) Unmarshal(in []byte) error {
+	msg := new(comment.DeleteObjectReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var DeleteObjectArgs_Req_DEFAULT *comment.DeleteObjectReq
+
+func (p *DeleteObjectArgs) GetReq() *comment.DeleteObjectReq {
+	if !p.IsSetReq() {
+		return DeleteObjectArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *DeleteObjectArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *DeleteObjectArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type DeleteObjectResult struct {
+	Success *comment.DeleteObjectResp
+}
+
+var DeleteObjectResult_Success_DEFAULT *comment.DeleteObjectResp
+
+func (p *DeleteObjectResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(comment.DeleteObjectResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *DeleteObjectResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *DeleteObjectResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *DeleteObjectResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *DeleteObjectResult) Unmarshal(in []byte) error {
+	msg := new(comment.DeleteObjectResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *DeleteObjectResult) GetSuccess() *comment.DeleteObjectResp {
+	if !p.IsSetSuccess() {
+		return DeleteObjectResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *DeleteObjectResult) SetSuccess(x interface{}) {
+	p.Success = x.(*comment.DeleteObjectResp)
+}
+
+func (p *DeleteObjectResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *DeleteObjectResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getObjectsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(comment.GetObjectsReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(comment.CommentService).GetObjects(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetObjectsArgs:
+		success, err := handler.(comment.CommentService).GetObjects(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetObjectsResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetObjectsArgs() interface{} {
+	return &GetObjectsArgs{}
+}
+
+func newGetObjectsResult() interface{} {
+	return &GetObjectsResult{}
+}
+
+type GetObjectsArgs struct {
+	Req *comment.GetObjectsReq
+}
+
+func (p *GetObjectsArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(comment.GetObjectsReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetObjectsArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetObjectsArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetObjectsArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetObjectsArgs) Unmarshal(in []byte) error {
+	msg := new(comment.GetObjectsReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetObjectsArgs_Req_DEFAULT *comment.GetObjectsReq
+
+func (p *GetObjectsArgs) GetReq() *comment.GetObjectsReq {
+	if !p.IsSetReq() {
+		return GetObjectsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetObjectsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetObjectsArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetObjectsResult struct {
+	Success *comment.GetObjectsResp
+}
+
+var GetObjectsResult_Success_DEFAULT *comment.GetObjectsResp
+
+func (p *GetObjectsResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(comment.GetObjectsResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetObjectsResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetObjectsResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetObjectsResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetObjectsResult) Unmarshal(in []byte) error {
+	msg := new(comment.GetObjectsResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetObjectsResult) GetSuccess() *comment.GetObjectsResp {
+	if !p.IsSetSuccess() {
+		return GetObjectsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetObjectsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*comment.GetObjectsResp)
+}
+
+func (p *GetObjectsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetObjectsResult) GetResult() interface{} {
+	return p.Success
+}
+
+func updateObjectHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(comment.UpdateObjectReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(comment.CommentService).UpdateObject(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *UpdateObjectArgs:
+		success, err := handler.(comment.CommentService).UpdateObject(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*UpdateObjectResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newUpdateObjectArgs() interface{} {
+	return &UpdateObjectArgs{}
+}
+
+func newUpdateObjectResult() interface{} {
+	return &UpdateObjectResult{}
+}
+
+type UpdateObjectArgs struct {
+	Req *comment.UpdateObjectReq
+}
+
+func (p *UpdateObjectArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(comment.UpdateObjectReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *UpdateObjectArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *UpdateObjectArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *UpdateObjectArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *UpdateObjectArgs) Unmarshal(in []byte) error {
+	msg := new(comment.UpdateObjectReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var UpdateObjectArgs_Req_DEFAULT *comment.UpdateObjectReq
+
+func (p *UpdateObjectArgs) GetReq() *comment.UpdateObjectReq {
+	if !p.IsSetReq() {
+		return UpdateObjectArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *UpdateObjectArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *UpdateObjectArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type UpdateObjectResult struct {
+	Success *comment.UpdateObjectResp
+}
+
+var UpdateObjectResult_Success_DEFAULT *comment.UpdateObjectResp
+
+func (p *UpdateObjectResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(comment.UpdateObjectResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *UpdateObjectResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *UpdateObjectResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *UpdateObjectResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *UpdateObjectResult) Unmarshal(in []byte) error {
+	msg := new(comment.UpdateObjectResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *UpdateObjectResult) GetSuccess() *comment.UpdateObjectResp {
+	if !p.IsSetSuccess() {
+		return UpdateObjectResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *UpdateObjectResult) SetSuccess(x interface{}) {
+	p.Success = x.(*comment.UpdateObjectResp)
+}
+
+func (p *UpdateObjectResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *UpdateObjectResult) GetResult() interface{} {
+	return p.Success
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -2338,6 +3878,106 @@ func (p *kClient) SetCommentSubjectAttrs(ctx context.Context, Req *comment.SetCo
 	_args.Req = Req
 	var _result SetCommentSubjectAttrsResult
 	if err = p.c.Call(ctx, "SetCommentSubjectAttrs", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CreateLabel(ctx context.Context, Req *comment.CreateLabelReq) (r *comment.CreateLabelResp, err error) {
+	var _args CreateLabelArgs
+	_args.Req = Req
+	var _result CreateLabelResult
+	if err = p.c.Call(ctx, "CreateLabel", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) DeleteLabel(ctx context.Context, Req *comment.DeleteLabelReq) (r *comment.DeleteLabelResp, err error) {
+	var _args DeleteLabelArgs
+	_args.Req = Req
+	var _result DeleteLabelResult
+	if err = p.c.Call(ctx, "DeleteLabel", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetLabel(ctx context.Context, Req *comment.GetLabelReq) (r *comment.GetLabelResp, err error) {
+	var _args GetLabelArgs
+	_args.Req = Req
+	var _result GetLabelResult
+	if err = p.c.Call(ctx, "GetLabel", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetLabelsInBatch(ctx context.Context, Req *comment.GetLabelsInBatchReq) (r *comment.GetLabelsInBatchResp, err error) {
+	var _args GetLabelsInBatchArgs
+	_args.Req = Req
+	var _result GetLabelsInBatchResult
+	if err = p.c.Call(ctx, "GetLabelsInBatch", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) UpdateLabel(ctx context.Context, Req *comment.UpdateLabelReq) (r *comment.UpdateLabelResp, err error) {
+	var _args UpdateLabelArgs
+	_args.Req = Req
+	var _result UpdateLabelResult
+	if err = p.c.Call(ctx, "UpdateLabel", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetLabels(ctx context.Context, Req *comment.GetLabelsReq) (r *comment.GetLabelsResp, err error) {
+	var _args GetLabelsArgs
+	_args.Req = Req
+	var _result GetLabelsResult
+	if err = p.c.Call(ctx, "GetLabels", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CreateObject(ctx context.Context, Req *comment.CreateObjectReq) (r *comment.CreateObjectResp, err error) {
+	var _args CreateObjectArgs
+	_args.Req = Req
+	var _result CreateObjectResult
+	if err = p.c.Call(ctx, "CreateObject", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) DeleteObject(ctx context.Context, Req *comment.DeleteObjectReq) (r *comment.DeleteObjectResp, err error) {
+	var _args DeleteObjectArgs
+	_args.Req = Req
+	var _result DeleteObjectResult
+	if err = p.c.Call(ctx, "DeleteObject", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetObjects(ctx context.Context, Req *comment.GetObjectsReq) (r *comment.GetObjectsResp, err error) {
+	var _args GetObjectsArgs
+	_args.Req = Req
+	var _result GetObjectsResult
+	if err = p.c.Call(ctx, "GetObjects", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) UpdateObject(ctx context.Context, Req *comment.UpdateObjectReq) (r *comment.UpdateObjectResp, err error) {
+	var _args UpdateObjectArgs
+	_args.Req = Req
+	var _result UpdateObjectResult
+	if err = p.c.Call(ctx, "UpdateObject", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

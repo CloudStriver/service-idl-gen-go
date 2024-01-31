@@ -25,6 +25,16 @@ type Client interface {
 	DeleteCommentSubject(ctx context.Context, Req *comment.DeleteCommentSubjectReq, callOptions ...callopt.Option) (r *comment.DeleteCommentSubjectResp, err error)
 	SetCommentSubjectState(ctx context.Context, Req *comment.SetCommentSubjectStateReq, callOptions ...callopt.Option) (r *comment.SetCommentSubjectStateResp, err error)
 	SetCommentSubjectAttrs(ctx context.Context, Req *comment.SetCommentSubjectAttrsReq, callOptions ...callopt.Option) (r *comment.SetCommentSubjectAttrsResp, err error)
+	CreateLabel(ctx context.Context, Req *comment.CreateLabelReq, callOptions ...callopt.Option) (r *comment.CreateLabelResp, err error)
+	DeleteLabel(ctx context.Context, Req *comment.DeleteLabelReq, callOptions ...callopt.Option) (r *comment.DeleteLabelResp, err error)
+	GetLabel(ctx context.Context, Req *comment.GetLabelReq, callOptions ...callopt.Option) (r *comment.GetLabelResp, err error)
+	GetLabelsInBatch(ctx context.Context, Req *comment.GetLabelsInBatchReq, callOptions ...callopt.Option) (r *comment.GetLabelsInBatchResp, err error)
+	UpdateLabel(ctx context.Context, Req *comment.UpdateLabelReq, callOptions ...callopt.Option) (r *comment.UpdateLabelResp, err error)
+	GetLabels(ctx context.Context, Req *comment.GetLabelsReq, callOptions ...callopt.Option) (r *comment.GetLabelsResp, err error)
+	CreateObject(ctx context.Context, Req *comment.CreateObjectReq, callOptions ...callopt.Option) (r *comment.CreateObjectResp, err error)
+	DeleteObject(ctx context.Context, Req *comment.DeleteObjectReq, callOptions ...callopt.Option) (r *comment.DeleteObjectResp, err error)
+	GetObjects(ctx context.Context, Req *comment.GetObjectsReq, callOptions ...callopt.Option) (r *comment.GetObjectsResp, err error)
+	UpdateObject(ctx context.Context, Req *comment.UpdateObjectReq, callOptions ...callopt.Option) (r *comment.UpdateObjectResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -124,4 +134,54 @@ func (p *kCommentServiceClient) SetCommentSubjectState(ctx context.Context, Req 
 func (p *kCommentServiceClient) SetCommentSubjectAttrs(ctx context.Context, Req *comment.SetCommentSubjectAttrsReq, callOptions ...callopt.Option) (r *comment.SetCommentSubjectAttrsResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.SetCommentSubjectAttrs(ctx, Req)
+}
+
+func (p *kCommentServiceClient) CreateLabel(ctx context.Context, Req *comment.CreateLabelReq, callOptions ...callopt.Option) (r *comment.CreateLabelResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateLabel(ctx, Req)
+}
+
+func (p *kCommentServiceClient) DeleteLabel(ctx context.Context, Req *comment.DeleteLabelReq, callOptions ...callopt.Option) (r *comment.DeleteLabelResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteLabel(ctx, Req)
+}
+
+func (p *kCommentServiceClient) GetLabel(ctx context.Context, Req *comment.GetLabelReq, callOptions ...callopt.Option) (r *comment.GetLabelResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetLabel(ctx, Req)
+}
+
+func (p *kCommentServiceClient) GetLabelsInBatch(ctx context.Context, Req *comment.GetLabelsInBatchReq, callOptions ...callopt.Option) (r *comment.GetLabelsInBatchResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetLabelsInBatch(ctx, Req)
+}
+
+func (p *kCommentServiceClient) UpdateLabel(ctx context.Context, Req *comment.UpdateLabelReq, callOptions ...callopt.Option) (r *comment.UpdateLabelResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.UpdateLabel(ctx, Req)
+}
+
+func (p *kCommentServiceClient) GetLabels(ctx context.Context, Req *comment.GetLabelsReq, callOptions ...callopt.Option) (r *comment.GetLabelsResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetLabels(ctx, Req)
+}
+
+func (p *kCommentServiceClient) CreateObject(ctx context.Context, Req *comment.CreateObjectReq, callOptions ...callopt.Option) (r *comment.CreateObjectResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateObject(ctx, Req)
+}
+
+func (p *kCommentServiceClient) DeleteObject(ctx context.Context, Req *comment.DeleteObjectReq, callOptions ...callopt.Option) (r *comment.DeleteObjectResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteObject(ctx, Req)
+}
+
+func (p *kCommentServiceClient) GetObjects(ctx context.Context, Req *comment.GetObjectsReq, callOptions ...callopt.Option) (r *comment.GetObjectsResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetObjects(ctx, Req)
+}
+
+func (p *kCommentServiceClient) UpdateObject(ctx context.Context, Req *comment.UpdateObjectReq, callOptions ...callopt.Option) (r *comment.UpdateObjectResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.UpdateObject(ctx, Req)
 }

@@ -32,6 +32,7 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"MoveFile":               kitex.NewMethodInfo(moveFileHandler, newMoveFileArgs, newMoveFileResult, false),
 		"SaveFileToPrivateSpace": kitex.NewMethodInfo(saveFileToPrivateSpaceHandler, newSaveFileToPrivateSpaceArgs, newSaveFileToPrivateSpaceResult, false),
 		"AddFileToPublicSpace":   kitex.NewMethodInfo(addFileToPublicSpaceHandler, newAddFileToPublicSpaceArgs, newAddFileToPublicSpaceResult, false),
+		"CompletelyRemoveFile":   kitex.NewMethodInfo(completelyRemoveFileHandler, newCompletelyRemoveFileArgs, newCompletelyRemoveFileResult, false),
 		"DeleteFile":             kitex.NewMethodInfo(deleteFileHandler, newDeleteFileArgs, newDeleteFileResult, false),
 		"RecoverRecycleBinFile":  kitex.NewMethodInfo(recoverRecycleBinFileHandler, newRecoverRecycleBinFileArgs, newRecoverRecycleBinFileResult, false),
 		"GetZone":                kitex.NewMethodInfo(getZoneHandler, newGetZoneArgs, newGetZoneResult, false),
@@ -1765,6 +1766,159 @@ func (p *AddFileToPublicSpaceResult) IsSetSuccess() bool {
 }
 
 func (p *AddFileToPublicSpaceResult) GetResult() interface{} {
+	return p.Success
+}
+
+func completelyRemoveFileHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.CompletelyRemoveFileReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).CompletelyRemoveFile(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *CompletelyRemoveFileArgs:
+		success, err := handler.(content.ContentService).CompletelyRemoveFile(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*CompletelyRemoveFileResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newCompletelyRemoveFileArgs() interface{} {
+	return &CompletelyRemoveFileArgs{}
+}
+
+func newCompletelyRemoveFileResult() interface{} {
+	return &CompletelyRemoveFileResult{}
+}
+
+type CompletelyRemoveFileArgs struct {
+	Req *content.CompletelyRemoveFileReq
+}
+
+func (p *CompletelyRemoveFileArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.CompletelyRemoveFileReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *CompletelyRemoveFileArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *CompletelyRemoveFileArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *CompletelyRemoveFileArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *CompletelyRemoveFileArgs) Unmarshal(in []byte) error {
+	msg := new(content.CompletelyRemoveFileReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var CompletelyRemoveFileArgs_Req_DEFAULT *content.CompletelyRemoveFileReq
+
+func (p *CompletelyRemoveFileArgs) GetReq() *content.CompletelyRemoveFileReq {
+	if !p.IsSetReq() {
+		return CompletelyRemoveFileArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *CompletelyRemoveFileArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *CompletelyRemoveFileArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type CompletelyRemoveFileResult struct {
+	Success *content.CompletelyRemoveFileResp
+}
+
+var CompletelyRemoveFileResult_Success_DEFAULT *content.CompletelyRemoveFileResp
+
+func (p *CompletelyRemoveFileResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.CompletelyRemoveFileResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *CompletelyRemoveFileResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *CompletelyRemoveFileResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *CompletelyRemoveFileResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *CompletelyRemoveFileResult) Unmarshal(in []byte) error {
+	msg := new(content.CompletelyRemoveFileResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *CompletelyRemoveFileResult) GetSuccess() *content.CompletelyRemoveFileResp {
+	if !p.IsSetSuccess() {
+		return CompletelyRemoveFileResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *CompletelyRemoveFileResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.CompletelyRemoveFileResp)
+}
+
+func (p *CompletelyRemoveFileResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *CompletelyRemoveFileResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -7544,6 +7698,16 @@ func (p *kClient) AddFileToPublicSpace(ctx context.Context, Req *content.AddFile
 	_args.Req = Req
 	var _result AddFileToPublicSpaceResult
 	if err = p.c.Call(ctx, "AddFileToPublicSpace", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CompletelyRemoveFile(ctx context.Context, Req *content.CompletelyRemoveFileReq) (r *content.CompletelyRemoveFileResp, err error) {
+	var _args CompletelyRemoveFileArgs
+	_args.Req = Req
+	var _result CompletelyRemoveFileResult
+	if err = p.c.Call(ctx, "CompletelyRemoveFile", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

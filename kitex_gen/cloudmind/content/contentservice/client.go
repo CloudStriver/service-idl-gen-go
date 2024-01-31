@@ -22,6 +22,7 @@ type Client interface {
 	MoveFile(ctx context.Context, Req *content.MoveFileReq, callOptions ...callopt.Option) (r *content.MoveFileResp, err error)
 	SaveFileToPrivateSpace(ctx context.Context, Req *content.SaveFileToPrivateSpaceReq, callOptions ...callopt.Option) (r *content.SaveFileToPrivateSpaceResp, err error)
 	AddFileToPublicSpace(ctx context.Context, Req *content.AddFileToPublicSpaceReq, callOptions ...callopt.Option) (r *content.AddFileToPublicSpaceResp, err error)
+	CompletelyRemoveFile(ctx context.Context, Req *content.CompletelyRemoveFileReq, callOptions ...callopt.Option) (r *content.CompletelyRemoveFileResp, err error)
 	DeleteFile(ctx context.Context, Req *content.DeleteFileReq, callOptions ...callopt.Option) (r *content.DeleteFileResp, err error)
 	RecoverRecycleBinFile(ctx context.Context, Req *content.RecoverRecycleBinFileReq, callOptions ...callopt.Option) (r *content.RecoverRecycleBinFileResp, err error)
 	GetZone(ctx context.Context, Req *content.GetZoneReq, callOptions ...callopt.Option) (r *content.GetZoneResp, err error)
@@ -143,6 +144,11 @@ func (p *kContentServiceClient) SaveFileToPrivateSpace(ctx context.Context, Req 
 func (p *kContentServiceClient) AddFileToPublicSpace(ctx context.Context, Req *content.AddFileToPublicSpaceReq, callOptions ...callopt.Option) (r *content.AddFileToPublicSpaceResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.AddFileToPublicSpace(ctx, Req)
+}
+
+func (p *kContentServiceClient) CompletelyRemoveFile(ctx context.Context, Req *content.CompletelyRemoveFileReq, callOptions ...callopt.Option) (r *content.CompletelyRemoveFileResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CompletelyRemoveFile(ctx, Req)
 }
 
 func (p *kContentServiceClient) DeleteFile(ctx context.Context, Req *content.DeleteFileReq, callOptions ...callopt.Option) (r *content.DeleteFileResp, err error) {

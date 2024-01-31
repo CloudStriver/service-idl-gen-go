@@ -928,6 +928,138 @@ func (x *SubjectInfo) fastReadField4(buf []byte, _type int8) (offset int, err er
 	return offset, err
 }
 
+func (x *Label) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_Label[number], err)
+}
+
+func (x *Label) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.LabelId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *Label) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.Value, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *LabelEntity) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_LabelEntity[number], err)
+}
+
+func (x *LabelEntity) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.ObjectId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *LabelEntity) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.UserId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *LabelEntity) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.ObjectType, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *LabelEntity) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Labels = append(x.Labels, v)
+	return offset, err
+}
+
+func (x *ObjectFilterOptions) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_ObjectFilterOptions[number], err)
+}
+
+func (x *ObjectFilterOptions) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadString(buf, _type)
+	x.OnlyLabelId = &tmp
+	return offset, err
+}
+
+func (x *ObjectFilterOptions) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadInt64(buf, _type)
+	x.OnlyObjectType = &tmp
+	return offset, err
+}
+
 func (x *Content) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -1651,6 +1783,101 @@ func (x *SubjectInfo) fastWriteField4(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetAttrs())
+	return offset
+}
+
+func (x *Label) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	return offset
+}
+
+func (x *Label) fastWriteField1(buf []byte) (offset int) {
+	if x.LabelId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetLabelId())
+	return offset
+}
+
+func (x *Label) fastWriteField2(buf []byte) (offset int) {
+	if x.Value == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetValue())
+	return offset
+}
+
+func (x *LabelEntity) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	return offset
+}
+
+func (x *LabelEntity) fastWriteField1(buf []byte) (offset int) {
+	if x.ObjectId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetObjectId())
+	return offset
+}
+
+func (x *LabelEntity) fastWriteField2(buf []byte) (offset int) {
+	if x.UserId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetUserId())
+	return offset
+}
+
+func (x *LabelEntity) fastWriteField3(buf []byte) (offset int) {
+	if x.ObjectType == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetObjectType())
+	return offset
+}
+
+func (x *LabelEntity) fastWriteField4(buf []byte) (offset int) {
+	if len(x.Labels) == 0 {
+		return offset
+	}
+	for i := range x.GetLabels() {
+		offset += fastpb.WriteString(buf[offset:], 4, x.GetLabels()[i])
+	}
+	return offset
+}
+
+func (x *ObjectFilterOptions) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	return offset
+}
+
+func (x *ObjectFilterOptions) fastWriteField1(buf []byte) (offset int) {
+	if x.OnlyLabelId == nil {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetOnlyLabelId())
+	return offset
+}
+
+func (x *ObjectFilterOptions) fastWriteField2(buf []byte) (offset int) {
+	if x.OnlyObjectType == nil {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetOnlyObjectType())
 	return offset
 }
 
@@ -2380,6 +2607,101 @@ func (x *SubjectInfo) sizeField4() (n int) {
 	return n
 }
 
+func (x *Label) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	return n
+}
+
+func (x *Label) sizeField1() (n int) {
+	if x.LabelId == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetLabelId())
+	return n
+}
+
+func (x *Label) sizeField2() (n int) {
+	if x.Value == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetValue())
+	return n
+}
+
+func (x *LabelEntity) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	return n
+}
+
+func (x *LabelEntity) sizeField1() (n int) {
+	if x.ObjectId == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetObjectId())
+	return n
+}
+
+func (x *LabelEntity) sizeField2() (n int) {
+	if x.UserId == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetUserId())
+	return n
+}
+
+func (x *LabelEntity) sizeField3() (n int) {
+	if x.ObjectType == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(3, x.GetObjectType())
+	return n
+}
+
+func (x *LabelEntity) sizeField4() (n int) {
+	if len(x.Labels) == 0 {
+		return n
+	}
+	for i := range x.GetLabels() {
+		n += fastpb.SizeString(4, x.GetLabels()[i])
+	}
+	return n
+}
+
+func (x *ObjectFilterOptions) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	return n
+}
+
+func (x *ObjectFilterOptions) sizeField1() (n int) {
+	if x.OnlyLabelId == nil {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetOnlyLabelId())
+	return n
+}
+
+func (x *ObjectFilterOptions) sizeField2() (n int) {
+	if x.OnlyObjectType == nil {
+		return n
+	}
+	n += fastpb.SizeInt64(2, x.GetOnlyObjectType())
+	return n
+}
+
 var fieldIDToName_Content = map[int32]string{
 	1: "Id",
 	2: "UserId",
@@ -2478,4 +2800,21 @@ var fieldIDToName_SubjectInfo = map[int32]string{
 	2: "ItemId",
 	3: "UserId",
 	4: "Attrs",
+}
+
+var fieldIDToName_Label = map[int32]string{
+	1: "LabelId",
+	2: "Value",
+}
+
+var fieldIDToName_LabelEntity = map[int32]string{
+	1: "ObjectId",
+	2: "UserId",
+	3: "ObjectType",
+	4: "Labels",
+}
+
+var fieldIDToName_ObjectFilterOptions = map[int32]string{
+	1: "OnlyLabelId",
+	2: "OnlyObjectType",
 }
