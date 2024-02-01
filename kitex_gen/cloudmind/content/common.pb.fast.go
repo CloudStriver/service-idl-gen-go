@@ -334,22 +334,22 @@ func (x *FileInfo) fastReadField13(buf []byte, _type int8) (offset int, err erro
 }
 
 func (x *FileInfo) fastReadField14(buf []byte, _type int8) (offset int, err error) {
-	x.CreateAt, offset, err = fastpb.ReadInt64(buf, _type)
-	return offset, err
-}
-
-func (x *FileInfo) fastReadField15(buf []byte, _type int8) (offset int, err error) {
-	x.UpdateAt, offset, err = fastpb.ReadInt64(buf, _type)
-	return offset, err
-}
-
-func (x *FileInfo) fastReadField16(buf []byte, _type int8) (offset int, err error) {
 	var v string
 	v, offset, err = fastpb.ReadString(buf, _type)
 	if err != nil {
 		return offset, err
 	}
 	x.Labels = append(x.Labels, v)
+	return offset, err
+}
+
+func (x *FileInfo) fastReadField15(buf []byte, _type int8) (offset int, err error) {
+	x.CreateAt, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *FileInfo) fastReadField16(buf []byte, _type int8) (offset int, err error) {
+	x.UpdateAt, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -2072,28 +2072,28 @@ func (x *FileInfo) fastWriteField13(buf []byte) (offset int) {
 }
 
 func (x *FileInfo) fastWriteField14(buf []byte) (offset int) {
-	if x.CreateAt == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 14, x.GetCreateAt())
-	return offset
-}
-
-func (x *FileInfo) fastWriteField15(buf []byte) (offset int) {
-	if x.UpdateAt == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 15, x.GetUpdateAt())
-	return offset
-}
-
-func (x *FileInfo) fastWriteField16(buf []byte) (offset int) {
 	if len(x.Labels) == 0 {
 		return offset
 	}
 	for i := range x.GetLabels() {
-		offset += fastpb.WriteString(buf[offset:], 16, x.GetLabels()[i])
+		offset += fastpb.WriteString(buf[offset:], 14, x.GetLabels()[i])
 	}
+	return offset
+}
+
+func (x *FileInfo) fastWriteField15(buf []byte) (offset int) {
+	if x.CreateAt == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 15, x.GetCreateAt())
+	return offset
+}
+
+func (x *FileInfo) fastWriteField16(buf []byte) (offset int) {
+	if x.UpdateAt == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 16, x.GetUpdateAt())
 	return offset
 }
 
@@ -3491,28 +3491,28 @@ func (x *FileInfo) sizeField13() (n int) {
 }
 
 func (x *FileInfo) sizeField14() (n int) {
-	if x.CreateAt == 0 {
-		return n
-	}
-	n += fastpb.SizeInt64(14, x.GetCreateAt())
-	return n
-}
-
-func (x *FileInfo) sizeField15() (n int) {
-	if x.UpdateAt == 0 {
-		return n
-	}
-	n += fastpb.SizeInt64(15, x.GetUpdateAt())
-	return n
-}
-
-func (x *FileInfo) sizeField16() (n int) {
 	if len(x.Labels) == 0 {
 		return n
 	}
 	for i := range x.GetLabels() {
-		n += fastpb.SizeString(16, x.GetLabels()[i])
+		n += fastpb.SizeString(14, x.GetLabels()[i])
 	}
+	return n
+}
+
+func (x *FileInfo) sizeField15() (n int) {
+	if x.CreateAt == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(15, x.GetCreateAt())
+	return n
+}
+
+func (x *FileInfo) sizeField16() (n int) {
+	if x.UpdateAt == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(16, x.GetUpdateAt())
 	return n
 }
 
@@ -4678,9 +4678,9 @@ var fieldIDToName_FileInfo = map[int32]string{
 	11: "SubZone",
 	12: "Description",
 	13: "Url",
-	14: "CreateAt",
-	15: "UpdateAt",
-	16: "Labels",
+	14: "Labels",
+	15: "CreateAt",
+	16: "UpdateAt",
 }
 
 var fieldIDToName_Zone = map[int32]string{
