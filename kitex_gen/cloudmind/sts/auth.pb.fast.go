@@ -398,6 +398,16 @@ func (x *GenCosStsReq) FastRead(buf []byte, _type int8, number int32) (offset in
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -413,6 +423,16 @@ ReadFieldError:
 
 func (x *GenCosStsReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
 	x.Path, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *GenCosStsReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.IsFile, offset, err = fastpb.ReadBool(buf, _type)
+	return offset, err
+}
+
+func (x *GenCosStsReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.Time, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -493,16 +513,6 @@ func (x *GenSignedUrlReq) FastRead(buf []byte, _type int8, number int32) (offset
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 3:
-		offset, err = x.fastReadField3(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 4:
-		offset, err = x.fastReadField4(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -517,22 +527,12 @@ ReadFieldError:
 }
 
 func (x *GenSignedUrlReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	x.SecretId, offset, err = fastpb.ReadString(buf, _type)
+	x.Path, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
 func (x *GenSignedUrlReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.SecretKey, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *GenSignedUrlReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	x.Method, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *GenSignedUrlReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	x.Path, offset, err = fastpb.ReadString(buf, _type)
+	x.Ttl, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -841,6 +841,8 @@ func (x *GenCosStsReq) FastWrite(buf []byte) (offset int) {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
 	return offset
 }
 
@@ -849,6 +851,22 @@ func (x *GenCosStsReq) fastWriteField1(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 1, x.GetPath())
+	return offset
+}
+
+func (x *GenCosStsReq) fastWriteField2(buf []byte) (offset int) {
+	if !x.IsFile {
+		return offset
+	}
+	offset += fastpb.WriteBool(buf[offset:], 2, x.GetIsFile())
+	return offset
+}
+
+func (x *GenCosStsReq) fastWriteField3(buf []byte) (offset int) {
+	if x.Time == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetTime())
 	return offset
 }
 
@@ -910,40 +928,22 @@ func (x *GenSignedUrlReq) FastWrite(buf []byte) (offset int) {
 	}
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
-	offset += x.fastWriteField3(buf[offset:])
-	offset += x.fastWriteField4(buf[offset:])
 	return offset
 }
 
 func (x *GenSignedUrlReq) fastWriteField1(buf []byte) (offset int) {
-	if x.SecretId == "" {
+	if x.Path == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 1, x.GetSecretId())
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetPath())
 	return offset
 }
 
 func (x *GenSignedUrlReq) fastWriteField2(buf []byte) (offset int) {
-	if x.SecretKey == "" {
+	if x.Ttl == 0 {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetSecretKey())
-	return offset
-}
-
-func (x *GenSignedUrlReq) fastWriteField3(buf []byte) (offset int) {
-	if x.Method == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 3, x.GetMethod())
-	return offset
-}
-
-func (x *GenSignedUrlReq) fastWriteField4(buf []byte) (offset int) {
-	if x.Path == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 4, x.GetPath())
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetTtl())
 	return offset
 }
 
@@ -1228,6 +1228,8 @@ func (x *GenCosStsReq) Size() (n int) {
 		return n
 	}
 	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
 	return n
 }
 
@@ -1236,6 +1238,22 @@ func (x *GenCosStsReq) sizeField1() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(1, x.GetPath())
+	return n
+}
+
+func (x *GenCosStsReq) sizeField2() (n int) {
+	if !x.IsFile {
+		return n
+	}
+	n += fastpb.SizeBool(2, x.GetIsFile())
+	return n
+}
+
+func (x *GenCosStsReq) sizeField3() (n int) {
+	if x.Time == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(3, x.GetTime())
 	return n
 }
 
@@ -1297,40 +1315,22 @@ func (x *GenSignedUrlReq) Size() (n int) {
 	}
 	n += x.sizeField1()
 	n += x.sizeField2()
-	n += x.sizeField3()
-	n += x.sizeField4()
 	return n
 }
 
 func (x *GenSignedUrlReq) sizeField1() (n int) {
-	if x.SecretId == "" {
+	if x.Path == "" {
 		return n
 	}
-	n += fastpb.SizeString(1, x.GetSecretId())
+	n += fastpb.SizeString(1, x.GetPath())
 	return n
 }
 
 func (x *GenSignedUrlReq) sizeField2() (n int) {
-	if x.SecretKey == "" {
+	if x.Ttl == 0 {
 		return n
 	}
-	n += fastpb.SizeString(2, x.GetSecretKey())
-	return n
-}
-
-func (x *GenSignedUrlReq) sizeField3() (n int) {
-	if x.Method == "" {
-		return n
-	}
-	n += fastpb.SizeString(3, x.GetMethod())
-	return n
-}
-
-func (x *GenSignedUrlReq) sizeField4() (n int) {
-	if x.Path == "" {
-		return n
-	}
-	n += fastpb.SizeString(4, x.GetPath())
+	n += fastpb.SizeInt64(2, x.GetTtl())
 	return n
 }
 
@@ -1425,6 +1425,8 @@ var fieldIDToName_AppendAuthResp = map[int32]string{}
 
 var fieldIDToName_GenCosStsReq = map[int32]string{
 	1: "Path",
+	2: "IsFile",
+	3: "Time",
 }
 
 var fieldIDToName_GenCosStsResp = map[int32]string{
@@ -1436,10 +1438,8 @@ var fieldIDToName_GenCosStsResp = map[int32]string{
 }
 
 var fieldIDToName_GenSignedUrlReq = map[int32]string{
-	1: "SecretId",
-	2: "SecretKey",
-	3: "Method",
-	4: "Path",
+	1: "Path",
+	2: "Ttl",
 }
 
 var fieldIDToName_GenSignedUrlResp = map[int32]string{
