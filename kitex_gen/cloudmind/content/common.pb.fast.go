@@ -79,6 +79,11 @@ func (x *File) FastRead(buf []byte, _type int8, number int32) (offset int, err e
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 15:
+		offset, err = x.fastReadField15(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -158,6 +163,16 @@ func (x *File) fastReadField14(buf []byte, _type int8) (offset int, err error) {
 	return offset, err
 }
 
+func (x *File) fastReadField15(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Labels = append(x.Labels, v)
+	return offset, err
+}
+
 func (x *FileInfo) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
@@ -232,6 +247,11 @@ func (x *FileInfo) FastRead(buf []byte, _type int8, number int32) (offset int, e
 		}
 	case 16:
 		offset, err = x.fastReadField16(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 17:
+		offset, err = x.fastReadField17(buf, _type)
 		if err != nil {
 			goto ReadFieldError
 		}
@@ -320,6 +340,16 @@ func (x *FileInfo) fastReadField15(buf []byte, _type int8) (offset int, err erro
 
 func (x *FileInfo) fastReadField16(buf []byte, _type int8) (offset int, err error) {
 	x.UpdateAt, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *FileInfo) fastReadField17(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Labels = append(x.Labels, v)
 	return offset, err
 }
 
@@ -1796,6 +1826,7 @@ func (x *File) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField12(buf[offset:])
 	offset += x.fastWriteField13(buf[offset:])
 	offset += x.fastWriteField14(buf[offset:])
+	offset += x.fastWriteField15(buf[offset:])
 	return offset
 }
 
@@ -1903,6 +1934,16 @@ func (x *File) fastWriteField14(buf []byte) (offset int) {
 	return offset
 }
 
+func (x *File) fastWriteField15(buf []byte) (offset int) {
+	if len(x.Labels) == 0 {
+		return offset
+	}
+	for i := range x.GetLabels() {
+		offset += fastpb.WriteString(buf[offset:], 15, x.GetLabels()[i])
+	}
+	return offset
+}
+
 func (x *FileInfo) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -1922,6 +1963,7 @@ func (x *FileInfo) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField14(buf[offset:])
 	offset += x.fastWriteField15(buf[offset:])
 	offset += x.fastWriteField16(buf[offset:])
+	offset += x.fastWriteField17(buf[offset:])
 	return offset
 }
 
@@ -2042,6 +2084,16 @@ func (x *FileInfo) fastWriteField16(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteInt64(buf[offset:], 16, x.GetUpdateAt())
+	return offset
+}
+
+func (x *FileInfo) fastWriteField17(buf []byte) (offset int) {
+	if len(x.Labels) == 0 {
+		return offset
+	}
+	for i := range x.GetLabels() {
+		offset += fastpb.WriteString(buf[offset:], 17, x.GetLabels()[i])
+	}
 	return offset
 }
 
@@ -3193,6 +3245,7 @@ func (x *File) Size() (n int) {
 	n += x.sizeField12()
 	n += x.sizeField13()
 	n += x.sizeField14()
+	n += x.sizeField15()
 	return n
 }
 
@@ -3300,6 +3353,16 @@ func (x *File) sizeField14() (n int) {
 	return n
 }
 
+func (x *File) sizeField15() (n int) {
+	if len(x.Labels) == 0 {
+		return n
+	}
+	for i := range x.GetLabels() {
+		n += fastpb.SizeString(15, x.GetLabels()[i])
+	}
+	return n
+}
+
 func (x *FileInfo) Size() (n int) {
 	if x == nil {
 		return n
@@ -3319,6 +3382,7 @@ func (x *FileInfo) Size() (n int) {
 	n += x.sizeField14()
 	n += x.sizeField15()
 	n += x.sizeField16()
+	n += x.sizeField17()
 	return n
 }
 
@@ -3439,6 +3503,16 @@ func (x *FileInfo) sizeField16() (n int) {
 		return n
 	}
 	n += fastpb.SizeInt64(16, x.GetUpdateAt())
+	return n
+}
+
+func (x *FileInfo) sizeField17() (n int) {
+	if len(x.Labels) == 0 {
+		return n
+	}
+	for i := range x.GetLabels() {
+		n += fastpb.SizeString(17, x.GetLabels()[i])
+	}
 	return n
 }
 
@@ -4587,6 +4661,7 @@ var fieldIDToName_File = map[int32]string{
 	12: "SubZone",
 	13: "Description",
 	14: "Url",
+	15: "Labels",
 }
 
 var fieldIDToName_FileInfo = map[int32]string{
@@ -4605,6 +4680,7 @@ var fieldIDToName_FileInfo = map[int32]string{
 	14: "Url",
 	15: "CreateAt",
 	16: "UpdateAt",
+	17: "Labels",
 }
 
 var fieldIDToName_Zone = map[int32]string{
