@@ -25,6 +25,7 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"SearchUser":             kitex.NewMethodInfo(searchUserHandler, newSearchUserArgs, newSearchUserResult, false),
 		"GetUser":                kitex.NewMethodInfo(getUserHandler, newGetUserArgs, newGetUserResult, false),
 		"GetUserDetail":          kitex.NewMethodInfo(getUserDetailHandler, newGetUserDetailArgs, newGetUserDetailResult, false),
+		"AskUploadAvatar":        kitex.NewMethodInfo(askUploadAvatarHandler, newAskUploadAvatarArgs, newAskUploadAvatarResult, false),
 		"GetPublicFile":          kitex.NewMethodInfo(getPublicFileHandler, newGetPublicFileArgs, newGetPublicFileResult, false),
 		"GetPrivateFile":         kitex.NewMethodInfo(getPrivateFileHandler, newGetPrivateFileArgs, newGetPrivateFileResult, false),
 		"GetPrivateFiles":        kitex.NewMethodInfo(getPrivateFilesHandler, newGetPrivateFilesArgs, newGetPrivateFilesResult, false),
@@ -46,6 +47,8 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"GetShareList":           kitex.NewMethodInfo(getShareListHandler, newGetShareListArgs, newGetShareListResult, false),
 		"DeleteShareCode":        kitex.NewMethodInfo(deleteShareCodeHandler, newDeleteShareCodeArgs, newDeleteShareCodeResult, false),
 		"ParsingShareCode":       kitex.NewMethodInfo(parsingShareCodeHandler, newParsingShareCodeArgs, newParsingShareCodeResult, false),
+		"AskUploadFile":          kitex.NewMethodInfo(askUploadFileHandler, newAskUploadFileArgs, newAskUploadFileResult, false),
+		"AskDownloadFile":        kitex.NewMethodInfo(askDownloadFileHandler, newAskDownloadFileArgs, newAskDownloadFileResult, false),
 		"CreatePost":             kitex.NewMethodInfo(createPostHandler, newCreatePostArgs, newCreatePostResult, false),
 		"DeletePost":             kitex.NewMethodInfo(deletePostHandler, newDeletePostArgs, newDeletePostResult, false),
 		"UpdatePost":             kitex.NewMethodInfo(updatePostHandler, newUpdatePostArgs, newUpdatePostResult, false),
@@ -676,6 +679,159 @@ func (p *GetUserDetailResult) IsSetSuccess() bool {
 }
 
 func (p *GetUserDetailResult) GetResult() interface{} {
+	return p.Success
+}
+
+func askUploadAvatarHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.AskUploadAvatarReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Content).AskUploadAvatar(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *AskUploadAvatarArgs:
+		success, err := handler.(core_api.Content).AskUploadAvatar(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*AskUploadAvatarResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newAskUploadAvatarArgs() interface{} {
+	return &AskUploadAvatarArgs{}
+}
+
+func newAskUploadAvatarResult() interface{} {
+	return &AskUploadAvatarResult{}
+}
+
+type AskUploadAvatarArgs struct {
+	Req *core_api.AskUploadAvatarReq
+}
+
+func (p *AskUploadAvatarArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.AskUploadAvatarReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *AskUploadAvatarArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *AskUploadAvatarArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *AskUploadAvatarArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *AskUploadAvatarArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.AskUploadAvatarReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var AskUploadAvatarArgs_Req_DEFAULT *core_api.AskUploadAvatarReq
+
+func (p *AskUploadAvatarArgs) GetReq() *core_api.AskUploadAvatarReq {
+	if !p.IsSetReq() {
+		return AskUploadAvatarArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *AskUploadAvatarArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *AskUploadAvatarArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type AskUploadAvatarResult struct {
+	Success *core_api.AskUploadAvatarResp
+}
+
+var AskUploadAvatarResult_Success_DEFAULT *core_api.AskUploadAvatarResp
+
+func (p *AskUploadAvatarResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.AskUploadAvatarResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *AskUploadAvatarResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *AskUploadAvatarResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *AskUploadAvatarResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *AskUploadAvatarResult) Unmarshal(in []byte) error {
+	msg := new(core_api.AskUploadAvatarResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *AskUploadAvatarResult) GetSuccess() *core_api.AskUploadAvatarResp {
+	if !p.IsSetSuccess() {
+		return AskUploadAvatarResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *AskUploadAvatarResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.AskUploadAvatarResp)
+}
+
+func (p *AskUploadAvatarResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *AskUploadAvatarResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -3892,6 +4048,312 @@ func (p *ParsingShareCodeResult) GetResult() interface{} {
 	return p.Success
 }
 
+func askUploadFileHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.AskUploadFileReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Content).AskUploadFile(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *AskUploadFileArgs:
+		success, err := handler.(core_api.Content).AskUploadFile(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*AskUploadFileResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newAskUploadFileArgs() interface{} {
+	return &AskUploadFileArgs{}
+}
+
+func newAskUploadFileResult() interface{} {
+	return &AskUploadFileResult{}
+}
+
+type AskUploadFileArgs struct {
+	Req *core_api.AskUploadFileReq
+}
+
+func (p *AskUploadFileArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.AskUploadFileReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *AskUploadFileArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *AskUploadFileArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *AskUploadFileArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *AskUploadFileArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.AskUploadFileReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var AskUploadFileArgs_Req_DEFAULT *core_api.AskUploadFileReq
+
+func (p *AskUploadFileArgs) GetReq() *core_api.AskUploadFileReq {
+	if !p.IsSetReq() {
+		return AskUploadFileArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *AskUploadFileArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *AskUploadFileArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type AskUploadFileResult struct {
+	Success *core_api.AskUploadFileResp
+}
+
+var AskUploadFileResult_Success_DEFAULT *core_api.AskUploadFileResp
+
+func (p *AskUploadFileResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.AskUploadFileResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *AskUploadFileResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *AskUploadFileResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *AskUploadFileResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *AskUploadFileResult) Unmarshal(in []byte) error {
+	msg := new(core_api.AskUploadFileResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *AskUploadFileResult) GetSuccess() *core_api.AskUploadFileResp {
+	if !p.IsSetSuccess() {
+		return AskUploadFileResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *AskUploadFileResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.AskUploadFileResp)
+}
+
+func (p *AskUploadFileResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *AskUploadFileResult) GetResult() interface{} {
+	return p.Success
+}
+
+func askDownloadFileHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.AskDownloadFileReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Content).AskDownloadFile(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *AskDownloadFileArgs:
+		success, err := handler.(core_api.Content).AskDownloadFile(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*AskDownloadFileResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newAskDownloadFileArgs() interface{} {
+	return &AskDownloadFileArgs{}
+}
+
+func newAskDownloadFileResult() interface{} {
+	return &AskDownloadFileResult{}
+}
+
+type AskDownloadFileArgs struct {
+	Req *core_api.AskDownloadFileReq
+}
+
+func (p *AskDownloadFileArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.AskDownloadFileReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *AskDownloadFileArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *AskDownloadFileArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *AskDownloadFileArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *AskDownloadFileArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.AskDownloadFileReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var AskDownloadFileArgs_Req_DEFAULT *core_api.AskDownloadFileReq
+
+func (p *AskDownloadFileArgs) GetReq() *core_api.AskDownloadFileReq {
+	if !p.IsSetReq() {
+		return AskDownloadFileArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *AskDownloadFileArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *AskDownloadFileArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type AskDownloadFileResult struct {
+	Success *core_api.AskDownloadFileResp
+}
+
+var AskDownloadFileResult_Success_DEFAULT *core_api.AskDownloadFileResp
+
+func (p *AskDownloadFileResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.AskDownloadFileResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *AskDownloadFileResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *AskDownloadFileResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *AskDownloadFileResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *AskDownloadFileResult) Unmarshal(in []byte) error {
+	msg := new(core_api.AskDownloadFileResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *AskDownloadFileResult) GetSuccess() *core_api.AskDownloadFileResp {
+	if !p.IsSetSuccess() {
+		return AskDownloadFileResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *AskDownloadFileResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.AskDownloadFileResp)
+}
+
+func (p *AskDownloadFileResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *AskDownloadFileResult) GetResult() interface{} {
+	return p.Success
+}
+
 func createPostHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
@@ -4707,6 +5169,16 @@ func (p *kClient) GetUserDetail(ctx context.Context, Req *core_api.GetUserDetail
 	return _result.GetSuccess(), nil
 }
 
+func (p *kClient) AskUploadAvatar(ctx context.Context, Req *core_api.AskUploadAvatarReq) (r *core_api.AskUploadAvatarResp, err error) {
+	var _args AskUploadAvatarArgs
+	_args.Req = Req
+	var _result AskUploadAvatarResult
+	if err = p.c.Call(ctx, "AskUploadAvatar", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
 func (p *kClient) GetPublicFile(ctx context.Context, Req *core_api.GetFileReq) (r *core_api.GetFileResp, err error) {
 	var _args GetPublicFileArgs
 	_args.Req = Req
@@ -4912,6 +5384,26 @@ func (p *kClient) ParsingShareCode(ctx context.Context, Req *core_api.ParsingSha
 	_args.Req = Req
 	var _result ParsingShareCodeResult
 	if err = p.c.Call(ctx, "ParsingShareCode", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) AskUploadFile(ctx context.Context, Req *core_api.AskUploadFileReq) (r *core_api.AskUploadFileResp, err error) {
+	var _args AskUploadFileArgs
+	_args.Req = Req
+	var _result AskUploadFileResult
+	if err = p.c.Call(ctx, "AskUploadFile", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) AskDownloadFile(ctx context.Context, Req *core_api.AskDownloadFileReq) (r *core_api.AskDownloadFileResp, err error) {
+	var _args AskDownloadFileArgs
+	_args.Req = Req
+	var _result AskDownloadFileResult
+	if err = p.c.Call(ctx, "AskDownloadFile", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

@@ -2399,6 +2399,234 @@ func (x *ParsingShareCodeResp) GetShareFile() *ShareFile {
 	return nil
 }
 
+type AskUploadFileReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name     string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	FileSize int64  `protobuf:"varint,2,opt,name=fileSize,proto3" json:"fileSize,omitempty"`
+}
+
+func (x *AskUploadFileReq) Reset() {
+	*x = AskUploadFileReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[46]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AskUploadFileReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AskUploadFileReq) ProtoMessage() {}
+
+func (x *AskUploadFileReq) ProtoReflect() protoreflect.Message {
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[46]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AskUploadFileReq.ProtoReflect.Descriptor instead.
+func (*AskUploadFileReq) Descriptor() ([]byte, []int) {
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{46}
+}
+
+func (x *AskUploadFileReq) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *AskUploadFileReq) GetFileSize() int64 {
+	if x != nil {
+		return x.FileSize
+	}
+	return 0
+}
+
+type AskUploadFileResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TmpSecretId  string `protobuf:"bytes,1,opt,name=tmpSecretId,proto3" json:"tmpSecretId,omitempty"`
+	TmpSecretKey string `protobuf:"bytes,2,opt,name=tmpSecretKey,proto3" json:"tmpSecretKey,omitempty"`
+	StartTime    int64  `protobuf:"varint,3,opt,name=startTime,proto3" json:"startTime,omitempty"`
+	ExpiredTime  int64  `protobuf:"varint,4,opt,name=expiredTime,proto3" json:"expiredTime,omitempty"`
+	SessionToken string `protobuf:"bytes,5,opt,name=sessionToken,proto3" json:"sessionToken,omitempty"`
+}
+
+func (x *AskUploadFileResp) Reset() {
+	*x = AskUploadFileResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[47]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AskUploadFileResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AskUploadFileResp) ProtoMessage() {}
+
+func (x *AskUploadFileResp) ProtoReflect() protoreflect.Message {
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[47]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AskUploadFileResp.ProtoReflect.Descriptor instead.
+func (*AskUploadFileResp) Descriptor() ([]byte, []int) {
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{47}
+}
+
+func (x *AskUploadFileResp) GetTmpSecretId() string {
+	if x != nil {
+		return x.TmpSecretId
+	}
+	return ""
+}
+
+func (x *AskUploadFileResp) GetTmpSecretKey() string {
+	if x != nil {
+		return x.TmpSecretKey
+	}
+	return ""
+}
+
+func (x *AskUploadFileResp) GetStartTime() int64 {
+	if x != nil {
+		return x.StartTime
+	}
+	return 0
+}
+
+func (x *AskUploadFileResp) GetExpiredTime() int64 {
+	if x != nil {
+		return x.ExpiredTime
+	}
+	return 0
+}
+
+func (x *AskUploadFileResp) GetSessionToken() string {
+	if x != nil {
+		return x.SessionToken
+	}
+	return ""
+}
+
+type AskDownloadFileReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	FileIds []string `protobuf:"bytes,1,rep,name=fileIds,proto3" json:"fileIds,omitempty"`
+}
+
+func (x *AskDownloadFileReq) Reset() {
+	*x = AskDownloadFileReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[48]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AskDownloadFileReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AskDownloadFileReq) ProtoMessage() {}
+
+func (x *AskDownloadFileReq) ProtoReflect() protoreflect.Message {
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[48]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AskDownloadFileReq.ProtoReflect.Descriptor instead.
+func (*AskDownloadFileReq) Descriptor() ([]byte, []int) {
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{48}
+}
+
+func (x *AskDownloadFileReq) GetFileIds() []string {
+	if x != nil {
+		return x.FileIds
+	}
+	return nil
+}
+
+type AskDownloadFileResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Urls []string `protobuf:"bytes,1,rep,name=urls,proto3" json:"urls,omitempty"`
+}
+
+func (x *AskDownloadFileResp) Reset() {
+	*x = AskDownloadFileResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[49]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AskDownloadFileResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AskDownloadFileResp) ProtoMessage() {}
+
+func (x *AskDownloadFileResp) ProtoReflect() protoreflect.Message {
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[49]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AskDownloadFileResp.ProtoReflect.Descriptor instead.
+func (*AskDownloadFileResp) Descriptor() ([]byte, []int) {
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{49}
+}
+
+func (x *AskDownloadFileResp) GetUrls() []string {
+	if x != nil {
+		return x.Urls
+	}
+	return nil
+}
+
 type GetUserReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2410,7 +2638,7 @@ type GetUserReq struct {
 func (x *GetUserReq) Reset() {
 	*x = GetUserReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_content_proto_msgTypes[46]
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[50]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2423,7 +2651,7 @@ func (x *GetUserReq) String() string {
 func (*GetUserReq) ProtoMessage() {}
 
 func (x *GetUserReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_content_proto_msgTypes[46]
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[50]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2436,7 +2664,7 @@ func (x *GetUserReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserReq.ProtoReflect.Descriptor instead.
 func (*GetUserReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{46}
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{50}
 }
 
 func (x *GetUserReq) GetUserId() string {
@@ -2457,7 +2685,7 @@ type GetUserResp struct {
 func (x *GetUserResp) Reset() {
 	*x = GetUserResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_content_proto_msgTypes[47]
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[51]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2470,7 +2698,7 @@ func (x *GetUserResp) String() string {
 func (*GetUserResp) ProtoMessage() {}
 
 func (x *GetUserResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_content_proto_msgTypes[47]
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[51]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2483,7 +2711,7 @@ func (x *GetUserResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserResp.ProtoReflect.Descriptor instead.
 func (*GetUserResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{47}
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{51}
 }
 
 func (x *GetUserResp) GetUser() *User {
@@ -2504,7 +2732,7 @@ type CreateUserReq struct {
 func (x *CreateUserReq) Reset() {
 	*x = CreateUserReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_content_proto_msgTypes[48]
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[52]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2517,7 +2745,7 @@ func (x *CreateUserReq) String() string {
 func (*CreateUserReq) ProtoMessage() {}
 
 func (x *CreateUserReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_content_proto_msgTypes[48]
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[52]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2530,7 +2758,7 @@ func (x *CreateUserReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateUserReq.ProtoReflect.Descriptor instead.
 func (*CreateUserReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{48}
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{52}
 }
 
 func (x *CreateUserReq) GetUserInfo() *UserInfo {
@@ -2549,7 +2777,7 @@ type CreateUserResp struct {
 func (x *CreateUserResp) Reset() {
 	*x = CreateUserResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_content_proto_msgTypes[49]
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[53]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2562,7 +2790,7 @@ func (x *CreateUserResp) String() string {
 func (*CreateUserResp) ProtoMessage() {}
 
 func (x *CreateUserResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_content_proto_msgTypes[49]
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[53]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2575,7 +2803,7 @@ func (x *CreateUserResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateUserResp.ProtoReflect.Descriptor instead.
 func (*CreateUserResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{49}
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{53}
 }
 
 type GetUserDetailReq struct {
@@ -2587,7 +2815,7 @@ type GetUserDetailReq struct {
 func (x *GetUserDetailReq) Reset() {
 	*x = GetUserDetailReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_content_proto_msgTypes[50]
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[54]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2600,7 +2828,7 @@ func (x *GetUserDetailReq) String() string {
 func (*GetUserDetailReq) ProtoMessage() {}
 
 func (x *GetUserDetailReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_content_proto_msgTypes[50]
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[54]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2613,7 +2841,7 @@ func (x *GetUserDetailReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserDetailReq.ProtoReflect.Descriptor instead.
 func (*GetUserDetailReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{50}
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{54}
 }
 
 type GetUserDetailResp struct {
@@ -2627,7 +2855,7 @@ type GetUserDetailResp struct {
 func (x *GetUserDetailResp) Reset() {
 	*x = GetUserDetailResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_content_proto_msgTypes[51]
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[55]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2640,7 +2868,7 @@ func (x *GetUserDetailResp) String() string {
 func (*GetUserDetailResp) ProtoMessage() {}
 
 func (x *GetUserDetailResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_content_proto_msgTypes[51]
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[55]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2653,7 +2881,7 @@ func (x *GetUserDetailResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserDetailResp.ProtoReflect.Descriptor instead.
 func (*GetUserDetailResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{51}
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{55}
 }
 
 func (x *GetUserDetailResp) GetUserDetail() *UserDetail {
@@ -2674,7 +2902,7 @@ type DeleteUserReq struct {
 func (x *DeleteUserReq) Reset() {
 	*x = DeleteUserReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_content_proto_msgTypes[52]
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[56]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2687,7 +2915,7 @@ func (x *DeleteUserReq) String() string {
 func (*DeleteUserReq) ProtoMessage() {}
 
 func (x *DeleteUserReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_content_proto_msgTypes[52]
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[56]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2700,7 +2928,7 @@ func (x *DeleteUserReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteUserReq.ProtoReflect.Descriptor instead.
 func (*DeleteUserReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{52}
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{56}
 }
 
 func (x *DeleteUserReq) GetUserId() string {
@@ -2719,7 +2947,7 @@ type DeleteUserResp struct {
 func (x *DeleteUserResp) Reset() {
 	*x = DeleteUserResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_content_proto_msgTypes[53]
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[57]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2732,7 +2960,7 @@ func (x *DeleteUserResp) String() string {
 func (*DeleteUserResp) ProtoMessage() {}
 
 func (x *DeleteUserResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_content_proto_msgTypes[53]
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[57]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2745,7 +2973,141 @@ func (x *DeleteUserResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteUserResp.ProtoReflect.Descriptor instead.
 func (*DeleteUserResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{53}
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{57}
+}
+
+type AskUploadAvatarReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name       string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	AvatarSize int64  `protobuf:"varint,2,opt,name=avatarSize,proto3" json:"avatarSize,omitempty"`
+}
+
+func (x *AskUploadAvatarReq) Reset() {
+	*x = AskUploadAvatarReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[58]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AskUploadAvatarReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AskUploadAvatarReq) ProtoMessage() {}
+
+func (x *AskUploadAvatarReq) ProtoReflect() protoreflect.Message {
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[58]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AskUploadAvatarReq.ProtoReflect.Descriptor instead.
+func (*AskUploadAvatarReq) Descriptor() ([]byte, []int) {
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{58}
+}
+
+func (x *AskUploadAvatarReq) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *AskUploadAvatarReq) GetAvatarSize() int64 {
+	if x != nil {
+		return x.AvatarSize
+	}
+	return 0
+}
+
+type AskUploadAvatarResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TmpSecretId  string `protobuf:"bytes,1,opt,name=tmpSecretId,proto3" json:"tmpSecretId,omitempty"`
+	TmpSecretKey string `protobuf:"bytes,2,opt,name=tmpSecretKey,proto3" json:"tmpSecretKey,omitempty"`
+	StartTime    int64  `protobuf:"varint,3,opt,name=startTime,proto3" json:"startTime,omitempty"`
+	ExpiredTime  int64  `protobuf:"varint,4,opt,name=expiredTime,proto3" json:"expiredTime,omitempty"`
+	SessionToken string `protobuf:"bytes,5,opt,name=sessionToken,proto3" json:"sessionToken,omitempty"`
+}
+
+func (x *AskUploadAvatarResp) Reset() {
+	*x = AskUploadAvatarResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[59]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AskUploadAvatarResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AskUploadAvatarResp) ProtoMessage() {}
+
+func (x *AskUploadAvatarResp) ProtoReflect() protoreflect.Message {
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[59]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AskUploadAvatarResp.ProtoReflect.Descriptor instead.
+func (*AskUploadAvatarResp) Descriptor() ([]byte, []int) {
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{59}
+}
+
+func (x *AskUploadAvatarResp) GetTmpSecretId() string {
+	if x != nil {
+		return x.TmpSecretId
+	}
+	return ""
+}
+
+func (x *AskUploadAvatarResp) GetTmpSecretKey() string {
+	if x != nil {
+		return x.TmpSecretKey
+	}
+	return ""
+}
+
+func (x *AskUploadAvatarResp) GetStartTime() int64 {
+	if x != nil {
+		return x.StartTime
+	}
+	return 0
+}
+
+func (x *AskUploadAvatarResp) GetExpiredTime() int64 {
+	if x != nil {
+		return x.ExpiredTime
+	}
+	return 0
+}
+
+func (x *AskUploadAvatarResp) GetSessionToken() string {
+	if x != nil {
+		return x.SessionToken
+	}
+	return ""
 }
 
 type CreatePostReq struct {
@@ -2759,7 +3121,7 @@ type CreatePostReq struct {
 func (x *CreatePostReq) Reset() {
 	*x = CreatePostReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_content_proto_msgTypes[54]
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[60]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2772,7 +3134,7 @@ func (x *CreatePostReq) String() string {
 func (*CreatePostReq) ProtoMessage() {}
 
 func (x *CreatePostReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_content_proto_msgTypes[54]
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[60]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2785,7 +3147,7 @@ func (x *CreatePostReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreatePostReq.ProtoReflect.Descriptor instead.
 func (*CreatePostReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{54}
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{60}
 }
 
 func (x *CreatePostReq) GetPostInfo() *PostInfo {
@@ -2804,7 +3166,7 @@ type CreatePostResp struct {
 func (x *CreatePostResp) Reset() {
 	*x = CreatePostResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_content_proto_msgTypes[55]
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[61]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2817,7 +3179,7 @@ func (x *CreatePostResp) String() string {
 func (*CreatePostResp) ProtoMessage() {}
 
 func (x *CreatePostResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_content_proto_msgTypes[55]
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[61]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2830,7 +3192,7 @@ func (x *CreatePostResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreatePostResp.ProtoReflect.Descriptor instead.
 func (*CreatePostResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{55}
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{61}
 }
 
 type DeletePostReq struct {
@@ -2844,7 +3206,7 @@ type DeletePostReq struct {
 func (x *DeletePostReq) Reset() {
 	*x = DeletePostReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_content_proto_msgTypes[56]
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[62]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2857,7 +3219,7 @@ func (x *DeletePostReq) String() string {
 func (*DeletePostReq) ProtoMessage() {}
 
 func (x *DeletePostReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_content_proto_msgTypes[56]
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[62]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2870,7 +3232,7 @@ func (x *DeletePostReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeletePostReq.ProtoReflect.Descriptor instead.
 func (*DeletePostReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{56}
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{62}
 }
 
 func (x *DeletePostReq) GetPostId() string {
@@ -2889,7 +3251,7 @@ type DeletePostResp struct {
 func (x *DeletePostResp) Reset() {
 	*x = DeletePostResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_content_proto_msgTypes[57]
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[63]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2902,7 +3264,7 @@ func (x *DeletePostResp) String() string {
 func (*DeletePostResp) ProtoMessage() {}
 
 func (x *DeletePostResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_content_proto_msgTypes[57]
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[63]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2915,7 +3277,7 @@ func (x *DeletePostResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeletePostResp.ProtoReflect.Descriptor instead.
 func (*DeletePostResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{57}
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{63}
 }
 
 type UpdatePostReq struct {
@@ -2929,7 +3291,7 @@ type UpdatePostReq struct {
 func (x *UpdatePostReq) Reset() {
 	*x = UpdatePostReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_content_proto_msgTypes[58]
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[64]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2942,7 +3304,7 @@ func (x *UpdatePostReq) String() string {
 func (*UpdatePostReq) ProtoMessage() {}
 
 func (x *UpdatePostReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_content_proto_msgTypes[58]
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[64]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2955,7 +3317,7 @@ func (x *UpdatePostReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdatePostReq.ProtoReflect.Descriptor instead.
 func (*UpdatePostReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{58}
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{64}
 }
 
 func (x *UpdatePostReq) GetPostInfo() *PostInfo {
@@ -2974,7 +3336,7 @@ type UpdatePostResp struct {
 func (x *UpdatePostResp) Reset() {
 	*x = UpdatePostResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_content_proto_msgTypes[59]
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[65]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2987,7 +3349,7 @@ func (x *UpdatePostResp) String() string {
 func (*UpdatePostResp) ProtoMessage() {}
 
 func (x *UpdatePostResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_content_proto_msgTypes[59]
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[65]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3000,7 +3362,7 @@ func (x *UpdatePostResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdatePostResp.ProtoReflect.Descriptor instead.
 func (*UpdatePostResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{59}
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{65}
 }
 
 type GetPostReq struct {
@@ -3014,7 +3376,7 @@ type GetPostReq struct {
 func (x *GetPostReq) Reset() {
 	*x = GetPostReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_content_proto_msgTypes[60]
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[66]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3027,7 +3389,7 @@ func (x *GetPostReq) String() string {
 func (*GetPostReq) ProtoMessage() {}
 
 func (x *GetPostReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_content_proto_msgTypes[60]
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[66]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3040,7 +3402,7 @@ func (x *GetPostReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPostReq.ProtoReflect.Descriptor instead.
 func (*GetPostReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{60}
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{66}
 }
 
 func (x *GetPostReq) GetPostId() string {
@@ -3061,7 +3423,7 @@ type GetPostResp struct {
 func (x *GetPostResp) Reset() {
 	*x = GetPostResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_content_proto_msgTypes[61]
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[67]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3074,7 +3436,7 @@ func (x *GetPostResp) String() string {
 func (*GetPostResp) ProtoMessage() {}
 
 func (x *GetPostResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_content_proto_msgTypes[61]
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[67]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3087,7 +3449,7 @@ func (x *GetPostResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPostResp.ProtoReflect.Descriptor instead.
 func (*GetPostResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{61}
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{67}
 }
 
 func (x *GetPostResp) GetPost() *Post {
@@ -3110,7 +3472,7 @@ type GetPostsReq struct {
 func (x *GetPostsReq) Reset() {
 	*x = GetPostsReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_content_proto_msgTypes[62]
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[68]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3123,7 +3485,7 @@ func (x *GetPostsReq) String() string {
 func (*GetPostsReq) ProtoMessage() {}
 
 func (x *GetPostsReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_content_proto_msgTypes[62]
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[68]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3136,7 +3498,7 @@ func (x *GetPostsReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPostsReq.ProtoReflect.Descriptor instead.
 func (*GetPostsReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{62}
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{68}
 }
 
 func (x *GetPostsReq) GetSearchOptions() *SearchOptions {
@@ -3173,7 +3535,7 @@ type GetPostsResp struct {
 func (x *GetPostsResp) Reset() {
 	*x = GetPostsResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_content_proto_msgTypes[63]
+		mi := &file_cloudmind_core_api_content_proto_msgTypes[69]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3186,7 +3548,7 @@ func (x *GetPostsResp) String() string {
 func (*GetPostsResp) ProtoMessage() {}
 
 func (x *GetPostsResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_content_proto_msgTypes[63]
+	mi := &file_cloudmind_core_api_content_proto_msgTypes[69]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3199,7 +3561,7 @@ func (x *GetPostsResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPostsResp.ProtoReflect.Descriptor instead.
 func (*GetPostsResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{63}
+	return file_cloudmind_core_api_content_proto_rawDescGZIP(), []int{69}
 }
 
 func (x *GetPostsResp) GetPosts() []*Post {
@@ -3518,83 +3880,122 @@ var file_cloudmind_core_api_content_proto_rawDesc = []byte{
 	0x68, 0x61, 0x72, 0x65, 0x46, 0x69, 0x6c, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d,
 	0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f,
 	0x61, 0x70, 0x69, 0x2e, 0x53, 0x68, 0x61, 0x72, 0x65, 0x46, 0x69, 0x6c, 0x65, 0x52, 0x09, 0x73,
-	0x68, 0x61, 0x72, 0x65, 0x46, 0x69, 0x6c, 0x65, 0x22, 0x24, 0x0a, 0x0a, 0x47, 0x65, 0x74, 0x55,
-	0x73, 0x65, 0x72, 0x52, 0x65, 0x71, 0x12, 0x16, 0x0a, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x22, 0x3b,
-	0x0a, 0x0b, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x12, 0x2c, 0x0a,
-	0x04, 0x75, 0x73, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x63, 0x6c,
-	0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69,
-	0x2e, 0x55, 0x73, 0x65, 0x72, 0x52, 0x04, 0x75, 0x73, 0x65, 0x72, 0x22, 0x49, 0x0a, 0x0d, 0x43,
-	0x72, 0x65, 0x61, 0x74, 0x65, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65, 0x71, 0x12, 0x38, 0x0a, 0x08,
-	0x75, 0x73, 0x65, 0x72, 0x49, 0x6e, 0x66, 0x6f, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c,
-	0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f,
-	0x61, 0x70, 0x69, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x08, 0x75, 0x73,
-	0x65, 0x72, 0x49, 0x6e, 0x66, 0x6f, 0x22, 0x10, 0x0a, 0x0e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65,
-	0x55, 0x73, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x22, 0x12, 0x0a, 0x10, 0x47, 0x65, 0x74, 0x55,
-	0x73, 0x65, 0x72, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x71, 0x22, 0x53, 0x0a, 0x11,
-	0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x73,
-	0x70, 0x12, 0x3e, 0x0a, 0x0a, 0x75, 0x73, 0x65, 0x72, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e,
-	0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x44,
-	0x65, 0x74, 0x61, 0x69, 0x6c, 0x52, 0x0a, 0x75, 0x73, 0x65, 0x72, 0x44, 0x65, 0x74, 0x61, 0x69,
-	0x6c, 0x22, 0x27, 0x0a, 0x0d, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x55, 0x73, 0x65, 0x72, 0x52,
-	0x65, 0x71, 0x12, 0x16, 0x0a, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x22, 0x10, 0x0a, 0x0e, 0x44, 0x65,
-	0x6c, 0x65, 0x74, 0x65, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x22, 0x49, 0x0a, 0x0d,
-	0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x73, 0x74, 0x52, 0x65, 0x71, 0x12, 0x38, 0x0a,
-	0x08, 0x70, 0x6f, 0x73, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
-	0x1c, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65,
-	0x5f, 0x61, 0x70, 0x69, 0x2e, 0x50, 0x6f, 0x73, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x08, 0x70,
-	0x6f, 0x73, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x22, 0x10, 0x0a, 0x0e, 0x43, 0x72, 0x65, 0x61, 0x74,
-	0x65, 0x50, 0x6f, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x22, 0x27, 0x0a, 0x0d, 0x44, 0x65, 0x6c,
-	0x65, 0x74, 0x65, 0x50, 0x6f, 0x73, 0x74, 0x52, 0x65, 0x71, 0x12, 0x16, 0x0a, 0x06, 0x70, 0x6f,
-	0x73, 0x74, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x70, 0x6f, 0x73, 0x74,
-	0x49, 0x64, 0x22, 0x10, 0x0a, 0x0e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x50, 0x6f, 0x73, 0x74,
-	0x52, 0x65, 0x73, 0x70, 0x22, 0x49, 0x0a, 0x0d, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f,
-	0x73, 0x74, 0x52, 0x65, 0x71, 0x12, 0x38, 0x0a, 0x08, 0x70, 0x6f, 0x73, 0x74, 0x49, 0x6e, 0x66,
-	0x6f, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d,
-	0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x50, 0x6f, 0x73,
-	0x74, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x08, 0x70, 0x6f, 0x73, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x22,
-	0x10, 0x0a, 0x0e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x73, 0x74, 0x52, 0x65, 0x73,
-	0x70, 0x22, 0x24, 0x0a, 0x0a, 0x47, 0x65, 0x74, 0x50, 0x6f, 0x73, 0x74, 0x52, 0x65, 0x71, 0x12,
-	0x16, 0x0a, 0x06, 0x70, 0x6f, 0x73, 0x74, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x06, 0x70, 0x6f, 0x73, 0x74, 0x49, 0x64, 0x22, 0x3b, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x50, 0x6f,
-	0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x12, 0x2c, 0x0a, 0x04, 0x70, 0x6f, 0x73, 0x74, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64,
-	0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x50, 0x6f, 0x73, 0x74, 0x52, 0x04,
-	0x70, 0x6f, 0x73, 0x74, 0x22, 0xc0, 0x02, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x50, 0x6f, 0x73, 0x74,
-	0x73, 0x52, 0x65, 0x71, 0x12, 0x4c, 0x0a, 0x0d, 0x73, 0x65, 0x61, 0x72, 0x63, 0x68, 0x4f, 0x70,
-	0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x21, 0x2e, 0x63, 0x6c,
-	0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69,
-	0x2e, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x48, 0x00,
-	0x52, 0x0d, 0x73, 0x65, 0x61, 0x72, 0x63, 0x68, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x88,
-	0x01, 0x01, 0x12, 0x58, 0x0a, 0x11, 0x70, 0x6f, 0x73, 0x74, 0x46, 0x69, 0x6c, 0x74, 0x65, 0x72,
-	0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x25, 0x2e,
+	0x68, 0x61, 0x72, 0x65, 0x46, 0x69, 0x6c, 0x65, 0x22, 0x42, 0x0a, 0x10, 0x41, 0x73, 0x6b, 0x55,
+	0x70, 0x6c, 0x6f, 0x61, 0x64, 0x46, 0x69, 0x6c, 0x65, 0x52, 0x65, 0x71, 0x12, 0x12, 0x0a, 0x04,
+	0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65,
+	0x12, 0x1a, 0x0a, 0x08, 0x66, 0x69, 0x6c, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x03, 0x52, 0x08, 0x66, 0x69, 0x6c, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x22, 0xbd, 0x01, 0x0a,
+	0x11, 0x41, 0x73, 0x6b, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x46, 0x69, 0x6c, 0x65, 0x52, 0x65,
+	0x73, 0x70, 0x12, 0x20, 0x0a, 0x0b, 0x74, 0x6d, 0x70, 0x53, 0x65, 0x63, 0x72, 0x65, 0x74, 0x49,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x74, 0x6d, 0x70, 0x53, 0x65, 0x63, 0x72,
+	0x65, 0x74, 0x49, 0x64, 0x12, 0x22, 0x0a, 0x0c, 0x74, 0x6d, 0x70, 0x53, 0x65, 0x63, 0x72, 0x65,
+	0x74, 0x4b, 0x65, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x74, 0x6d, 0x70, 0x53,
+	0x65, 0x63, 0x72, 0x65, 0x74, 0x4b, 0x65, 0x79, 0x12, 0x1c, 0x0a, 0x09, 0x73, 0x74, 0x61, 0x72,
+	0x74, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x73, 0x74, 0x61,
+	0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65,
+	0x64, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x65, 0x78, 0x70,
+	0x69, 0x72, 0x65, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x22, 0x0a, 0x0c, 0x73, 0x65, 0x73, 0x73,
+	0x69, 0x6f, 0x6e, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c,
+	0x73, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x22, 0x2e, 0x0a, 0x12,
+	0x41, 0x73, 0x6b, 0x44, 0x6f, 0x77, 0x6e, 0x6c, 0x6f, 0x61, 0x64, 0x46, 0x69, 0x6c, 0x65, 0x52,
+	0x65, 0x71, 0x12, 0x18, 0x0a, 0x07, 0x66, 0x69, 0x6c, 0x65, 0x49, 0x64, 0x73, 0x18, 0x01, 0x20,
+	0x03, 0x28, 0x09, 0x52, 0x07, 0x66, 0x69, 0x6c, 0x65, 0x49, 0x64, 0x73, 0x22, 0x29, 0x0a, 0x13,
+	0x41, 0x73, 0x6b, 0x44, 0x6f, 0x77, 0x6e, 0x6c, 0x6f, 0x61, 0x64, 0x46, 0x69, 0x6c, 0x65, 0x52,
+	0x65, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x75, 0x72, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28,
+	0x09, 0x52, 0x04, 0x75, 0x72, 0x6c, 0x73, 0x22, 0x24, 0x0a, 0x0a, 0x47, 0x65, 0x74, 0x55, 0x73,
+	0x65, 0x72, 0x52, 0x65, 0x71, 0x12, 0x16, 0x0a, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x22, 0x3b, 0x0a,
+	0x0b, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x12, 0x2c, 0x0a, 0x04,
+	0x75, 0x73, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x63, 0x6c, 0x6f,
+	0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e,
+	0x55, 0x73, 0x65, 0x72, 0x52, 0x04, 0x75, 0x73, 0x65, 0x72, 0x22, 0x49, 0x0a, 0x0d, 0x43, 0x72,
+	0x65, 0x61, 0x74, 0x65, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65, 0x71, 0x12, 0x38, 0x0a, 0x08, 0x75,
+	0x73, 0x65, 0x72, 0x49, 0x6e, 0x66, 0x6f, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e,
 	0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61,
-	0x70, 0x69, 0x2e, 0x50, 0x6f, 0x73, 0x74, 0x46, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x4f, 0x70, 0x74,
-	0x69, 0x6f, 0x6e, 0x73, 0x48, 0x01, 0x52, 0x11, 0x70, 0x6f, 0x73, 0x74, 0x46, 0x69, 0x6c, 0x74,
-	0x65, 0x72, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x88, 0x01, 0x01, 0x12, 0x4b, 0x0a, 0x11,
+	0x70, 0x69, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x08, 0x75, 0x73, 0x65,
+	0x72, 0x49, 0x6e, 0x66, 0x6f, 0x22, 0x10, 0x0a, 0x0e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x55,
+	0x73, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x22, 0x12, 0x0a, 0x10, 0x47, 0x65, 0x74, 0x55, 0x73,
+	0x65, 0x72, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x71, 0x22, 0x53, 0x0a, 0x11, 0x47,
+	0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x73, 0x70,
+	0x12, 0x3e, 0x0a, 0x0a, 0x75, 0x73, 0x65, 0x72, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64,
+	0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x44, 0x65,
+	0x74, 0x61, 0x69, 0x6c, 0x52, 0x0a, 0x75, 0x73, 0x65, 0x72, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c,
+	0x22, 0x27, 0x0a, 0x0d, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65,
+	0x71, 0x12, 0x16, 0x0a, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x22, 0x10, 0x0a, 0x0e, 0x44, 0x65, 0x6c,
+	0x65, 0x74, 0x65, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x22, 0x48, 0x0a, 0x12, 0x41,
+	0x73, 0x6b, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x41, 0x76, 0x61, 0x74, 0x61, 0x72, 0x52, 0x65,
+	0x71, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x61, 0x76, 0x61, 0x74, 0x61, 0x72, 0x53,
+	0x69, 0x7a, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0a, 0x61, 0x76, 0x61, 0x74, 0x61,
+	0x72, 0x53, 0x69, 0x7a, 0x65, 0x22, 0xbf, 0x01, 0x0a, 0x13, 0x41, 0x73, 0x6b, 0x55, 0x70, 0x6c,
+	0x6f, 0x61, 0x64, 0x41, 0x76, 0x61, 0x74, 0x61, 0x72, 0x52, 0x65, 0x73, 0x70, 0x12, 0x20, 0x0a,
+	0x0b, 0x74, 0x6d, 0x70, 0x53, 0x65, 0x63, 0x72, 0x65, 0x74, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0b, 0x74, 0x6d, 0x70, 0x53, 0x65, 0x63, 0x72, 0x65, 0x74, 0x49, 0x64, 0x12,
+	0x22, 0x0a, 0x0c, 0x74, 0x6d, 0x70, 0x53, 0x65, 0x63, 0x72, 0x65, 0x74, 0x4b, 0x65, 0x79, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x74, 0x6d, 0x70, 0x53, 0x65, 0x63, 0x72, 0x65, 0x74,
+	0x4b, 0x65, 0x79, 0x12, 0x1c, 0x0a, 0x09, 0x73, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x73, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d,
+	0x65, 0x12, 0x20, 0x0a, 0x0b, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x64, 0x54, 0x69, 0x6d, 0x65,
+	0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x64, 0x54,
+	0x69, 0x6d, 0x65, 0x12, 0x22, 0x0a, 0x0c, 0x73, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x54, 0x6f,
+	0x6b, 0x65, 0x6e, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x73, 0x65, 0x73, 0x73, 0x69,
+	0x6f, 0x6e, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x22, 0x49, 0x0a, 0x0d, 0x43, 0x72, 0x65, 0x61, 0x74,
+	0x65, 0x50, 0x6f, 0x73, 0x74, 0x52, 0x65, 0x71, 0x12, 0x38, 0x0a, 0x08, 0x70, 0x6f, 0x73, 0x74,
+	0x49, 0x6e, 0x66, 0x6f, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x63, 0x6c, 0x6f,
+	0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e,
+	0x50, 0x6f, 0x73, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x08, 0x70, 0x6f, 0x73, 0x74, 0x49, 0x6e,
+	0x66, 0x6f, 0x22, 0x10, 0x0a, 0x0e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x73, 0x74,
+	0x52, 0x65, 0x73, 0x70, 0x22, 0x27, 0x0a, 0x0d, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x50, 0x6f,
+	0x73, 0x74, 0x52, 0x65, 0x71, 0x12, 0x16, 0x0a, 0x06, 0x70, 0x6f, 0x73, 0x74, 0x49, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x70, 0x6f, 0x73, 0x74, 0x49, 0x64, 0x22, 0x10, 0x0a,
+	0x0e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x50, 0x6f, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x22,
+	0x49, 0x0a, 0x0d, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x73, 0x74, 0x52, 0x65, 0x71,
+	0x12, 0x38, 0x0a, 0x08, 0x70, 0x6f, 0x73, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63,
+	0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x50, 0x6f, 0x73, 0x74, 0x49, 0x6e, 0x66, 0x6f,
+	0x52, 0x08, 0x70, 0x6f, 0x73, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x22, 0x10, 0x0a, 0x0e, 0x55, 0x70,
+	0x64, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x22, 0x24, 0x0a, 0x0a,
+	0x47, 0x65, 0x74, 0x50, 0x6f, 0x73, 0x74, 0x52, 0x65, 0x71, 0x12, 0x16, 0x0a, 0x06, 0x70, 0x6f,
+	0x73, 0x74, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x70, 0x6f, 0x73, 0x74,
+	0x49, 0x64, 0x22, 0x3b, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x50, 0x6f, 0x73, 0x74, 0x52, 0x65, 0x73,
+	0x70, 0x12, 0x2c, 0x0a, 0x04, 0x70, 0x6f, 0x73, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x18, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65,
+	0x5f, 0x61, 0x70, 0x69, 0x2e, 0x50, 0x6f, 0x73, 0x74, 0x52, 0x04, 0x70, 0x6f, 0x73, 0x74, 0x22,
+	0xc0, 0x02, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x50, 0x6f, 0x73, 0x74, 0x73, 0x52, 0x65, 0x71, 0x12,
+	0x4c, 0x0a, 0x0d, 0x73, 0x65, 0x61, 0x72, 0x63, 0x68, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x21, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69,
+	0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x53, 0x65, 0x61, 0x72,
+	0x63, 0x68, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x48, 0x00, 0x52, 0x0d, 0x73, 0x65, 0x61,
+	0x72, 0x63, 0x68, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x88, 0x01, 0x01, 0x12, 0x58, 0x0a,
+	0x11, 0x70, 0x6f, 0x73, 0x74, 0x46, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x4f, 0x70, 0x74, 0x69, 0x6f,
+	0x6e, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x25, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64,
+	0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x50, 0x6f,
+	0x73, 0x74, 0x46, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x48,
+	0x01, 0x52, 0x11, 0x70, 0x6f, 0x73, 0x74, 0x46, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x4f, 0x70, 0x74,
+	0x69, 0x6f, 0x6e, 0x73, 0x88, 0x01, 0x01, 0x12, 0x4b, 0x0a, 0x11, 0x70, 0x61, 0x67, 0x69, 0x6e,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x18, 0x2e, 0x62, 0x61, 0x73, 0x69, 0x63, 0x2e, 0x50, 0x61, 0x67, 0x69, 0x6e,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x48, 0x02, 0x52, 0x11,
 	0x70, 0x61, 0x67, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e,
-	0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x62, 0x61, 0x73, 0x69, 0x63, 0x2e,
-	0x50, 0x61, 0x67, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e,
-	0x73, 0x48, 0x02, 0x52, 0x11, 0x70, 0x61, 0x67, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4f,
-	0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x88, 0x01, 0x01, 0x42, 0x10, 0x0a, 0x0e, 0x5f, 0x73, 0x65,
-	0x61, 0x72, 0x63, 0x68, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x42, 0x14, 0x0a, 0x12, 0x5f,
-	0x70, 0x6f, 0x73, 0x74, 0x46, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e,
-	0x73, 0x42, 0x14, 0x0a, 0x12, 0x5f, 0x70, 0x61, 0x67, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e,
-	0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x22, 0x6a, 0x0a, 0x0c, 0x47, 0x65, 0x74, 0x50, 0x6f,
-	0x73, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x12, 0x2e, 0x0a, 0x05, 0x70, 0x6f, 0x73, 0x74, 0x73,
-	0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69,
-	0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x50, 0x6f, 0x73, 0x74,
-	0x52, 0x05, 0x70, 0x6f, 0x73, 0x74, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x12, 0x14, 0x0a,
-	0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x74, 0x6f,
-	0x6b, 0x65, 0x6e, 0x42, 0x49, 0x5a, 0x47, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
-	0x6d, 0x2f, 0x43, 0x6c, 0x6f, 0x75, 0x64, 0x53, 0x74, 0x72, 0x69, 0x76, 0x65, 0x72, 0x2f, 0x73,
-	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2d, 0x69, 0x64, 0x6c, 0x2d, 0x67, 0x65, 0x6e, 0x2d, 0x67,
-	0x6f, 0x2f, 0x6b, 0x69, 0x74, 0x65, 0x78, 0x5f, 0x67, 0x65, 0x6e, 0x2f, 0x63, 0x6c, 0x6f, 0x75,
-	0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2f, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x62, 0x06,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x73, 0x88, 0x01, 0x01, 0x42, 0x10, 0x0a, 0x0e, 0x5f, 0x73, 0x65, 0x61, 0x72, 0x63, 0x68, 0x4f,
+	0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x42, 0x14, 0x0a, 0x12, 0x5f, 0x70, 0x6f, 0x73, 0x74, 0x46,
+	0x69, 0x6c, 0x74, 0x65, 0x72, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x42, 0x14, 0x0a, 0x12,
+	0x5f, 0x70, 0x61, 0x67, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4f, 0x70, 0x74, 0x69, 0x6f,
+	0x6e, 0x73, 0x22, 0x6a, 0x0a, 0x0c, 0x47, 0x65, 0x74, 0x50, 0x6f, 0x73, 0x74, 0x73, 0x52, 0x65,
+	0x73, 0x70, 0x12, 0x2e, 0x0a, 0x05, 0x70, 0x6f, 0x73, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28,
+	0x0b, 0x32, 0x18, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f,
+	0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x50, 0x6f, 0x73, 0x74, 0x52, 0x05, 0x70, 0x6f, 0x73,
+	0x74, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x03, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x6b, 0x65,
+	0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x42, 0x49,
+	0x5a, 0x47, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x6c, 0x6f,
+	0x75, 0x64, 0x53, 0x74, 0x72, 0x69, 0x76, 0x65, 0x72, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63,
+	0x65, 0x2d, 0x69, 0x64, 0x6c, 0x2d, 0x67, 0x65, 0x6e, 0x2d, 0x67, 0x6f, 0x2f, 0x6b, 0x69, 0x74,
+	0x65, 0x78, 0x5f, 0x67, 0x65, 0x6e, 0x2f, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64,
+	0x2f, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x33,
 }
 
 var (
@@ -3609,7 +4010,7 @@ func file_cloudmind_core_api_content_proto_rawDescGZIP() []byte {
 	return file_cloudmind_core_api_content_proto_rawDescData
 }
 
-var file_cloudmind_core_api_content_proto_msgTypes = make([]protoimpl.MessageInfo, 64)
+var file_cloudmind_core_api_content_proto_msgTypes = make([]protoimpl.MessageInfo, 70)
 var file_cloudmind_core_api_content_proto_goTypes = []interface{}{
 	(*UpdateUserReq)(nil),              // 0: cloudmind.core_api.UpdateUserReq
 	(*UpdateUserResp)(nil),             // 1: cloudmind.core_api.UpdateUserResp
@@ -3657,87 +4058,93 @@ var file_cloudmind_core_api_content_proto_goTypes = []interface{}{
 	(*DeleteShareCodeResp)(nil),        // 43: cloudmind.core_api.DeleteShareCodeResp
 	(*ParsingShareCodeReq)(nil),        // 44: cloudmind.core_api.ParsingShareCodeReq
 	(*ParsingShareCodeResp)(nil),       // 45: cloudmind.core_api.ParsingShareCodeResp
-	(*GetUserReq)(nil),                 // 46: cloudmind.core_api.GetUserReq
-	(*GetUserResp)(nil),                // 47: cloudmind.core_api.GetUserResp
-	(*CreateUserReq)(nil),              // 48: cloudmind.core_api.CreateUserReq
-	(*CreateUserResp)(nil),             // 49: cloudmind.core_api.CreateUserResp
-	(*GetUserDetailReq)(nil),           // 50: cloudmind.core_api.GetUserDetailReq
-	(*GetUserDetailResp)(nil),          // 51: cloudmind.core_api.GetUserDetailResp
-	(*DeleteUserReq)(nil),              // 52: cloudmind.core_api.DeleteUserReq
-	(*DeleteUserResp)(nil),             // 53: cloudmind.core_api.DeleteUserResp
-	(*CreatePostReq)(nil),              // 54: cloudmind.core_api.CreatePostReq
-	(*CreatePostResp)(nil),             // 55: cloudmind.core_api.CreatePostResp
-	(*DeletePostReq)(nil),              // 56: cloudmind.core_api.DeletePostReq
-	(*DeletePostResp)(nil),             // 57: cloudmind.core_api.DeletePostResp
-	(*UpdatePostReq)(nil),              // 58: cloudmind.core_api.UpdatePostReq
-	(*UpdatePostResp)(nil),             // 59: cloudmind.core_api.UpdatePostResp
-	(*GetPostReq)(nil),                 // 60: cloudmind.core_api.GetPostReq
-	(*GetPostResp)(nil),                // 61: cloudmind.core_api.GetPostResp
-	(*GetPostsReq)(nil),                // 62: cloudmind.core_api.GetPostsReq
-	(*GetPostsResp)(nil),               // 63: cloudmind.core_api.GetPostsResp
-	(*UserDetail)(nil),                 // 64: cloudmind.core_api.UserDetail
-	(*basic.PaginationOptions)(nil),    // 65: basic.PaginationOptions
-	(*User)(nil),                       // 66: cloudmind.core_api.User
-	(*FileFilterOptions)(nil),          // 67: cloudmind.core_api.FileFilterOptions
-	(*FileInfo)(nil),                   // 68: cloudmind.core_api.FileInfo
-	(*SearchOptions)(nil),              // 69: cloudmind.core_api.SearchOptions
-	(*File)(nil),                       // 70: cloudmind.core_api.File
-	(DocumentType)(0),                  // 71: cloudmind.core_api.DocumentType
-	(IsDel)(0),                         // 72: cloudmind.core_api.IsDel
-	(*Zone)(nil),                       // 73: cloudmind.core_api.Zone
-	(*ShareFile)(nil),                  // 74: cloudmind.core_api.ShareFile
-	(*ShareFileFilterOptions)(nil),     // 75: cloudmind.core_api.ShareFileFilterOptions
-	(*ShareCode)(nil),                  // 76: cloudmind.core_api.ShareCode
-	(*UserInfo)(nil),                   // 77: cloudmind.core_api.UserInfo
-	(*PostInfo)(nil),                   // 78: cloudmind.core_api.PostInfo
-	(*Post)(nil),                       // 79: cloudmind.core_api.Post
-	(*PostFilterOptions)(nil),          // 80: cloudmind.core_api.PostFilterOptions
+	(*AskUploadFileReq)(nil),           // 46: cloudmind.core_api.AskUploadFileReq
+	(*AskUploadFileResp)(nil),          // 47: cloudmind.core_api.AskUploadFileResp
+	(*AskDownloadFileReq)(nil),         // 48: cloudmind.core_api.AskDownloadFileReq
+	(*AskDownloadFileResp)(nil),        // 49: cloudmind.core_api.AskDownloadFileResp
+	(*GetUserReq)(nil),                 // 50: cloudmind.core_api.GetUserReq
+	(*GetUserResp)(nil),                // 51: cloudmind.core_api.GetUserResp
+	(*CreateUserReq)(nil),              // 52: cloudmind.core_api.CreateUserReq
+	(*CreateUserResp)(nil),             // 53: cloudmind.core_api.CreateUserResp
+	(*GetUserDetailReq)(nil),           // 54: cloudmind.core_api.GetUserDetailReq
+	(*GetUserDetailResp)(nil),          // 55: cloudmind.core_api.GetUserDetailResp
+	(*DeleteUserReq)(nil),              // 56: cloudmind.core_api.DeleteUserReq
+	(*DeleteUserResp)(nil),             // 57: cloudmind.core_api.DeleteUserResp
+	(*AskUploadAvatarReq)(nil),         // 58: cloudmind.core_api.AskUploadAvatarReq
+	(*AskUploadAvatarResp)(nil),        // 59: cloudmind.core_api.AskUploadAvatarResp
+	(*CreatePostReq)(nil),              // 60: cloudmind.core_api.CreatePostReq
+	(*CreatePostResp)(nil),             // 61: cloudmind.core_api.CreatePostResp
+	(*DeletePostReq)(nil),              // 62: cloudmind.core_api.DeletePostReq
+	(*DeletePostResp)(nil),             // 63: cloudmind.core_api.DeletePostResp
+	(*UpdatePostReq)(nil),              // 64: cloudmind.core_api.UpdatePostReq
+	(*UpdatePostResp)(nil),             // 65: cloudmind.core_api.UpdatePostResp
+	(*GetPostReq)(nil),                 // 66: cloudmind.core_api.GetPostReq
+	(*GetPostResp)(nil),                // 67: cloudmind.core_api.GetPostResp
+	(*GetPostsReq)(nil),                // 68: cloudmind.core_api.GetPostsReq
+	(*GetPostsResp)(nil),               // 69: cloudmind.core_api.GetPostsResp
+	(*UserDetail)(nil),                 // 70: cloudmind.core_api.UserDetail
+	(*basic.PaginationOptions)(nil),    // 71: basic.PaginationOptions
+	(*User)(nil),                       // 72: cloudmind.core_api.User
+	(*FileFilterOptions)(nil),          // 73: cloudmind.core_api.FileFilterOptions
+	(*FileInfo)(nil),                   // 74: cloudmind.core_api.FileInfo
+	(*SearchOptions)(nil),              // 75: cloudmind.core_api.SearchOptions
+	(*File)(nil),                       // 76: cloudmind.core_api.File
+	(DocumentType)(0),                  // 77: cloudmind.core_api.DocumentType
+	(IsDel)(0),                         // 78: cloudmind.core_api.IsDel
+	(*Zone)(nil),                       // 79: cloudmind.core_api.Zone
+	(*ShareFile)(nil),                  // 80: cloudmind.core_api.ShareFile
+	(*ShareFileFilterOptions)(nil),     // 81: cloudmind.core_api.ShareFileFilterOptions
+	(*ShareCode)(nil),                  // 82: cloudmind.core_api.ShareCode
+	(*UserInfo)(nil),                   // 83: cloudmind.core_api.UserInfo
+	(*PostInfo)(nil),                   // 84: cloudmind.core_api.PostInfo
+	(*Post)(nil),                       // 85: cloudmind.core_api.Post
+	(*PostFilterOptions)(nil),          // 86: cloudmind.core_api.PostFilterOptions
 }
 var file_cloudmind_core_api_content_proto_depIdxs = []int32{
-	64, // 0: cloudmind.core_api.UpdateUserReq.userDetail:type_name -> cloudmind.core_api.UserDetail
-	65, // 1: cloudmind.core_api.SearchUserReq.paginationOptions:type_name -> basic.PaginationOptions
-	66, // 2: cloudmind.core_api.SearchUserResp.users:type_name -> cloudmind.core_api.User
-	67, // 3: cloudmind.core_api.GetFileReq.filterOptions:type_name -> cloudmind.core_api.FileFilterOptions
-	68, // 4: cloudmind.core_api.GetFileResp.file:type_name -> cloudmind.core_api.FileInfo
-	69, // 5: cloudmind.core_api.GetPrivateFilesReq.searchOptions:type_name -> cloudmind.core_api.SearchOptions
-	67, // 6: cloudmind.core_api.GetPrivateFilesReq.filterOptions:type_name -> cloudmind.core_api.FileFilterOptions
-	65, // 7: cloudmind.core_api.GetPrivateFilesReq.paginationOptions:type_name -> basic.PaginationOptions
-	68, // 8: cloudmind.core_api.GetPrivateFilesResp.files:type_name -> cloudmind.core_api.FileInfo
-	69, // 9: cloudmind.core_api.GetPublicFilesReq.searchOptions:type_name -> cloudmind.core_api.SearchOptions
-	67, // 10: cloudmind.core_api.GetPublicFilesReq.filterOptions:type_name -> cloudmind.core_api.FileFilterOptions
-	65, // 11: cloudmind.core_api.GetPublicFilesReq.paginationOptions:type_name -> basic.PaginationOptions
-	68, // 12: cloudmind.core_api.GetPublicFilesResp.files:type_name -> cloudmind.core_api.FileInfo
-	67, // 13: cloudmind.core_api.GetRecycleBinFilesReq.filterOptions:type_name -> cloudmind.core_api.FileFilterOptions
-	65, // 14: cloudmind.core_api.GetRecycleBinFilesReq.paginationOptions:type_name -> basic.PaginationOptions
-	68, // 15: cloudmind.core_api.GetRecycleBinFilesResp.files:type_name -> cloudmind.core_api.FileInfo
-	67, // 16: cloudmind.core_api.GetFileBySharingCodeReq.filterOptions:type_name -> cloudmind.core_api.FileFilterOptions
-	65, // 17: cloudmind.core_api.GetFileBySharingCodeReq.paginationOptions:type_name -> basic.PaginationOptions
-	68, // 18: cloudmind.core_api.GetFileBySharingCodeResp.files:type_name -> cloudmind.core_api.FileInfo
-	70, // 19: cloudmind.core_api.CreateFileReq.file:type_name -> cloudmind.core_api.File
-	70, // 20: cloudmind.core_api.UpdateFileReq.file:type_name -> cloudmind.core_api.File
-	71, // 21: cloudmind.core_api.SaveFileToPrivateSpaceReq.documentType:type_name -> cloudmind.core_api.DocumentType
-	70, // 22: cloudmind.core_api.AddFileToPublicSpaceReq.file:type_name -> cloudmind.core_api.File
-	72, // 23: cloudmind.core_api.DeleteFileReq.deleteType:type_name -> cloudmind.core_api.IsDel
-	73, // 24: cloudmind.core_api.CreateZoneReq.zone:type_name -> cloudmind.core_api.Zone
-	73, // 25: cloudmind.core_api.GetZoneResp.zone:type_name -> cloudmind.core_api.Zone
-	73, // 26: cloudmind.core_api.UpdateZoneReq.zone:type_name -> cloudmind.core_api.Zone
-	74, // 27: cloudmind.core_api.CreateShareCodeReq.shareFile:type_name -> cloudmind.core_api.ShareFile
-	75, // 28: cloudmind.core_api.GetShareListReq.shareFileFilterOptions:type_name -> cloudmind.core_api.ShareFileFilterOptions
-	65, // 29: cloudmind.core_api.GetShareListReq.paginationOptions:type_name -> basic.PaginationOptions
-	76, // 30: cloudmind.core_api.GetShareListResp.shareCodes:type_name -> cloudmind.core_api.ShareCode
-	74, // 31: cloudmind.core_api.UpdateShareCodeReq.shareFile:type_name -> cloudmind.core_api.ShareFile
-	75, // 32: cloudmind.core_api.DeleteShareCodeReq.shareFileFilterOptions:type_name -> cloudmind.core_api.ShareFileFilterOptions
-	74, // 33: cloudmind.core_api.ParsingShareCodeResp.shareFile:type_name -> cloudmind.core_api.ShareFile
-	66, // 34: cloudmind.core_api.GetUserResp.user:type_name -> cloudmind.core_api.User
-	77, // 35: cloudmind.core_api.CreateUserReq.userInfo:type_name -> cloudmind.core_api.UserInfo
-	64, // 36: cloudmind.core_api.GetUserDetailResp.userDetail:type_name -> cloudmind.core_api.UserDetail
-	78, // 37: cloudmind.core_api.CreatePostReq.postInfo:type_name -> cloudmind.core_api.PostInfo
-	78, // 38: cloudmind.core_api.UpdatePostReq.postInfo:type_name -> cloudmind.core_api.PostInfo
-	79, // 39: cloudmind.core_api.GetPostResp.post:type_name -> cloudmind.core_api.Post
-	69, // 40: cloudmind.core_api.GetPostsReq.searchOptions:type_name -> cloudmind.core_api.SearchOptions
-	80, // 41: cloudmind.core_api.GetPostsReq.postFilterOptions:type_name -> cloudmind.core_api.PostFilterOptions
-	65, // 42: cloudmind.core_api.GetPostsReq.paginationOptions:type_name -> basic.PaginationOptions
-	79, // 43: cloudmind.core_api.GetPostsResp.posts:type_name -> cloudmind.core_api.Post
+	70, // 0: cloudmind.core_api.UpdateUserReq.userDetail:type_name -> cloudmind.core_api.UserDetail
+	71, // 1: cloudmind.core_api.SearchUserReq.paginationOptions:type_name -> basic.PaginationOptions
+	72, // 2: cloudmind.core_api.SearchUserResp.users:type_name -> cloudmind.core_api.User
+	73, // 3: cloudmind.core_api.GetFileReq.filterOptions:type_name -> cloudmind.core_api.FileFilterOptions
+	74, // 4: cloudmind.core_api.GetFileResp.file:type_name -> cloudmind.core_api.FileInfo
+	75, // 5: cloudmind.core_api.GetPrivateFilesReq.searchOptions:type_name -> cloudmind.core_api.SearchOptions
+	73, // 6: cloudmind.core_api.GetPrivateFilesReq.filterOptions:type_name -> cloudmind.core_api.FileFilterOptions
+	71, // 7: cloudmind.core_api.GetPrivateFilesReq.paginationOptions:type_name -> basic.PaginationOptions
+	74, // 8: cloudmind.core_api.GetPrivateFilesResp.files:type_name -> cloudmind.core_api.FileInfo
+	75, // 9: cloudmind.core_api.GetPublicFilesReq.searchOptions:type_name -> cloudmind.core_api.SearchOptions
+	73, // 10: cloudmind.core_api.GetPublicFilesReq.filterOptions:type_name -> cloudmind.core_api.FileFilterOptions
+	71, // 11: cloudmind.core_api.GetPublicFilesReq.paginationOptions:type_name -> basic.PaginationOptions
+	74, // 12: cloudmind.core_api.GetPublicFilesResp.files:type_name -> cloudmind.core_api.FileInfo
+	73, // 13: cloudmind.core_api.GetRecycleBinFilesReq.filterOptions:type_name -> cloudmind.core_api.FileFilterOptions
+	71, // 14: cloudmind.core_api.GetRecycleBinFilesReq.paginationOptions:type_name -> basic.PaginationOptions
+	74, // 15: cloudmind.core_api.GetRecycleBinFilesResp.files:type_name -> cloudmind.core_api.FileInfo
+	73, // 16: cloudmind.core_api.GetFileBySharingCodeReq.filterOptions:type_name -> cloudmind.core_api.FileFilterOptions
+	71, // 17: cloudmind.core_api.GetFileBySharingCodeReq.paginationOptions:type_name -> basic.PaginationOptions
+	74, // 18: cloudmind.core_api.GetFileBySharingCodeResp.files:type_name -> cloudmind.core_api.FileInfo
+	76, // 19: cloudmind.core_api.CreateFileReq.file:type_name -> cloudmind.core_api.File
+	76, // 20: cloudmind.core_api.UpdateFileReq.file:type_name -> cloudmind.core_api.File
+	77, // 21: cloudmind.core_api.SaveFileToPrivateSpaceReq.documentType:type_name -> cloudmind.core_api.DocumentType
+	76, // 22: cloudmind.core_api.AddFileToPublicSpaceReq.file:type_name -> cloudmind.core_api.File
+	78, // 23: cloudmind.core_api.DeleteFileReq.deleteType:type_name -> cloudmind.core_api.IsDel
+	79, // 24: cloudmind.core_api.CreateZoneReq.zone:type_name -> cloudmind.core_api.Zone
+	79, // 25: cloudmind.core_api.GetZoneResp.zone:type_name -> cloudmind.core_api.Zone
+	79, // 26: cloudmind.core_api.UpdateZoneReq.zone:type_name -> cloudmind.core_api.Zone
+	80, // 27: cloudmind.core_api.CreateShareCodeReq.shareFile:type_name -> cloudmind.core_api.ShareFile
+	81, // 28: cloudmind.core_api.GetShareListReq.shareFileFilterOptions:type_name -> cloudmind.core_api.ShareFileFilterOptions
+	71, // 29: cloudmind.core_api.GetShareListReq.paginationOptions:type_name -> basic.PaginationOptions
+	82, // 30: cloudmind.core_api.GetShareListResp.shareCodes:type_name -> cloudmind.core_api.ShareCode
+	80, // 31: cloudmind.core_api.UpdateShareCodeReq.shareFile:type_name -> cloudmind.core_api.ShareFile
+	81, // 32: cloudmind.core_api.DeleteShareCodeReq.shareFileFilterOptions:type_name -> cloudmind.core_api.ShareFileFilterOptions
+	80, // 33: cloudmind.core_api.ParsingShareCodeResp.shareFile:type_name -> cloudmind.core_api.ShareFile
+	72, // 34: cloudmind.core_api.GetUserResp.user:type_name -> cloudmind.core_api.User
+	83, // 35: cloudmind.core_api.CreateUserReq.userInfo:type_name -> cloudmind.core_api.UserInfo
+	70, // 36: cloudmind.core_api.GetUserDetailResp.userDetail:type_name -> cloudmind.core_api.UserDetail
+	84, // 37: cloudmind.core_api.CreatePostReq.postInfo:type_name -> cloudmind.core_api.PostInfo
+	84, // 38: cloudmind.core_api.UpdatePostReq.postInfo:type_name -> cloudmind.core_api.PostInfo
+	85, // 39: cloudmind.core_api.GetPostResp.post:type_name -> cloudmind.core_api.Post
+	75, // 40: cloudmind.core_api.GetPostsReq.searchOptions:type_name -> cloudmind.core_api.SearchOptions
+	86, // 41: cloudmind.core_api.GetPostsReq.postFilterOptions:type_name -> cloudmind.core_api.PostFilterOptions
+	71, // 42: cloudmind.core_api.GetPostsReq.paginationOptions:type_name -> basic.PaginationOptions
+	85, // 43: cloudmind.core_api.GetPostsResp.posts:type_name -> cloudmind.core_api.Post
 	44, // [44:44] is the sub-list for method output_type
 	44, // [44:44] is the sub-list for method input_type
 	44, // [44:44] is the sub-list for extension type_name
@@ -4305,7 +4712,7 @@ func file_cloudmind_core_api_content_proto_init() {
 			}
 		}
 		file_cloudmind_core_api_content_proto_msgTypes[46].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetUserReq); i {
+			switch v := v.(*AskUploadFileReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4317,7 +4724,7 @@ func file_cloudmind_core_api_content_proto_init() {
 			}
 		}
 		file_cloudmind_core_api_content_proto_msgTypes[47].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetUserResp); i {
+			switch v := v.(*AskUploadFileResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4329,7 +4736,7 @@ func file_cloudmind_core_api_content_proto_init() {
 			}
 		}
 		file_cloudmind_core_api_content_proto_msgTypes[48].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateUserReq); i {
+			switch v := v.(*AskDownloadFileReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4341,7 +4748,7 @@ func file_cloudmind_core_api_content_proto_init() {
 			}
 		}
 		file_cloudmind_core_api_content_proto_msgTypes[49].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateUserResp); i {
+			switch v := v.(*AskDownloadFileResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4353,7 +4760,7 @@ func file_cloudmind_core_api_content_proto_init() {
 			}
 		}
 		file_cloudmind_core_api_content_proto_msgTypes[50].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetUserDetailReq); i {
+			switch v := v.(*GetUserReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4365,7 +4772,7 @@ func file_cloudmind_core_api_content_proto_init() {
 			}
 		}
 		file_cloudmind_core_api_content_proto_msgTypes[51].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetUserDetailResp); i {
+			switch v := v.(*GetUserResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4377,7 +4784,7 @@ func file_cloudmind_core_api_content_proto_init() {
 			}
 		}
 		file_cloudmind_core_api_content_proto_msgTypes[52].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeleteUserReq); i {
+			switch v := v.(*CreateUserReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4389,7 +4796,7 @@ func file_cloudmind_core_api_content_proto_init() {
 			}
 		}
 		file_cloudmind_core_api_content_proto_msgTypes[53].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeleteUserResp); i {
+			switch v := v.(*CreateUserResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4401,7 +4808,7 @@ func file_cloudmind_core_api_content_proto_init() {
 			}
 		}
 		file_cloudmind_core_api_content_proto_msgTypes[54].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreatePostReq); i {
+			switch v := v.(*GetUserDetailReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4413,7 +4820,7 @@ func file_cloudmind_core_api_content_proto_init() {
 			}
 		}
 		file_cloudmind_core_api_content_proto_msgTypes[55].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreatePostResp); i {
+			switch v := v.(*GetUserDetailResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4425,7 +4832,7 @@ func file_cloudmind_core_api_content_proto_init() {
 			}
 		}
 		file_cloudmind_core_api_content_proto_msgTypes[56].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeletePostReq); i {
+			switch v := v.(*DeleteUserReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4437,7 +4844,7 @@ func file_cloudmind_core_api_content_proto_init() {
 			}
 		}
 		file_cloudmind_core_api_content_proto_msgTypes[57].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeletePostResp); i {
+			switch v := v.(*DeleteUserResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4449,7 +4856,7 @@ func file_cloudmind_core_api_content_proto_init() {
 			}
 		}
 		file_cloudmind_core_api_content_proto_msgTypes[58].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdatePostReq); i {
+			switch v := v.(*AskUploadAvatarReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4461,7 +4868,7 @@ func file_cloudmind_core_api_content_proto_init() {
 			}
 		}
 		file_cloudmind_core_api_content_proto_msgTypes[59].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdatePostResp); i {
+			switch v := v.(*AskUploadAvatarResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4473,7 +4880,7 @@ func file_cloudmind_core_api_content_proto_init() {
 			}
 		}
 		file_cloudmind_core_api_content_proto_msgTypes[60].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetPostReq); i {
+			switch v := v.(*CreatePostReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4485,7 +4892,7 @@ func file_cloudmind_core_api_content_proto_init() {
 			}
 		}
 		file_cloudmind_core_api_content_proto_msgTypes[61].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetPostResp); i {
+			switch v := v.(*CreatePostResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4497,7 +4904,7 @@ func file_cloudmind_core_api_content_proto_init() {
 			}
 		}
 		file_cloudmind_core_api_content_proto_msgTypes[62].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetPostsReq); i {
+			switch v := v.(*DeletePostReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4509,6 +4916,78 @@ func file_cloudmind_core_api_content_proto_init() {
 			}
 		}
 		file_cloudmind_core_api_content_proto_msgTypes[63].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeletePostResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cloudmind_core_api_content_proto_msgTypes[64].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpdatePostReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cloudmind_core_api_content_proto_msgTypes[65].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpdatePostResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cloudmind_core_api_content_proto_msgTypes[66].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetPostReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cloudmind_core_api_content_proto_msgTypes[67].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetPostResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cloudmind_core_api_content_proto_msgTypes[68].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetPostsReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cloudmind_core_api_content_proto_msgTypes[69].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetPostsResp); i {
 			case 0:
 				return &v.state
@@ -4528,14 +5007,14 @@ func file_cloudmind_core_api_content_proto_init() {
 	file_cloudmind_core_api_content_proto_msgTypes[12].OneofWrappers = []interface{}{}
 	file_cloudmind_core_api_content_proto_msgTypes[38].OneofWrappers = []interface{}{}
 	file_cloudmind_core_api_content_proto_msgTypes[42].OneofWrappers = []interface{}{}
-	file_cloudmind_core_api_content_proto_msgTypes[62].OneofWrappers = []interface{}{}
+	file_cloudmind_core_api_content_proto_msgTypes[68].OneofWrappers = []interface{}{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_cloudmind_core_api_content_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   64,
+			NumMessages:   70,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

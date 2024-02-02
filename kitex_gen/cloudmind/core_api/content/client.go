@@ -15,6 +15,7 @@ type Client interface {
 	SearchUser(ctx context.Context, Req *core_api.SearchUserReq, callOptions ...callopt.Option) (r *core_api.SearchUserResp, err error)
 	GetUser(ctx context.Context, Req *core_api.GetUserReq, callOptions ...callopt.Option) (r *core_api.GetUserResp, err error)
 	GetUserDetail(ctx context.Context, Req *core_api.GetUserDetailReq, callOptions ...callopt.Option) (r *core_api.GetUserDetailResp, err error)
+	AskUploadAvatar(ctx context.Context, Req *core_api.AskUploadAvatarReq, callOptions ...callopt.Option) (r *core_api.AskUploadAvatarResp, err error)
 	GetPublicFile(ctx context.Context, Req *core_api.GetFileReq, callOptions ...callopt.Option) (r *core_api.GetFileResp, err error)
 	GetPrivateFile(ctx context.Context, Req *core_api.GetFileReq, callOptions ...callopt.Option) (r *core_api.GetFileResp, err error)
 	GetPrivateFiles(ctx context.Context, Req *core_api.GetPrivateFilesReq, callOptions ...callopt.Option) (r *core_api.GetPrivateFilesResp, err error)
@@ -36,6 +37,8 @@ type Client interface {
 	GetShareList(ctx context.Context, Req *core_api.GetShareListReq, callOptions ...callopt.Option) (r *core_api.GetShareListResp, err error)
 	DeleteShareCode(ctx context.Context, Req *core_api.DeleteShareCodeReq, callOptions ...callopt.Option) (r *core_api.DeleteShareCodeResp, err error)
 	ParsingShareCode(ctx context.Context, Req *core_api.ParsingShareCodeReq, callOptions ...callopt.Option) (r *core_api.ParsingShareCodeResp, err error)
+	AskUploadFile(ctx context.Context, Req *core_api.AskUploadFileReq, callOptions ...callopt.Option) (r *core_api.AskUploadFileResp, err error)
+	AskDownloadFile(ctx context.Context, Req *core_api.AskDownloadFileReq, callOptions ...callopt.Option) (r *core_api.AskDownloadFileResp, err error)
 	CreatePost(ctx context.Context, Req *core_api.CreatePostReq, callOptions ...callopt.Option) (r *core_api.CreatePostResp, err error)
 	DeletePost(ctx context.Context, Req *core_api.DeletePostReq, callOptions ...callopt.Option) (r *core_api.DeletePostResp, err error)
 	UpdatePost(ctx context.Context, Req *core_api.UpdatePostReq, callOptions ...callopt.Option) (r *core_api.UpdatePostResp, err error)
@@ -90,6 +93,11 @@ func (p *kContentClient) GetUser(ctx context.Context, Req *core_api.GetUserReq, 
 func (p *kContentClient) GetUserDetail(ctx context.Context, Req *core_api.GetUserDetailReq, callOptions ...callopt.Option) (r *core_api.GetUserDetailResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetUserDetail(ctx, Req)
+}
+
+func (p *kContentClient) AskUploadAvatar(ctx context.Context, Req *core_api.AskUploadAvatarReq, callOptions ...callopt.Option) (r *core_api.AskUploadAvatarResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.AskUploadAvatar(ctx, Req)
 }
 
 func (p *kContentClient) GetPublicFile(ctx context.Context, Req *core_api.GetFileReq, callOptions ...callopt.Option) (r *core_api.GetFileResp, err error) {
@@ -195,6 +203,16 @@ func (p *kContentClient) DeleteShareCode(ctx context.Context, Req *core_api.Dele
 func (p *kContentClient) ParsingShareCode(ctx context.Context, Req *core_api.ParsingShareCodeReq, callOptions ...callopt.Option) (r *core_api.ParsingShareCodeResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.ParsingShareCode(ctx, Req)
+}
+
+func (p *kContentClient) AskUploadFile(ctx context.Context, Req *core_api.AskUploadFileReq, callOptions ...callopt.Option) (r *core_api.AskUploadFileResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.AskUploadFile(ctx, Req)
+}
+
+func (p *kContentClient) AskDownloadFile(ctx context.Context, Req *core_api.AskDownloadFileReq, callOptions ...callopt.Option) (r *core_api.AskDownloadFileResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.AskDownloadFile(ctx, Req)
 }
 
 func (p *kContentClient) CreatePost(ctx context.Context, Req *core_api.CreatePostReq, callOptions ...callopt.Option) (r *core_api.CreatePostResp, err error) {

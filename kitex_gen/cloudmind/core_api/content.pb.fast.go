@@ -1596,6 +1596,166 @@ func (x *ParsingShareCodeResp) fastReadField1(buf []byte, _type int8) (offset in
 	return offset, nil
 }
 
+func (x *AskUploadFileReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_AskUploadFileReq[number], err)
+}
+
+func (x *AskUploadFileReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.Name, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *AskUploadFileReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.FileSize, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *AskUploadFileResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_AskUploadFileResp[number], err)
+}
+
+func (x *AskUploadFileResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.TmpSecretId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *AskUploadFileResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.TmpSecretKey, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *AskUploadFileResp) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.StartTime, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *AskUploadFileResp) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	x.ExpiredTime, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *AskUploadFileResp) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	x.SessionToken, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *AskDownloadFileReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_AskDownloadFileReq[number], err)
+}
+
+func (x *AskDownloadFileReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.FileIds = append(x.FileIds, v)
+	return offset, err
+}
+
+func (x *AskDownloadFileResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_AskDownloadFileResp[number], err)
+}
+
+func (x *AskDownloadFileResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Urls = append(x.Urls, v)
+	return offset, err
+}
+
 func (x *GetUserReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
@@ -1773,6 +1933,106 @@ func (x *DeleteUserResp) FastRead(buf []byte, _type int8, number int32) (offset 
 	return offset, nil
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+}
+
+func (x *AskUploadAvatarReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_AskUploadAvatarReq[number], err)
+}
+
+func (x *AskUploadAvatarReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.Name, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *AskUploadAvatarReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.AvatarSize, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *AskUploadAvatarResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_AskUploadAvatarResp[number], err)
+}
+
+func (x *AskUploadAvatarResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.TmpSecretId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *AskUploadAvatarResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.TmpSecretKey, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *AskUploadAvatarResp) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.StartTime, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *AskUploadAvatarResp) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	x.ExpiredTime, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *AskUploadAvatarResp) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	x.SessionToken, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
 }
 
 func (x *CreatePostReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -3064,6 +3324,119 @@ func (x *ParsingShareCodeResp) fastWriteField1(buf []byte) (offset int) {
 	return offset
 }
 
+func (x *AskUploadFileReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	return offset
+}
+
+func (x *AskUploadFileReq) fastWriteField1(buf []byte) (offset int) {
+	if x.Name == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetName())
+	return offset
+}
+
+func (x *AskUploadFileReq) fastWriteField2(buf []byte) (offset int) {
+	if x.FileSize == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetFileSize())
+	return offset
+}
+
+func (x *AskUploadFileResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
+	return offset
+}
+
+func (x *AskUploadFileResp) fastWriteField1(buf []byte) (offset int) {
+	if x.TmpSecretId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetTmpSecretId())
+	return offset
+}
+
+func (x *AskUploadFileResp) fastWriteField2(buf []byte) (offset int) {
+	if x.TmpSecretKey == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetTmpSecretKey())
+	return offset
+}
+
+func (x *AskUploadFileResp) fastWriteField3(buf []byte) (offset int) {
+	if x.StartTime == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetStartTime())
+	return offset
+}
+
+func (x *AskUploadFileResp) fastWriteField4(buf []byte) (offset int) {
+	if x.ExpiredTime == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetExpiredTime())
+	return offset
+}
+
+func (x *AskUploadFileResp) fastWriteField5(buf []byte) (offset int) {
+	if x.SessionToken == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 5, x.GetSessionToken())
+	return offset
+}
+
+func (x *AskDownloadFileReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *AskDownloadFileReq) fastWriteField1(buf []byte) (offset int) {
+	if len(x.FileIds) == 0 {
+		return offset
+	}
+	for i := range x.GetFileIds() {
+		offset += fastpb.WriteString(buf[offset:], 1, x.GetFileIds()[i])
+	}
+	return offset
+}
+
+func (x *AskDownloadFileResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *AskDownloadFileResp) fastWriteField1(buf []byte) (offset int) {
+	if len(x.Urls) == 0 {
+		return offset
+	}
+	for i := range x.GetUrls() {
+		offset += fastpb.WriteString(buf[offset:], 1, x.GetUrls()[i])
+	}
+	return offset
+}
+
 func (x *GetUserReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -3162,6 +3535,83 @@ func (x *DeleteUserResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
+	return offset
+}
+
+func (x *AskUploadAvatarReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	return offset
+}
+
+func (x *AskUploadAvatarReq) fastWriteField1(buf []byte) (offset int) {
+	if x.Name == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetName())
+	return offset
+}
+
+func (x *AskUploadAvatarReq) fastWriteField2(buf []byte) (offset int) {
+	if x.AvatarSize == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetAvatarSize())
+	return offset
+}
+
+func (x *AskUploadAvatarResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
+	return offset
+}
+
+func (x *AskUploadAvatarResp) fastWriteField1(buf []byte) (offset int) {
+	if x.TmpSecretId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetTmpSecretId())
+	return offset
+}
+
+func (x *AskUploadAvatarResp) fastWriteField2(buf []byte) (offset int) {
+	if x.TmpSecretKey == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetTmpSecretKey())
+	return offset
+}
+
+func (x *AskUploadAvatarResp) fastWriteField3(buf []byte) (offset int) {
+	if x.StartTime == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetStartTime())
+	return offset
+}
+
+func (x *AskUploadAvatarResp) fastWriteField4(buf []byte) (offset int) {
+	if x.ExpiredTime == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetExpiredTime())
+	return offset
+}
+
+func (x *AskUploadAvatarResp) fastWriteField5(buf []byte) (offset int) {
+	if x.SessionToken == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 5, x.GetSessionToken())
 	return offset
 }
 
@@ -4336,6 +4786,119 @@ func (x *ParsingShareCodeResp) sizeField1() (n int) {
 	return n
 }
 
+func (x *AskUploadFileReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	return n
+}
+
+func (x *AskUploadFileReq) sizeField1() (n int) {
+	if x.Name == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetName())
+	return n
+}
+
+func (x *AskUploadFileReq) sizeField2() (n int) {
+	if x.FileSize == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(2, x.GetFileSize())
+	return n
+}
+
+func (x *AskUploadFileResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
+	return n
+}
+
+func (x *AskUploadFileResp) sizeField1() (n int) {
+	if x.TmpSecretId == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetTmpSecretId())
+	return n
+}
+
+func (x *AskUploadFileResp) sizeField2() (n int) {
+	if x.TmpSecretKey == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetTmpSecretKey())
+	return n
+}
+
+func (x *AskUploadFileResp) sizeField3() (n int) {
+	if x.StartTime == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(3, x.GetStartTime())
+	return n
+}
+
+func (x *AskUploadFileResp) sizeField4() (n int) {
+	if x.ExpiredTime == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(4, x.GetExpiredTime())
+	return n
+}
+
+func (x *AskUploadFileResp) sizeField5() (n int) {
+	if x.SessionToken == "" {
+		return n
+	}
+	n += fastpb.SizeString(5, x.GetSessionToken())
+	return n
+}
+
+func (x *AskDownloadFileReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *AskDownloadFileReq) sizeField1() (n int) {
+	if len(x.FileIds) == 0 {
+		return n
+	}
+	for i := range x.GetFileIds() {
+		n += fastpb.SizeString(1, x.GetFileIds()[i])
+	}
+	return n
+}
+
+func (x *AskDownloadFileResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *AskDownloadFileResp) sizeField1() (n int) {
+	if len(x.Urls) == 0 {
+		return n
+	}
+	for i := range x.GetUrls() {
+		n += fastpb.SizeString(1, x.GetUrls()[i])
+	}
+	return n
+}
+
 func (x *GetUserReq) Size() (n int) {
 	if x == nil {
 		return n
@@ -4434,6 +4997,83 @@ func (x *DeleteUserResp) Size() (n int) {
 	if x == nil {
 		return n
 	}
+	return n
+}
+
+func (x *AskUploadAvatarReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	return n
+}
+
+func (x *AskUploadAvatarReq) sizeField1() (n int) {
+	if x.Name == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetName())
+	return n
+}
+
+func (x *AskUploadAvatarReq) sizeField2() (n int) {
+	if x.AvatarSize == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(2, x.GetAvatarSize())
+	return n
+}
+
+func (x *AskUploadAvatarResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
+	return n
+}
+
+func (x *AskUploadAvatarResp) sizeField1() (n int) {
+	if x.TmpSecretId == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetTmpSecretId())
+	return n
+}
+
+func (x *AskUploadAvatarResp) sizeField2() (n int) {
+	if x.TmpSecretKey == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetTmpSecretKey())
+	return n
+}
+
+func (x *AskUploadAvatarResp) sizeField3() (n int) {
+	if x.StartTime == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(3, x.GetStartTime())
+	return n
+}
+
+func (x *AskUploadAvatarResp) sizeField4() (n int) {
+	if x.ExpiredTime == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(4, x.GetExpiredTime())
+	return n
+}
+
+func (x *AskUploadAvatarResp) sizeField5() (n int) {
+	if x.SessionToken == "" {
+		return n
+	}
+	n += fastpb.SizeString(5, x.GetSessionToken())
 	return n
 }
 
@@ -4810,6 +5450,27 @@ var fieldIDToName_ParsingShareCodeResp = map[int32]string{
 	1: "ShareFile",
 }
 
+var fieldIDToName_AskUploadFileReq = map[int32]string{
+	1: "Name",
+	2: "FileSize",
+}
+
+var fieldIDToName_AskUploadFileResp = map[int32]string{
+	1: "TmpSecretId",
+	2: "TmpSecretKey",
+	3: "StartTime",
+	4: "ExpiredTime",
+	5: "SessionToken",
+}
+
+var fieldIDToName_AskDownloadFileReq = map[int32]string{
+	1: "FileIds",
+}
+
+var fieldIDToName_AskDownloadFileResp = map[int32]string{
+	1: "Urls",
+}
+
 var fieldIDToName_GetUserReq = map[int32]string{
 	1: "UserId",
 }
@@ -4835,6 +5496,19 @@ var fieldIDToName_DeleteUserReq = map[int32]string{
 }
 
 var fieldIDToName_DeleteUserResp = map[int32]string{}
+
+var fieldIDToName_AskUploadAvatarReq = map[int32]string{
+	1: "Name",
+	2: "AvatarSize",
+}
+
+var fieldIDToName_AskUploadAvatarResp = map[int32]string{
+	1: "TmpSecretId",
+	2: "TmpSecretKey",
+	3: "StartTime",
+	4: "ExpiredTime",
+	5: "SessionToken",
+}
 
 var fieldIDToName_CreatePostReq = map[int32]string{
 	1: "PostInfo",
