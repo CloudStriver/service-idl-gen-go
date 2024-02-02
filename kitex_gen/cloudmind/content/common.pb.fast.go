@@ -1694,7 +1694,7 @@ func (x *Coupon) fastReadField7(buf []byte, _type int8) (offset int, err error) 
 }
 
 func (x *Coupon) fastReadField8(buf []byte, _type int8) (offset int, err error) {
-	x.Desciption, offset, err = fastpb.ReadString(buf, _type)
+	x.Description, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -3128,10 +3128,10 @@ func (x *Coupon) fastWriteField7(buf []byte) (offset int) {
 }
 
 func (x *Coupon) fastWriteField8(buf []byte) (offset int) {
-	if x.Desciption == "" {
+	if x.Description == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 8, x.GetDesciption())
+	offset += fastpb.WriteString(buf[offset:], 8, x.GetDescription())
 	return offset
 }
 
@@ -4547,10 +4547,10 @@ func (x *Coupon) sizeField7() (n int) {
 }
 
 func (x *Coupon) sizeField8() (n int) {
-	if x.Desciption == "" {
+	if x.Description == "" {
 		return n
 	}
-	n += fastpb.SizeString(8, x.GetDesciption())
+	n += fastpb.SizeString(8, x.GetDescription())
 	return n
 }
 
@@ -4826,7 +4826,7 @@ var fieldIDToName_Coupon = map[int32]string{
 	5:  "CreateTime",
 	6:  "ExpireTime",
 	7:  "Name",
-	8:  "Desciption",
+	8:  "Description",
 	9:  "LowSumPrice",
 	10: "ProductType",
 	11: "Discount",
