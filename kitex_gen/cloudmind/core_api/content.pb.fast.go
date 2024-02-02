@@ -310,6 +310,11 @@ func (x *GetPrivateFilesResp) FastRead(buf []byte, _type int8, number int32) (of
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -344,7 +349,12 @@ func (x *GetPrivateFilesResp) fastReadField3(buf []byte, _type int8) (offset int
 }
 
 func (x *GetPrivateFilesResp) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	x.FatherPath, offset, err = fastpb.ReadString(buf, _type)
+	x.FatherNamePath, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *GetPrivateFilesResp) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	x.FatherIdPath, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -441,6 +451,11 @@ func (x *GetPublicFilesResp) FastRead(buf []byte, _type int8, number int32) (off
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -475,7 +490,12 @@ func (x *GetPublicFilesResp) fastReadField3(buf []byte, _type int8) (offset int,
 }
 
 func (x *GetPublicFilesResp) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	x.FatherPath, offset, err = fastpb.ReadString(buf, _type)
+	x.FatherNamePath, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *GetPublicFilesResp) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	x.FatherIdPath, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -2220,6 +2240,7 @@ func (x *GetPrivateFilesResp) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
 	return offset
 }
 
@@ -2250,10 +2271,18 @@ func (x *GetPrivateFilesResp) fastWriteField3(buf []byte) (offset int) {
 }
 
 func (x *GetPrivateFilesResp) fastWriteField4(buf []byte) (offset int) {
-	if x.FatherPath == "" {
+	if x.FatherNamePath == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 4, x.GetFatherPath())
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetFatherNamePath())
+	return offset
+}
+
+func (x *GetPrivateFilesResp) fastWriteField5(buf []byte) (offset int) {
+	if x.FatherIdPath == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 5, x.GetFatherIdPath())
 	return offset
 }
 
@@ -2308,6 +2337,7 @@ func (x *GetPublicFilesResp) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
 	return offset
 }
 
@@ -2338,10 +2368,18 @@ func (x *GetPublicFilesResp) fastWriteField3(buf []byte) (offset int) {
 }
 
 func (x *GetPublicFilesResp) fastWriteField4(buf []byte) (offset int) {
-	if x.FatherPath == "" {
+	if x.FatherNamePath == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 4, x.GetFatherPath())
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetFatherNamePath())
+	return offset
+}
+
+func (x *GetPublicFilesResp) fastWriteField5(buf []byte) (offset int) {
+	if x.FatherIdPath == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 5, x.GetFatherIdPath())
 	return offset
 }
 
@@ -3474,6 +3512,7 @@ func (x *GetPrivateFilesResp) Size() (n int) {
 	n += x.sizeField2()
 	n += x.sizeField3()
 	n += x.sizeField4()
+	n += x.sizeField5()
 	return n
 }
 
@@ -3504,10 +3543,18 @@ func (x *GetPrivateFilesResp) sizeField3() (n int) {
 }
 
 func (x *GetPrivateFilesResp) sizeField4() (n int) {
-	if x.FatherPath == "" {
+	if x.FatherNamePath == "" {
 		return n
 	}
-	n += fastpb.SizeString(4, x.GetFatherPath())
+	n += fastpb.SizeString(4, x.GetFatherNamePath())
+	return n
+}
+
+func (x *GetPrivateFilesResp) sizeField5() (n int) {
+	if x.FatherIdPath == "" {
+		return n
+	}
+	n += fastpb.SizeString(5, x.GetFatherIdPath())
 	return n
 }
 
@@ -3562,6 +3609,7 @@ func (x *GetPublicFilesResp) Size() (n int) {
 	n += x.sizeField2()
 	n += x.sizeField3()
 	n += x.sizeField4()
+	n += x.sizeField5()
 	return n
 }
 
@@ -3592,10 +3640,18 @@ func (x *GetPublicFilesResp) sizeField3() (n int) {
 }
 
 func (x *GetPublicFilesResp) sizeField4() (n int) {
-	if x.FatherPath == "" {
+	if x.FatherNamePath == "" {
 		return n
 	}
-	n += fastpb.SizeString(4, x.GetFatherPath())
+	n += fastpb.SizeString(4, x.GetFatherNamePath())
+	return n
+}
+
+func (x *GetPublicFilesResp) sizeField5() (n int) {
+	if x.FatherIdPath == "" {
+		return n
+	}
+	n += fastpb.SizeString(5, x.GetFatherIdPath())
 	return n
 }
 
@@ -4589,7 +4645,8 @@ var fieldIDToName_GetPrivateFilesResp = map[int32]string{
 	1: "Files",
 	2: "Total",
 	3: "Token",
-	4: "FatherPath",
+	4: "FatherNamePath",
+	5: "FatherIdPath",
 }
 
 var fieldIDToName_GetPublicFilesReq = map[int32]string{
@@ -4603,7 +4660,8 @@ var fieldIDToName_GetPublicFilesResp = map[int32]string{
 	1: "Files",
 	2: "Total",
 	3: "Token",
-	4: "FatherPath",
+	4: "FatherNamePath",
+	5: "FatherIdPath",
 }
 
 var fieldIDToName_GetRecycleBinFilesReq = map[int32]string{
