@@ -230,6 +230,11 @@ func (x *GetFileListResp) FastRead(buf []byte, _type int8, number int32) (offset
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -264,7 +269,12 @@ func (x *GetFileListResp) fastReadField3(buf []byte, _type int8) (offset int, er
 }
 
 func (x *GetFileListResp) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	x.FatherPath, offset, err = fastpb.ReadString(buf, _type)
+	x.FatherNamePath, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *GetFileListResp) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	x.FatherIdPath, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -3112,6 +3122,7 @@ func (x *GetFileListResp) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
 	return offset
 }
 
@@ -3142,10 +3153,18 @@ func (x *GetFileListResp) fastWriteField3(buf []byte) (offset int) {
 }
 
 func (x *GetFileListResp) fastWriteField4(buf []byte) (offset int) {
-	if x.FatherPath == "" {
+	if x.FatherNamePath == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 4, x.GetFatherPath())
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetFatherNamePath())
+	return offset
+}
+
+func (x *GetFileListResp) fastWriteField5(buf []byte) (offset int) {
+	if x.FatherIdPath == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 5, x.GetFatherIdPath())
 	return offset
 }
 
@@ -4914,6 +4933,7 @@ func (x *GetFileListResp) Size() (n int) {
 	n += x.sizeField2()
 	n += x.sizeField3()
 	n += x.sizeField4()
+	n += x.sizeField5()
 	return n
 }
 
@@ -4944,10 +4964,18 @@ func (x *GetFileListResp) sizeField3() (n int) {
 }
 
 func (x *GetFileListResp) sizeField4() (n int) {
-	if x.FatherPath == "" {
+	if x.FatherNamePath == "" {
 		return n
 	}
-	n += fastpb.SizeString(4, x.GetFatherPath())
+	n += fastpb.SizeString(4, x.GetFatherNamePath())
+	return n
+}
+
+func (x *GetFileListResp) sizeField5() (n int) {
+	if x.FatherIdPath == "" {
+		return n
+	}
+	n += fastpb.SizeString(5, x.GetFatherIdPath())
 	return n
 }
 
@@ -6620,7 +6648,8 @@ var fieldIDToName_GetFileListResp = map[int32]string{
 	1: "Files",
 	2: "Total",
 	3: "Token",
-	4: "FatherPath",
+	4: "FatherNamePath",
+	5: "FatherIdPath",
 }
 
 var fieldIDToName_GetFolderSizeReq = map[int32]string{
