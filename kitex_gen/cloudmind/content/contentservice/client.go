@@ -14,7 +14,6 @@ type Client interface {
 	GetFileIsExist(ctx context.Context, Req *content.GetFileIsExistReq, callOptions ...callopt.Option) (r *content.GetFileIsExistResp, err error)
 	GetFile(ctx context.Context, Req *content.GetFileReq, callOptions ...callopt.Option) (r *content.GetFileResp, err error)
 	GetFileList(ctx context.Context, Req *content.GetFileListReq, callOptions ...callopt.Option) (r *content.GetFileListResp, err error)
-	GetFileCount(ctx context.Context, Req *content.GetFileCountReq, callOptions ...callopt.Option) (r *content.GetFileCountResp, err error)
 	GetFileBySharingCode(ctx context.Context, Req *content.GetFileBySharingCodeReq, callOptions ...callopt.Option) (r *content.GetFileBySharingCodeResp, err error)
 	GetFolderSize(ctx context.Context, Req *content.GetFolderSizeReq, callOptions ...callopt.Option) (r *content.GetFolderSizeResp, err error)
 	UpdateFile(ctx context.Context, Req *content.UpdateFileReq, callOptions ...callopt.Option) (r *content.UpdateFileResp, err error)
@@ -104,11 +103,6 @@ func (p *kContentServiceClient) GetFile(ctx context.Context, Req *content.GetFil
 func (p *kContentServiceClient) GetFileList(ctx context.Context, Req *content.GetFileListReq, callOptions ...callopt.Option) (r *content.GetFileListResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetFileList(ctx, Req)
-}
-
-func (p *kContentServiceClient) GetFileCount(ctx context.Context, Req *content.GetFileCountReq, callOptions ...callopt.Option) (r *content.GetFileCountResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.GetFileCount(ctx, Req)
 }
 
 func (p *kContentServiceClient) GetFileBySharingCode(ctx context.Context, Req *content.GetFileBySharingCodeReq, callOptions ...callopt.Option) (r *content.GetFileBySharingCodeResp, err error) {

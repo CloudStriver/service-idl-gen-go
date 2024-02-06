@@ -24,7 +24,6 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"GetFileIsExist":         kitex.NewMethodInfo(getFileIsExistHandler, newGetFileIsExistArgs, newGetFileIsExistResult, false),
 		"GetFile":                kitex.NewMethodInfo(getFileHandler, newGetFileArgs, newGetFileResult, false),
 		"GetFileList":            kitex.NewMethodInfo(getFileListHandler, newGetFileListArgs, newGetFileListResult, false),
-		"GetFileCount":           kitex.NewMethodInfo(getFileCountHandler, newGetFileCountArgs, newGetFileCountResult, false),
 		"GetFileBySharingCode":   kitex.NewMethodInfo(getFileBySharingCodeHandler, newGetFileBySharingCodeArgs, newGetFileBySharingCodeResult, false),
 		"GetFolderSize":          kitex.NewMethodInfo(getFolderSizeHandler, newGetFolderSizeArgs, newGetFolderSizeResult, false),
 		"UpdateFile":             kitex.NewMethodInfo(updateFileHandler, newUpdateFileArgs, newUpdateFileResult, false),
@@ -542,159 +541,6 @@ func (p *GetFileListResult) IsSetSuccess() bool {
 }
 
 func (p *GetFileListResult) GetResult() interface{} {
-	return p.Success
-}
-
-func getFileCountHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	switch s := arg.(type) {
-	case *streaming.Args:
-		st := s.Stream
-		req := new(content.GetFileCountReq)
-		if err := st.RecvMsg(req); err != nil {
-			return err
-		}
-		resp, err := handler.(content.ContentService).GetFileCount(ctx, req)
-		if err != nil {
-			return err
-		}
-		if err := st.SendMsg(resp); err != nil {
-			return err
-		}
-	case *GetFileCountArgs:
-		success, err := handler.(content.ContentService).GetFileCount(ctx, s.Req)
-		if err != nil {
-			return err
-		}
-		realResult := result.(*GetFileCountResult)
-		realResult.Success = success
-	}
-	return nil
-}
-func newGetFileCountArgs() interface{} {
-	return &GetFileCountArgs{}
-}
-
-func newGetFileCountResult() interface{} {
-	return &GetFileCountResult{}
-}
-
-type GetFileCountArgs struct {
-	Req *content.GetFileCountReq
-}
-
-func (p *GetFileCountArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetReq() {
-		p.Req = new(content.GetFileCountReq)
-	}
-	return p.Req.FastRead(buf, _type, number)
-}
-
-func (p *GetFileCountArgs) FastWrite(buf []byte) (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.FastWrite(buf)
-}
-
-func (p *GetFileCountArgs) Size() (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.Size()
-}
-
-func (p *GetFileCountArgs) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetReq() {
-		return out, nil
-	}
-	return proto.Marshal(p.Req)
-}
-
-func (p *GetFileCountArgs) Unmarshal(in []byte) error {
-	msg := new(content.GetFileCountReq)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Req = msg
-	return nil
-}
-
-var GetFileCountArgs_Req_DEFAULT *content.GetFileCountReq
-
-func (p *GetFileCountArgs) GetReq() *content.GetFileCountReq {
-	if !p.IsSetReq() {
-		return GetFileCountArgs_Req_DEFAULT
-	}
-	return p.Req
-}
-
-func (p *GetFileCountArgs) IsSetReq() bool {
-	return p.Req != nil
-}
-
-func (p *GetFileCountArgs) GetFirstArgument() interface{} {
-	return p.Req
-}
-
-type GetFileCountResult struct {
-	Success *content.GetFileCountResp
-}
-
-var GetFileCountResult_Success_DEFAULT *content.GetFileCountResp
-
-func (p *GetFileCountResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetSuccess() {
-		p.Success = new(content.GetFileCountResp)
-	}
-	return p.Success.FastRead(buf, _type, number)
-}
-
-func (p *GetFileCountResult) FastWrite(buf []byte) (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.FastWrite(buf)
-}
-
-func (p *GetFileCountResult) Size() (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.Size()
-}
-
-func (p *GetFileCountResult) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetSuccess() {
-		return out, nil
-	}
-	return proto.Marshal(p.Success)
-}
-
-func (p *GetFileCountResult) Unmarshal(in []byte) error {
-	msg := new(content.GetFileCountResp)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Success = msg
-	return nil
-}
-
-func (p *GetFileCountResult) GetSuccess() *content.GetFileCountResp {
-	if !p.IsSetSuccess() {
-		return GetFileCountResult_Success_DEFAULT
-	}
-	return p.Success
-}
-
-func (p *GetFileCountResult) SetSuccess(x interface{}) {
-	p.Success = x.(*content.GetFileCountResp)
-}
-
-func (p *GetFileCountResult) IsSetSuccess() bool {
-	return p.Success != nil
-}
-
-func (p *GetFileCountResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -7618,16 +7464,6 @@ func (p *kClient) GetFileList(ctx context.Context, Req *content.GetFileListReq) 
 	_args.Req = Req
 	var _result GetFileListResult
 	if err = p.c.Call(ctx, "GetFileList", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
-}
-
-func (p *kClient) GetFileCount(ctx context.Context, Req *content.GetFileCountReq) (r *content.GetFileCountResp, err error) {
-	var _args GetFileCountArgs
-	_args.Req = Req
-	var _result GetFileCountResult
-	if err = p.c.Call(ctx, "GetFileCount", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
