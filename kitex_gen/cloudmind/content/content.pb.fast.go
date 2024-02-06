@@ -420,6 +420,11 @@ func (x *GetFileBySharingCodeReq) FastRead(buf []byte, _type int8, number int32)
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -439,6 +444,11 @@ func (x *GetFileBySharingCodeReq) fastReadField1(buf []byte, _type int8) (offset
 }
 
 func (x *GetFileBySharingCodeReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.Key, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *GetFileBySharingCodeReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	var v FileFilterOptions
 	offset, err = fastpb.ReadMessage(buf, _type, &v)
 	if err != nil {
@@ -448,7 +458,7 @@ func (x *GetFileBySharingCodeReq) fastReadField2(buf []byte, _type int8) (offset
 	return offset, nil
 }
 
-func (x *GetFileBySharingCodeReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+func (x *GetFileBySharingCodeReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
 	var v basic.PaginationOptions
 	offset, err = fastpb.ReadMessage(buf, _type, &v)
 	if err != nil {
@@ -3248,6 +3258,7 @@ func (x *GetFileBySharingCodeReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
 	return offset
 }
 
@@ -3260,18 +3271,26 @@ func (x *GetFileBySharingCodeReq) fastWriteField1(buf []byte) (offset int) {
 }
 
 func (x *GetFileBySharingCodeReq) fastWriteField2(buf []byte) (offset int) {
-	if x.FilterOptions == nil {
+	if x.Key == "" {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 2, x.GetFilterOptions())
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetKey())
 	return offset
 }
 
 func (x *GetFileBySharingCodeReq) fastWriteField3(buf []byte) (offset int) {
+	if x.FilterOptions == nil {
+		return offset
+	}
+	offset += fastpb.WriteMessage(buf[offset:], 3, x.GetFilterOptions())
+	return offset
+}
+
+func (x *GetFileBySharingCodeReq) fastWriteField4(buf []byte) (offset int) {
 	if x.PaginationOptions == nil {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 3, x.GetPaginationOptions())
+	offset += fastpb.WriteMessage(buf[offset:], 4, x.GetPaginationOptions())
 	return offset
 }
 
@@ -5059,6 +5078,7 @@ func (x *GetFileBySharingCodeReq) Size() (n int) {
 	n += x.sizeField1()
 	n += x.sizeField2()
 	n += x.sizeField3()
+	n += x.sizeField4()
 	return n
 }
 
@@ -5071,18 +5091,26 @@ func (x *GetFileBySharingCodeReq) sizeField1() (n int) {
 }
 
 func (x *GetFileBySharingCodeReq) sizeField2() (n int) {
-	if x.FilterOptions == nil {
+	if x.Key == "" {
 		return n
 	}
-	n += fastpb.SizeMessage(2, x.GetFilterOptions())
+	n += fastpb.SizeString(2, x.GetKey())
 	return n
 }
 
 func (x *GetFileBySharingCodeReq) sizeField3() (n int) {
+	if x.FilterOptions == nil {
+		return n
+	}
+	n += fastpb.SizeMessage(3, x.GetFilterOptions())
+	return n
+}
+
+func (x *GetFileBySharingCodeReq) sizeField4() (n int) {
 	if x.PaginationOptions == nil {
 		return n
 	}
-	n += fastpb.SizeMessage(3, x.GetPaginationOptions())
+	n += fastpb.SizeMessage(4, x.GetPaginationOptions())
 	return n
 }
 
@@ -6671,8 +6699,9 @@ var fieldIDToName_GetFileCountResp = map[int32]string{
 
 var fieldIDToName_GetFileBySharingCodeReq = map[int32]string{
 	1: "SharingCode",
-	2: "FilterOptions",
-	3: "PaginationOptions",
+	2: "Key",
+	3: "FilterOptions",
+	4: "PaginationOptions",
 }
 
 var fieldIDToName_GetFileBySharingCodeResp = map[int32]string{

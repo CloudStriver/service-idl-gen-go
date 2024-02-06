@@ -38,6 +38,7 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"SaveFileToPrivateSpace": kitex.NewMethodInfo(saveFileToPrivateSpaceHandler, newSaveFileToPrivateSpaceArgs, newSaveFileToPrivateSpaceResult, false),
 		"AddFileToPublicSpace":   kitex.NewMethodInfo(addFileToPublicSpaceHandler, newAddFileToPublicSpaceArgs, newAddFileToPublicSpaceResult, false),
 		"DeleteFile":             kitex.NewMethodInfo(deleteFileHandler, newDeleteFileArgs, newDeleteFileResult, false),
+		"CompletelyRemoveFile":   kitex.NewMethodInfo(completelyRemoveFileHandler, newCompletelyRemoveFileArgs, newCompletelyRemoveFileResult, false),
 		"RecoverRecycleBinFile":  kitex.NewMethodInfo(recoverRecycleBinFileHandler, newRecoverRecycleBinFileArgs, newRecoverRecycleBinFileResult, false),
 		"CreateZone":             kitex.NewMethodInfo(createZoneHandler, newCreateZoneArgs, newCreateZoneResult, false),
 		"UpdateZone":             kitex.NewMethodInfo(updateZoneHandler, newUpdateZoneArgs, newUpdateZoneResult, false),
@@ -839,7 +840,7 @@ func getPublicFileHandler(ctx context.Context, handler interface{}, arg, result 
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(core_api.GetFileReq)
+		req := new(core_api.GetPublicFilesReq)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
@@ -869,12 +870,12 @@ func newGetPublicFileResult() interface{} {
 }
 
 type GetPublicFileArgs struct {
-	Req *core_api.GetFileReq
+	Req *core_api.GetPublicFilesReq
 }
 
 func (p *GetPublicFileArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(core_api.GetFileReq)
+		p.Req = new(core_api.GetPublicFilesReq)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
@@ -901,7 +902,7 @@ func (p *GetPublicFileArgs) Marshal(out []byte) ([]byte, error) {
 }
 
 func (p *GetPublicFileArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.GetFileReq)
+	msg := new(core_api.GetPublicFilesReq)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -909,9 +910,9 @@ func (p *GetPublicFileArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var GetPublicFileArgs_Req_DEFAULT *core_api.GetFileReq
+var GetPublicFileArgs_Req_DEFAULT *core_api.GetPublicFilesReq
 
-func (p *GetPublicFileArgs) GetReq() *core_api.GetFileReq {
+func (p *GetPublicFileArgs) GetReq() *core_api.GetPublicFilesReq {
 	if !p.IsSetReq() {
 		return GetPublicFileArgs_Req_DEFAULT
 	}
@@ -927,14 +928,14 @@ func (p *GetPublicFileArgs) GetFirstArgument() interface{} {
 }
 
 type GetPublicFileResult struct {
-	Success *core_api.GetFileResp
+	Success *core_api.GetPublicFilesResp
 }
 
-var GetPublicFileResult_Success_DEFAULT *core_api.GetFileResp
+var GetPublicFileResult_Success_DEFAULT *core_api.GetPublicFilesResp
 
 func (p *GetPublicFileResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(core_api.GetFileResp)
+		p.Success = new(core_api.GetPublicFilesResp)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
@@ -961,7 +962,7 @@ func (p *GetPublicFileResult) Marshal(out []byte) ([]byte, error) {
 }
 
 func (p *GetPublicFileResult) Unmarshal(in []byte) error {
-	msg := new(core_api.GetFileResp)
+	msg := new(core_api.GetPublicFilesResp)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -969,7 +970,7 @@ func (p *GetPublicFileResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *GetPublicFileResult) GetSuccess() *core_api.GetFileResp {
+func (p *GetPublicFileResult) GetSuccess() *core_api.GetPublicFilesResp {
 	if !p.IsSetSuccess() {
 		return GetPublicFileResult_Success_DEFAULT
 	}
@@ -977,7 +978,7 @@ func (p *GetPublicFileResult) GetSuccess() *core_api.GetFileResp {
 }
 
 func (p *GetPublicFileResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.GetFileResp)
+	p.Success = x.(*core_api.GetPublicFilesResp)
 }
 
 func (p *GetPublicFileResult) IsSetSuccess() bool {
@@ -992,7 +993,7 @@ func getPrivateFileHandler(ctx context.Context, handler interface{}, arg, result
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(core_api.GetFileReq)
+		req := new(core_api.GetPrivateFileReq)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
@@ -1022,12 +1023,12 @@ func newGetPrivateFileResult() interface{} {
 }
 
 type GetPrivateFileArgs struct {
-	Req *core_api.GetFileReq
+	Req *core_api.GetPrivateFileReq
 }
 
 func (p *GetPrivateFileArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(core_api.GetFileReq)
+		p.Req = new(core_api.GetPrivateFileReq)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
@@ -1054,7 +1055,7 @@ func (p *GetPrivateFileArgs) Marshal(out []byte) ([]byte, error) {
 }
 
 func (p *GetPrivateFileArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.GetFileReq)
+	msg := new(core_api.GetPrivateFileReq)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -1062,9 +1063,9 @@ func (p *GetPrivateFileArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var GetPrivateFileArgs_Req_DEFAULT *core_api.GetFileReq
+var GetPrivateFileArgs_Req_DEFAULT *core_api.GetPrivateFileReq
 
-func (p *GetPrivateFileArgs) GetReq() *core_api.GetFileReq {
+func (p *GetPrivateFileArgs) GetReq() *core_api.GetPrivateFileReq {
 	if !p.IsSetReq() {
 		return GetPrivateFileArgs_Req_DEFAULT
 	}
@@ -1080,14 +1081,14 @@ func (p *GetPrivateFileArgs) GetFirstArgument() interface{} {
 }
 
 type GetPrivateFileResult struct {
-	Success *core_api.GetFileResp
+	Success *core_api.GetPrivateFileResp
 }
 
-var GetPrivateFileResult_Success_DEFAULT *core_api.GetFileResp
+var GetPrivateFileResult_Success_DEFAULT *core_api.GetPrivateFileResp
 
 func (p *GetPrivateFileResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(core_api.GetFileResp)
+		p.Success = new(core_api.GetPrivateFileResp)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
@@ -1114,7 +1115,7 @@ func (p *GetPrivateFileResult) Marshal(out []byte) ([]byte, error) {
 }
 
 func (p *GetPrivateFileResult) Unmarshal(in []byte) error {
-	msg := new(core_api.GetFileResp)
+	msg := new(core_api.GetPrivateFileResp)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -1122,7 +1123,7 @@ func (p *GetPrivateFileResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *GetPrivateFileResult) GetSuccess() *core_api.GetFileResp {
+func (p *GetPrivateFileResult) GetSuccess() *core_api.GetPrivateFileResp {
 	if !p.IsSetSuccess() {
 		return GetPrivateFileResult_Success_DEFAULT
 	}
@@ -1130,7 +1131,7 @@ func (p *GetPrivateFileResult) GetSuccess() *core_api.GetFileResp {
 }
 
 func (p *GetPrivateFileResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.GetFileResp)
+	p.Success = x.(*core_api.GetPrivateFileResp)
 }
 
 func (p *GetPrivateFileResult) IsSetSuccess() bool {
@@ -2668,6 +2669,159 @@ func (p *DeleteFileResult) IsSetSuccess() bool {
 }
 
 func (p *DeleteFileResult) GetResult() interface{} {
+	return p.Success
+}
+
+func completelyRemoveFileHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.CompletelyRemoveFileReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Content).CompletelyRemoveFile(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *CompletelyRemoveFileArgs:
+		success, err := handler.(core_api.Content).CompletelyRemoveFile(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*CompletelyRemoveFileResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newCompletelyRemoveFileArgs() interface{} {
+	return &CompletelyRemoveFileArgs{}
+}
+
+func newCompletelyRemoveFileResult() interface{} {
+	return &CompletelyRemoveFileResult{}
+}
+
+type CompletelyRemoveFileArgs struct {
+	Req *core_api.CompletelyRemoveFileReq
+}
+
+func (p *CompletelyRemoveFileArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.CompletelyRemoveFileReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *CompletelyRemoveFileArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *CompletelyRemoveFileArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *CompletelyRemoveFileArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *CompletelyRemoveFileArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.CompletelyRemoveFileReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var CompletelyRemoveFileArgs_Req_DEFAULT *core_api.CompletelyRemoveFileReq
+
+func (p *CompletelyRemoveFileArgs) GetReq() *core_api.CompletelyRemoveFileReq {
+	if !p.IsSetReq() {
+		return CompletelyRemoveFileArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *CompletelyRemoveFileArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *CompletelyRemoveFileArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type CompletelyRemoveFileResult struct {
+	Success *core_api.CompletelyRemoveFileReq
+}
+
+var CompletelyRemoveFileResult_Success_DEFAULT *core_api.CompletelyRemoveFileReq
+
+func (p *CompletelyRemoveFileResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.CompletelyRemoveFileReq)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *CompletelyRemoveFileResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *CompletelyRemoveFileResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *CompletelyRemoveFileResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *CompletelyRemoveFileResult) Unmarshal(in []byte) error {
+	msg := new(core_api.CompletelyRemoveFileReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *CompletelyRemoveFileResult) GetSuccess() *core_api.CompletelyRemoveFileReq {
+	if !p.IsSetSuccess() {
+		return CompletelyRemoveFileResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *CompletelyRemoveFileResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.CompletelyRemoveFileReq)
+}
+
+func (p *CompletelyRemoveFileResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *CompletelyRemoveFileResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -5179,7 +5333,7 @@ func (p *kClient) AskUploadAvatar(ctx context.Context, Req *core_api.AskUploadAv
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) GetPublicFile(ctx context.Context, Req *core_api.GetFileReq) (r *core_api.GetFileResp, err error) {
+func (p *kClient) GetPublicFile(ctx context.Context, Req *core_api.GetPublicFilesReq) (r *core_api.GetPublicFilesResp, err error) {
 	var _args GetPublicFileArgs
 	_args.Req = Req
 	var _result GetPublicFileResult
@@ -5189,7 +5343,7 @@ func (p *kClient) GetPublicFile(ctx context.Context, Req *core_api.GetFileReq) (
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) GetPrivateFile(ctx context.Context, Req *core_api.GetFileReq) (r *core_api.GetFileResp, err error) {
+func (p *kClient) GetPrivateFile(ctx context.Context, Req *core_api.GetPrivateFileReq) (r *core_api.GetPrivateFileResp, err error) {
 	var _args GetPrivateFileArgs
 	_args.Req = Req
 	var _result GetPrivateFileResult
@@ -5294,6 +5448,16 @@ func (p *kClient) DeleteFile(ctx context.Context, Req *core_api.DeleteFileReq) (
 	_args.Req = Req
 	var _result DeleteFileResult
 	if err = p.c.Call(ctx, "DeleteFile", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CompletelyRemoveFile(ctx context.Context, Req *core_api.CompletelyRemoveFileReq) (r *core_api.CompletelyRemoveFileReq, err error) {
+	var _args CompletelyRemoveFileArgs
+	_args.Req = Req
+	var _result CompletelyRemoveFileResult
+	if err = p.c.Call(ctx, "CompletelyRemoveFile", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

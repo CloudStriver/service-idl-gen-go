@@ -16,8 +16,8 @@ type Client interface {
 	GetUser(ctx context.Context, Req *core_api.GetUserReq, callOptions ...callopt.Option) (r *core_api.GetUserResp, err error)
 	GetUserDetail(ctx context.Context, Req *core_api.GetUserDetailReq, callOptions ...callopt.Option) (r *core_api.GetUserDetailResp, err error)
 	AskUploadAvatar(ctx context.Context, Req *core_api.AskUploadAvatarReq, callOptions ...callopt.Option) (r *core_api.AskUploadAvatarResp, err error)
-	GetPublicFile(ctx context.Context, Req *core_api.GetFileReq, callOptions ...callopt.Option) (r *core_api.GetFileResp, err error)
-	GetPrivateFile(ctx context.Context, Req *core_api.GetFileReq, callOptions ...callopt.Option) (r *core_api.GetFileResp, err error)
+	GetPublicFile(ctx context.Context, Req *core_api.GetPublicFilesReq, callOptions ...callopt.Option) (r *core_api.GetPublicFilesResp, err error)
+	GetPrivateFile(ctx context.Context, Req *core_api.GetPrivateFileReq, callOptions ...callopt.Option) (r *core_api.GetPrivateFileResp, err error)
 	GetPrivateFiles(ctx context.Context, Req *core_api.GetPrivateFilesReq, callOptions ...callopt.Option) (r *core_api.GetPrivateFilesResp, err error)
 	GetPublicFiles(ctx context.Context, Req *core_api.GetPublicFilesReq, callOptions ...callopt.Option) (r *core_api.GetPublicFilesResp, err error)
 	GetRecycleBinFiles(ctx context.Context, Req *core_api.GetRecycleBinFilesReq, callOptions ...callopt.Option) (r *core_api.GetRecycleBinFilesResp, err error)
@@ -28,6 +28,7 @@ type Client interface {
 	SaveFileToPrivateSpace(ctx context.Context, Req *core_api.SaveFileToPrivateSpaceReq, callOptions ...callopt.Option) (r *core_api.SaveFileToPrivateSpaceResp, err error)
 	AddFileToPublicSpace(ctx context.Context, Req *core_api.AddFileToPublicSpaceReq, callOptions ...callopt.Option) (r *core_api.AddFileToPublicSpaceResp, err error)
 	DeleteFile(ctx context.Context, Req *core_api.DeleteFileReq, callOptions ...callopt.Option) (r *core_api.DeleteFileResp, err error)
+	CompletelyRemoveFile(ctx context.Context, Req *core_api.CompletelyRemoveFileReq, callOptions ...callopt.Option) (r *core_api.CompletelyRemoveFileReq, err error)
 	RecoverRecycleBinFile(ctx context.Context, Req *core_api.RecoverRecycleBinFileReq, callOptions ...callopt.Option) (r *core_api.RecoverRecycleBinFileResp, err error)
 	CreateZone(ctx context.Context, Req *core_api.CreateZoneReq, callOptions ...callopt.Option) (r *core_api.CreateZoneResp, err error)
 	UpdateZone(ctx context.Context, Req *core_api.UpdateZoneReq, callOptions ...callopt.Option) (r *core_api.UpdateZoneResp, err error)
@@ -100,12 +101,12 @@ func (p *kContentClient) AskUploadAvatar(ctx context.Context, Req *core_api.AskU
 	return p.kClient.AskUploadAvatar(ctx, Req)
 }
 
-func (p *kContentClient) GetPublicFile(ctx context.Context, Req *core_api.GetFileReq, callOptions ...callopt.Option) (r *core_api.GetFileResp, err error) {
+func (p *kContentClient) GetPublicFile(ctx context.Context, Req *core_api.GetPublicFilesReq, callOptions ...callopt.Option) (r *core_api.GetPublicFilesResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetPublicFile(ctx, Req)
 }
 
-func (p *kContentClient) GetPrivateFile(ctx context.Context, Req *core_api.GetFileReq, callOptions ...callopt.Option) (r *core_api.GetFileResp, err error) {
+func (p *kContentClient) GetPrivateFile(ctx context.Context, Req *core_api.GetPrivateFileReq, callOptions ...callopt.Option) (r *core_api.GetPrivateFileResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetPrivateFile(ctx, Req)
 }
@@ -158,6 +159,11 @@ func (p *kContentClient) AddFileToPublicSpace(ctx context.Context, Req *core_api
 func (p *kContentClient) DeleteFile(ctx context.Context, Req *core_api.DeleteFileReq, callOptions ...callopt.Option) (r *core_api.DeleteFileResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.DeleteFile(ctx, Req)
+}
+
+func (p *kContentClient) CompletelyRemoveFile(ctx context.Context, Req *core_api.CompletelyRemoveFileReq, callOptions ...callopt.Option) (r *core_api.CompletelyRemoveFileReq, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CompletelyRemoveFile(ctx, Req)
 }
 
 func (p *kContentClient) RecoverRecycleBinFile(ctx context.Context, Req *core_api.RecoverRecycleBinFileReq, callOptions ...callopt.Option) (r *core_api.RecoverRecycleBinFileResp, err error) {
