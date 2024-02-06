@@ -572,11 +572,6 @@ func (x *GetPublicFilesReq) FastRead(buf []byte, _type int8, number int32) (offs
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 14:
-		offset, err = x.fastReadField14(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -610,29 +605,23 @@ func (x *GetPublicFilesReq) fastReadField3(buf []byte, _type int8) (offset int, 
 
 func (x *GetPublicFilesReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadString(buf, _type)
-	x.Label = &tmp
-	return offset, err
-}
-
-func (x *GetPublicFilesReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadString(buf, _type)
 	x.Description = &tmp
 	return offset, err
 }
 
-func (x *GetPublicFilesReq) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+func (x *GetPublicFilesReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
 	x.SortType = &tmp
 	return offset, err
 }
 
-func (x *GetPublicFilesReq) fastReadField7(buf []byte, _type int8) (offset int, err error) {
+func (x *GetPublicFilesReq) fastReadField6(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadString(buf, _type)
 	x.OnlyFatherId = &tmp
 	return offset, err
 }
 
-func (x *GetPublicFilesReq) fastReadField8(buf []byte, _type int8) (offset int, err error) {
+func (x *GetPublicFilesReq) fastReadField7(buf []byte, _type int8) (offset int, err error) {
 	var v string
 	v, offset, err = fastpb.ReadString(buf, _type)
 	if err != nil {
@@ -642,37 +631,37 @@ func (x *GetPublicFilesReq) fastReadField8(buf []byte, _type int8) (offset int, 
 	return offset, err
 }
 
-func (x *GetPublicFilesReq) fastReadField9(buf []byte, _type int8) (offset int, err error) {
+func (x *GetPublicFilesReq) fastReadField8(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadString(buf, _type)
 	x.OnlyZone = &tmp
 	return offset, err
 }
 
-func (x *GetPublicFilesReq) fastReadField10(buf []byte, _type int8) (offset int, err error) {
+func (x *GetPublicFilesReq) fastReadField9(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadString(buf, _type)
 	x.OnlySubZone = &tmp
 	return offset, err
 }
 
-func (x *GetPublicFilesReq) fastReadField11(buf []byte, _type int8) (offset int, err error) {
+func (x *GetPublicFilesReq) fastReadField10(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
 	x.Limit = &tmp
 	return offset, err
 }
 
-func (x *GetPublicFilesReq) fastReadField12(buf []byte, _type int8) (offset int, err error) {
+func (x *GetPublicFilesReq) fastReadField11(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadString(buf, _type)
 	x.LastToken = &tmp
 	return offset, err
 }
 
-func (x *GetPublicFilesReq) fastReadField13(buf []byte, _type int8) (offset int, err error) {
+func (x *GetPublicFilesReq) fastReadField12(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadBool(buf, _type)
 	x.Backward = &tmp
 	return offset, err
 }
 
-func (x *GetPublicFilesReq) fastReadField14(buf []byte, _type int8) (offset int, err error) {
+func (x *GetPublicFilesReq) fastReadField13(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
 	x.Offset = &tmp
 	return offset, err
@@ -3872,7 +3861,6 @@ func (x *GetPublicFilesReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField11(buf[offset:])
 	offset += x.fastWriteField12(buf[offset:])
 	offset += x.fastWriteField13(buf[offset:])
-	offset += x.fastWriteField14(buf[offset:])
 	return offset
 }
 
@@ -3901,92 +3889,84 @@ func (x *GetPublicFilesReq) fastWriteField3(buf []byte) (offset int) {
 }
 
 func (x *GetPublicFilesReq) fastWriteField4(buf []byte) (offset int) {
-	if x.Label == nil {
+	if x.Description == nil {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 4, x.GetLabel())
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetDescription())
 	return offset
 }
 
 func (x *GetPublicFilesReq) fastWriteField5(buf []byte) (offset int) {
-	if x.Description == nil {
+	if x.SortType == nil {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 5, x.GetDescription())
+	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetSortType())
 	return offset
 }
 
 func (x *GetPublicFilesReq) fastWriteField6(buf []byte) (offset int) {
-	if x.SortType == nil {
+	if x.OnlyFatherId == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetSortType())
+	offset += fastpb.WriteString(buf[offset:], 6, x.GetOnlyFatherId())
 	return offset
 }
 
 func (x *GetPublicFilesReq) fastWriteField7(buf []byte) (offset int) {
-	if x.OnlyFatherId == nil {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 7, x.GetOnlyFatherId())
-	return offset
-}
-
-func (x *GetPublicFilesReq) fastWriteField8(buf []byte) (offset int) {
 	if len(x.OnlyType) == 0 {
 		return offset
 	}
 	for i := range x.GetOnlyType() {
-		offset += fastpb.WriteString(buf[offset:], 8, x.GetOnlyType()[i])
+		offset += fastpb.WriteString(buf[offset:], 7, x.GetOnlyType()[i])
 	}
+	return offset
+}
+
+func (x *GetPublicFilesReq) fastWriteField8(buf []byte) (offset int) {
+	if x.OnlyZone == nil {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 8, x.GetOnlyZone())
 	return offset
 }
 
 func (x *GetPublicFilesReq) fastWriteField9(buf []byte) (offset int) {
-	if x.OnlyZone == nil {
+	if x.OnlySubZone == nil {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 9, x.GetOnlyZone())
+	offset += fastpb.WriteString(buf[offset:], 9, x.GetOnlySubZone())
 	return offset
 }
 
 func (x *GetPublicFilesReq) fastWriteField10(buf []byte) (offset int) {
-	if x.OnlySubZone == nil {
+	if x.Limit == nil {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 10, x.GetOnlySubZone())
+	offset += fastpb.WriteInt64(buf[offset:], 10, x.GetLimit())
 	return offset
 }
 
 func (x *GetPublicFilesReq) fastWriteField11(buf []byte) (offset int) {
-	if x.Limit == nil {
+	if x.LastToken == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 11, x.GetLimit())
+	offset += fastpb.WriteString(buf[offset:], 11, x.GetLastToken())
 	return offset
 }
 
 func (x *GetPublicFilesReq) fastWriteField12(buf []byte) (offset int) {
-	if x.LastToken == nil {
+	if x.Backward == nil {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 12, x.GetLastToken())
+	offset += fastpb.WriteBool(buf[offset:], 12, x.GetBackward())
 	return offset
 }
 
 func (x *GetPublicFilesReq) fastWriteField13(buf []byte) (offset int) {
-	if x.Backward == nil {
-		return offset
-	}
-	offset += fastpb.WriteBool(buf[offset:], 13, x.GetBackward())
-	return offset
-}
-
-func (x *GetPublicFilesReq) fastWriteField14(buf []byte) (offset int) {
 	if x.Offset == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 14, x.GetOffset())
+	offset += fastpb.WriteInt64(buf[offset:], 13, x.GetOffset())
 	return offset
 }
 
@@ -6375,7 +6355,6 @@ func (x *GetPublicFilesReq) Size() (n int) {
 	n += x.sizeField11()
 	n += x.sizeField12()
 	n += x.sizeField13()
-	n += x.sizeField14()
 	return n
 }
 
@@ -6404,92 +6383,84 @@ func (x *GetPublicFilesReq) sizeField3() (n int) {
 }
 
 func (x *GetPublicFilesReq) sizeField4() (n int) {
-	if x.Label == nil {
+	if x.Description == nil {
 		return n
 	}
-	n += fastpb.SizeString(4, x.GetLabel())
+	n += fastpb.SizeString(4, x.GetDescription())
 	return n
 }
 
 func (x *GetPublicFilesReq) sizeField5() (n int) {
-	if x.Description == nil {
+	if x.SortType == nil {
 		return n
 	}
-	n += fastpb.SizeString(5, x.GetDescription())
+	n += fastpb.SizeInt64(5, x.GetSortType())
 	return n
 }
 
 func (x *GetPublicFilesReq) sizeField6() (n int) {
-	if x.SortType == nil {
+	if x.OnlyFatherId == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(6, x.GetSortType())
+	n += fastpb.SizeString(6, x.GetOnlyFatherId())
 	return n
 }
 
 func (x *GetPublicFilesReq) sizeField7() (n int) {
-	if x.OnlyFatherId == nil {
-		return n
-	}
-	n += fastpb.SizeString(7, x.GetOnlyFatherId())
-	return n
-}
-
-func (x *GetPublicFilesReq) sizeField8() (n int) {
 	if len(x.OnlyType) == 0 {
 		return n
 	}
 	for i := range x.GetOnlyType() {
-		n += fastpb.SizeString(8, x.GetOnlyType()[i])
+		n += fastpb.SizeString(7, x.GetOnlyType()[i])
 	}
+	return n
+}
+
+func (x *GetPublicFilesReq) sizeField8() (n int) {
+	if x.OnlyZone == nil {
+		return n
+	}
+	n += fastpb.SizeString(8, x.GetOnlyZone())
 	return n
 }
 
 func (x *GetPublicFilesReq) sizeField9() (n int) {
-	if x.OnlyZone == nil {
+	if x.OnlySubZone == nil {
 		return n
 	}
-	n += fastpb.SizeString(9, x.GetOnlyZone())
+	n += fastpb.SizeString(9, x.GetOnlySubZone())
 	return n
 }
 
 func (x *GetPublicFilesReq) sizeField10() (n int) {
-	if x.OnlySubZone == nil {
+	if x.Limit == nil {
 		return n
 	}
-	n += fastpb.SizeString(10, x.GetOnlySubZone())
+	n += fastpb.SizeInt64(10, x.GetLimit())
 	return n
 }
 
 func (x *GetPublicFilesReq) sizeField11() (n int) {
-	if x.Limit == nil {
+	if x.LastToken == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(11, x.GetLimit())
+	n += fastpb.SizeString(11, x.GetLastToken())
 	return n
 }
 
 func (x *GetPublicFilesReq) sizeField12() (n int) {
-	if x.LastToken == nil {
+	if x.Backward == nil {
 		return n
 	}
-	n += fastpb.SizeString(12, x.GetLastToken())
+	n += fastpb.SizeBool(12, x.GetBackward())
 	return n
 }
 
 func (x *GetPublicFilesReq) sizeField13() (n int) {
-	if x.Backward == nil {
-		return n
-	}
-	n += fastpb.SizeBool(13, x.GetBackward())
-	return n
-}
-
-func (x *GetPublicFilesReq) sizeField14() (n int) {
 	if x.Offset == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(14, x.GetOffset())
+	n += fastpb.SizeInt64(13, x.GetOffset())
 	return n
 }
 
@@ -8578,17 +8549,16 @@ var fieldIDToName_GetPublicFilesReq = map[int32]string{
 	1:  "AllFieldsKey",
 	2:  "Name",
 	3:  "Id",
-	4:  "Label",
-	5:  "Description",
-	6:  "SortType",
-	7:  "OnlyFatherId",
-	8:  "OnlyType",
-	9:  "OnlyZone",
-	10: "OnlySubZone",
-	11: "Limit",
-	12: "LastToken",
-	13: "Backward",
-	14: "Offset",
+	4:  "Description",
+	5:  "SortType",
+	6:  "OnlyFatherId",
+	7:  "OnlyType",
+	8:  "OnlyZone",
+	9:  "OnlySubZone",
+	10: "Limit",
+	11: "LastToken",
+	12: "Backward",
+	13: "Offset",
 }
 
 var fieldIDToName_GetPublicFilesResp = map[int32]string{
