@@ -1839,6 +1839,31 @@ func (x *CreatePostReq) FastRead(buf []byte, _type int8, number int32) (offset i
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 6:
+		offset, err = x.fastReadField6(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -1853,13 +1878,38 @@ ReadFieldError:
 }
 
 func (x *CreatePostReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v Post
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	x.UserId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *CreatePostReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.Title, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *CreatePostReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.Text, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *CreatePostReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
 	if err != nil {
 		return offset, err
 	}
-	x.Post = &v
-	return offset, nil
+	x.Tags = append(x.Tags, v)
+	return offset, err
+}
+
+func (x *CreatePostReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	x.Status, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *CreatePostReq) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+	x.Url, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
 }
 
 func (x *CreatePostResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -1920,6 +1970,31 @@ func (x *UpdatePostReq) FastRead(buf []byte, _type int8, number int32) (offset i
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 6:
+		offset, err = x.fastReadField6(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 7:
+		offset, err = x.fastReadField7(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -1934,13 +2009,38 @@ ReadFieldError:
 }
 
 func (x *UpdatePostReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v Post
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	x.PostId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *UpdatePostReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.Title, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *UpdatePostReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	x.Text, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *UpdatePostReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
 	if err != nil {
 		return offset, err
 	}
-	x.Post = &v
-	return offset, nil
+	x.Tags = append(x.Tags, v)
+	return offset, err
+}
+
+func (x *UpdatePostReq) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+	x.Status, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *UpdatePostReq) fastReadField7(buf []byte, _type int8) (offset int, err error) {
+	x.Url, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
 }
 
 func (x *UpdatePostResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -1977,19 +2077,44 @@ ReadFieldError:
 }
 
 func (x *GetPostReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v PostFilterOptions
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
-	if err != nil {
-		return offset, err
-	}
-	x.PostFilterOptions = &v
-	return offset, nil
+	x.PostId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
 }
 
 func (x *GetPostResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 6:
+		offset, err = x.fastReadField6(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 7:
+		offset, err = x.fastReadField7(buf, _type)
 		if err != nil {
 			goto ReadFieldError
 		}
@@ -2007,13 +2132,43 @@ ReadFieldError:
 }
 
 func (x *GetPostResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v Post
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	x.UserId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *GetPostResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.Title, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *GetPostResp) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.Text, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *GetPostResp) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
 	if err != nil {
 		return offset, err
 	}
-	x.Post = &v
-	return offset, nil
+	x.Tags = append(x.Tags, v)
+	return offset, err
+}
+
+func (x *GetPostResp) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	x.Url, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *GetPostResp) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+	x.CreateTime, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *GetPostResp) fastReadField7(buf []byte, _type int8) (offset int, err error) {
+	x.UpdateTime, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
 }
 
 func (x *GetPostsReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -4149,14 +4304,61 @@ func (x *CreatePostReq) FastWrite(buf []byte) (offset int) {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
+	offset += x.fastWriteField6(buf[offset:])
 	return offset
 }
 
 func (x *CreatePostReq) fastWriteField1(buf []byte) (offset int) {
-	if x.Post == nil {
+	if x.UserId == "" {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetPost())
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetUserId())
+	return offset
+}
+
+func (x *CreatePostReq) fastWriteField2(buf []byte) (offset int) {
+	if x.Title == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetTitle())
+	return offset
+}
+
+func (x *CreatePostReq) fastWriteField3(buf []byte) (offset int) {
+	if x.Text == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetText())
+	return offset
+}
+
+func (x *CreatePostReq) fastWriteField4(buf []byte) (offset int) {
+	if len(x.Tags) == 0 {
+		return offset
+	}
+	for i := range x.GetTags() {
+		offset += fastpb.WriteString(buf[offset:], 4, x.GetTags()[i])
+	}
+	return offset
+}
+
+func (x *CreatePostReq) fastWriteField5(buf []byte) (offset int) {
+	if x.Status == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetStatus())
+	return offset
+}
+
+func (x *CreatePostReq) fastWriteField6(buf []byte) (offset int) {
+	if x.Url == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 6, x.GetUrl())
 	return offset
 }
 
@@ -4195,14 +4397,61 @@ func (x *UpdatePostReq) FastWrite(buf []byte) (offset int) {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
+	offset += x.fastWriteField6(buf[offset:])
+	offset += x.fastWriteField7(buf[offset:])
 	return offset
 }
 
 func (x *UpdatePostReq) fastWriteField1(buf []byte) (offset int) {
-	if x.Post == nil {
+	if x.PostId == "" {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetPost())
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetPostId())
+	return offset
+}
+
+func (x *UpdatePostReq) fastWriteField3(buf []byte) (offset int) {
+	if x.Title == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetTitle())
+	return offset
+}
+
+func (x *UpdatePostReq) fastWriteField4(buf []byte) (offset int) {
+	if x.Text == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetText())
+	return offset
+}
+
+func (x *UpdatePostReq) fastWriteField5(buf []byte) (offset int) {
+	if len(x.Tags) == 0 {
+		return offset
+	}
+	for i := range x.GetTags() {
+		offset += fastpb.WriteString(buf[offset:], 5, x.GetTags()[i])
+	}
+	return offset
+}
+
+func (x *UpdatePostReq) fastWriteField6(buf []byte) (offset int) {
+	if x.Status == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetStatus())
+	return offset
+}
+
+func (x *UpdatePostReq) fastWriteField7(buf []byte) (offset int) {
+	if x.Url == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 7, x.GetUrl())
 	return offset
 }
 
@@ -4222,10 +4471,10 @@ func (x *GetPostReq) FastWrite(buf []byte) (offset int) {
 }
 
 func (x *GetPostReq) fastWriteField1(buf []byte) (offset int) {
-	if x.PostFilterOptions == nil {
+	if x.PostId == "" {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetPostFilterOptions())
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetPostId())
 	return offset
 }
 
@@ -4234,14 +4483,70 @@ func (x *GetPostResp) FastWrite(buf []byte) (offset int) {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
+	offset += x.fastWriteField6(buf[offset:])
+	offset += x.fastWriteField7(buf[offset:])
 	return offset
 }
 
 func (x *GetPostResp) fastWriteField1(buf []byte) (offset int) {
-	if x.Post == nil {
+	if x.UserId == "" {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetPost())
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetUserId())
+	return offset
+}
+
+func (x *GetPostResp) fastWriteField2(buf []byte) (offset int) {
+	if x.Title == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetTitle())
+	return offset
+}
+
+func (x *GetPostResp) fastWriteField3(buf []byte) (offset int) {
+	if x.Text == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetText())
+	return offset
+}
+
+func (x *GetPostResp) fastWriteField4(buf []byte) (offset int) {
+	if len(x.Tags) == 0 {
+		return offset
+	}
+	for i := range x.GetTags() {
+		offset += fastpb.WriteString(buf[offset:], 4, x.GetTags()[i])
+	}
+	return offset
+}
+
+func (x *GetPostResp) fastWriteField5(buf []byte) (offset int) {
+	if x.Url == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 5, x.GetUrl())
+	return offset
+}
+
+func (x *GetPostResp) fastWriteField6(buf []byte) (offset int) {
+	if x.CreateTime == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetCreateTime())
+	return offset
+}
+
+func (x *GetPostResp) fastWriteField7(buf []byte) (offset int) {
+	if x.UpdateTime == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetUpdateTime())
 	return offset
 }
 
@@ -5969,14 +6274,61 @@ func (x *CreatePostReq) Size() (n int) {
 		return n
 	}
 	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
+	n += x.sizeField6()
 	return n
 }
 
 func (x *CreatePostReq) sizeField1() (n int) {
-	if x.Post == nil {
+	if x.UserId == "" {
 		return n
 	}
-	n += fastpb.SizeMessage(1, x.GetPost())
+	n += fastpb.SizeString(1, x.GetUserId())
+	return n
+}
+
+func (x *CreatePostReq) sizeField2() (n int) {
+	if x.Title == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetTitle())
+	return n
+}
+
+func (x *CreatePostReq) sizeField3() (n int) {
+	if x.Text == "" {
+		return n
+	}
+	n += fastpb.SizeString(3, x.GetText())
+	return n
+}
+
+func (x *CreatePostReq) sizeField4() (n int) {
+	if len(x.Tags) == 0 {
+		return n
+	}
+	for i := range x.GetTags() {
+		n += fastpb.SizeString(4, x.GetTags()[i])
+	}
+	return n
+}
+
+func (x *CreatePostReq) sizeField5() (n int) {
+	if x.Status == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(5, x.GetStatus())
+	return n
+}
+
+func (x *CreatePostReq) sizeField6() (n int) {
+	if x.Url == "" {
+		return n
+	}
+	n += fastpb.SizeString(6, x.GetUrl())
 	return n
 }
 
@@ -6015,14 +6367,61 @@ func (x *UpdatePostReq) Size() (n int) {
 		return n
 	}
 	n += x.sizeField1()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
+	n += x.sizeField6()
+	n += x.sizeField7()
 	return n
 }
 
 func (x *UpdatePostReq) sizeField1() (n int) {
-	if x.Post == nil {
+	if x.PostId == "" {
 		return n
 	}
-	n += fastpb.SizeMessage(1, x.GetPost())
+	n += fastpb.SizeString(1, x.GetPostId())
+	return n
+}
+
+func (x *UpdatePostReq) sizeField3() (n int) {
+	if x.Title == "" {
+		return n
+	}
+	n += fastpb.SizeString(3, x.GetTitle())
+	return n
+}
+
+func (x *UpdatePostReq) sizeField4() (n int) {
+	if x.Text == "" {
+		return n
+	}
+	n += fastpb.SizeString(4, x.GetText())
+	return n
+}
+
+func (x *UpdatePostReq) sizeField5() (n int) {
+	if len(x.Tags) == 0 {
+		return n
+	}
+	for i := range x.GetTags() {
+		n += fastpb.SizeString(5, x.GetTags()[i])
+	}
+	return n
+}
+
+func (x *UpdatePostReq) sizeField6() (n int) {
+	if x.Status == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(6, x.GetStatus())
+	return n
+}
+
+func (x *UpdatePostReq) sizeField7() (n int) {
+	if x.Url == "" {
+		return n
+	}
+	n += fastpb.SizeString(7, x.GetUrl())
 	return n
 }
 
@@ -6042,10 +6441,10 @@ func (x *GetPostReq) Size() (n int) {
 }
 
 func (x *GetPostReq) sizeField1() (n int) {
-	if x.PostFilterOptions == nil {
+	if x.PostId == "" {
 		return n
 	}
-	n += fastpb.SizeMessage(1, x.GetPostFilterOptions())
+	n += fastpb.SizeString(1, x.GetPostId())
 	return n
 }
 
@@ -6054,14 +6453,70 @@ func (x *GetPostResp) Size() (n int) {
 		return n
 	}
 	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
+	n += x.sizeField6()
+	n += x.sizeField7()
 	return n
 }
 
 func (x *GetPostResp) sizeField1() (n int) {
-	if x.Post == nil {
+	if x.UserId == "" {
 		return n
 	}
-	n += fastpb.SizeMessage(1, x.GetPost())
+	n += fastpb.SizeString(1, x.GetUserId())
+	return n
+}
+
+func (x *GetPostResp) sizeField2() (n int) {
+	if x.Title == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetTitle())
+	return n
+}
+
+func (x *GetPostResp) sizeField3() (n int) {
+	if x.Text == "" {
+		return n
+	}
+	n += fastpb.SizeString(3, x.GetText())
+	return n
+}
+
+func (x *GetPostResp) sizeField4() (n int) {
+	if len(x.Tags) == 0 {
+		return n
+	}
+	for i := range x.GetTags() {
+		n += fastpb.SizeString(4, x.GetTags()[i])
+	}
+	return n
+}
+
+func (x *GetPostResp) sizeField5() (n int) {
+	if x.Url == "" {
+		return n
+	}
+	n += fastpb.SizeString(5, x.GetUrl())
+	return n
+}
+
+func (x *GetPostResp) sizeField6() (n int) {
+	if x.CreateTime == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(6, x.GetCreateTime())
+	return n
+}
+
+func (x *GetPostResp) sizeField7() (n int) {
+	if x.UpdateTime == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(7, x.GetUpdateTime())
 	return n
 }
 
@@ -6890,7 +7345,12 @@ var fieldIDToName_DeleteUserReq = map[int32]string{
 var fieldIDToName_DeleteUserResp = map[int32]string{}
 
 var fieldIDToName_CreatePostReq = map[int32]string{
-	1: "Post",
+	1: "UserId",
+	2: "Title",
+	3: "Text",
+	4: "Tags",
+	5: "Status",
+	6: "Url",
 }
 
 var fieldIDToName_CreatePostResp = map[int32]string{}
@@ -6902,17 +7362,28 @@ var fieldIDToName_DeletePostReq = map[int32]string{
 var fieldIDToName_DeletePostResp = map[int32]string{}
 
 var fieldIDToName_UpdatePostReq = map[int32]string{
-	1: "Post",
+	1: "PostId",
+	3: "Title",
+	4: "Text",
+	5: "Tags",
+	6: "Status",
+	7: "Url",
 }
 
 var fieldIDToName_UpdatePostResp = map[int32]string{}
 
 var fieldIDToName_GetPostReq = map[int32]string{
-	1: "PostFilterOptions",
+	1: "PostId",
 }
 
 var fieldIDToName_GetPostResp = map[int32]string{
-	1: "Post",
+	1: "UserId",
+	2: "Title",
+	3: "Text",
+	4: "Tags",
+	5: "Url",
+	6: "CreateTime",
+	7: "UpdateTime",
 }
 
 var fieldIDToName_GetPostsReq = map[int32]string{
