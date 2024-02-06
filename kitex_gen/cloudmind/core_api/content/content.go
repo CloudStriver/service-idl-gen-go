@@ -53,8 +53,10 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"CreatePost":             kitex.NewMethodInfo(createPostHandler, newCreatePostArgs, newCreatePostResult, false),
 		"DeletePost":             kitex.NewMethodInfo(deletePostHandler, newDeletePostArgs, newDeletePostResult, false),
 		"UpdatePost":             kitex.NewMethodInfo(updatePostHandler, newUpdatePostArgs, newUpdatePostResult, false),
-		"GetPosts":               kitex.NewMethodInfo(getPostsHandler, newGetPostsArgs, newGetPostsResult, false),
-		"GetPost":                kitex.NewMethodInfo(getPostHandler, newGetPostArgs, newGetPostResult, false),
+		"GetOtherPosts":          kitex.NewMethodInfo(getOtherPostsHandler, newGetOtherPostsArgs, newGetOtherPostsResult, false),
+		"GetOtherPost":           kitex.NewMethodInfo(getOtherPostHandler, newGetOtherPostArgs, newGetOtherPostResult, false),
+		"GetOwnPosts":            kitex.NewMethodInfo(getOwnPostsHandler, newGetOwnPostsArgs, newGetOwnPostsResult, false),
+		"GetOwnPost":             kitex.NewMethodInfo(getOwnPostHandler, newGetOwnPostArgs, newGetOwnPostResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName":     "cloudmind.core_api",
@@ -4967,73 +4969,73 @@ func (p *UpdatePostResult) GetResult() interface{} {
 	return p.Success
 }
 
-func getPostsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+func getOtherPostsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(core_api.GetPostsReq)
+		req := new(core_api.GetOtherPostsReq)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
-		resp, err := handler.(core_api.Content).GetPosts(ctx, req)
+		resp, err := handler.(core_api.Content).GetOtherPosts(ctx, req)
 		if err != nil {
 			return err
 		}
 		if err := st.SendMsg(resp); err != nil {
 			return err
 		}
-	case *GetPostsArgs:
-		success, err := handler.(core_api.Content).GetPosts(ctx, s.Req)
+	case *GetOtherPostsArgs:
+		success, err := handler.(core_api.Content).GetOtherPosts(ctx, s.Req)
 		if err != nil {
 			return err
 		}
-		realResult := result.(*GetPostsResult)
+		realResult := result.(*GetOtherPostsResult)
 		realResult.Success = success
 	}
 	return nil
 }
-func newGetPostsArgs() interface{} {
-	return &GetPostsArgs{}
+func newGetOtherPostsArgs() interface{} {
+	return &GetOtherPostsArgs{}
 }
 
-func newGetPostsResult() interface{} {
-	return &GetPostsResult{}
+func newGetOtherPostsResult() interface{} {
+	return &GetOtherPostsResult{}
 }
 
-type GetPostsArgs struct {
-	Req *core_api.GetPostsReq
+type GetOtherPostsArgs struct {
+	Req *core_api.GetOtherPostsReq
 }
 
-func (p *GetPostsArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *GetOtherPostsArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(core_api.GetPostsReq)
+		p.Req = new(core_api.GetOtherPostsReq)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
 
-func (p *GetPostsArgs) FastWrite(buf []byte) (n int) {
+func (p *GetOtherPostsArgs) FastWrite(buf []byte) (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.FastWrite(buf)
 }
 
-func (p *GetPostsArgs) Size() (n int) {
+func (p *GetOtherPostsArgs) Size() (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.Size()
 }
 
-func (p *GetPostsArgs) Marshal(out []byte) ([]byte, error) {
+func (p *GetOtherPostsArgs) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetReq() {
 		return out, nil
 	}
 	return proto.Marshal(p.Req)
 }
 
-func (p *GetPostsArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.GetPostsReq)
+func (p *GetOtherPostsArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.GetOtherPostsReq)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -5041,59 +5043,59 @@ func (p *GetPostsArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var GetPostsArgs_Req_DEFAULT *core_api.GetPostsReq
+var GetOtherPostsArgs_Req_DEFAULT *core_api.GetOtherPostsReq
 
-func (p *GetPostsArgs) GetReq() *core_api.GetPostsReq {
+func (p *GetOtherPostsArgs) GetReq() *core_api.GetOtherPostsReq {
 	if !p.IsSetReq() {
-		return GetPostsArgs_Req_DEFAULT
+		return GetOtherPostsArgs_Req_DEFAULT
 	}
 	return p.Req
 }
 
-func (p *GetPostsArgs) IsSetReq() bool {
+func (p *GetOtherPostsArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *GetPostsArgs) GetFirstArgument() interface{} {
+func (p *GetOtherPostsArgs) GetFirstArgument() interface{} {
 	return p.Req
 }
 
-type GetPostsResult struct {
-	Success *core_api.GetPostsResp
+type GetOtherPostsResult struct {
+	Success *core_api.GetOtherPostsResp
 }
 
-var GetPostsResult_Success_DEFAULT *core_api.GetPostsResp
+var GetOtherPostsResult_Success_DEFAULT *core_api.GetOtherPostsResp
 
-func (p *GetPostsResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *GetOtherPostsResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(core_api.GetPostsResp)
+		p.Success = new(core_api.GetOtherPostsResp)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
 
-func (p *GetPostsResult) FastWrite(buf []byte) (n int) {
+func (p *GetOtherPostsResult) FastWrite(buf []byte) (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.FastWrite(buf)
 }
 
-func (p *GetPostsResult) Size() (n int) {
+func (p *GetOtherPostsResult) Size() (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.Size()
 }
 
-func (p *GetPostsResult) Marshal(out []byte) ([]byte, error) {
+func (p *GetOtherPostsResult) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetSuccess() {
 		return out, nil
 	}
 	return proto.Marshal(p.Success)
 }
 
-func (p *GetPostsResult) Unmarshal(in []byte) error {
-	msg := new(core_api.GetPostsResp)
+func (p *GetOtherPostsResult) Unmarshal(in []byte) error {
+	msg := new(core_api.GetOtherPostsResp)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -5101,92 +5103,92 @@ func (p *GetPostsResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *GetPostsResult) GetSuccess() *core_api.GetPostsResp {
+func (p *GetOtherPostsResult) GetSuccess() *core_api.GetOtherPostsResp {
 	if !p.IsSetSuccess() {
-		return GetPostsResult_Success_DEFAULT
+		return GetOtherPostsResult_Success_DEFAULT
 	}
 	return p.Success
 }
 
-func (p *GetPostsResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.GetPostsResp)
+func (p *GetOtherPostsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.GetOtherPostsResp)
 }
 
-func (p *GetPostsResult) IsSetSuccess() bool {
+func (p *GetOtherPostsResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *GetPostsResult) GetResult() interface{} {
+func (p *GetOtherPostsResult) GetResult() interface{} {
 	return p.Success
 }
 
-func getPostHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+func getOtherPostHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(core_api.GetPostReq)
+		req := new(core_api.GetOtherPostReq)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
-		resp, err := handler.(core_api.Content).GetPost(ctx, req)
+		resp, err := handler.(core_api.Content).GetOtherPost(ctx, req)
 		if err != nil {
 			return err
 		}
 		if err := st.SendMsg(resp); err != nil {
 			return err
 		}
-	case *GetPostArgs:
-		success, err := handler.(core_api.Content).GetPost(ctx, s.Req)
+	case *GetOtherPostArgs:
+		success, err := handler.(core_api.Content).GetOtherPost(ctx, s.Req)
 		if err != nil {
 			return err
 		}
-		realResult := result.(*GetPostResult)
+		realResult := result.(*GetOtherPostResult)
 		realResult.Success = success
 	}
 	return nil
 }
-func newGetPostArgs() interface{} {
-	return &GetPostArgs{}
+func newGetOtherPostArgs() interface{} {
+	return &GetOtherPostArgs{}
 }
 
-func newGetPostResult() interface{} {
-	return &GetPostResult{}
+func newGetOtherPostResult() interface{} {
+	return &GetOtherPostResult{}
 }
 
-type GetPostArgs struct {
-	Req *core_api.GetPostReq
+type GetOtherPostArgs struct {
+	Req *core_api.GetOtherPostReq
 }
 
-func (p *GetPostArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *GetOtherPostArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(core_api.GetPostReq)
+		p.Req = new(core_api.GetOtherPostReq)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
 
-func (p *GetPostArgs) FastWrite(buf []byte) (n int) {
+func (p *GetOtherPostArgs) FastWrite(buf []byte) (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.FastWrite(buf)
 }
 
-func (p *GetPostArgs) Size() (n int) {
+func (p *GetOtherPostArgs) Size() (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.Size()
 }
 
-func (p *GetPostArgs) Marshal(out []byte) ([]byte, error) {
+func (p *GetOtherPostArgs) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetReq() {
 		return out, nil
 	}
 	return proto.Marshal(p.Req)
 }
 
-func (p *GetPostArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.GetPostReq)
+func (p *GetOtherPostArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.GetOtherPostReq)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -5194,59 +5196,59 @@ func (p *GetPostArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var GetPostArgs_Req_DEFAULT *core_api.GetPostReq
+var GetOtherPostArgs_Req_DEFAULT *core_api.GetOtherPostReq
 
-func (p *GetPostArgs) GetReq() *core_api.GetPostReq {
+func (p *GetOtherPostArgs) GetReq() *core_api.GetOtherPostReq {
 	if !p.IsSetReq() {
-		return GetPostArgs_Req_DEFAULT
+		return GetOtherPostArgs_Req_DEFAULT
 	}
 	return p.Req
 }
 
-func (p *GetPostArgs) IsSetReq() bool {
+func (p *GetOtherPostArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *GetPostArgs) GetFirstArgument() interface{} {
+func (p *GetOtherPostArgs) GetFirstArgument() interface{} {
 	return p.Req
 }
 
-type GetPostResult struct {
-	Success *core_api.GetPostResp
+type GetOtherPostResult struct {
+	Success *core_api.GetOtherPostResp
 }
 
-var GetPostResult_Success_DEFAULT *core_api.GetPostResp
+var GetOtherPostResult_Success_DEFAULT *core_api.GetOtherPostResp
 
-func (p *GetPostResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *GetOtherPostResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(core_api.GetPostResp)
+		p.Success = new(core_api.GetOtherPostResp)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
 
-func (p *GetPostResult) FastWrite(buf []byte) (n int) {
+func (p *GetOtherPostResult) FastWrite(buf []byte) (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.FastWrite(buf)
 }
 
-func (p *GetPostResult) Size() (n int) {
+func (p *GetOtherPostResult) Size() (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.Size()
 }
 
-func (p *GetPostResult) Marshal(out []byte) ([]byte, error) {
+func (p *GetOtherPostResult) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetSuccess() {
 		return out, nil
 	}
 	return proto.Marshal(p.Success)
 }
 
-func (p *GetPostResult) Unmarshal(in []byte) error {
-	msg := new(core_api.GetPostResp)
+func (p *GetOtherPostResult) Unmarshal(in []byte) error {
+	msg := new(core_api.GetOtherPostResp)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -5254,22 +5256,328 @@ func (p *GetPostResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *GetPostResult) GetSuccess() *core_api.GetPostResp {
+func (p *GetOtherPostResult) GetSuccess() *core_api.GetOtherPostResp {
 	if !p.IsSetSuccess() {
-		return GetPostResult_Success_DEFAULT
+		return GetOtherPostResult_Success_DEFAULT
 	}
 	return p.Success
 }
 
-func (p *GetPostResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.GetPostResp)
+func (p *GetOtherPostResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.GetOtherPostResp)
 }
 
-func (p *GetPostResult) IsSetSuccess() bool {
+func (p *GetOtherPostResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *GetPostResult) GetResult() interface{} {
+func (p *GetOtherPostResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getOwnPostsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.GetOwnPostsReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Content).GetOwnPosts(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetOwnPostsArgs:
+		success, err := handler.(core_api.Content).GetOwnPosts(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetOwnPostsResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetOwnPostsArgs() interface{} {
+	return &GetOwnPostsArgs{}
+}
+
+func newGetOwnPostsResult() interface{} {
+	return &GetOwnPostsResult{}
+}
+
+type GetOwnPostsArgs struct {
+	Req *core_api.GetOwnPostsReq
+}
+
+func (p *GetOwnPostsArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.GetOwnPostsReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetOwnPostsArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetOwnPostsArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetOwnPostsArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetOwnPostsArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.GetOwnPostsReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetOwnPostsArgs_Req_DEFAULT *core_api.GetOwnPostsReq
+
+func (p *GetOwnPostsArgs) GetReq() *core_api.GetOwnPostsReq {
+	if !p.IsSetReq() {
+		return GetOwnPostsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetOwnPostsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetOwnPostsArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetOwnPostsResult struct {
+	Success *core_api.GetOwnPostsResp
+}
+
+var GetOwnPostsResult_Success_DEFAULT *core_api.GetOwnPostsResp
+
+func (p *GetOwnPostsResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.GetOwnPostsResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetOwnPostsResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetOwnPostsResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetOwnPostsResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetOwnPostsResult) Unmarshal(in []byte) error {
+	msg := new(core_api.GetOwnPostsResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetOwnPostsResult) GetSuccess() *core_api.GetOwnPostsResp {
+	if !p.IsSetSuccess() {
+		return GetOwnPostsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetOwnPostsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.GetOwnPostsResp)
+}
+
+func (p *GetOwnPostsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetOwnPostsResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getOwnPostHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.GetOwnPostReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Content).GetOwnPost(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetOwnPostArgs:
+		success, err := handler.(core_api.Content).GetOwnPost(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetOwnPostResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetOwnPostArgs() interface{} {
+	return &GetOwnPostArgs{}
+}
+
+func newGetOwnPostResult() interface{} {
+	return &GetOwnPostResult{}
+}
+
+type GetOwnPostArgs struct {
+	Req *core_api.GetOwnPostReq
+}
+
+func (p *GetOwnPostArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.GetOwnPostReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetOwnPostArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetOwnPostArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetOwnPostArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetOwnPostArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.GetOwnPostReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetOwnPostArgs_Req_DEFAULT *core_api.GetOwnPostReq
+
+func (p *GetOwnPostArgs) GetReq() *core_api.GetOwnPostReq {
+	if !p.IsSetReq() {
+		return GetOwnPostArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetOwnPostArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetOwnPostArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetOwnPostResult struct {
+	Success *core_api.GetOwnPostResp
+}
+
+var GetOwnPostResult_Success_DEFAULT *core_api.GetOwnPostResp
+
+func (p *GetOwnPostResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.GetOwnPostResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetOwnPostResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetOwnPostResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetOwnPostResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetOwnPostResult) Unmarshal(in []byte) error {
+	msg := new(core_api.GetOwnPostResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetOwnPostResult) GetSuccess() *core_api.GetOwnPostResp {
+	if !p.IsSetSuccess() {
+		return GetOwnPostResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetOwnPostResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.GetOwnPostResp)
+}
+
+func (p *GetOwnPostResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetOwnPostResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -5603,21 +5911,41 @@ func (p *kClient) UpdatePost(ctx context.Context, Req *core_api.UpdatePostReq) (
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) GetPosts(ctx context.Context, Req *core_api.GetPostsReq) (r *core_api.GetPostsResp, err error) {
-	var _args GetPostsArgs
+func (p *kClient) GetOtherPosts(ctx context.Context, Req *core_api.GetOtherPostsReq) (r *core_api.GetOtherPostsResp, err error) {
+	var _args GetOtherPostsArgs
 	_args.Req = Req
-	var _result GetPostsResult
-	if err = p.c.Call(ctx, "GetPosts", &_args, &_result); err != nil {
+	var _result GetOtherPostsResult
+	if err = p.c.Call(ctx, "GetOtherPosts", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) GetPost(ctx context.Context, Req *core_api.GetPostReq) (r *core_api.GetPostResp, err error) {
-	var _args GetPostArgs
+func (p *kClient) GetOtherPost(ctx context.Context, Req *core_api.GetOtherPostReq) (r *core_api.GetOtherPostResp, err error) {
+	var _args GetOtherPostArgs
 	_args.Req = Req
-	var _result GetPostResult
-	if err = p.c.Call(ctx, "GetPost", &_args, &_result); err != nil {
+	var _result GetOtherPostResult
+	if err = p.c.Call(ctx, "GetOtherPost", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetOwnPosts(ctx context.Context, Req *core_api.GetOwnPostsReq) (r *core_api.GetOwnPostsResp, err error) {
+	var _args GetOwnPostsArgs
+	_args.Req = Req
+	var _result GetOwnPostsResult
+	if err = p.c.Call(ctx, "GetOwnPosts", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetOwnPost(ctx context.Context, Req *core_api.GetOwnPostReq) (r *core_api.GetOwnPostResp, err error) {
+	var _args GetOwnPostArgs
+	_args.Req = Req
+	var _result GetOwnPostResult
+	if err = p.c.Call(ctx, "GetOwnPost", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

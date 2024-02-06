@@ -43,8 +43,10 @@ type Client interface {
 	CreatePost(ctx context.Context, Req *core_api.CreatePostReq, callOptions ...callopt.Option) (r *core_api.CreatePostResp, err error)
 	DeletePost(ctx context.Context, Req *core_api.DeletePostReq, callOptions ...callopt.Option) (r *core_api.DeletePostResp, err error)
 	UpdatePost(ctx context.Context, Req *core_api.UpdatePostReq, callOptions ...callopt.Option) (r *core_api.UpdatePostResp, err error)
-	GetPosts(ctx context.Context, Req *core_api.GetPostsReq, callOptions ...callopt.Option) (r *core_api.GetPostsResp, err error)
-	GetPost(ctx context.Context, Req *core_api.GetPostReq, callOptions ...callopt.Option) (r *core_api.GetPostResp, err error)
+	GetOtherPosts(ctx context.Context, Req *core_api.GetOtherPostsReq, callOptions ...callopt.Option) (r *core_api.GetOtherPostsResp, err error)
+	GetOtherPost(ctx context.Context, Req *core_api.GetOtherPostReq, callOptions ...callopt.Option) (r *core_api.GetOtherPostResp, err error)
+	GetOwnPosts(ctx context.Context, Req *core_api.GetOwnPostsReq, callOptions ...callopt.Option) (r *core_api.GetOwnPostsResp, err error)
+	GetOwnPost(ctx context.Context, Req *core_api.GetOwnPostReq, callOptions ...callopt.Option) (r *core_api.GetOwnPostResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -236,12 +238,22 @@ func (p *kContentClient) UpdatePost(ctx context.Context, Req *core_api.UpdatePos
 	return p.kClient.UpdatePost(ctx, Req)
 }
 
-func (p *kContentClient) GetPosts(ctx context.Context, Req *core_api.GetPostsReq, callOptions ...callopt.Option) (r *core_api.GetPostsResp, err error) {
+func (p *kContentClient) GetOtherPosts(ctx context.Context, Req *core_api.GetOtherPostsReq, callOptions ...callopt.Option) (r *core_api.GetOtherPostsResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.GetPosts(ctx, Req)
+	return p.kClient.GetOtherPosts(ctx, Req)
 }
 
-func (p *kContentClient) GetPost(ctx context.Context, Req *core_api.GetPostReq, callOptions ...callopt.Option) (r *core_api.GetPostResp, err error) {
+func (p *kContentClient) GetOtherPost(ctx context.Context, Req *core_api.GetOtherPostReq, callOptions ...callopt.Option) (r *core_api.GetOtherPostResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.GetPost(ctx, Req)
+	return p.kClient.GetOtherPost(ctx, Req)
+}
+
+func (p *kContentClient) GetOwnPosts(ctx context.Context, Req *core_api.GetOwnPostsReq, callOptions ...callopt.Option) (r *core_api.GetOwnPostsResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetOwnPosts(ctx, Req)
+}
+
+func (p *kContentClient) GetOwnPost(ctx context.Context, Req *core_api.GetOwnPostReq, callOptions ...callopt.Option) (r *core_api.GetOwnPostResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetOwnPost(ctx, Req)
 }

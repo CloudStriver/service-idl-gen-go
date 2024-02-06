@@ -2118,6 +2118,11 @@ func (x *GetPostResp) FastRead(buf []byte, _type int8, number int32) (offset int
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 8:
+		offset, err = x.fastReadField8(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -2162,11 +2167,16 @@ func (x *GetPostResp) fastReadField5(buf []byte, _type int8) (offset int, err er
 }
 
 func (x *GetPostResp) fastReadField6(buf []byte, _type int8) (offset int, err error) {
-	x.CreateTime, offset, err = fastpb.ReadInt64(buf, _type)
+	x.Status, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
 func (x *GetPostResp) fastReadField7(buf []byte, _type int8) (offset int, err error) {
+	x.CreateTime, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *GetPostResp) fastReadField8(buf []byte, _type int8) (offset int, err error) {
 	x.UpdateTime, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
@@ -4489,6 +4499,7 @@ func (x *GetPostResp) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField5(buf[offset:])
 	offset += x.fastWriteField6(buf[offset:])
 	offset += x.fastWriteField7(buf[offset:])
+	offset += x.fastWriteField8(buf[offset:])
 	return offset
 }
 
@@ -4535,18 +4546,26 @@ func (x *GetPostResp) fastWriteField5(buf []byte) (offset int) {
 }
 
 func (x *GetPostResp) fastWriteField6(buf []byte) (offset int) {
-	if x.CreateTime == 0 {
+	if x.Status == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetCreateTime())
+	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetStatus())
 	return offset
 }
 
 func (x *GetPostResp) fastWriteField7(buf []byte) (offset int) {
+	if x.CreateTime == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetCreateTime())
+	return offset
+}
+
+func (x *GetPostResp) fastWriteField8(buf []byte) (offset int) {
 	if x.UpdateTime == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetUpdateTime())
+	offset += fastpb.WriteInt64(buf[offset:], 8, x.GetUpdateTime())
 	return offset
 }
 
@@ -6459,6 +6478,7 @@ func (x *GetPostResp) Size() (n int) {
 	n += x.sizeField5()
 	n += x.sizeField6()
 	n += x.sizeField7()
+	n += x.sizeField8()
 	return n
 }
 
@@ -6505,18 +6525,26 @@ func (x *GetPostResp) sizeField5() (n int) {
 }
 
 func (x *GetPostResp) sizeField6() (n int) {
-	if x.CreateTime == 0 {
+	if x.Status == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(6, x.GetCreateTime())
+	n += fastpb.SizeInt64(6, x.GetStatus())
 	return n
 }
 
 func (x *GetPostResp) sizeField7() (n int) {
+	if x.CreateTime == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(7, x.GetCreateTime())
+	return n
+}
+
+func (x *GetPostResp) sizeField8() (n int) {
 	if x.UpdateTime == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(7, x.GetUpdateTime())
+	n += fastpb.SizeInt64(8, x.GetUpdateTime())
 	return n
 }
 
@@ -7382,8 +7410,9 @@ var fieldIDToName_GetPostResp = map[int32]string{
 	3: "Text",
 	4: "Tags",
 	5: "Url",
-	6: "CreateTime",
-	7: "UpdateTime",
+	6: "Status",
+	7: "CreateTime",
+	8: "UpdateTime",
 }
 
 var fieldIDToName_GetPostsReq = map[int32]string{
