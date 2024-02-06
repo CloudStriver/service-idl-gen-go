@@ -37,8 +37,8 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"MoveFile":               kitex.NewMethodInfo(moveFileHandler, newMoveFileArgs, newMoveFileResult, false),
 		"SaveFileToPrivateSpace": kitex.NewMethodInfo(saveFileToPrivateSpaceHandler, newSaveFileToPrivateSpaceArgs, newSaveFileToPrivateSpaceResult, false),
 		"AddFileToPublicSpace":   kitex.NewMethodInfo(addFileToPublicSpaceHandler, newAddFileToPublicSpaceArgs, newAddFileToPublicSpaceResult, false),
-		"DeleteFile":             kitex.NewMethodInfo(deleteFileHandler, newDeleteFileArgs, newDeleteFileResult, false),
 		"CompletelyRemoveFile":   kitex.NewMethodInfo(completelyRemoveFileHandler, newCompletelyRemoveFileArgs, newCompletelyRemoveFileResult, false),
+		"DeleteFile":             kitex.NewMethodInfo(deleteFileHandler, newDeleteFileArgs, newDeleteFileResult, false),
 		"RecoverRecycleBinFile":  kitex.NewMethodInfo(recoverRecycleBinFileHandler, newRecoverRecycleBinFileArgs, newRecoverRecycleBinFileResult, false),
 		"CreateZone":             kitex.NewMethodInfo(createZoneHandler, newCreateZoneArgs, newCreateZoneResult, false),
 		"UpdateZone":             kitex.NewMethodInfo(updateZoneHandler, newUpdateZoneArgs, newUpdateZoneResult, false),
@@ -2521,159 +2521,6 @@ func (p *AddFileToPublicSpaceResult) GetResult() interface{} {
 	return p.Success
 }
 
-func deleteFileHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	switch s := arg.(type) {
-	case *streaming.Args:
-		st := s.Stream
-		req := new(core_api.DeleteFileReq)
-		if err := st.RecvMsg(req); err != nil {
-			return err
-		}
-		resp, err := handler.(core_api.Content).DeleteFile(ctx, req)
-		if err != nil {
-			return err
-		}
-		if err := st.SendMsg(resp); err != nil {
-			return err
-		}
-	case *DeleteFileArgs:
-		success, err := handler.(core_api.Content).DeleteFile(ctx, s.Req)
-		if err != nil {
-			return err
-		}
-		realResult := result.(*DeleteFileResult)
-		realResult.Success = success
-	}
-	return nil
-}
-func newDeleteFileArgs() interface{} {
-	return &DeleteFileArgs{}
-}
-
-func newDeleteFileResult() interface{} {
-	return &DeleteFileResult{}
-}
-
-type DeleteFileArgs struct {
-	Req *core_api.DeleteFileReq
-}
-
-func (p *DeleteFileArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetReq() {
-		p.Req = new(core_api.DeleteFileReq)
-	}
-	return p.Req.FastRead(buf, _type, number)
-}
-
-func (p *DeleteFileArgs) FastWrite(buf []byte) (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.FastWrite(buf)
-}
-
-func (p *DeleteFileArgs) Size() (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.Size()
-}
-
-func (p *DeleteFileArgs) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetReq() {
-		return out, nil
-	}
-	return proto.Marshal(p.Req)
-}
-
-func (p *DeleteFileArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.DeleteFileReq)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Req = msg
-	return nil
-}
-
-var DeleteFileArgs_Req_DEFAULT *core_api.DeleteFileReq
-
-func (p *DeleteFileArgs) GetReq() *core_api.DeleteFileReq {
-	if !p.IsSetReq() {
-		return DeleteFileArgs_Req_DEFAULT
-	}
-	return p.Req
-}
-
-func (p *DeleteFileArgs) IsSetReq() bool {
-	return p.Req != nil
-}
-
-func (p *DeleteFileArgs) GetFirstArgument() interface{} {
-	return p.Req
-}
-
-type DeleteFileResult struct {
-	Success *core_api.DeleteFileResp
-}
-
-var DeleteFileResult_Success_DEFAULT *core_api.DeleteFileResp
-
-func (p *DeleteFileResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetSuccess() {
-		p.Success = new(core_api.DeleteFileResp)
-	}
-	return p.Success.FastRead(buf, _type, number)
-}
-
-func (p *DeleteFileResult) FastWrite(buf []byte) (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.FastWrite(buf)
-}
-
-func (p *DeleteFileResult) Size() (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.Size()
-}
-
-func (p *DeleteFileResult) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetSuccess() {
-		return out, nil
-	}
-	return proto.Marshal(p.Success)
-}
-
-func (p *DeleteFileResult) Unmarshal(in []byte) error {
-	msg := new(core_api.DeleteFileResp)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Success = msg
-	return nil
-}
-
-func (p *DeleteFileResult) GetSuccess() *core_api.DeleteFileResp {
-	if !p.IsSetSuccess() {
-		return DeleteFileResult_Success_DEFAULT
-	}
-	return p.Success
-}
-
-func (p *DeleteFileResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.DeleteFileResp)
-}
-
-func (p *DeleteFileResult) IsSetSuccess() bool {
-	return p.Success != nil
-}
-
-func (p *DeleteFileResult) GetResult() interface{} {
-	return p.Success
-}
-
 func completelyRemoveFileHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
@@ -2824,6 +2671,159 @@ func (p *CompletelyRemoveFileResult) IsSetSuccess() bool {
 }
 
 func (p *CompletelyRemoveFileResult) GetResult() interface{} {
+	return p.Success
+}
+
+func deleteFileHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.DeleteFileReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Content).DeleteFile(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *DeleteFileArgs:
+		success, err := handler.(core_api.Content).DeleteFile(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*DeleteFileResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newDeleteFileArgs() interface{} {
+	return &DeleteFileArgs{}
+}
+
+func newDeleteFileResult() interface{} {
+	return &DeleteFileResult{}
+}
+
+type DeleteFileArgs struct {
+	Req *core_api.DeleteFileReq
+}
+
+func (p *DeleteFileArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.DeleteFileReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *DeleteFileArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *DeleteFileArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *DeleteFileArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *DeleteFileArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.DeleteFileReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var DeleteFileArgs_Req_DEFAULT *core_api.DeleteFileReq
+
+func (p *DeleteFileArgs) GetReq() *core_api.DeleteFileReq {
+	if !p.IsSetReq() {
+		return DeleteFileArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *DeleteFileArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *DeleteFileArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type DeleteFileResult struct {
+	Success *core_api.DeleteFileResp
+}
+
+var DeleteFileResult_Success_DEFAULT *core_api.DeleteFileResp
+
+func (p *DeleteFileResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.DeleteFileResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *DeleteFileResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *DeleteFileResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *DeleteFileResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *DeleteFileResult) Unmarshal(in []byte) error {
+	msg := new(core_api.DeleteFileResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *DeleteFileResult) GetSuccess() *core_api.DeleteFileResp {
+	if !p.IsSetSuccess() {
+		return DeleteFileResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *DeleteFileResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.DeleteFileResp)
+}
+
+func (p *DeleteFileResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *DeleteFileResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -5751,21 +5751,21 @@ func (p *kClient) AddFileToPublicSpace(ctx context.Context, Req *core_api.AddFil
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) DeleteFile(ctx context.Context, Req *core_api.DeleteFileReq) (r *core_api.DeleteFileResp, err error) {
-	var _args DeleteFileArgs
-	_args.Req = Req
-	var _result DeleteFileResult
-	if err = p.c.Call(ctx, "DeleteFile", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
-}
-
 func (p *kClient) CompletelyRemoveFile(ctx context.Context, Req *core_api.CompletelyRemoveFileReq) (r *core_api.CompletelyRemoveFileReq, err error) {
 	var _args CompletelyRemoveFileArgs
 	_args.Req = Req
 	var _result CompletelyRemoveFileResult
 	if err = p.c.Call(ctx, "CompletelyRemoveFile", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) DeleteFile(ctx context.Context, Req *core_api.DeleteFileReq) (r *core_api.DeleteFileResp, err error) {
+	var _args DeleteFileArgs
+	_args.Req = Req
+	var _result DeleteFileResult
+	if err = p.c.Call(ctx, "DeleteFile", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

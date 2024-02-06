@@ -27,8 +27,8 @@ type Client interface {
 	MoveFile(ctx context.Context, Req *core_api.MoveFileReq, callOptions ...callopt.Option) (r *core_api.MoveFileResp, err error)
 	SaveFileToPrivateSpace(ctx context.Context, Req *core_api.SaveFileToPrivateSpaceReq, callOptions ...callopt.Option) (r *core_api.SaveFileToPrivateSpaceResp, err error)
 	AddFileToPublicSpace(ctx context.Context, Req *core_api.AddFileToPublicSpaceReq, callOptions ...callopt.Option) (r *core_api.AddFileToPublicSpaceResp, err error)
-	DeleteFile(ctx context.Context, Req *core_api.DeleteFileReq, callOptions ...callopt.Option) (r *core_api.DeleteFileResp, err error)
 	CompletelyRemoveFile(ctx context.Context, Req *core_api.CompletelyRemoveFileReq, callOptions ...callopt.Option) (r *core_api.CompletelyRemoveFileReq, err error)
+	DeleteFile(ctx context.Context, Req *core_api.DeleteFileReq, callOptions ...callopt.Option) (r *core_api.DeleteFileResp, err error)
 	RecoverRecycleBinFile(ctx context.Context, Req *core_api.RecoverRecycleBinFileReq, callOptions ...callopt.Option) (r *core_api.RecoverRecycleBinFileResp, err error)
 	CreateZone(ctx context.Context, Req *core_api.CreateZoneReq, callOptions ...callopt.Option) (r *core_api.CreateZoneResp, err error)
 	UpdateZone(ctx context.Context, Req *core_api.UpdateZoneReq, callOptions ...callopt.Option) (r *core_api.UpdateZoneResp, err error)
@@ -158,14 +158,14 @@ func (p *kContentClient) AddFileToPublicSpace(ctx context.Context, Req *core_api
 	return p.kClient.AddFileToPublicSpace(ctx, Req)
 }
 
-func (p *kContentClient) DeleteFile(ctx context.Context, Req *core_api.DeleteFileReq, callOptions ...callopt.Option) (r *core_api.DeleteFileResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.DeleteFile(ctx, Req)
-}
-
 func (p *kContentClient) CompletelyRemoveFile(ctx context.Context, Req *core_api.CompletelyRemoveFileReq, callOptions ...callopt.Option) (r *core_api.CompletelyRemoveFileReq, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.CompletelyRemoveFile(ctx, Req)
+}
+
+func (p *kContentClient) DeleteFile(ctx context.Context, Req *core_api.DeleteFileReq, callOptions ...callopt.Option) (r *core_api.DeleteFileResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteFile(ctx, Req)
 }
 
 func (p *kContentClient) RecoverRecycleBinFile(ctx context.Context, Req *core_api.RecoverRecycleBinFileReq, callOptions ...callopt.Option) (r *core_api.RecoverRecycleBinFileResp, err error) {
