@@ -16,10 +16,10 @@ type Client interface {
 	UpdateSlider(ctx context.Context, Req *system.UpdateSliderReq, callOptions ...callopt.Option) (r *system.UpdateSliderResp, err error)
 	DeleteSlider(ctx context.Context, Req *system.DeleteSliderReq, callOptions ...callopt.Option) (r *system.DeleteSliderResp, err error)
 	GetNotifications(ctx context.Context, Req *system.GetNotificationsReq, callOptions ...callopt.Option) (r *system.GetNotificationsResp, err error)
-	CleanNotification(ctx context.Context, Req *system.CleanNotificationReq, callOptions ...callopt.Option) (r *system.CleanNotificationResp, err error)
 	GetNotificationCount(ctx context.Context, Req *system.GetNotificationCountReq, callOptions ...callopt.Option) (r *system.GetNotificationCountResp, err error)
 	CreateNotifications(ctx context.Context, Req *system.CreateNotificationsReq, callOptions ...callopt.Option) (r *system.CreateNotificationsResp, err error)
-	ReadNotifications(ctx context.Context, Req *system.ReadNotificationsReq, callOptions ...callopt.Option) (r *system.ReadNotificationsResp, err error)
+	UpateNotifications(ctx context.Context, Req *system.UpdateNotificationsReq, callOptions ...callopt.Option) (r *system.UpdateNotificationsResp, err error)
+	DeleteNotifications(ctx context.Context, Req *system.DeleteNotificationsReq, callOptions ...callopt.Option) (r *system.DeleteNotificationsResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -76,11 +76,6 @@ func (p *kSystemServiceClient) GetNotifications(ctx context.Context, Req *system
 	return p.kClient.GetNotifications(ctx, Req)
 }
 
-func (p *kSystemServiceClient) CleanNotification(ctx context.Context, Req *system.CleanNotificationReq, callOptions ...callopt.Option) (r *system.CleanNotificationResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.CleanNotification(ctx, Req)
-}
-
 func (p *kSystemServiceClient) GetNotificationCount(ctx context.Context, Req *system.GetNotificationCountReq, callOptions ...callopt.Option) (r *system.GetNotificationCountResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetNotificationCount(ctx, Req)
@@ -91,7 +86,12 @@ func (p *kSystemServiceClient) CreateNotifications(ctx context.Context, Req *sys
 	return p.kClient.CreateNotifications(ctx, Req)
 }
 
-func (p *kSystemServiceClient) ReadNotifications(ctx context.Context, Req *system.ReadNotificationsReq, callOptions ...callopt.Option) (r *system.ReadNotificationsResp, err error) {
+func (p *kSystemServiceClient) UpateNotifications(ctx context.Context, Req *system.UpdateNotificationsReq, callOptions ...callopt.Option) (r *system.UpdateNotificationsResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.ReadNotifications(ctx, Req)
+	return p.kClient.UpateNotifications(ctx, Req)
+}
+
+func (p *kSystemServiceClient) DeleteNotifications(ctx context.Context, Req *system.DeleteNotificationsReq, callOptions ...callopt.Option) (r *system.DeleteNotificationsResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteNotifications(ctx, Req)
 }

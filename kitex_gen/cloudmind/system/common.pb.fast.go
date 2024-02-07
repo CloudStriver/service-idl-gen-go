@@ -108,93 +108,12 @@ func (x *Notification) fastReadField7(buf []byte, _type int8) (offset int, err e
 }
 
 func (x *Notification) fastReadField8(buf []byte, _type int8) (offset int, err error) {
-	x.CreateAt, offset, err = fastpb.ReadInt64(buf, _type)
-	return offset, err
-}
-
-func (x *Notification) fastReadField9(buf []byte, _type int8) (offset int, err error) {
 	x.IsRead, offset, err = fastpb.ReadBool(buf, _type)
 	return offset, err
 }
 
-func (x *NotificationFilterOptions) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
-	switch number {
-	case 1:
-		offset, err = x.fastReadField1(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 2:
-		offset, err = x.fastReadField2(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 3:
-		offset, err = x.fastReadField3(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 4:
-		offset, err = x.fastReadField4(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 5:
-		offset, err = x.fastReadField5(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 6:
-		offset, err = x.fastReadField6(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	default:
-		offset, err = fastpb.Skip(buf, _type, number)
-		if err != nil {
-			goto SkipFieldError
-		}
-	}
-	return offset, nil
-SkipFieldError:
-	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
-ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_NotificationFilterOptions[number], err)
-}
-
-func (x *NotificationFilterOptions) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadString(buf, _type)
-	x.OnlyUserId = &tmp
-	return offset, err
-}
-
-func (x *NotificationFilterOptions) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadInt64(buf, _type)
-	x.OnlyType = &tmp
-	return offset, err
-}
-
-func (x *NotificationFilterOptions) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadInt64(buf, _type)
-	x.OnlyTargetType = &tmp
-	return offset, err
-}
-
-func (x *NotificationFilterOptions) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadString(buf, _type)
-	x.OnlyFirstId = &tmp
-	return offset, err
-}
-
-func (x *NotificationFilterOptions) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadString(buf, _type)
-	x.OnlyLastId = &tmp
-	return offset, err
-}
-
-func (x *NotificationFilterOptions) fastReadField6(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadBool(buf, _type)
-	x.OnlyIsRead = &tmp
+func (x *Notification) fastReadField9(buf []byte, _type int8) (offset int, err error) {
+	x.CreateTime, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -283,7 +202,7 @@ func (x *Slider) fastReadField7(buf []byte, _type int8) (offset int, err error) 
 	return offset, err
 }
 
-func (x *SliderFilterOptions) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *NotificationInfo) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
@@ -292,6 +211,31 @@ func (x *SliderFilterOptions) FastRead(buf []byte, _type int8, number int32) (of
 		}
 	case 2:
 		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 6:
+		offset, err = x.fastReadField6(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 7:
+		offset, err = x.fastReadField7(buf, _type)
 		if err != nil {
 			goto ReadFieldError
 		}
@@ -305,18 +249,41 @@ func (x *SliderFilterOptions) FastRead(buf []byte, _type int8, number int32) (of
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_SliderFilterOptions[number], err)
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_NotificationInfo[number], err)
 }
 
-func (x *SliderFilterOptions) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadInt64(buf, _type)
-	x.OnlyType = &tmp
+func (x *NotificationInfo) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.TargetUserId, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
-func (x *SliderFilterOptions) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadInt64(buf, _type)
-	x.OnlyIsPublic = &tmp
+func (x *NotificationInfo) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.SourceUserId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *NotificationInfo) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.SourceContentId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *NotificationInfo) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	x.TargetType, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *NotificationInfo) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	x.Type, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *NotificationInfo) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+	x.Text, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *NotificationInfo) fastReadField7(buf []byte, _type int8) (offset int, err error) {
+	x.IsRead, offset, err = fastpb.ReadBool(buf, _type)
 	return offset, err
 }
 
@@ -393,79 +360,18 @@ func (x *Notification) fastWriteField7(buf []byte) (offset int) {
 }
 
 func (x *Notification) fastWriteField8(buf []byte) (offset int) {
-	if x.CreateAt == 0 {
+	if !x.IsRead {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 8, x.GetCreateAt())
+	offset += fastpb.WriteBool(buf[offset:], 8, x.GetIsRead())
 	return offset
 }
 
 func (x *Notification) fastWriteField9(buf []byte) (offset int) {
-	if !x.IsRead {
+	if x.CreateTime == 0 {
 		return offset
 	}
-	offset += fastpb.WriteBool(buf[offset:], 9, x.GetIsRead())
-	return offset
-}
-
-func (x *NotificationFilterOptions) FastWrite(buf []byte) (offset int) {
-	if x == nil {
-		return offset
-	}
-	offset += x.fastWriteField1(buf[offset:])
-	offset += x.fastWriteField2(buf[offset:])
-	offset += x.fastWriteField3(buf[offset:])
-	offset += x.fastWriteField4(buf[offset:])
-	offset += x.fastWriteField5(buf[offset:])
-	offset += x.fastWriteField6(buf[offset:])
-	return offset
-}
-
-func (x *NotificationFilterOptions) fastWriteField1(buf []byte) (offset int) {
-	if x.OnlyUserId == nil {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 1, x.GetOnlyUserId())
-	return offset
-}
-
-func (x *NotificationFilterOptions) fastWriteField2(buf []byte) (offset int) {
-	if x.OnlyType == nil {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetOnlyType())
-	return offset
-}
-
-func (x *NotificationFilterOptions) fastWriteField3(buf []byte) (offset int) {
-	if x.OnlyTargetType == nil {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetOnlyTargetType())
-	return offset
-}
-
-func (x *NotificationFilterOptions) fastWriteField4(buf []byte) (offset int) {
-	if x.OnlyFirstId == nil {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 4, x.GetOnlyFirstId())
-	return offset
-}
-
-func (x *NotificationFilterOptions) fastWriteField5(buf []byte) (offset int) {
-	if x.OnlyLastId == nil {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 5, x.GetOnlyLastId())
-	return offset
-}
-
-func (x *NotificationFilterOptions) fastWriteField6(buf []byte) (offset int) {
-	if x.OnlyIsRead == nil {
-		return offset
-	}
-	offset += fastpb.WriteBool(buf[offset:], 6, x.GetOnlyIsRead())
+	offset += fastpb.WriteInt64(buf[offset:], 9, x.GetCreateTime())
 	return offset
 }
 
@@ -539,28 +445,73 @@ func (x *Slider) fastWriteField7(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *SliderFilterOptions) FastWrite(buf []byte) (offset int) {
+func (x *NotificationInfo) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
+	offset += x.fastWriteField6(buf[offset:])
+	offset += x.fastWriteField7(buf[offset:])
 	return offset
 }
 
-func (x *SliderFilterOptions) fastWriteField1(buf []byte) (offset int) {
-	if x.OnlyType == nil {
+func (x *NotificationInfo) fastWriteField1(buf []byte) (offset int) {
+	if x.TargetUserId == "" {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 1, x.GetOnlyType())
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetTargetUserId())
 	return offset
 }
 
-func (x *SliderFilterOptions) fastWriteField2(buf []byte) (offset int) {
-	if x.OnlyIsPublic == nil {
+func (x *NotificationInfo) fastWriteField2(buf []byte) (offset int) {
+	if x.SourceUserId == "" {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetOnlyIsPublic())
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetSourceUserId())
+	return offset
+}
+
+func (x *NotificationInfo) fastWriteField3(buf []byte) (offset int) {
+	if x.SourceContentId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetSourceContentId())
+	return offset
+}
+
+func (x *NotificationInfo) fastWriteField4(buf []byte) (offset int) {
+	if x.TargetType == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetTargetType())
+	return offset
+}
+
+func (x *NotificationInfo) fastWriteField5(buf []byte) (offset int) {
+	if x.Type == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetType())
+	return offset
+}
+
+func (x *NotificationInfo) fastWriteField6(buf []byte) (offset int) {
+	if x.Text == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 6, x.GetText())
+	return offset
+}
+
+func (x *NotificationInfo) fastWriteField7(buf []byte) (offset int) {
+	if !x.IsRead {
+		return offset
+	}
+	offset += fastpb.WriteBool(buf[offset:], 7, x.GetIsRead())
 	return offset
 }
 
@@ -637,79 +588,18 @@ func (x *Notification) sizeField7() (n int) {
 }
 
 func (x *Notification) sizeField8() (n int) {
-	if x.CreateAt == 0 {
+	if !x.IsRead {
 		return n
 	}
-	n += fastpb.SizeInt64(8, x.GetCreateAt())
+	n += fastpb.SizeBool(8, x.GetIsRead())
 	return n
 }
 
 func (x *Notification) sizeField9() (n int) {
-	if !x.IsRead {
+	if x.CreateTime == 0 {
 		return n
 	}
-	n += fastpb.SizeBool(9, x.GetIsRead())
-	return n
-}
-
-func (x *NotificationFilterOptions) Size() (n int) {
-	if x == nil {
-		return n
-	}
-	n += x.sizeField1()
-	n += x.sizeField2()
-	n += x.sizeField3()
-	n += x.sizeField4()
-	n += x.sizeField5()
-	n += x.sizeField6()
-	return n
-}
-
-func (x *NotificationFilterOptions) sizeField1() (n int) {
-	if x.OnlyUserId == nil {
-		return n
-	}
-	n += fastpb.SizeString(1, x.GetOnlyUserId())
-	return n
-}
-
-func (x *NotificationFilterOptions) sizeField2() (n int) {
-	if x.OnlyType == nil {
-		return n
-	}
-	n += fastpb.SizeInt64(2, x.GetOnlyType())
-	return n
-}
-
-func (x *NotificationFilterOptions) sizeField3() (n int) {
-	if x.OnlyTargetType == nil {
-		return n
-	}
-	n += fastpb.SizeInt64(3, x.GetOnlyTargetType())
-	return n
-}
-
-func (x *NotificationFilterOptions) sizeField4() (n int) {
-	if x.OnlyFirstId == nil {
-		return n
-	}
-	n += fastpb.SizeString(4, x.GetOnlyFirstId())
-	return n
-}
-
-func (x *NotificationFilterOptions) sizeField5() (n int) {
-	if x.OnlyLastId == nil {
-		return n
-	}
-	n += fastpb.SizeString(5, x.GetOnlyLastId())
-	return n
-}
-
-func (x *NotificationFilterOptions) sizeField6() (n int) {
-	if x.OnlyIsRead == nil {
-		return n
-	}
-	n += fastpb.SizeBool(6, x.GetOnlyIsRead())
+	n += fastpb.SizeInt64(9, x.GetCreateTime())
 	return n
 }
 
@@ -783,28 +673,73 @@ func (x *Slider) sizeField7() (n int) {
 	return n
 }
 
-func (x *SliderFilterOptions) Size() (n int) {
+func (x *NotificationInfo) Size() (n int) {
 	if x == nil {
 		return n
 	}
 	n += x.sizeField1()
 	n += x.sizeField2()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
+	n += x.sizeField6()
+	n += x.sizeField7()
 	return n
 }
 
-func (x *SliderFilterOptions) sizeField1() (n int) {
-	if x.OnlyType == nil {
+func (x *NotificationInfo) sizeField1() (n int) {
+	if x.TargetUserId == "" {
 		return n
 	}
-	n += fastpb.SizeInt64(1, x.GetOnlyType())
+	n += fastpb.SizeString(1, x.GetTargetUserId())
 	return n
 }
 
-func (x *SliderFilterOptions) sizeField2() (n int) {
-	if x.OnlyIsPublic == nil {
+func (x *NotificationInfo) sizeField2() (n int) {
+	if x.SourceUserId == "" {
 		return n
 	}
-	n += fastpb.SizeInt64(2, x.GetOnlyIsPublic())
+	n += fastpb.SizeString(2, x.GetSourceUserId())
+	return n
+}
+
+func (x *NotificationInfo) sizeField3() (n int) {
+	if x.SourceContentId == "" {
+		return n
+	}
+	n += fastpb.SizeString(3, x.GetSourceContentId())
+	return n
+}
+
+func (x *NotificationInfo) sizeField4() (n int) {
+	if x.TargetType == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(4, x.GetTargetType())
+	return n
+}
+
+func (x *NotificationInfo) sizeField5() (n int) {
+	if x.Type == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(5, x.GetType())
+	return n
+}
+
+func (x *NotificationInfo) sizeField6() (n int) {
+	if x.Text == "" {
+		return n
+	}
+	n += fastpb.SizeString(6, x.GetText())
+	return n
+}
+
+func (x *NotificationInfo) sizeField7() (n int) {
+	if !x.IsRead {
+		return n
+	}
+	n += fastpb.SizeBool(7, x.GetIsRead())
 	return n
 }
 
@@ -816,17 +751,8 @@ var fieldIDToName_Notification = map[int32]string{
 	5: "TargetType",
 	6: "Type",
 	7: "Text",
-	8: "CreateAt",
-	9: "IsRead",
-}
-
-var fieldIDToName_NotificationFilterOptions = map[int32]string{
-	1: "OnlyUserId",
-	2: "OnlyType",
-	3: "OnlyTargetType",
-	4: "OnlyFirstId",
-	5: "OnlyLastId",
-	6: "OnlyIsRead",
+	8: "IsRead",
+	9: "CreateTime",
 }
 
 var fieldIDToName_Slider = map[int32]string{
@@ -839,7 +765,12 @@ var fieldIDToName_Slider = map[int32]string{
 	7: "UpdateTime",
 }
 
-var fieldIDToName_SliderFilterOptions = map[int32]string{
-	1: "OnlyType",
-	2: "OnlyIsPublic",
+var fieldIDToName_NotificationInfo = map[int32]string{
+	1: "TargetUserId",
+	2: "SourceUserId",
+	3: "SourceContentId",
+	4: "TargetType",
+	5: "Type",
+	6: "Text",
+	7: "IsRead",
 }
