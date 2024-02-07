@@ -1718,8 +1718,8 @@ func (x *SearchUserReq) FastRead(buf []byte, _type int8, number int32) (offset i
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 3:
-		offset, err = x.fastReadField3(buf, _type)
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
 		if err != nil {
 			goto ReadFieldError
 		}
@@ -1737,11 +1737,16 @@ ReadFieldError:
 }
 
 func (x *SearchUserReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	x.Keyword, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
+	var v SearchOptions
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.SearchOptions = &v
+	return offset, nil
 }
 
-func (x *SearchUserReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+func (x *SearchUserReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
 	var v basic.PaginationOptions
 	offset, err = fastpb.ReadMessage(buf, _type, &v)
 	if err != nil {
@@ -4348,23 +4353,23 @@ func (x *SearchUserReq) FastWrite(buf []byte) (offset int) {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
-	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
 	return offset
 }
 
 func (x *SearchUserReq) fastWriteField1(buf []byte) (offset int) {
-	if x.Keyword == "" {
+	if x.SearchOptions == nil {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 1, x.GetKeyword())
+	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetSearchOptions())
 	return offset
 }
 
-func (x *SearchUserReq) fastWriteField3(buf []byte) (offset int) {
+func (x *SearchUserReq) fastWriteField2(buf []byte) (offset int) {
 	if x.PaginationOptions == nil {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 3, x.GetPaginationOptions())
+	offset += fastpb.WriteMessage(buf[offset:], 2, x.GetPaginationOptions())
 	return offset
 }
 
@@ -6421,23 +6426,23 @@ func (x *SearchUserReq) Size() (n int) {
 		return n
 	}
 	n += x.sizeField1()
-	n += x.sizeField3()
+	n += x.sizeField2()
 	return n
 }
 
 func (x *SearchUserReq) sizeField1() (n int) {
-	if x.Keyword == "" {
+	if x.SearchOptions == nil {
 		return n
 	}
-	n += fastpb.SizeString(1, x.GetKeyword())
+	n += fastpb.SizeMessage(1, x.GetSearchOptions())
 	return n
 }
 
-func (x *SearchUserReq) sizeField3() (n int) {
+func (x *SearchUserReq) sizeField2() (n int) {
 	if x.PaginationOptions == nil {
 		return n
 	}
-	n += fastpb.SizeMessage(3, x.GetPaginationOptions())
+	n += fastpb.SizeMessage(2, x.GetPaginationOptions())
 	return n
 }
 
@@ -7607,8 +7612,8 @@ var fieldIDToName_GetUserResp = map[int32]string{
 }
 
 var fieldIDToName_SearchUserReq = map[int32]string{
-	1: "Keyword",
-	3: "PaginationOptions",
+	1: "SearchOptions",
+	2: "PaginationOptions",
 }
 
 var fieldIDToName_SearchUserResp = map[int32]string{
