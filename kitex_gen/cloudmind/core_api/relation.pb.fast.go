@@ -170,6 +170,11 @@ func (x *GetFromRelationsResp) FastRead(buf []byte, _type int8, number int32) (o
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -190,6 +195,16 @@ func (x *GetFromRelationsResp) fastReadField1(buf []byte, _type int8) (offset in
 		return offset, err
 	}
 	x.Users = append(x.Users, &v)
+	return offset, nil
+}
+
+func (x *GetFromRelationsResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	var v OwnPost
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Posts = append(x.Posts, &v)
 	return offset, nil
 }
 
@@ -560,6 +575,7 @@ func (x *GetFromRelationsResp) FastWrite(buf []byte) (offset int) {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
 	return offset
 }
 
@@ -569,6 +585,16 @@ func (x *GetFromRelationsResp) fastWriteField1(buf []byte) (offset int) {
 	}
 	for i := range x.GetUsers() {
 		offset += fastpb.WriteMessage(buf[offset:], 1, x.GetUsers()[i])
+	}
+	return offset
+}
+
+func (x *GetFromRelationsResp) fastWriteField2(buf []byte) (offset int) {
+	if x.Posts == nil {
+		return offset
+	}
+	for i := range x.GetPosts() {
+		offset += fastpb.WriteMessage(buf[offset:], 2, x.GetPosts()[i])
 	}
 	return offset
 }
@@ -868,6 +894,7 @@ func (x *GetFromRelationsResp) Size() (n int) {
 		return n
 	}
 	n += x.sizeField1()
+	n += x.sizeField2()
 	return n
 }
 
@@ -877,6 +904,16 @@ func (x *GetFromRelationsResp) sizeField1() (n int) {
 	}
 	for i := range x.GetUsers() {
 		n += fastpb.SizeMessage(1, x.GetUsers()[i])
+	}
+	return n
+}
+
+func (x *GetFromRelationsResp) sizeField2() (n int) {
+	if x.Posts == nil {
+		return n
+	}
+	for i := range x.GetPosts() {
+		n += fastpb.SizeMessage(2, x.GetPosts()[i])
 	}
 	return n
 }
@@ -1088,6 +1125,7 @@ var fieldIDToName_GetFromRelationsReq = map[int32]string{
 
 var fieldIDToName_GetFromRelationsResp = map[int32]string{
 	1: "Users",
+	2: "Posts",
 }
 
 var fieldIDToName_GetToRelationsReq = map[int32]string{
