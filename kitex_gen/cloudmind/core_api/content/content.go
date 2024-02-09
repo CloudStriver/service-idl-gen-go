@@ -57,6 +57,11 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"GetOtherPost":           kitex.NewMethodInfo(getOtherPostHandler, newGetOtherPostArgs, newGetOtherPostResult, false),
 		"GetOwnPosts":            kitex.NewMethodInfo(getOwnPostsHandler, newGetOwnPostsArgs, newGetOwnPostsResult, false),
 		"GetOwnPost":             kitex.NewMethodInfo(getOwnPostHandler, newGetOwnPostArgs, newGetOwnPostResult, false),
+		"GetRecommendByUser":     kitex.NewMethodInfo(getRecommendByUserHandler, newGetRecommendByUserArgs, newGetRecommendByUserResult, false),
+		"GetRecommendByItem":     kitex.NewMethodInfo(getRecommendByItemHandler, newGetRecommendByItemArgs, newGetRecommendByItemResult, false),
+		"CreateFeedBack":         kitex.NewMethodInfo(createFeedBackHandler, newCreateFeedBackArgs, newCreateFeedBackResult, false),
+		"GetPopularRecommend":    kitex.NewMethodInfo(getPopularRecommendHandler, newGetPopularRecommendArgs, newGetPopularRecommendResult, false),
+		"GetLatestRecommend":     kitex.NewMethodInfo(getLatestRecommendHandler, newGetLatestRecommendArgs, newGetLatestRecommendResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName":     "cloudmind.core_api",
@@ -5581,6 +5586,771 @@ func (p *GetOwnPostResult) GetResult() interface{} {
 	return p.Success
 }
 
+func getRecommendByUserHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.GetRecommendByUserReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Content).GetRecommendByUser(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetRecommendByUserArgs:
+		success, err := handler.(core_api.Content).GetRecommendByUser(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetRecommendByUserResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetRecommendByUserArgs() interface{} {
+	return &GetRecommendByUserArgs{}
+}
+
+func newGetRecommendByUserResult() interface{} {
+	return &GetRecommendByUserResult{}
+}
+
+type GetRecommendByUserArgs struct {
+	Req *core_api.GetRecommendByUserReq
+}
+
+func (p *GetRecommendByUserArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.GetRecommendByUserReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetRecommendByUserArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetRecommendByUserArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetRecommendByUserArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetRecommendByUserArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.GetRecommendByUserReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetRecommendByUserArgs_Req_DEFAULT *core_api.GetRecommendByUserReq
+
+func (p *GetRecommendByUserArgs) GetReq() *core_api.GetRecommendByUserReq {
+	if !p.IsSetReq() {
+		return GetRecommendByUserArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetRecommendByUserArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetRecommendByUserArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetRecommendByUserResult struct {
+	Success *core_api.GetRecommendByUserResp
+}
+
+var GetRecommendByUserResult_Success_DEFAULT *core_api.GetRecommendByUserResp
+
+func (p *GetRecommendByUserResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.GetRecommendByUserResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetRecommendByUserResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetRecommendByUserResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetRecommendByUserResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetRecommendByUserResult) Unmarshal(in []byte) error {
+	msg := new(core_api.GetRecommendByUserResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetRecommendByUserResult) GetSuccess() *core_api.GetRecommendByUserResp {
+	if !p.IsSetSuccess() {
+		return GetRecommendByUserResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetRecommendByUserResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.GetRecommendByUserResp)
+}
+
+func (p *GetRecommendByUserResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetRecommendByUserResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getRecommendByItemHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.GetRecommendByItemReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Content).GetRecommendByItem(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetRecommendByItemArgs:
+		success, err := handler.(core_api.Content).GetRecommendByItem(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetRecommendByItemResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetRecommendByItemArgs() interface{} {
+	return &GetRecommendByItemArgs{}
+}
+
+func newGetRecommendByItemResult() interface{} {
+	return &GetRecommendByItemResult{}
+}
+
+type GetRecommendByItemArgs struct {
+	Req *core_api.GetRecommendByItemReq
+}
+
+func (p *GetRecommendByItemArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.GetRecommendByItemReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetRecommendByItemArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetRecommendByItemArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetRecommendByItemArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetRecommendByItemArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.GetRecommendByItemReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetRecommendByItemArgs_Req_DEFAULT *core_api.GetRecommendByItemReq
+
+func (p *GetRecommendByItemArgs) GetReq() *core_api.GetRecommendByItemReq {
+	if !p.IsSetReq() {
+		return GetRecommendByItemArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetRecommendByItemArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetRecommendByItemArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetRecommendByItemResult struct {
+	Success *core_api.GetRecommendByItemResp
+}
+
+var GetRecommendByItemResult_Success_DEFAULT *core_api.GetRecommendByItemResp
+
+func (p *GetRecommendByItemResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.GetRecommendByItemResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetRecommendByItemResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetRecommendByItemResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetRecommendByItemResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetRecommendByItemResult) Unmarshal(in []byte) error {
+	msg := new(core_api.GetRecommendByItemResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetRecommendByItemResult) GetSuccess() *core_api.GetRecommendByItemResp {
+	if !p.IsSetSuccess() {
+		return GetRecommendByItemResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetRecommendByItemResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.GetRecommendByItemResp)
+}
+
+func (p *GetRecommendByItemResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetRecommendByItemResult) GetResult() interface{} {
+	return p.Success
+}
+
+func createFeedBackHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.CreateFeedBackReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Content).CreateFeedBack(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *CreateFeedBackArgs:
+		success, err := handler.(core_api.Content).CreateFeedBack(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*CreateFeedBackResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newCreateFeedBackArgs() interface{} {
+	return &CreateFeedBackArgs{}
+}
+
+func newCreateFeedBackResult() interface{} {
+	return &CreateFeedBackResult{}
+}
+
+type CreateFeedBackArgs struct {
+	Req *core_api.CreateFeedBackReq
+}
+
+func (p *CreateFeedBackArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.CreateFeedBackReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *CreateFeedBackArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *CreateFeedBackArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *CreateFeedBackArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *CreateFeedBackArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.CreateFeedBackReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var CreateFeedBackArgs_Req_DEFAULT *core_api.CreateFeedBackReq
+
+func (p *CreateFeedBackArgs) GetReq() *core_api.CreateFeedBackReq {
+	if !p.IsSetReq() {
+		return CreateFeedBackArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *CreateFeedBackArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *CreateFeedBackArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type CreateFeedBackResult struct {
+	Success *core_api.CreateFeedBackResp
+}
+
+var CreateFeedBackResult_Success_DEFAULT *core_api.CreateFeedBackResp
+
+func (p *CreateFeedBackResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.CreateFeedBackResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *CreateFeedBackResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *CreateFeedBackResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *CreateFeedBackResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *CreateFeedBackResult) Unmarshal(in []byte) error {
+	msg := new(core_api.CreateFeedBackResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *CreateFeedBackResult) GetSuccess() *core_api.CreateFeedBackResp {
+	if !p.IsSetSuccess() {
+		return CreateFeedBackResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *CreateFeedBackResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.CreateFeedBackResp)
+}
+
+func (p *CreateFeedBackResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *CreateFeedBackResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getPopularRecommendHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.GetPopularRecommendReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Content).GetPopularRecommend(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetPopularRecommendArgs:
+		success, err := handler.(core_api.Content).GetPopularRecommend(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetPopularRecommendResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetPopularRecommendArgs() interface{} {
+	return &GetPopularRecommendArgs{}
+}
+
+func newGetPopularRecommendResult() interface{} {
+	return &GetPopularRecommendResult{}
+}
+
+type GetPopularRecommendArgs struct {
+	Req *core_api.GetPopularRecommendReq
+}
+
+func (p *GetPopularRecommendArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.GetPopularRecommendReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetPopularRecommendArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetPopularRecommendArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetPopularRecommendArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetPopularRecommendArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.GetPopularRecommendReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetPopularRecommendArgs_Req_DEFAULT *core_api.GetPopularRecommendReq
+
+func (p *GetPopularRecommendArgs) GetReq() *core_api.GetPopularRecommendReq {
+	if !p.IsSetReq() {
+		return GetPopularRecommendArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetPopularRecommendArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetPopularRecommendArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetPopularRecommendResult struct {
+	Success *core_api.GetPopularRecommendResp
+}
+
+var GetPopularRecommendResult_Success_DEFAULT *core_api.GetPopularRecommendResp
+
+func (p *GetPopularRecommendResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.GetPopularRecommendResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetPopularRecommendResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetPopularRecommendResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetPopularRecommendResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetPopularRecommendResult) Unmarshal(in []byte) error {
+	msg := new(core_api.GetPopularRecommendResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetPopularRecommendResult) GetSuccess() *core_api.GetPopularRecommendResp {
+	if !p.IsSetSuccess() {
+		return GetPopularRecommendResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetPopularRecommendResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.GetPopularRecommendResp)
+}
+
+func (p *GetPopularRecommendResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetPopularRecommendResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getLatestRecommendHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.GetLatestRecommendReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Content).GetLatestRecommend(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetLatestRecommendArgs:
+		success, err := handler.(core_api.Content).GetLatestRecommend(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetLatestRecommendResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetLatestRecommendArgs() interface{} {
+	return &GetLatestRecommendArgs{}
+}
+
+func newGetLatestRecommendResult() interface{} {
+	return &GetLatestRecommendResult{}
+}
+
+type GetLatestRecommendArgs struct {
+	Req *core_api.GetLatestRecommendReq
+}
+
+func (p *GetLatestRecommendArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.GetLatestRecommendReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetLatestRecommendArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetLatestRecommendArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetLatestRecommendArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetLatestRecommendArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.GetLatestRecommendReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetLatestRecommendArgs_Req_DEFAULT *core_api.GetLatestRecommendReq
+
+func (p *GetLatestRecommendArgs) GetReq() *core_api.GetLatestRecommendReq {
+	if !p.IsSetReq() {
+		return GetLatestRecommendArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetLatestRecommendArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetLatestRecommendArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetLatestRecommendResult struct {
+	Success *core_api.GetLatestRecommendResp
+}
+
+var GetLatestRecommendResult_Success_DEFAULT *core_api.GetLatestRecommendResp
+
+func (p *GetLatestRecommendResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.GetLatestRecommendResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetLatestRecommendResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetLatestRecommendResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetLatestRecommendResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetLatestRecommendResult) Unmarshal(in []byte) error {
+	msg := new(core_api.GetLatestRecommendResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetLatestRecommendResult) GetSuccess() *core_api.GetLatestRecommendResp {
+	if !p.IsSetSuccess() {
+		return GetLatestRecommendResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetLatestRecommendResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.GetLatestRecommendResp)
+}
+
+func (p *GetLatestRecommendResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetLatestRecommendResult) GetResult() interface{} {
+	return p.Success
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -5946,6 +6716,56 @@ func (p *kClient) GetOwnPost(ctx context.Context, Req *core_api.GetOwnPostReq) (
 	_args.Req = Req
 	var _result GetOwnPostResult
 	if err = p.c.Call(ctx, "GetOwnPost", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetRecommendByUser(ctx context.Context, Req *core_api.GetRecommendByUserReq) (r *core_api.GetRecommendByUserResp, err error) {
+	var _args GetRecommendByUserArgs
+	_args.Req = Req
+	var _result GetRecommendByUserResult
+	if err = p.c.Call(ctx, "GetRecommendByUser", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetRecommendByItem(ctx context.Context, Req *core_api.GetRecommendByItemReq) (r *core_api.GetRecommendByItemResp, err error) {
+	var _args GetRecommendByItemArgs
+	_args.Req = Req
+	var _result GetRecommendByItemResult
+	if err = p.c.Call(ctx, "GetRecommendByItem", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CreateFeedBack(ctx context.Context, Req *core_api.CreateFeedBackReq) (r *core_api.CreateFeedBackResp, err error) {
+	var _args CreateFeedBackArgs
+	_args.Req = Req
+	var _result CreateFeedBackResult
+	if err = p.c.Call(ctx, "CreateFeedBack", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetPopularRecommend(ctx context.Context, Req *core_api.GetPopularRecommendReq) (r *core_api.GetPopularRecommendResp, err error) {
+	var _args GetPopularRecommendArgs
+	_args.Req = Req
+	var _result GetPopularRecommendResult
+	if err = p.c.Call(ctx, "GetPopularRecommend", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetLatestRecommend(ctx context.Context, Req *core_api.GetLatestRecommendReq) (r *core_api.GetLatestRecommendResp, err error) {
+	var _args GetLatestRecommendArgs
+	_args.Req = Req
+	var _result GetLatestRecommendResult
+	if err = p.c.Call(ctx, "GetLatestRecommend", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

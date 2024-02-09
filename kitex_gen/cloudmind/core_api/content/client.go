@@ -47,6 +47,11 @@ type Client interface {
 	GetOtherPost(ctx context.Context, Req *core_api.GetOtherPostReq, callOptions ...callopt.Option) (r *core_api.GetOtherPostResp, err error)
 	GetOwnPosts(ctx context.Context, Req *core_api.GetOwnPostsReq, callOptions ...callopt.Option) (r *core_api.GetOwnPostsResp, err error)
 	GetOwnPost(ctx context.Context, Req *core_api.GetOwnPostReq, callOptions ...callopt.Option) (r *core_api.GetOwnPostResp, err error)
+	GetRecommendByUser(ctx context.Context, Req *core_api.GetRecommendByUserReq, callOptions ...callopt.Option) (r *core_api.GetRecommendByUserResp, err error)
+	GetRecommendByItem(ctx context.Context, Req *core_api.GetRecommendByItemReq, callOptions ...callopt.Option) (r *core_api.GetRecommendByItemResp, err error)
+	CreateFeedBack(ctx context.Context, Req *core_api.CreateFeedBackReq, callOptions ...callopt.Option) (r *core_api.CreateFeedBackResp, err error)
+	GetPopularRecommend(ctx context.Context, Req *core_api.GetPopularRecommendReq, callOptions ...callopt.Option) (r *core_api.GetPopularRecommendResp, err error)
+	GetLatestRecommend(ctx context.Context, Req *core_api.GetLatestRecommendReq, callOptions ...callopt.Option) (r *core_api.GetLatestRecommendResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -256,4 +261,29 @@ func (p *kContentClient) GetOwnPosts(ctx context.Context, Req *core_api.GetOwnPo
 func (p *kContentClient) GetOwnPost(ctx context.Context, Req *core_api.GetOwnPostReq, callOptions ...callopt.Option) (r *core_api.GetOwnPostResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetOwnPost(ctx, Req)
+}
+
+func (p *kContentClient) GetRecommendByUser(ctx context.Context, Req *core_api.GetRecommendByUserReq, callOptions ...callopt.Option) (r *core_api.GetRecommendByUserResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetRecommendByUser(ctx, Req)
+}
+
+func (p *kContentClient) GetRecommendByItem(ctx context.Context, Req *core_api.GetRecommendByItemReq, callOptions ...callopt.Option) (r *core_api.GetRecommendByItemResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetRecommendByItem(ctx, Req)
+}
+
+func (p *kContentClient) CreateFeedBack(ctx context.Context, Req *core_api.CreateFeedBackReq, callOptions ...callopt.Option) (r *core_api.CreateFeedBackResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateFeedBack(ctx, Req)
+}
+
+func (p *kContentClient) GetPopularRecommend(ctx context.Context, Req *core_api.GetPopularRecommendReq, callOptions ...callopt.Option) (r *core_api.GetPopularRecommendResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetPopularRecommend(ctx, Req)
+}
+
+func (p *kContentClient) GetLatestRecommend(ctx context.Context, Req *core_api.GetLatestRecommendReq, callOptions ...callopt.Option) (r *core_api.GetLatestRecommendResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetLatestRecommend(ctx, Req)
 }

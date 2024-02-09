@@ -3357,12 +3357,7 @@ func (x *UpdateItemReq) fastReadField3(buf []byte, _type int8) (offset int, err 
 }
 
 func (x *UpdateItemReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	var v string
-	v, offset, err = fastpb.ReadString(buf, _type)
-	if err != nil {
-		return offset, err
-	}
-	x.Categories = append(x.Categories, v)
+	x.Categories, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -3465,8 +3460,7 @@ func (x *GetRecommendByUserReq) fastReadField2(buf []byte, _type int8) (offset i
 }
 
 func (x *GetRecommendByUserReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadString(buf, _type)
-	x.Category = &tmp
+	x.Category, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -3542,8 +3536,7 @@ func (x *GetRecommendByItemReq) fastReadField2(buf []byte, _type int8) (offset i
 }
 
 func (x *GetRecommendByItemReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadString(buf, _type)
-	x.Category = &tmp
+	x.Category, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -3619,8 +3612,7 @@ func (x *GetPopularRecommendReq) fastReadField2(buf []byte, _type int8) (offset 
 }
 
 func (x *GetPopularRecommendReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadString(buf, _type)
-	x.Category = &tmp
+	x.Category, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -3696,8 +3688,7 @@ func (x *GetLatestRecommendReq) fastReadField2(buf []byte, _type int8) (offset i
 }
 
 func (x *GetLatestRecommendReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadString(buf, _type)
-	x.Category = &tmp
+	x.Category, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -5910,12 +5901,10 @@ func (x *UpdateItemReq) fastWriteField3(buf []byte) (offset int) {
 }
 
 func (x *UpdateItemReq) fastWriteField4(buf []byte) (offset int) {
-	if len(x.Categories) == 0 {
+	if x.Categories == 0 {
 		return offset
 	}
-	for i := range x.GetCategories() {
-		offset += fastpb.WriteString(buf[offset:], 4, x.GetCategories()[i])
-	}
+	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetCategories())
 	return offset
 }
 
@@ -5984,10 +5973,10 @@ func (x *GetRecommendByUserReq) fastWriteField2(buf []byte) (offset int) {
 }
 
 func (x *GetRecommendByUserReq) fastWriteField3(buf []byte) (offset int) {
-	if x.Category == nil {
+	if x.Category == 0 {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 3, x.GetCategory())
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetCategory())
 	return offset
 }
 
@@ -6036,10 +6025,10 @@ func (x *GetRecommendByItemReq) fastWriteField2(buf []byte) (offset int) {
 }
 
 func (x *GetRecommendByItemReq) fastWriteField3(buf []byte) (offset int) {
-	if x.Category == nil {
+	if x.Category == 0 {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 3, x.GetCategory())
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetCategory())
 	return offset
 }
 
@@ -6088,10 +6077,10 @@ func (x *GetPopularRecommendReq) fastWriteField2(buf []byte) (offset int) {
 }
 
 func (x *GetPopularRecommendReq) fastWriteField3(buf []byte) (offset int) {
-	if x.Category == nil {
+	if x.Category == 0 {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 3, x.GetCategory())
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetCategory())
 	return offset
 }
 
@@ -6140,10 +6129,10 @@ func (x *GetLatestRecommendReq) fastWriteField2(buf []byte) (offset int) {
 }
 
 func (x *GetLatestRecommendReq) fastWriteField3(buf []byte) (offset int) {
-	if x.Category == nil {
+	if x.Category == 0 {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 3, x.GetCategory())
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetCategory())
 	return offset
 }
 
@@ -8326,12 +8315,10 @@ func (x *UpdateItemReq) sizeField3() (n int) {
 }
 
 func (x *UpdateItemReq) sizeField4() (n int) {
-	if len(x.Categories) == 0 {
+	if x.Categories == 0 {
 		return n
 	}
-	for i := range x.GetCategories() {
-		n += fastpb.SizeString(4, x.GetCategories()[i])
-	}
+	n += fastpb.SizeInt64(4, x.GetCategories())
 	return n
 }
 
@@ -8400,10 +8387,10 @@ func (x *GetRecommendByUserReq) sizeField2() (n int) {
 }
 
 func (x *GetRecommendByUserReq) sizeField3() (n int) {
-	if x.Category == nil {
+	if x.Category == 0 {
 		return n
 	}
-	n += fastpb.SizeString(3, x.GetCategory())
+	n += fastpb.SizeInt64(3, x.GetCategory())
 	return n
 }
 
@@ -8452,10 +8439,10 @@ func (x *GetRecommendByItemReq) sizeField2() (n int) {
 }
 
 func (x *GetRecommendByItemReq) sizeField3() (n int) {
-	if x.Category == nil {
+	if x.Category == 0 {
 		return n
 	}
-	n += fastpb.SizeString(3, x.GetCategory())
+	n += fastpb.SizeInt64(3, x.GetCategory())
 	return n
 }
 
@@ -8504,10 +8491,10 @@ func (x *GetPopularRecommendReq) sizeField2() (n int) {
 }
 
 func (x *GetPopularRecommendReq) sizeField3() (n int) {
-	if x.Category == nil {
+	if x.Category == 0 {
 		return n
 	}
-	n += fastpb.SizeString(3, x.GetCategory())
+	n += fastpb.SizeInt64(3, x.GetCategory())
 	return n
 }
 
@@ -8556,10 +8543,10 @@ func (x *GetLatestRecommendReq) sizeField2() (n int) {
 }
 
 func (x *GetLatestRecommendReq) sizeField3() (n int) {
-	if x.Category == nil {
+	if x.Category == 0 {
 		return n
 	}
-	n += fastpb.SizeString(3, x.GetCategory())
+	n += fastpb.SizeInt64(3, x.GetCategory())
 	return n
 }
 

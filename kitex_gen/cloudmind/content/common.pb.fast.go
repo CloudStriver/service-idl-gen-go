@@ -1806,11 +1806,6 @@ func (x *Item) FastRead(buf []byte, _type int8, number int32) (offset int, err e
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 6:
-		offset, err = x.fastReadField6(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -1845,21 +1840,11 @@ func (x *Item) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 }
 
 func (x *Item) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	var v string
-	v, offset, err = fastpb.ReadString(buf, _type)
-	if err != nil {
-		return offset, err
-	}
-	x.Categories = append(x.Categories, v)
+	x.Category, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
 func (x *Item) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	x.Timestamp, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *Item) fastReadField6(buf []byte, _type int8) (offset int, err error) {
 	x.Comment, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
@@ -3320,7 +3305,6 @@ func (x *Item) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
 	offset += x.fastWriteField5(buf[offset:])
-	offset += x.fastWriteField6(buf[offset:])
 	return offset
 }
 
@@ -3351,28 +3335,18 @@ func (x *Item) fastWriteField3(buf []byte) (offset int) {
 }
 
 func (x *Item) fastWriteField4(buf []byte) (offset int) {
-	if len(x.Categories) == 0 {
+	if x.Category == 0 {
 		return offset
 	}
-	for i := range x.GetCategories() {
-		offset += fastpb.WriteString(buf[offset:], 4, x.GetCategories()[i])
-	}
+	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetCategory())
 	return offset
 }
 
 func (x *Item) fastWriteField5(buf []byte) (offset int) {
-	if x.Timestamp == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 5, x.GetTimestamp())
-	return offset
-}
-
-func (x *Item) fastWriteField6(buf []byte) (offset int) {
 	if x.Comment == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 6, x.GetComment())
+	offset += fastpb.WriteString(buf[offset:], 5, x.GetComment())
 	return offset
 }
 
@@ -4820,7 +4794,6 @@ func (x *Item) Size() (n int) {
 	n += x.sizeField3()
 	n += x.sizeField4()
 	n += x.sizeField5()
-	n += x.sizeField6()
 	return n
 }
 
@@ -4851,28 +4824,18 @@ func (x *Item) sizeField3() (n int) {
 }
 
 func (x *Item) sizeField4() (n int) {
-	if len(x.Categories) == 0 {
+	if x.Category == 0 {
 		return n
 	}
-	for i := range x.GetCategories() {
-		n += fastpb.SizeString(4, x.GetCategories()[i])
-	}
+	n += fastpb.SizeInt64(4, x.GetCategory())
 	return n
 }
 
 func (x *Item) sizeField5() (n int) {
-	if x.Timestamp == "" {
-		return n
-	}
-	n += fastpb.SizeString(5, x.GetTimestamp())
-	return n
-}
-
-func (x *Item) sizeField6() (n int) {
 	if x.Comment == "" {
 		return n
 	}
-	n += fastpb.SizeString(6, x.GetComment())
+	n += fastpb.SizeString(5, x.GetComment())
 	return n
 }
 
@@ -5116,9 +5079,8 @@ var fieldIDToName_Item = map[int32]string{
 	1: "ItemId",
 	2: "IsHidden",
 	3: "Labels",
-	4: "Categories",
-	5: "Timestamp",
-	6: "Comment",
+	4: "Category",
+	5: "Comment",
 }
 
 var fieldIDToName_FeedBack = map[int32]string{

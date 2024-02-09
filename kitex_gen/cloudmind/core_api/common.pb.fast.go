@@ -1596,6 +1596,51 @@ func (x *Notification) fastReadField7(buf []byte, _type int8) (offset int, err e
 	return offset, err
 }
 
+func (x *Recommends) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_Recommends[number], err)
+}
+
+func (x *Recommends) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v User
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Users = append(x.Users, &v)
+	return offset, nil
+}
+
+func (x *Recommends) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	var v Post
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Posts = append(x.Posts, &v)
+	return offset, nil
+}
+
 func (x *User) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -2838,6 +2883,35 @@ func (x *Notification) fastWriteField7(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetCreateTime())
+	return offset
+}
+
+func (x *Recommends) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	return offset
+}
+
+func (x *Recommends) fastWriteField1(buf []byte) (offset int) {
+	if x.Users == nil {
+		return offset
+	}
+	for i := range x.GetUsers() {
+		offset += fastpb.WriteMessage(buf[offset:], 1, x.GetUsers()[i])
+	}
+	return offset
+}
+
+func (x *Recommends) fastWriteField2(buf []byte) (offset int) {
+	if x.Posts == nil {
+		return offset
+	}
+	for i := range x.GetPosts() {
+		offset += fastpb.WriteMessage(buf[offset:], 2, x.GetPosts()[i])
+	}
 	return offset
 }
 
@@ -4086,6 +4160,35 @@ func (x *Notification) sizeField7() (n int) {
 	return n
 }
 
+func (x *Recommends) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	return n
+}
+
+func (x *Recommends) sizeField1() (n int) {
+	if x.Users == nil {
+		return n
+	}
+	for i := range x.GetUsers() {
+		n += fastpb.SizeMessage(1, x.GetUsers()[i])
+	}
+	return n
+}
+
+func (x *Recommends) sizeField2() (n int) {
+	if x.Posts == nil {
+		return n
+	}
+	for i := range x.GetPosts() {
+		n += fastpb.SizeMessage(2, x.GetPosts()[i])
+	}
+	return n
+}
+
 var fieldIDToName_User = map[int32]string{
 	1: "UserId",
 	2: "Name",
@@ -4263,6 +4366,11 @@ var fieldIDToName_Notification = map[int32]string{
 	5: "Text",
 	6: "IsRead",
 	7: "CreateTime",
+}
+
+var fieldIDToName_Recommends = map[int32]string{
+	1: "Users",
+	2: "Posts",
 }
 
 var _ = sts.File_cloudmind_sts_common_proto

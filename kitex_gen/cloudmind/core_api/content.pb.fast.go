@@ -3642,6 +3642,348 @@ func (x *GetOwnPostsResp) fastReadField3(buf []byte, _type int8) (offset int, er
 	return offset, err
 }
 
+func (x *CreateFeedBackReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CreateFeedBackReq[number], err)
+}
+
+func (x *CreateFeedBackReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.FeedbackType, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *CreateFeedBackReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.ItemId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *CreateFeedBackResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+}
+
+func (x *GetPopularRecommendReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetPopularRecommendReq[number], err)
+}
+
+func (x *GetPopularRecommendReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadInt64(buf, _type)
+	x.Limit = &tmp
+	return offset, err
+}
+
+func (x *GetPopularRecommendReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	var v int32
+	v, offset, err = fastpb.ReadInt32(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Category = Category(v)
+	return offset, nil
+}
+
+func (x *GetPopularRecommendResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetPopularRecommendResp[number], err)
+}
+
+func (x *GetPopularRecommendResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v Recommends
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Recommends = &v
+	return offset, nil
+}
+
+func (x *GetLatestRecommendReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetLatestRecommendReq[number], err)
+}
+
+func (x *GetLatestRecommendReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadInt64(buf, _type)
+	x.Limit = &tmp
+	return offset, err
+}
+
+func (x *GetLatestRecommendReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	var v int32
+	v, offset, err = fastpb.ReadInt32(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Category = Category(v)
+	return offset, nil
+}
+
+func (x *GetLatestRecommendResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetLatestRecommendResp[number], err)
+}
+
+func (x *GetLatestRecommendResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v Recommends
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Recommends = &v
+	return offset, nil
+}
+
+func (x *GetRecommendByItemReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetRecommendByItemReq[number], err)
+}
+
+func (x *GetRecommendByItemReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.ItemId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *GetRecommendByItemReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadInt64(buf, _type)
+	x.Limit = &tmp
+	return offset, err
+}
+
+func (x *GetRecommendByItemReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	var v int32
+	v, offset, err = fastpb.ReadInt32(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Category = Category(v)
+	return offset, nil
+}
+
+func (x *GetRecommendByItemResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetRecommendByItemResp[number], err)
+}
+
+func (x *GetRecommendByItemResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v Recommends
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Recommends = &v
+	return offset, nil
+}
+
+func (x *GetRecommendByUserReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetRecommendByUserReq[number], err)
+}
+
+func (x *GetRecommendByUserReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadInt64(buf, _type)
+	x.Limit = &tmp
+	return offset, err
+}
+
+func (x *GetRecommendByUserReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	var v int32
+	v, offset, err = fastpb.ReadInt32(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Category = Category(v)
+	return offset, nil
+}
+
+func (x *GetRecommendByUserResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetRecommendByUserResp[number], err)
+}
+
+func (x *GetRecommendByUserResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v Recommends
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Recommends = &v
+	return offset, nil
+}
+
 func (x *UpdateUserReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -6277,6 +6619,211 @@ func (x *GetOwnPostsResp) fastWriteField3(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 3, x.GetToken())
+	return offset
+}
+
+func (x *CreateFeedBackReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	return offset
+}
+
+func (x *CreateFeedBackReq) fastWriteField1(buf []byte) (offset int) {
+	if x.FeedbackType == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetFeedbackType())
+	return offset
+}
+
+func (x *CreateFeedBackReq) fastWriteField2(buf []byte) (offset int) {
+	if x.ItemId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetItemId())
+	return offset
+}
+
+func (x *CreateFeedBackResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	return offset
+}
+
+func (x *GetPopularRecommendReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	return offset
+}
+
+func (x *GetPopularRecommendReq) fastWriteField1(buf []byte) (offset int) {
+	if x.Limit == nil {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 1, x.GetLimit())
+	return offset
+}
+
+func (x *GetPopularRecommendReq) fastWriteField2(buf []byte) (offset int) {
+	if x.Category == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 2, int32(x.GetCategory()))
+	return offset
+}
+
+func (x *GetPopularRecommendResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *GetPopularRecommendResp) fastWriteField1(buf []byte) (offset int) {
+	if x.Recommends == nil {
+		return offset
+	}
+	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetRecommends())
+	return offset
+}
+
+func (x *GetLatestRecommendReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	return offset
+}
+
+func (x *GetLatestRecommendReq) fastWriteField1(buf []byte) (offset int) {
+	if x.Limit == nil {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 1, x.GetLimit())
+	return offset
+}
+
+func (x *GetLatestRecommendReq) fastWriteField2(buf []byte) (offset int) {
+	if x.Category == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 2, int32(x.GetCategory()))
+	return offset
+}
+
+func (x *GetLatestRecommendResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *GetLatestRecommendResp) fastWriteField1(buf []byte) (offset int) {
+	if x.Recommends == nil {
+		return offset
+	}
+	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetRecommends())
+	return offset
+}
+
+func (x *GetRecommendByItemReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	return offset
+}
+
+func (x *GetRecommendByItemReq) fastWriteField1(buf []byte) (offset int) {
+	if x.ItemId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetItemId())
+	return offset
+}
+
+func (x *GetRecommendByItemReq) fastWriteField2(buf []byte) (offset int) {
+	if x.Limit == nil {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetLimit())
+	return offset
+}
+
+func (x *GetRecommendByItemReq) fastWriteField3(buf []byte) (offset int) {
+	if x.Category == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 3, int32(x.GetCategory()))
+	return offset
+}
+
+func (x *GetRecommendByItemResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *GetRecommendByItemResp) fastWriteField1(buf []byte) (offset int) {
+	if x.Recommends == nil {
+		return offset
+	}
+	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetRecommends())
+	return offset
+}
+
+func (x *GetRecommendByUserReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	return offset
+}
+
+func (x *GetRecommendByUserReq) fastWriteField1(buf []byte) (offset int) {
+	if x.Limit == nil {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 1, x.GetLimit())
+	return offset
+}
+
+func (x *GetRecommendByUserReq) fastWriteField2(buf []byte) (offset int) {
+	if x.Category == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 2, int32(x.GetCategory()))
+	return offset
+}
+
+func (x *GetRecommendByUserResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *GetRecommendByUserResp) fastWriteField1(buf []byte) (offset int) {
+	if x.Recommends == nil {
+		return offset
+	}
+	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetRecommends())
 	return offset
 }
 
@@ -8918,6 +9465,211 @@ func (x *GetOwnPostsResp) sizeField3() (n int) {
 	return n
 }
 
+func (x *CreateFeedBackReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	return n
+}
+
+func (x *CreateFeedBackReq) sizeField1() (n int) {
+	if x.FeedbackType == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetFeedbackType())
+	return n
+}
+
+func (x *CreateFeedBackReq) sizeField2() (n int) {
+	if x.ItemId == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetItemId())
+	return n
+}
+
+func (x *CreateFeedBackResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	return n
+}
+
+func (x *GetPopularRecommendReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	return n
+}
+
+func (x *GetPopularRecommendReq) sizeField1() (n int) {
+	if x.Limit == nil {
+		return n
+	}
+	n += fastpb.SizeInt64(1, x.GetLimit())
+	return n
+}
+
+func (x *GetPopularRecommendReq) sizeField2() (n int) {
+	if x.Category == 0 {
+		return n
+	}
+	n += fastpb.SizeInt32(2, int32(x.GetCategory()))
+	return n
+}
+
+func (x *GetPopularRecommendResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *GetPopularRecommendResp) sizeField1() (n int) {
+	if x.Recommends == nil {
+		return n
+	}
+	n += fastpb.SizeMessage(1, x.GetRecommends())
+	return n
+}
+
+func (x *GetLatestRecommendReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	return n
+}
+
+func (x *GetLatestRecommendReq) sizeField1() (n int) {
+	if x.Limit == nil {
+		return n
+	}
+	n += fastpb.SizeInt64(1, x.GetLimit())
+	return n
+}
+
+func (x *GetLatestRecommendReq) sizeField2() (n int) {
+	if x.Category == 0 {
+		return n
+	}
+	n += fastpb.SizeInt32(2, int32(x.GetCategory()))
+	return n
+}
+
+func (x *GetLatestRecommendResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *GetLatestRecommendResp) sizeField1() (n int) {
+	if x.Recommends == nil {
+		return n
+	}
+	n += fastpb.SizeMessage(1, x.GetRecommends())
+	return n
+}
+
+func (x *GetRecommendByItemReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	return n
+}
+
+func (x *GetRecommendByItemReq) sizeField1() (n int) {
+	if x.ItemId == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetItemId())
+	return n
+}
+
+func (x *GetRecommendByItemReq) sizeField2() (n int) {
+	if x.Limit == nil {
+		return n
+	}
+	n += fastpb.SizeInt64(2, x.GetLimit())
+	return n
+}
+
+func (x *GetRecommendByItemReq) sizeField3() (n int) {
+	if x.Category == 0 {
+		return n
+	}
+	n += fastpb.SizeInt32(3, int32(x.GetCategory()))
+	return n
+}
+
+func (x *GetRecommendByItemResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *GetRecommendByItemResp) sizeField1() (n int) {
+	if x.Recommends == nil {
+		return n
+	}
+	n += fastpb.SizeMessage(1, x.GetRecommends())
+	return n
+}
+
+func (x *GetRecommendByUserReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	return n
+}
+
+func (x *GetRecommendByUserReq) sizeField1() (n int) {
+	if x.Limit == nil {
+		return n
+	}
+	n += fastpb.SizeInt64(1, x.GetLimit())
+	return n
+}
+
+func (x *GetRecommendByUserReq) sizeField2() (n int) {
+	if x.Category == 0 {
+		return n
+	}
+	n += fastpb.SizeInt32(2, int32(x.GetCategory()))
+	return n
+}
+
+func (x *GetRecommendByUserResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *GetRecommendByUserResp) sizeField1() (n int) {
+	if x.Recommends == nil {
+		return n
+	}
+	n += fastpb.SizeMessage(1, x.GetRecommends())
+	return n
+}
+
 var fieldIDToName_UpdateUserReq = map[int32]string{
 	1: "Name",
 	2: "Sex",
@@ -9361,6 +10113,50 @@ var fieldIDToName_GetOwnPostsResp = map[int32]string{
 	1: "Posts",
 	2: "Total",
 	3: "Token",
+}
+
+var fieldIDToName_CreateFeedBackReq = map[int32]string{
+	1: "FeedbackType",
+	2: "ItemId",
+}
+
+var fieldIDToName_CreateFeedBackResp = map[int32]string{}
+
+var fieldIDToName_GetPopularRecommendReq = map[int32]string{
+	1: "Limit",
+	2: "Category",
+}
+
+var fieldIDToName_GetPopularRecommendResp = map[int32]string{
+	1: "Recommends",
+}
+
+var fieldIDToName_GetLatestRecommendReq = map[int32]string{
+	1: "Limit",
+	2: "Category",
+}
+
+var fieldIDToName_GetLatestRecommendResp = map[int32]string{
+	1: "Recommends",
+}
+
+var fieldIDToName_GetRecommendByItemReq = map[int32]string{
+	1: "ItemId",
+	2: "Limit",
+	3: "Category",
+}
+
+var fieldIDToName_GetRecommendByItemResp = map[int32]string{
+	1: "Recommends",
+}
+
+var fieldIDToName_GetRecommendByUserReq = map[int32]string{
+	1: "Limit",
+	2: "Category",
+}
+
+var fieldIDToName_GetRecommendByUserResp = map[int32]string{
+	1: "Recommends",
 }
 
 var _ = basic.File_basic_pagination_proto
