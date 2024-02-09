@@ -42,6 +42,7 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"UpdateLabel":             kitex.NewMethodInfo(updateLabelHandler, newUpdateLabelArgs, newUpdateLabelResult, false),
 		"GetLabels":               kitex.NewMethodInfo(getLabelsHandler, newGetLabelsArgs, newGetLabelsResult, false),
 		"CreateObject":            kitex.NewMethodInfo(createObjectHandler, newCreateObjectArgs, newCreateObjectResult, false),
+		"CreateObjects":           kitex.NewMethodInfo(createObjectsHandler, newCreateObjectsArgs, newCreateObjectsResult, false),
 		"DeleteObject":            kitex.NewMethodInfo(deleteObjectHandler, newDeleteObjectArgs, newDeleteObjectResult, false),
 		"GetObjects":              kitex.NewMethodInfo(getObjectsHandler, newGetObjectsArgs, newGetObjectsResult, false),
 		"UpdateObject":            kitex.NewMethodInfo(updateObjectHandler, newUpdateObjectArgs, newUpdateObjectResult, false),
@@ -3274,6 +3275,159 @@ func (p *CreateObjectResult) GetResult() interface{} {
 	return p.Success
 }
 
+func createObjectsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(comment.CreateObjectsReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(comment.CommentService).CreateObjects(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *CreateObjectsArgs:
+		success, err := handler.(comment.CommentService).CreateObjects(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*CreateObjectsResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newCreateObjectsArgs() interface{} {
+	return &CreateObjectsArgs{}
+}
+
+func newCreateObjectsResult() interface{} {
+	return &CreateObjectsResult{}
+}
+
+type CreateObjectsArgs struct {
+	Req *comment.CreateObjectsReq
+}
+
+func (p *CreateObjectsArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(comment.CreateObjectsReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *CreateObjectsArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *CreateObjectsArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *CreateObjectsArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *CreateObjectsArgs) Unmarshal(in []byte) error {
+	msg := new(comment.CreateObjectsReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var CreateObjectsArgs_Req_DEFAULT *comment.CreateObjectsReq
+
+func (p *CreateObjectsArgs) GetReq() *comment.CreateObjectsReq {
+	if !p.IsSetReq() {
+		return CreateObjectsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *CreateObjectsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *CreateObjectsArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type CreateObjectsResult struct {
+	Success *comment.CreateObjectsResp
+}
+
+var CreateObjectsResult_Success_DEFAULT *comment.CreateObjectsResp
+
+func (p *CreateObjectsResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(comment.CreateObjectsResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *CreateObjectsResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *CreateObjectsResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *CreateObjectsResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *CreateObjectsResult) Unmarshal(in []byte) error {
+	msg := new(comment.CreateObjectsResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *CreateObjectsResult) GetSuccess() *comment.CreateObjectsResp {
+	if !p.IsSetSuccess() {
+		return CreateObjectsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *CreateObjectsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*comment.CreateObjectsResp)
+}
+
+func (p *CreateObjectsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *CreateObjectsResult) GetResult() interface{} {
+	return p.Success
+}
+
 func deleteObjectHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
@@ -3948,6 +4102,16 @@ func (p *kClient) CreateObject(ctx context.Context, Req *comment.CreateObjectReq
 	_args.Req = Req
 	var _result CreateObjectResult
 	if err = p.c.Call(ctx, "CreateObject", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CreateObjects(ctx context.Context, Req *comment.CreateObjectsReq) (r *comment.CreateObjectsResp, err error) {
+	var _args CreateObjectsArgs
+	_args.Req = Req
+	var _result CreateObjectsResult
+	if err = p.c.Call(ctx, "CreateObjects", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

@@ -980,11 +980,6 @@ func (x *LabelEntity) FastRead(buf []byte, _type int8, number int32) (offset int
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 4:
-		offset, err = x.fastReadField4(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -1004,16 +999,11 @@ func (x *LabelEntity) fastReadField1(buf []byte, _type int8) (offset int, err er
 }
 
 func (x *LabelEntity) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.UserId, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *LabelEntity) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	x.ObjectType, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
-func (x *LabelEntity) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+func (x *LabelEntity) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	var v string
 	v, offset, err = fastpb.ReadString(buf, _type)
 	if err != nil {
@@ -1818,7 +1808,6 @@ func (x *LabelEntity) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
-	offset += x.fastWriteField4(buf[offset:])
 	return offset
 }
 
@@ -1831,27 +1820,19 @@ func (x *LabelEntity) fastWriteField1(buf []byte) (offset int) {
 }
 
 func (x *LabelEntity) fastWriteField2(buf []byte) (offset int) {
-	if x.UserId == "" {
+	if x.ObjectType == 0 {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetUserId())
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetObjectType())
 	return offset
 }
 
 func (x *LabelEntity) fastWriteField3(buf []byte) (offset int) {
-	if x.ObjectType == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetObjectType())
-	return offset
-}
-
-func (x *LabelEntity) fastWriteField4(buf []byte) (offset int) {
 	if len(x.Labels) == 0 {
 		return offset
 	}
 	for i := range x.GetLabels() {
-		offset += fastpb.WriteString(buf[offset:], 4, x.GetLabels()[i])
+		offset += fastpb.WriteString(buf[offset:], 3, x.GetLabels()[i])
 	}
 	return offset
 }
@@ -2639,7 +2620,6 @@ func (x *LabelEntity) Size() (n int) {
 	n += x.sizeField1()
 	n += x.sizeField2()
 	n += x.sizeField3()
-	n += x.sizeField4()
 	return n
 }
 
@@ -2652,27 +2632,19 @@ func (x *LabelEntity) sizeField1() (n int) {
 }
 
 func (x *LabelEntity) sizeField2() (n int) {
-	if x.UserId == "" {
+	if x.ObjectType == 0 {
 		return n
 	}
-	n += fastpb.SizeString(2, x.GetUserId())
+	n += fastpb.SizeInt64(2, x.GetObjectType())
 	return n
 }
 
 func (x *LabelEntity) sizeField3() (n int) {
-	if x.ObjectType == 0 {
-		return n
-	}
-	n += fastpb.SizeInt64(3, x.GetObjectType())
-	return n
-}
-
-func (x *LabelEntity) sizeField4() (n int) {
 	if len(x.Labels) == 0 {
 		return n
 	}
 	for i := range x.GetLabels() {
-		n += fastpb.SizeString(4, x.GetLabels()[i])
+		n += fastpb.SizeString(3, x.GetLabels()[i])
 	}
 	return n
 }
@@ -2809,9 +2781,8 @@ var fieldIDToName_Label = map[int32]string{
 
 var fieldIDToName_LabelEntity = map[int32]string{
 	1: "ObjectId",
-	2: "UserId",
-	3: "ObjectType",
-	4: "Labels",
+	2: "ObjectType",
+	3: "Labels",
 }
 
 var fieldIDToName_ObjectFilterOptions = map[int32]string{

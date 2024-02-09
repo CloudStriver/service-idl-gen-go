@@ -1203,6 +1203,19 @@ func (x *CreateObjectReq) fastReadField1(buf []byte, _type int8) (offset int, er
 
 func (x *CreateObjectResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+}
+
+func (x *CreateObjectsReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
 		if err != nil {
@@ -1218,23 +1231,36 @@ func (x *CreateObjectResp) FastRead(buf []byte, _type int8, number int32) (offse
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CreateObjectResp[number], err)
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CreateObjectsReq[number], err)
 }
 
-func (x *CreateObjectResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	x.Id, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
+func (x *CreateObjectsReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v LabelEntity
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Objects = append(x.Objects, &v)
+	return offset, nil
+}
+
+func (x *CreateObjectsResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 }
 
 func (x *DeleteObjectReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 2:
-		offset, err = x.fastReadField2(buf, _type)
 		if err != nil {
 			goto ReadFieldError
 		}
@@ -1253,11 +1279,6 @@ ReadFieldError:
 
 func (x *DeleteObjectReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
 	x.ObjectId, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *DeleteObjectReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.UserId, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -2143,15 +2164,31 @@ func (x *CreateObjectResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
+	return offset
+}
+
+func (x *CreateObjectsReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
 	offset += x.fastWriteField1(buf[offset:])
 	return offset
 }
 
-func (x *CreateObjectResp) fastWriteField1(buf []byte) (offset int) {
-	if x.Id == "" {
+func (x *CreateObjectsReq) fastWriteField1(buf []byte) (offset int) {
+	if x.Objects == nil {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 1, x.GetId())
+	for i := range x.GetObjects() {
+		offset += fastpb.WriteMessage(buf[offset:], 1, x.GetObjects()[i])
+	}
+	return offset
+}
+
+func (x *CreateObjectsResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
 	return offset
 }
 
@@ -2160,7 +2197,6 @@ func (x *DeleteObjectReq) FastWrite(buf []byte) (offset int) {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
-	offset += x.fastWriteField2(buf[offset:])
 	return offset
 }
 
@@ -2169,14 +2205,6 @@ func (x *DeleteObjectReq) fastWriteField1(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 1, x.GetObjectId())
-	return offset
-}
-
-func (x *DeleteObjectReq) fastWriteField2(buf []byte) (offset int) {
-	if x.UserId == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetUserId())
 	return offset
 }
 
@@ -3002,15 +3030,31 @@ func (x *CreateObjectResp) Size() (n int) {
 	if x == nil {
 		return n
 	}
+	return n
+}
+
+func (x *CreateObjectsReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
 	n += x.sizeField1()
 	return n
 }
 
-func (x *CreateObjectResp) sizeField1() (n int) {
-	if x.Id == "" {
+func (x *CreateObjectsReq) sizeField1() (n int) {
+	if x.Objects == nil {
 		return n
 	}
-	n += fastpb.SizeString(1, x.GetId())
+	for i := range x.GetObjects() {
+		n += fastpb.SizeMessage(1, x.GetObjects()[i])
+	}
+	return n
+}
+
+func (x *CreateObjectsResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
 	return n
 }
 
@@ -3019,7 +3063,6 @@ func (x *DeleteObjectReq) Size() (n int) {
 		return n
 	}
 	n += x.sizeField1()
-	n += x.sizeField2()
 	return n
 }
 
@@ -3028,14 +3071,6 @@ func (x *DeleteObjectReq) sizeField1() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(1, x.GetObjectId())
-	return n
-}
-
-func (x *DeleteObjectReq) sizeField2() (n int) {
-	if x.UserId == "" {
-		return n
-	}
-	n += fastpb.SizeString(2, x.GetUserId())
 	return n
 }
 
@@ -3290,13 +3325,16 @@ var fieldIDToName_CreateObjectReq = map[int32]string{
 	1: "Object",
 }
 
-var fieldIDToName_CreateObjectResp = map[int32]string{
-	1: "Id",
+var fieldIDToName_CreateObjectResp = map[int32]string{}
+
+var fieldIDToName_CreateObjectsReq = map[int32]string{
+	1: "Objects",
 }
+
+var fieldIDToName_CreateObjectsResp = map[int32]string{}
 
 var fieldIDToName_DeleteObjectReq = map[int32]string{
 	1: "ObjectId",
-	2: "UserId",
 }
 
 var fieldIDToName_DeleteObjectResp = map[int32]string{}

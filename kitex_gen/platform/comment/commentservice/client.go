@@ -32,6 +32,7 @@ type Client interface {
 	UpdateLabel(ctx context.Context, Req *comment.UpdateLabelReq, callOptions ...callopt.Option) (r *comment.UpdateLabelResp, err error)
 	GetLabels(ctx context.Context, Req *comment.GetLabelsReq, callOptions ...callopt.Option) (r *comment.GetLabelsResp, err error)
 	CreateObject(ctx context.Context, Req *comment.CreateObjectReq, callOptions ...callopt.Option) (r *comment.CreateObjectResp, err error)
+	CreateObjects(ctx context.Context, Req *comment.CreateObjectsReq, callOptions ...callopt.Option) (r *comment.CreateObjectsResp, err error)
 	DeleteObject(ctx context.Context, Req *comment.DeleteObjectReq, callOptions ...callopt.Option) (r *comment.DeleteObjectResp, err error)
 	GetObjects(ctx context.Context, Req *comment.GetObjectsReq, callOptions ...callopt.Option) (r *comment.GetObjectsResp, err error)
 	UpdateObject(ctx context.Context, Req *comment.UpdateObjectReq, callOptions ...callopt.Option) (r *comment.UpdateObjectResp, err error)
@@ -169,6 +170,11 @@ func (p *kCommentServiceClient) GetLabels(ctx context.Context, Req *comment.GetL
 func (p *kCommentServiceClient) CreateObject(ctx context.Context, Req *comment.CreateObjectReq, callOptions ...callopt.Option) (r *comment.CreateObjectResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.CreateObject(ctx, Req)
+}
+
+func (p *kCommentServiceClient) CreateObjects(ctx context.Context, Req *comment.CreateObjectsReq, callOptions ...callopt.Option) (r *comment.CreateObjectsResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateObjects(ctx, Req)
 }
 
 func (p *kCommentServiceClient) DeleteObject(ctx context.Context, Req *comment.DeleteObjectReq, callOptions ...callopt.Option) (r *comment.DeleteObjectResp, err error) {
