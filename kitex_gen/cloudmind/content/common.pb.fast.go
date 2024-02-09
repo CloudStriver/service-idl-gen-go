@@ -1799,6 +1799,146 @@ SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 }
 
+func (x *Item) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 6:
+		offset, err = x.fastReadField6(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_Item[number], err)
+}
+
+func (x *Item) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.ItemId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *Item) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.IsHidden, offset, err = fastpb.ReadBool(buf, _type)
+	return offset, err
+}
+
+func (x *Item) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Labels = append(x.Labels, v)
+	return offset, err
+}
+
+func (x *Item) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Categories = append(x.Categories, v)
+	return offset, err
+}
+
+func (x *Item) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	x.Timestamp, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *Item) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+	x.Comment, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *FeedBack) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_FeedBack[number], err)
+}
+
+func (x *FeedBack) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.FeedbackType, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *FeedBack) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.UserId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *FeedBack) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.ItemId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *FeedBack) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	x.Timestamp, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
 func (x *File) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -3206,6 +3346,114 @@ func (x *LabelFilterOptions) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
+	return offset
+}
+
+func (x *Item) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
+	offset += x.fastWriteField6(buf[offset:])
+	return offset
+}
+
+func (x *Item) fastWriteField1(buf []byte) (offset int) {
+	if x.ItemId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetItemId())
+	return offset
+}
+
+func (x *Item) fastWriteField2(buf []byte) (offset int) {
+	if !x.IsHidden {
+		return offset
+	}
+	offset += fastpb.WriteBool(buf[offset:], 2, x.GetIsHidden())
+	return offset
+}
+
+func (x *Item) fastWriteField3(buf []byte) (offset int) {
+	if len(x.Labels) == 0 {
+		return offset
+	}
+	for i := range x.GetLabels() {
+		offset += fastpb.WriteString(buf[offset:], 3, x.GetLabels()[i])
+	}
+	return offset
+}
+
+func (x *Item) fastWriteField4(buf []byte) (offset int) {
+	if len(x.Categories) == 0 {
+		return offset
+	}
+	for i := range x.GetCategories() {
+		offset += fastpb.WriteString(buf[offset:], 4, x.GetCategories()[i])
+	}
+	return offset
+}
+
+func (x *Item) fastWriteField5(buf []byte) (offset int) {
+	if x.Timestamp == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 5, x.GetTimestamp())
+	return offset
+}
+
+func (x *Item) fastWriteField6(buf []byte) (offset int) {
+	if x.Comment == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 6, x.GetComment())
+	return offset
+}
+
+func (x *FeedBack) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	return offset
+}
+
+func (x *FeedBack) fastWriteField1(buf []byte) (offset int) {
+	if x.FeedbackType == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetFeedbackType())
+	return offset
+}
+
+func (x *FeedBack) fastWriteField2(buf []byte) (offset int) {
+	if x.UserId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetUserId())
+	return offset
+}
+
+func (x *FeedBack) fastWriteField3(buf []byte) (offset int) {
+	if x.ItemId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetItemId())
+	return offset
+}
+
+func (x *FeedBack) fastWriteField4(buf []byte) (offset int) {
+	if x.Timestamp == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetTimestamp())
 	return offset
 }
 
@@ -4619,6 +4867,114 @@ func (x *LabelFilterOptions) Size() (n int) {
 	return n
 }
 
+func (x *Item) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
+	n += x.sizeField6()
+	return n
+}
+
+func (x *Item) sizeField1() (n int) {
+	if x.ItemId == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetItemId())
+	return n
+}
+
+func (x *Item) sizeField2() (n int) {
+	if !x.IsHidden {
+		return n
+	}
+	n += fastpb.SizeBool(2, x.GetIsHidden())
+	return n
+}
+
+func (x *Item) sizeField3() (n int) {
+	if len(x.Labels) == 0 {
+		return n
+	}
+	for i := range x.GetLabels() {
+		n += fastpb.SizeString(3, x.GetLabels()[i])
+	}
+	return n
+}
+
+func (x *Item) sizeField4() (n int) {
+	if len(x.Categories) == 0 {
+		return n
+	}
+	for i := range x.GetCategories() {
+		n += fastpb.SizeString(4, x.GetCategories()[i])
+	}
+	return n
+}
+
+func (x *Item) sizeField5() (n int) {
+	if x.Timestamp == "" {
+		return n
+	}
+	n += fastpb.SizeString(5, x.GetTimestamp())
+	return n
+}
+
+func (x *Item) sizeField6() (n int) {
+	if x.Comment == "" {
+		return n
+	}
+	n += fastpb.SizeString(6, x.GetComment())
+	return n
+}
+
+func (x *FeedBack) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	return n
+}
+
+func (x *FeedBack) sizeField1() (n int) {
+	if x.FeedbackType == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetFeedbackType())
+	return n
+}
+
+func (x *FeedBack) sizeField2() (n int) {
+	if x.UserId == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetUserId())
+	return n
+}
+
+func (x *FeedBack) sizeField3() (n int) {
+	if x.ItemId == "" {
+		return n
+	}
+	n += fastpb.SizeString(3, x.GetItemId())
+	return n
+}
+
+func (x *FeedBack) sizeField4() (n int) {
+	if x.Timestamp == "" {
+		return n
+	}
+	n += fastpb.SizeString(4, x.GetTimestamp())
+	return n
+}
+
 var fieldIDToName_File = map[int32]string{
 	1:  "FileId",
 	2:  "UserId",
@@ -4813,3 +5169,19 @@ var fieldIDToName_CouponFilterOptions = map[int32]string{
 }
 
 var fieldIDToName_LabelFilterOptions = map[int32]string{}
+
+var fieldIDToName_Item = map[int32]string{
+	1: "ItemId",
+	2: "IsHidden",
+	3: "Labels",
+	4: "Categories",
+	5: "Timestamp",
+	6: "Comment",
+}
+
+var fieldIDToName_FeedBack = map[int32]string{
+	1: "FeedbackType",
+	2: "UserId",
+	3: "ItemId",
+	4: "Timestamp",
+}

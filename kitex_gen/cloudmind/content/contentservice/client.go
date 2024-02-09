@@ -59,6 +59,14 @@ type Client interface {
 	UpdateOrder(ctx context.Context, Req *content.UpdateOrderReq, callOptions ...callopt.Option) (r *content.UpdateOrderResp, err error)
 	GetOrder(ctx context.Context, Req *content.GetOrderReq, callOptions ...callopt.Option) (r *content.GetOrderResp, err error)
 	GetOrders(ctx context.Context, Req *content.GetOrdersReq, callOptions ...callopt.Option) (r *content.GetOrdersResp, err error)
+	CreateItems(ctx context.Context, Req *content.CreateItemsReq, callOptions ...callopt.Option) (r *content.CreateItemsResp, err error)
+	UpdateItem(ctx context.Context, Req *content.UpdateItemReq, callOptions ...callopt.Option) (r *content.UpdateItemResp, err error)
+	DeleteItem(ctx context.Context, Req *content.DeleteItemReq, callOptions ...callopt.Option) (r *content.DeleteItemResp, err error)
+	GetRecommendByUser(ctx context.Context, Req *content.GetRecommendByUserReq, callOptions ...callopt.Option) (r *content.GetRecommendByUserResp, err error)
+	GetRecommendByItem(ctx context.Context, Req *content.GetRecommendByItemReq, callOptions ...callopt.Option) (r *content.GetRecommendByItemResp, err error)
+	GetPopularRecommend(ctx context.Context, Req *content.GetPopularRecommendReq, callOptions ...callopt.Option) (r *content.GetPopularRecommendResp, err error)
+	GetLatestRecommend(ctx context.Context, Req *content.GetLatestRecommendReq, callOptions ...callopt.Option) (r *content.GetLatestRecommendResp, err error)
+	CreateFeedBacks(ctx context.Context, Req *content.CreateFeedBacksReq, callOptions ...callopt.Option) (r *content.CreateFeedBacksResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -328,4 +336,44 @@ func (p *kContentServiceClient) GetOrder(ctx context.Context, Req *content.GetOr
 func (p *kContentServiceClient) GetOrders(ctx context.Context, Req *content.GetOrdersReq, callOptions ...callopt.Option) (r *content.GetOrdersResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetOrders(ctx, Req)
+}
+
+func (p *kContentServiceClient) CreateItems(ctx context.Context, Req *content.CreateItemsReq, callOptions ...callopt.Option) (r *content.CreateItemsResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateItems(ctx, Req)
+}
+
+func (p *kContentServiceClient) UpdateItem(ctx context.Context, Req *content.UpdateItemReq, callOptions ...callopt.Option) (r *content.UpdateItemResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.UpdateItem(ctx, Req)
+}
+
+func (p *kContentServiceClient) DeleteItem(ctx context.Context, Req *content.DeleteItemReq, callOptions ...callopt.Option) (r *content.DeleteItemResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteItem(ctx, Req)
+}
+
+func (p *kContentServiceClient) GetRecommendByUser(ctx context.Context, Req *content.GetRecommendByUserReq, callOptions ...callopt.Option) (r *content.GetRecommendByUserResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetRecommendByUser(ctx, Req)
+}
+
+func (p *kContentServiceClient) GetRecommendByItem(ctx context.Context, Req *content.GetRecommendByItemReq, callOptions ...callopt.Option) (r *content.GetRecommendByItemResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetRecommendByItem(ctx, Req)
+}
+
+func (p *kContentServiceClient) GetPopularRecommend(ctx context.Context, Req *content.GetPopularRecommendReq, callOptions ...callopt.Option) (r *content.GetPopularRecommendResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetPopularRecommend(ctx, Req)
+}
+
+func (p *kContentServiceClient) GetLatestRecommend(ctx context.Context, Req *content.GetLatestRecommendReq, callOptions ...callopt.Option) (r *content.GetLatestRecommendResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetLatestRecommend(ctx, Req)
+}
+
+func (p *kContentServiceClient) CreateFeedBacks(ctx context.Context, Req *content.CreateFeedBacksReq, callOptions ...callopt.Option) (r *content.CreateFeedBacksResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateFeedBacks(ctx, Req)
 }
