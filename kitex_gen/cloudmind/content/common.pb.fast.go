@@ -1866,11 +1866,6 @@ func (x *FeedBack) FastRead(buf []byte, _type int8, number int32) (offset int, e
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 4:
-		offset, err = x.fastReadField4(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -1896,11 +1891,6 @@ func (x *FeedBack) fastReadField2(buf []byte, _type int8) (offset int, err error
 
 func (x *FeedBack) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	x.ItemId, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *FeedBack) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	x.Timestamp, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -3357,7 +3347,6 @@ func (x *FeedBack) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
-	offset += x.fastWriteField4(buf[offset:])
 	return offset
 }
 
@@ -3382,14 +3371,6 @@ func (x *FeedBack) fastWriteField3(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 3, x.GetItemId())
-	return offset
-}
-
-func (x *FeedBack) fastWriteField4(buf []byte) (offset int) {
-	if x.Timestamp == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 4, x.GetTimestamp())
 	return offset
 }
 
@@ -4846,7 +4827,6 @@ func (x *FeedBack) Size() (n int) {
 	n += x.sizeField1()
 	n += x.sizeField2()
 	n += x.sizeField3()
-	n += x.sizeField4()
 	return n
 }
 
@@ -4871,14 +4851,6 @@ func (x *FeedBack) sizeField3() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(3, x.GetItemId())
-	return n
-}
-
-func (x *FeedBack) sizeField4() (n int) {
-	if x.Timestamp == "" {
-		return n
-	}
-	n += fastpb.SizeString(4, x.GetTimestamp())
 	return n
 }
 
@@ -5087,5 +5059,4 @@ var fieldIDToName_FeedBack = map[int32]string{
 	1: "FeedbackType",
 	2: "UserId",
 	3: "ItemId",
-	4: "Timestamp",
 }

@@ -3357,7 +3357,8 @@ func (x *UpdateItemReq) fastReadField3(buf []byte, _type int8) (offset int, err 
 }
 
 func (x *UpdateItemReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	x.Categories, offset, err = fastpb.ReadInt64(buf, _type)
+	tmp, offset, err := fastpb.ReadInt64(buf, _type)
+	x.Categories = &tmp
 	return offset, err
 }
 
@@ -5901,7 +5902,7 @@ func (x *UpdateItemReq) fastWriteField3(buf []byte) (offset int) {
 }
 
 func (x *UpdateItemReq) fastWriteField4(buf []byte) (offset int) {
-	if x.Categories == 0 {
+	if x.Categories == nil {
 		return offset
 	}
 	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetCategories())
@@ -8315,7 +8316,7 @@ func (x *UpdateItemReq) sizeField3() (n int) {
 }
 
 func (x *UpdateItemReq) sizeField4() (n int) {
-	if x.Categories == 0 {
+	if x.Categories == nil {
 		return n
 	}
 	n += fastpb.SizeInt64(4, x.GetCategories())
