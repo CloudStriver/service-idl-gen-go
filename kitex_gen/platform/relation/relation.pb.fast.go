@@ -80,6 +80,11 @@ func (x *CreateRelationReq) fastReadField5(buf []byte, _type int8) (offset int, 
 
 func (x *CreateRelationResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -89,12 +94,39 @@ func (x *CreateRelationResp) FastRead(buf []byte, _type int8, number int32) (off
 	return offset, nil
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CreateRelationResp[number], err)
+}
+
+func (x *CreateRelationResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.Ok, offset, err = fastpb.ReadBool(buf, _type)
+	return offset, err
 }
 
 func (x *GetRelationReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
 		if err != nil {
 			goto ReadFieldError
 		}
@@ -112,13 +144,28 @@ ReadFieldError:
 }
 
 func (x *GetRelationReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v Relation
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
-	if err != nil {
-		return offset, err
-	}
-	x.Relation = &v
-	return offset, nil
+	x.FromType, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *GetRelationReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.FromId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *GetRelationReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.ToType, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *GetRelationReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	x.ToId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *GetRelationReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	x.RelationType, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
 }
 
 func (x *GetRelationResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -568,6 +615,15 @@ func (x *CreateRelationResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *CreateRelationResp) fastWriteField1(buf []byte) (offset int) {
+	if !x.Ok {
+		return offset
+	}
+	offset += fastpb.WriteBool(buf[offset:], 1, x.GetOk())
 	return offset
 }
 
@@ -576,14 +632,50 @@ func (x *GetRelationReq) FastWrite(buf []byte) (offset int) {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
 	return offset
 }
 
 func (x *GetRelationReq) fastWriteField1(buf []byte) (offset int) {
-	if x.Relation == nil {
+	if x.FromType == 0 {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetRelation())
+	offset += fastpb.WriteInt64(buf[offset:], 1, x.GetFromType())
+	return offset
+}
+
+func (x *GetRelationReq) fastWriteField2(buf []byte) (offset int) {
+	if x.FromId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetFromId())
+	return offset
+}
+
+func (x *GetRelationReq) fastWriteField3(buf []byte) (offset int) {
+	if x.ToType == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetToType())
+	return offset
+}
+
+func (x *GetRelationReq) fastWriteField4(buf []byte) (offset int) {
+	if x.ToId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetToId())
+	return offset
+}
+
+func (x *GetRelationReq) fastWriteField5(buf []byte) (offset int) {
+	if x.RelationType == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetRelationType())
 	return offset
 }
 
@@ -906,6 +998,15 @@ func (x *CreateRelationResp) Size() (n int) {
 	if x == nil {
 		return n
 	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *CreateRelationResp) sizeField1() (n int) {
+	if !x.Ok {
+		return n
+	}
+	n += fastpb.SizeBool(1, x.GetOk())
 	return n
 }
 
@@ -914,14 +1015,50 @@ func (x *GetRelationReq) Size() (n int) {
 		return n
 	}
 	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
 	return n
 }
 
 func (x *GetRelationReq) sizeField1() (n int) {
-	if x.Relation == nil {
+	if x.FromType == 0 {
 		return n
 	}
-	n += fastpb.SizeMessage(1, x.GetRelation())
+	n += fastpb.SizeInt64(1, x.GetFromType())
+	return n
+}
+
+func (x *GetRelationReq) sizeField2() (n int) {
+	if x.FromId == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetFromId())
+	return n
+}
+
+func (x *GetRelationReq) sizeField3() (n int) {
+	if x.ToType == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(3, x.GetToType())
+	return n
+}
+
+func (x *GetRelationReq) sizeField4() (n int) {
+	if x.ToId == "" {
+		return n
+	}
+	n += fastpb.SizeString(4, x.GetToId())
+	return n
+}
+
+func (x *GetRelationReq) sizeField5() (n int) {
+	if x.RelationType == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(5, x.GetRelationType())
 	return n
 }
 
@@ -1196,10 +1333,16 @@ var fieldIDToName_CreateRelationReq = map[int32]string{
 	5: "RelationType",
 }
 
-var fieldIDToName_CreateRelationResp = map[int32]string{}
+var fieldIDToName_CreateRelationResp = map[int32]string{
+	1: "Ok",
+}
 
 var fieldIDToName_GetRelationReq = map[int32]string{
-	1: "Relation",
+	1: "FromType",
+	2: "FromId",
+	3: "ToType",
+	4: "ToId",
+	5: "RelationType",
 }
 
 var fieldIDToName_GetRelationResp = map[int32]string{
