@@ -46,7 +46,7 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"ParsingShareCode":       kitex.NewMethodInfo(parsingShareCodeHandler, newParsingShareCodeArgs, newParsingShareCodeResult, false),
 		"UpdateUser":             kitex.NewMethodInfo(updateUserHandler, newUpdateUserArgs, newUpdateUserResult, false),
 		"GetUser":                kitex.NewMethodInfo(getUserHandler, newGetUserArgs, newGetUserResult, false),
-		"SearchUser":             kitex.NewMethodInfo(searchUserHandler, newSearchUserArgs, newSearchUserResult, false),
+		"GetUsers":               kitex.NewMethodInfo(getUsersHandler, newGetUsersArgs, newGetUsersResult, false),
 		"CreateUser":             kitex.NewMethodInfo(createUserHandler, newCreateUserArgs, newCreateUserResult, false),
 		"DeleteUser":             kitex.NewMethodInfo(deleteUserHandler, newDeleteUserArgs, newDeleteUserResult, false),
 		"CreatePost":             kitex.NewMethodInfo(createPostHandler, newCreatePostArgs, newCreatePostResult, false),
@@ -3918,73 +3918,73 @@ func (p *GetUserResult) GetResult() interface{} {
 	return p.Success
 }
 
-func searchUserHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+func getUsersHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(content.SearchUserReq)
+		req := new(content.GetUsersReq)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
-		resp, err := handler.(content.ContentService).SearchUser(ctx, req)
+		resp, err := handler.(content.ContentService).GetUsers(ctx, req)
 		if err != nil {
 			return err
 		}
 		if err := st.SendMsg(resp); err != nil {
 			return err
 		}
-	case *SearchUserArgs:
-		success, err := handler.(content.ContentService).SearchUser(ctx, s.Req)
+	case *GetUsersArgs:
+		success, err := handler.(content.ContentService).GetUsers(ctx, s.Req)
 		if err != nil {
 			return err
 		}
-		realResult := result.(*SearchUserResult)
+		realResult := result.(*GetUsersResult)
 		realResult.Success = success
 	}
 	return nil
 }
-func newSearchUserArgs() interface{} {
-	return &SearchUserArgs{}
+func newGetUsersArgs() interface{} {
+	return &GetUsersArgs{}
 }
 
-func newSearchUserResult() interface{} {
-	return &SearchUserResult{}
+func newGetUsersResult() interface{} {
+	return &GetUsersResult{}
 }
 
-type SearchUserArgs struct {
-	Req *content.SearchUserReq
+type GetUsersArgs struct {
+	Req *content.GetUsersReq
 }
 
-func (p *SearchUserArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *GetUsersArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(content.SearchUserReq)
+		p.Req = new(content.GetUsersReq)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
 
-func (p *SearchUserArgs) FastWrite(buf []byte) (n int) {
+func (p *GetUsersArgs) FastWrite(buf []byte) (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.FastWrite(buf)
 }
 
-func (p *SearchUserArgs) Size() (n int) {
+func (p *GetUsersArgs) Size() (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.Size()
 }
 
-func (p *SearchUserArgs) Marshal(out []byte) ([]byte, error) {
+func (p *GetUsersArgs) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetReq() {
 		return out, nil
 	}
 	return proto.Marshal(p.Req)
 }
 
-func (p *SearchUserArgs) Unmarshal(in []byte) error {
-	msg := new(content.SearchUserReq)
+func (p *GetUsersArgs) Unmarshal(in []byte) error {
+	msg := new(content.GetUsersReq)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -3992,59 +3992,59 @@ func (p *SearchUserArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var SearchUserArgs_Req_DEFAULT *content.SearchUserReq
+var GetUsersArgs_Req_DEFAULT *content.GetUsersReq
 
-func (p *SearchUserArgs) GetReq() *content.SearchUserReq {
+func (p *GetUsersArgs) GetReq() *content.GetUsersReq {
 	if !p.IsSetReq() {
-		return SearchUserArgs_Req_DEFAULT
+		return GetUsersArgs_Req_DEFAULT
 	}
 	return p.Req
 }
 
-func (p *SearchUserArgs) IsSetReq() bool {
+func (p *GetUsersArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *SearchUserArgs) GetFirstArgument() interface{} {
+func (p *GetUsersArgs) GetFirstArgument() interface{} {
 	return p.Req
 }
 
-type SearchUserResult struct {
-	Success *content.SearchUserResp
+type GetUsersResult struct {
+	Success *content.GetUsersResp
 }
 
-var SearchUserResult_Success_DEFAULT *content.SearchUserResp
+var GetUsersResult_Success_DEFAULT *content.GetUsersResp
 
-func (p *SearchUserResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *GetUsersResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(content.SearchUserResp)
+		p.Success = new(content.GetUsersResp)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
 
-func (p *SearchUserResult) FastWrite(buf []byte) (n int) {
+func (p *GetUsersResult) FastWrite(buf []byte) (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.FastWrite(buf)
 }
 
-func (p *SearchUserResult) Size() (n int) {
+func (p *GetUsersResult) Size() (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.Size()
 }
 
-func (p *SearchUserResult) Marshal(out []byte) ([]byte, error) {
+func (p *GetUsersResult) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetSuccess() {
 		return out, nil
 	}
 	return proto.Marshal(p.Success)
 }
 
-func (p *SearchUserResult) Unmarshal(in []byte) error {
-	msg := new(content.SearchUserResp)
+func (p *GetUsersResult) Unmarshal(in []byte) error {
+	msg := new(content.GetUsersResp)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -4052,22 +4052,22 @@ func (p *SearchUserResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *SearchUserResult) GetSuccess() *content.SearchUserResp {
+func (p *GetUsersResult) GetSuccess() *content.GetUsersResp {
 	if !p.IsSetSuccess() {
-		return SearchUserResult_Success_DEFAULT
+		return GetUsersResult_Success_DEFAULT
 	}
 	return p.Success
 }
 
-func (p *SearchUserResult) SetSuccess(x interface{}) {
-	p.Success = x.(*content.SearchUserResp)
+func (p *GetUsersResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.GetUsersResp)
 }
 
-func (p *SearchUserResult) IsSetSuccess() bool {
+func (p *GetUsersResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *SearchUserResult) GetResult() interface{} {
+func (p *GetUsersResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -8921,11 +8921,11 @@ func (p *kClient) GetUser(ctx context.Context, Req *content.GetUserReq) (r *cont
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) SearchUser(ctx context.Context, Req *content.SearchUserReq) (r *content.SearchUserResp, err error) {
-	var _args SearchUserArgs
+func (p *kClient) GetUsers(ctx context.Context, Req *content.GetUsersReq) (r *content.GetUsersResp, err error) {
+	var _args GetUsersArgs
 	_args.Req = Req
-	var _result SearchUserResult
-	if err = p.c.Call(ctx, "SearchUser", &_args, &_result); err != nil {
+	var _result GetUsersResult
+	if err = p.c.Call(ctx, "GetUsers", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

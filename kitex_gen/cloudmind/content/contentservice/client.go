@@ -36,7 +36,7 @@ type Client interface {
 	ParsingShareCode(ctx context.Context, Req *content.ParsingShareCodeReq, callOptions ...callopt.Option) (r *content.ParsingShareCodeResp, err error)
 	UpdateUser(ctx context.Context, Req *content.UpdateUserReq, callOptions ...callopt.Option) (r *content.UpdateUserResp, err error)
 	GetUser(ctx context.Context, Req *content.GetUserReq, callOptions ...callopt.Option) (r *content.GetUserResp, err error)
-	SearchUser(ctx context.Context, Req *content.SearchUserReq, callOptions ...callopt.Option) (r *content.SearchUserResp, err error)
+	GetUsers(ctx context.Context, Req *content.GetUsersReq, callOptions ...callopt.Option) (r *content.GetUsersResp, err error)
 	CreateUser(ctx context.Context, Req *content.CreateUserReq, callOptions ...callopt.Option) (r *content.CreateUserResp, err error)
 	DeleteUser(ctx context.Context, Req *content.DeleteUserReq, callOptions ...callopt.Option) (r *content.DeleteUserResp, err error)
 	CreatePost(ctx context.Context, Req *content.CreatePostReq, callOptions ...callopt.Option) (r *content.CreatePostResp, err error)
@@ -223,9 +223,9 @@ func (p *kContentServiceClient) GetUser(ctx context.Context, Req *content.GetUse
 	return p.kClient.GetUser(ctx, Req)
 }
 
-func (p *kContentServiceClient) SearchUser(ctx context.Context, Req *content.SearchUserReq, callOptions ...callopt.Option) (r *content.SearchUserResp, err error) {
+func (p *kContentServiceClient) GetUsers(ctx context.Context, Req *content.GetUsersReq, callOptions ...callopt.Option) (r *content.GetUsersResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.SearchUser(ctx, Req)
+	return p.kClient.GetUsers(ctx, Req)
 }
 
 func (p *kContentServiceClient) CreateUser(ctx context.Context, Req *content.CreateUserReq, callOptions ...callopt.Option) (r *content.CreateUserResp, err error) {

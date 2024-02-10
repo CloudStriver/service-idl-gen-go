@@ -1894,6 +1894,36 @@ func (x *FeedBack) fastReadField3(buf []byte, _type int8) (offset int, err error
 	return offset, err
 }
 
+func (x *UserFilterOptions) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_UserFilterOptions[number], err)
+}
+
+func (x *UserFilterOptions) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.UserIds = append(x.UserIds, v)
+	return offset, err
+}
+
 func (x *File) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -3371,6 +3401,24 @@ func (x *FeedBack) fastWriteField3(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 3, x.GetItemId())
+	return offset
+}
+
+func (x *UserFilterOptions) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *UserFilterOptions) fastWriteField1(buf []byte) (offset int) {
+	if len(x.UserIds) == 0 {
+		return offset
+	}
+	for i := range x.GetUserIds() {
+		offset += fastpb.WriteString(buf[offset:], 1, x.GetUserIds()[i])
+	}
 	return offset
 }
 
@@ -4854,6 +4902,24 @@ func (x *FeedBack) sizeField3() (n int) {
 	return n
 }
 
+func (x *UserFilterOptions) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *UserFilterOptions) sizeField1() (n int) {
+	if len(x.UserIds) == 0 {
+		return n
+	}
+	for i := range x.GetUserIds() {
+		n += fastpb.SizeString(1, x.GetUserIds()[i])
+	}
+	return n
+}
+
 var fieldIDToName_File = map[int32]string{
 	1:  "FileId",
 	2:  "UserId",
@@ -5059,4 +5125,8 @@ var fieldIDToName_FeedBack = map[int32]string{
 	1: "FeedbackType",
 	2: "UserId",
 	3: "ItemId",
+}
+
+var fieldIDToName_UserFilterOptions = map[int32]string{
+	1: "UserIds",
 }
