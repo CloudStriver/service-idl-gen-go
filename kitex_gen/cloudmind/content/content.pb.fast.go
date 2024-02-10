@@ -333,6 +333,101 @@ func (x *GetFileListResp) fastReadField5(buf []byte, _type int8) (offset int, er
 	return offset, err
 }
 
+func (x *GetRecycleBinFilesReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetRecycleBinFilesReq[number], err)
+}
+
+func (x *GetRecycleBinFilesReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v FileFilterOptions
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.FilterOptions = &v
+	return offset, nil
+}
+
+func (x *GetRecycleBinFilesReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	var v basic.PaginationOptions
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.PaginationOptions = &v
+	return offset, nil
+}
+
+func (x *GetRecycleBinFilesResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetRecycleBinFilesResp[number], err)
+}
+
+func (x *GetRecycleBinFilesResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v FileInfo
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Files = append(x.Files, &v)
+	return offset, nil
+}
+
+func (x *GetRecycleBinFilesResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.Total, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *GetRecycleBinFilesResp) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.Token, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
 func (x *GetFileBySharingCodeReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
@@ -3999,6 +4094,67 @@ func (x *GetFileListResp) fastWriteField5(buf []byte) (offset int) {
 	return offset
 }
 
+func (x *GetRecycleBinFilesReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	return offset
+}
+
+func (x *GetRecycleBinFilesReq) fastWriteField1(buf []byte) (offset int) {
+	if x.FilterOptions == nil {
+		return offset
+	}
+	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetFilterOptions())
+	return offset
+}
+
+func (x *GetRecycleBinFilesReq) fastWriteField2(buf []byte) (offset int) {
+	if x.PaginationOptions == nil {
+		return offset
+	}
+	offset += fastpb.WriteMessage(buf[offset:], 2, x.GetPaginationOptions())
+	return offset
+}
+
+func (x *GetRecycleBinFilesResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	return offset
+}
+
+func (x *GetRecycleBinFilesResp) fastWriteField1(buf []byte) (offset int) {
+	if x.Files == nil {
+		return offset
+	}
+	for i := range x.GetFiles() {
+		offset += fastpb.WriteMessage(buf[offset:], 1, x.GetFiles()[i])
+	}
+	return offset
+}
+
+func (x *GetRecycleBinFilesResp) fastWriteField2(buf []byte) (offset int) {
+	if x.Total == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetTotal())
+	return offset
+}
+
+func (x *GetRecycleBinFilesResp) fastWriteField3(buf []byte) (offset int) {
+	if x.Token == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetToken())
+	return offset
+}
+
 func (x *GetFileBySharingCodeReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -6431,6 +6587,67 @@ func (x *GetFileListResp) sizeField5() (n int) {
 	return n
 }
 
+func (x *GetRecycleBinFilesReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	return n
+}
+
+func (x *GetRecycleBinFilesReq) sizeField1() (n int) {
+	if x.FilterOptions == nil {
+		return n
+	}
+	n += fastpb.SizeMessage(1, x.GetFilterOptions())
+	return n
+}
+
+func (x *GetRecycleBinFilesReq) sizeField2() (n int) {
+	if x.PaginationOptions == nil {
+		return n
+	}
+	n += fastpb.SizeMessage(2, x.GetPaginationOptions())
+	return n
+}
+
+func (x *GetRecycleBinFilesResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	return n
+}
+
+func (x *GetRecycleBinFilesResp) sizeField1() (n int) {
+	if x.Files == nil {
+		return n
+	}
+	for i := range x.GetFiles() {
+		n += fastpb.SizeMessage(1, x.GetFiles()[i])
+	}
+	return n
+}
+
+func (x *GetRecycleBinFilesResp) sizeField2() (n int) {
+	if x.Total == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(2, x.GetTotal())
+	return n
+}
+
+func (x *GetRecycleBinFilesResp) sizeField3() (n int) {
+	if x.Token == "" {
+		return n
+	}
+	n += fastpb.SizeString(3, x.GetToken())
+	return n
+}
+
 func (x *GetFileBySharingCodeReq) Size() (n int) {
 	if x == nil {
 		return n
@@ -8695,6 +8912,17 @@ var fieldIDToName_GetFileListResp = map[int32]string{
 	3: "Token",
 	4: "FatherNamePath",
 	5: "FatherIdPath",
+}
+
+var fieldIDToName_GetRecycleBinFilesReq = map[int32]string{
+	1: "FilterOptions",
+	2: "PaginationOptions",
+}
+
+var fieldIDToName_GetRecycleBinFilesResp = map[int32]string{
+	1: "Files",
+	2: "Total",
+	3: "Token",
 }
 
 var fieldIDToName_GetFileBySharingCodeReq = map[int32]string{
