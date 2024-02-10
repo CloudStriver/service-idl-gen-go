@@ -294,23 +294,13 @@ func (x *Comment) fastReadField5(buf []byte, _type int8) (offset int, err error)
 }
 
 func (x *Comment) fastReadField6(buf []byte, _type int8) (offset int, err error) {
-	var v int32
-	v, offset, err = fastpb.ReadInt32(buf, _type)
-	if err != nil {
-		return offset, err
-	}
-	x.State = State(v)
-	return offset, nil
+	x.State, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
 }
 
 func (x *Comment) fastReadField7(buf []byte, _type int8) (offset int, err error) {
-	var v int32
-	v, offset, err = fastpb.ReadInt32(buf, _type)
-	if err != nil {
-		return offset, err
-	}
-	x.Attrs = Attrs(v)
-	return offset, nil
+	x.Attrs, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
 }
 
 func (x *Comment) fastReadField8(buf []byte, _type int8) (offset int, err error) {
@@ -759,23 +749,13 @@ func (x *Subject) fastReadField6(buf []byte, _type int8) (offset int, err error)
 }
 
 func (x *Subject) fastReadField7(buf []byte, _type int8) (offset int, err error) {
-	var v int32
-	v, offset, err = fastpb.ReadInt32(buf, _type)
-	if err != nil {
-		return offset, err
-	}
-	x.State = State(v)
-	return offset, nil
+	x.State, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
 }
 
 func (x *Subject) fastReadField8(buf []byte, _type int8) (offset int, err error) {
-	var v int32
-	v, offset, err = fastpb.ReadInt32(buf, _type)
-	if err != nil {
-		return offset, err
-	}
-	x.Attrs = Attrs(v)
-	return offset, nil
+	x.Attrs, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
 }
 
 func (x *SubjectDetails) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -1256,7 +1236,7 @@ func (x *Comment) fastWriteField6(buf []byte) (offset int) {
 	if x.State == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 6, int32(x.GetState()))
+	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetState())
 	return offset
 }
 
@@ -1264,7 +1244,7 @@ func (x *Comment) fastWriteField7(buf []byte) (offset int) {
 	if x.Attrs == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 7, int32(x.GetAttrs()))
+	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetAttrs())
 	return offset
 }
 
@@ -1642,7 +1622,7 @@ func (x *Subject) fastWriteField7(buf []byte) (offset int) {
 	if x.State == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 7, int32(x.GetState()))
+	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetState())
 	return offset
 }
 
@@ -1650,7 +1630,7 @@ func (x *Subject) fastWriteField8(buf []byte) (offset int) {
 	if x.Attrs == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 8, int32(x.GetAttrs()))
+	offset += fastpb.WriteInt64(buf[offset:], 8, x.GetAttrs())
 	return offset
 }
 
@@ -2068,7 +2048,7 @@ func (x *Comment) sizeField6() (n int) {
 	if x.State == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(6, int32(x.GetState()))
+	n += fastpb.SizeInt64(6, x.GetState())
 	return n
 }
 
@@ -2076,7 +2056,7 @@ func (x *Comment) sizeField7() (n int) {
 	if x.Attrs == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(7, int32(x.GetAttrs()))
+	n += fastpb.SizeInt64(7, x.GetAttrs())
 	return n
 }
 
@@ -2454,7 +2434,7 @@ func (x *Subject) sizeField7() (n int) {
 	if x.State == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(7, int32(x.GetState()))
+	n += fastpb.SizeInt64(7, x.GetState())
 	return n
 }
 
@@ -2462,7 +2442,7 @@ func (x *Subject) sizeField8() (n int) {
 	if x.Attrs == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(8, int32(x.GetAttrs()))
+	n += fastpb.SizeInt64(8, x.GetAttrs())
 	return n
 }
 
