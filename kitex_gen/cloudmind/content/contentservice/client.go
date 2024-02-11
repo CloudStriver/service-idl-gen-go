@@ -16,6 +16,7 @@ type Client interface {
 	GetFilesByIds(ctx context.Context, Req *content.GetFilesByIdsReq, callOptions ...callopt.Option) (r *content.GetFilesByIdsResp, err error)
 	GetFileList(ctx context.Context, Req *content.GetFileListReq, callOptions ...callopt.Option) (r *content.GetFileListResp, err error)
 	GetFileBySharingCode(ctx context.Context, Req *content.GetFileBySharingCodeReq, callOptions ...callopt.Option) (r *content.GetFileBySharingCodeResp, err error)
+	GetRecycleBinFiles(ctx context.Context, Req *content.GetRecycleBinFilesReq, callOptions ...callopt.Option) (r *content.GetRecycleBinFilesResp, err error)
 	UpdateFile(ctx context.Context, Req *content.UpdateFileReq, callOptions ...callopt.Option) (r *content.UpdateFileResp, err error)
 	CreateFile(ctx context.Context, Req *content.CreateFileReq, callOptions ...callopt.Option) (r *content.CreateFileResp, err error)
 	MoveFile(ctx context.Context, Req *content.MoveFileReq, callOptions ...callopt.Option) (r *content.MoveFileResp, err error)
@@ -121,6 +122,11 @@ func (p *kContentServiceClient) GetFileList(ctx context.Context, Req *content.Ge
 func (p *kContentServiceClient) GetFileBySharingCode(ctx context.Context, Req *content.GetFileBySharingCodeReq, callOptions ...callopt.Option) (r *content.GetFileBySharingCodeResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetFileBySharingCode(ctx, Req)
+}
+
+func (p *kContentServiceClient) GetRecycleBinFiles(ctx context.Context, Req *content.GetRecycleBinFilesReq, callOptions ...callopt.Option) (r *content.GetRecycleBinFilesResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetRecycleBinFiles(ctx, Req)
 }
 
 func (p *kContentServiceClient) UpdateFile(ctx context.Context, Req *content.UpdateFileReq, callOptions ...callopt.Option) (r *content.UpdateFileResp, err error) {

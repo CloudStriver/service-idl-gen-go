@@ -26,6 +26,7 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"GetFilesByIds":          kitex.NewMethodInfo(getFilesByIdsHandler, newGetFilesByIdsArgs, newGetFilesByIdsResult, false),
 		"GetFileList":            kitex.NewMethodInfo(getFileListHandler, newGetFileListArgs, newGetFileListResult, false),
 		"GetFileBySharingCode":   kitex.NewMethodInfo(getFileBySharingCodeHandler, newGetFileBySharingCodeArgs, newGetFileBySharingCodeResult, false),
+		"GetRecycleBinFiles":     kitex.NewMethodInfo(getRecycleBinFilesHandler, newGetRecycleBinFilesArgs, newGetRecycleBinFilesResult, false),
 		"UpdateFile":             kitex.NewMethodInfo(updateFileHandler, newUpdateFileArgs, newUpdateFileResult, false),
 		"CreateFile":             kitex.NewMethodInfo(createFileHandler, newCreateFileArgs, newCreateFileResult, false),
 		"MoveFile":               kitex.NewMethodInfo(moveFileHandler, newMoveFileArgs, newMoveFileResult, false),
@@ -855,6 +856,159 @@ func (p *GetFileBySharingCodeResult) IsSetSuccess() bool {
 }
 
 func (p *GetFileBySharingCodeResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getRecycleBinFilesHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.GetRecycleBinFilesReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).GetRecycleBinFiles(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetRecycleBinFilesArgs:
+		success, err := handler.(content.ContentService).GetRecycleBinFiles(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetRecycleBinFilesResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetRecycleBinFilesArgs() interface{} {
+	return &GetRecycleBinFilesArgs{}
+}
+
+func newGetRecycleBinFilesResult() interface{} {
+	return &GetRecycleBinFilesResult{}
+}
+
+type GetRecycleBinFilesArgs struct {
+	Req *content.GetRecycleBinFilesReq
+}
+
+func (p *GetRecycleBinFilesArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.GetRecycleBinFilesReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetRecycleBinFilesArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetRecycleBinFilesArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetRecycleBinFilesArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetRecycleBinFilesArgs) Unmarshal(in []byte) error {
+	msg := new(content.GetRecycleBinFilesReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetRecycleBinFilesArgs_Req_DEFAULT *content.GetRecycleBinFilesReq
+
+func (p *GetRecycleBinFilesArgs) GetReq() *content.GetRecycleBinFilesReq {
+	if !p.IsSetReq() {
+		return GetRecycleBinFilesArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetRecycleBinFilesArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetRecycleBinFilesArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetRecycleBinFilesResult struct {
+	Success *content.GetRecycleBinFilesResp
+}
+
+var GetRecycleBinFilesResult_Success_DEFAULT *content.GetRecycleBinFilesResp
+
+func (p *GetRecycleBinFilesResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.GetRecycleBinFilesResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetRecycleBinFilesResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetRecycleBinFilesResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetRecycleBinFilesResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetRecycleBinFilesResult) Unmarshal(in []byte) error {
+	msg := new(content.GetRecycleBinFilesResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetRecycleBinFilesResult) GetSuccess() *content.GetRecycleBinFilesResp {
+	if !p.IsSetSuccess() {
+		return GetRecycleBinFilesResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetRecycleBinFilesResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.GetRecycleBinFilesResp)
+}
+
+func (p *GetRecycleBinFilesResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetRecycleBinFilesResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -8716,6 +8870,16 @@ func (p *kClient) GetFileBySharingCode(ctx context.Context, Req *content.GetFile
 	_args.Req = Req
 	var _result GetFileBySharingCodeResult
 	if err = p.c.Call(ctx, "GetFileBySharingCode", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetRecycleBinFiles(ctx context.Context, Req *content.GetRecycleBinFilesReq) (r *content.GetRecycleBinFilesResp, err error) {
+	var _args GetRecycleBinFilesArgs
+	_args.Req = Req
+	var _result GetRecycleBinFilesResult
+	if err = p.c.Call(ctx, "GetRecycleBinFiles", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
