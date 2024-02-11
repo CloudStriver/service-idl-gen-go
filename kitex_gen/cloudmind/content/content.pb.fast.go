@@ -728,6 +728,11 @@ func (x *SaveFileToPrivateSpaceReq) FastRead(buf []byte, _type int8, number int3
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -752,16 +757,21 @@ func (x *SaveFileToPrivateSpaceReq) fastReadField1(buf []byte, _type int8) (offs
 }
 
 func (x *SaveFileToPrivateSpaceReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.NewPath, offset, err = fastpb.ReadString(buf, _type)
+	x.UserId, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
 func (x *SaveFileToPrivateSpaceReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	x.FatherId, offset, err = fastpb.ReadString(buf, _type)
+	x.NewPath, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
 func (x *SaveFileToPrivateSpaceReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	x.FatherId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *SaveFileToPrivateSpaceReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	x.DocumentType, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
@@ -4329,6 +4339,7 @@ func (x *SaveFileToPrivateSpaceReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
 	return offset
 }
 
@@ -4341,26 +4352,34 @@ func (x *SaveFileToPrivateSpaceReq) fastWriteField1(buf []byte) (offset int) {
 }
 
 func (x *SaveFileToPrivateSpaceReq) fastWriteField2(buf []byte) (offset int) {
-	if x.NewPath == "" {
+	if x.UserId == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetNewPath())
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetUserId())
 	return offset
 }
 
 func (x *SaveFileToPrivateSpaceReq) fastWriteField3(buf []byte) (offset int) {
-	if x.FatherId == "" {
+	if x.NewPath == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 3, x.GetFatherId())
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetNewPath())
 	return offset
 }
 
 func (x *SaveFileToPrivateSpaceReq) fastWriteField4(buf []byte) (offset int) {
+	if x.FatherId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetFatherId())
+	return offset
+}
+
+func (x *SaveFileToPrivateSpaceReq) fastWriteField5(buf []byte) (offset int) {
 	if x.DocumentType == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetDocumentType())
+	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetDocumentType())
 	return offset
 }
 
@@ -6813,6 +6832,7 @@ func (x *SaveFileToPrivateSpaceReq) Size() (n int) {
 	n += x.sizeField2()
 	n += x.sizeField3()
 	n += x.sizeField4()
+	n += x.sizeField5()
 	return n
 }
 
@@ -6825,26 +6845,34 @@ func (x *SaveFileToPrivateSpaceReq) sizeField1() (n int) {
 }
 
 func (x *SaveFileToPrivateSpaceReq) sizeField2() (n int) {
-	if x.NewPath == "" {
+	if x.UserId == "" {
 		return n
 	}
-	n += fastpb.SizeString(2, x.GetNewPath())
+	n += fastpb.SizeString(2, x.GetUserId())
 	return n
 }
 
 func (x *SaveFileToPrivateSpaceReq) sizeField3() (n int) {
-	if x.FatherId == "" {
+	if x.NewPath == "" {
 		return n
 	}
-	n += fastpb.SizeString(3, x.GetFatherId())
+	n += fastpb.SizeString(3, x.GetNewPath())
 	return n
 }
 
 func (x *SaveFileToPrivateSpaceReq) sizeField4() (n int) {
+	if x.FatherId == "" {
+		return n
+	}
+	n += fastpb.SizeString(4, x.GetFatherId())
+	return n
+}
+
+func (x *SaveFileToPrivateSpaceReq) sizeField5() (n int) {
 	if x.DocumentType == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(4, x.GetDocumentType())
+	n += fastpb.SizeInt64(5, x.GetDocumentType())
 	return n
 }
 
@@ -8933,9 +8961,10 @@ var fieldIDToName_MoveFileResp = map[int32]string{}
 
 var fieldIDToName_SaveFileToPrivateSpaceReq = map[int32]string{
 	1: "File",
-	2: "NewPath",
-	3: "FatherId",
-	4: "DocumentType",
+	2: "UserId",
+	3: "NewPath",
+	4: "FatherId",
+	5: "DocumentType",
 }
 
 var fieldIDToName_SaveFileToPrivateSpaceResp = map[int32]string{

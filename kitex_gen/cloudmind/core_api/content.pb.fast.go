@@ -828,11 +828,6 @@ func (x *GetRecycleBinFilesReq) FastRead(buf []byte, _type int8, number int32) (
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 5:
-		offset, err = x.fastReadField5(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -867,12 +862,6 @@ func (x *GetRecycleBinFilesReq) fastReadField3(buf []byte, _type int8) (offset i
 func (x *GetRecycleBinFilesReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
 	x.Offset = &tmp
-	return offset, err
-}
-
-func (x *GetRecycleBinFilesReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadInt64(buf, _type)
-	x.SortType = &tmp
 	return offset, err
 }
 
@@ -4581,7 +4570,6 @@ func (x *GetRecycleBinFilesReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
-	offset += x.fastWriteField5(buf[offset:])
 	return offset
 }
 
@@ -4614,14 +4602,6 @@ func (x *GetRecycleBinFilesReq) fastWriteField4(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetOffset())
-	return offset
-}
-
-func (x *GetRecycleBinFilesReq) fastWriteField5(buf []byte) (offset int) {
-	if x.SortType == nil {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetSortType())
 	return offset
 }
 
@@ -7424,7 +7404,6 @@ func (x *GetRecycleBinFilesReq) Size() (n int) {
 	n += x.sizeField2()
 	n += x.sizeField3()
 	n += x.sizeField4()
-	n += x.sizeField5()
 	return n
 }
 
@@ -7457,14 +7436,6 @@ func (x *GetRecycleBinFilesReq) sizeField4() (n int) {
 		return n
 	}
 	n += fastpb.SizeInt64(4, x.GetOffset())
-	return n
-}
-
-func (x *GetRecycleBinFilesReq) sizeField5() (n int) {
-	if x.SortType == nil {
-		return n
-	}
-	n += fastpb.SizeInt64(5, x.GetSortType())
 	return n
 }
 
@@ -9765,7 +9736,6 @@ var fieldIDToName_GetRecycleBinFilesReq = map[int32]string{
 	2: "LastToken",
 	3: "Backward",
 	4: "Offset",
-	5: "SortType",
 }
 
 var fieldIDToName_GetRecycleBinFilesResp = map[int32]string{
