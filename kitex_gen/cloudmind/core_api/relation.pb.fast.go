@@ -199,7 +199,7 @@ func (x *GetFromRelationsResp) fastReadField1(buf []byte, _type int8) (offset in
 }
 
 func (x *GetFromRelationsResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	var v OwnPost
+	var v Post
 	offset, err = fastpb.ReadMessage(buf, _type, &v)
 	if err != nil {
 		return offset, err

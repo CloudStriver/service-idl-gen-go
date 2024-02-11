@@ -43,15 +43,18 @@ type Client interface {
 	CreatePost(ctx context.Context, Req *core_api.CreatePostReq, callOptions ...callopt.Option) (r *core_api.CreatePostResp, err error)
 	DeletePost(ctx context.Context, Req *core_api.DeletePostReq, callOptions ...callopt.Option) (r *core_api.DeletePostResp, err error)
 	UpdatePost(ctx context.Context, Req *core_api.UpdatePostReq, callOptions ...callopt.Option) (r *core_api.UpdatePostResp, err error)
-	GetOtherPosts(ctx context.Context, Req *core_api.GetOtherPostsReq, callOptions ...callopt.Option) (r *core_api.GetOtherPostsResp, err error)
-	GetOtherPost(ctx context.Context, Req *core_api.GetOtherPostReq, callOptions ...callopt.Option) (r *core_api.GetOtherPostResp, err error)
-	GetOwnPosts(ctx context.Context, Req *core_api.GetOwnPostsReq, callOptions ...callopt.Option) (r *core_api.GetOwnPostsResp, err error)
-	GetOwnPost(ctx context.Context, Req *core_api.GetOwnPostReq, callOptions ...callopt.Option) (r *core_api.GetOwnPostResp, err error)
+	GetPosts(ctx context.Context, Req *core_api.GetPostsReq, callOptions ...callopt.Option) (r *core_api.GetPostsResp, err error)
+	GetPost(ctx context.Context, Req *core_api.GetPostReq, callOptions ...callopt.Option) (r *core_api.GetPostResp, err error)
 	GetRecommendByUser(ctx context.Context, Req *core_api.GetRecommendByUserReq, callOptions ...callopt.Option) (r *core_api.GetRecommendByUserResp, err error)
 	GetRecommendByItem(ctx context.Context, Req *core_api.GetRecommendByItemReq, callOptions ...callopt.Option) (r *core_api.GetRecommendByItemResp, err error)
 	CreateFeedBack(ctx context.Context, Req *core_api.CreateFeedBackReq, callOptions ...callopt.Option) (r *core_api.CreateFeedBackResp, err error)
 	GetPopularRecommend(ctx context.Context, Req *core_api.GetPopularRecommendReq, callOptions ...callopt.Option) (r *core_api.GetPopularRecommendResp, err error)
 	GetLatestRecommend(ctx context.Context, Req *core_api.GetLatestRecommendReq, callOptions ...callopt.Option) (r *core_api.GetLatestRecommendResp, err error)
+	CreateProduct(ctx context.Context, Req *core_api.CreateProductReq, callOptions ...callopt.Option) (r *core_api.CreateProductResp, err error)
+	GetProduct(ctx context.Context, Req *core_api.GetProductReq, callOptions ...callopt.Option) (r *core_api.GetProductResp, err error)
+	GetProducts(ctx context.Context, Req *core_api.GetProductsReq, callOptions ...callopt.Option) (r *core_api.GetProductsResp, err error)
+	UpdateProduct(ctx context.Context, Req *core_api.UpdateProductReq, callOptions ...callopt.Option) (r *core_api.UpdateProductResp, err error)
+	DeleteProduct(ctx context.Context, Req *core_api.DeleteProductReq, callOptions ...callopt.Option) (r *core_api.DeleteProductResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -243,24 +246,14 @@ func (p *kContentClient) UpdatePost(ctx context.Context, Req *core_api.UpdatePos
 	return p.kClient.UpdatePost(ctx, Req)
 }
 
-func (p *kContentClient) GetOtherPosts(ctx context.Context, Req *core_api.GetOtherPostsReq, callOptions ...callopt.Option) (r *core_api.GetOtherPostsResp, err error) {
+func (p *kContentClient) GetPosts(ctx context.Context, Req *core_api.GetPostsReq, callOptions ...callopt.Option) (r *core_api.GetPostsResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.GetOtherPosts(ctx, Req)
+	return p.kClient.GetPosts(ctx, Req)
 }
 
-func (p *kContentClient) GetOtherPost(ctx context.Context, Req *core_api.GetOtherPostReq, callOptions ...callopt.Option) (r *core_api.GetOtherPostResp, err error) {
+func (p *kContentClient) GetPost(ctx context.Context, Req *core_api.GetPostReq, callOptions ...callopt.Option) (r *core_api.GetPostResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.GetOtherPost(ctx, Req)
-}
-
-func (p *kContentClient) GetOwnPosts(ctx context.Context, Req *core_api.GetOwnPostsReq, callOptions ...callopt.Option) (r *core_api.GetOwnPostsResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.GetOwnPosts(ctx, Req)
-}
-
-func (p *kContentClient) GetOwnPost(ctx context.Context, Req *core_api.GetOwnPostReq, callOptions ...callopt.Option) (r *core_api.GetOwnPostResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.GetOwnPost(ctx, Req)
+	return p.kClient.GetPost(ctx, Req)
 }
 
 func (p *kContentClient) GetRecommendByUser(ctx context.Context, Req *core_api.GetRecommendByUserReq, callOptions ...callopt.Option) (r *core_api.GetRecommendByUserResp, err error) {
@@ -286,4 +279,29 @@ func (p *kContentClient) GetPopularRecommend(ctx context.Context, Req *core_api.
 func (p *kContentClient) GetLatestRecommend(ctx context.Context, Req *core_api.GetLatestRecommendReq, callOptions ...callopt.Option) (r *core_api.GetLatestRecommendResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetLatestRecommend(ctx, Req)
+}
+
+func (p *kContentClient) CreateProduct(ctx context.Context, Req *core_api.CreateProductReq, callOptions ...callopt.Option) (r *core_api.CreateProductResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateProduct(ctx, Req)
+}
+
+func (p *kContentClient) GetProduct(ctx context.Context, Req *core_api.GetProductReq, callOptions ...callopt.Option) (r *core_api.GetProductResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetProduct(ctx, Req)
+}
+
+func (p *kContentClient) GetProducts(ctx context.Context, Req *core_api.GetProductsReq, callOptions ...callopt.Option) (r *core_api.GetProductsResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetProducts(ctx, Req)
+}
+
+func (p *kContentClient) UpdateProduct(ctx context.Context, Req *core_api.UpdateProductReq, callOptions ...callopt.Option) (r *core_api.UpdateProductResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.UpdateProduct(ctx, Req)
+}
+
+func (p *kContentClient) DeleteProduct(ctx context.Context, Req *core_api.DeleteProductReq, callOptions ...callopt.Option) (r *core_api.DeleteProductResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteProduct(ctx, Req)
 }
