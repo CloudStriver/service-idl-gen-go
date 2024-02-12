@@ -12,54 +12,6 @@ var (
 	_ = fastpb.Skip
 )
 
-func (x *Balance) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
-	switch number {
-	case 1:
-		offset, err = x.fastReadField1(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 2:
-		offset, err = x.fastReadField2(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 3:
-		offset, err = x.fastReadField3(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	default:
-		offset, err = fastpb.Skip(buf, _type, number)
-		if err != nil {
-			goto SkipFieldError
-		}
-	}
-	return offset, nil
-SkipFieldError:
-	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
-ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_Balance[number], err)
-}
-
-func (x *Balance) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadInt64(buf, _type)
-	x.Flow = &tmp
-	return offset, err
-}
-
-func (x *Balance) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadInt64(buf, _type)
-	x.Memory = &tmp
-	return offset, err
-}
-
-func (x *Balance) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadInt64(buf, _type)
-	x.Point = &tmp
-	return offset, err
-}
-
 func (x *UpdateBalanceReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
@@ -74,6 +26,11 @@ func (x *UpdateBalanceReq) FastRead(buf []byte, _type int8, number int32) (offse
 		}
 	case 3:
 		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
 		if err != nil {
 			goto ReadFieldError
 		}
@@ -96,22 +53,22 @@ func (x *UpdateBalanceReq) fastReadField1(buf []byte, _type int8) (offset int, e
 }
 
 func (x *UpdateBalanceReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	var v Balance
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
-	if err != nil {
-		return offset, err
-	}
-	x.OldBalance = &v
-	return offset, nil
+	x.Oldbalance, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
 }
 
 func (x *UpdateBalanceReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	var v Balance
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	x.Balance, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *UpdateBalanceReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	var v int32
+	v, offset, err = fastpb.ReadInt32(buf, _type)
 	if err != nil {
 		return offset, err
 	}
-	x.Balance = &v
+	x.BalanceType = BalanceType(v)
 	return offset, nil
 }
 
@@ -160,6 +117,16 @@ func (x *GetBalanceResp) FastRead(buf []byte, _type int8, number int32) (offset 
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -174,24 +141,24 @@ ReadFieldError:
 }
 
 func (x *GetBalanceResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v Balance
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
-	if err != nil {
-		return offset, err
-	}
-	x.Balance = &v
-	return offset, nil
+	x.Flow, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *GetBalanceResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.Memory, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *GetBalanceResp) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.Point, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
 }
 
 func (x *CreateBalanceReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 2:
-		offset, err = x.fastReadField2(buf, _type)
 		if err != nil {
 			goto ReadFieldError
 		}
@@ -211,16 +178,6 @@ ReadFieldError:
 func (x *CreateBalanceReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
 	x.UserId, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
-}
-
-func (x *CreateBalanceReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	var v Balance
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
-	if err != nil {
-		return offset, err
-	}
-	x.Balance = &v
-	return offset, nil
 }
 
 func (x *CreateBalanceResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -398,40 +355,6 @@ func (x *GetStocksResp) fastReadField1(buf []byte, _type int8) (offset int, err 
 	return offset, err
 }
 
-func (x *Balance) FastWrite(buf []byte) (offset int) {
-	if x == nil {
-		return offset
-	}
-	offset += x.fastWriteField1(buf[offset:])
-	offset += x.fastWriteField2(buf[offset:])
-	offset += x.fastWriteField3(buf[offset:])
-	return offset
-}
-
-func (x *Balance) fastWriteField1(buf []byte) (offset int) {
-	if x.Flow == nil {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 1, x.GetFlow())
-	return offset
-}
-
-func (x *Balance) fastWriteField2(buf []byte) (offset int) {
-	if x.Memory == nil {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetMemory())
-	return offset
-}
-
-func (x *Balance) fastWriteField3(buf []byte) (offset int) {
-	if x.Point == nil {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetPoint())
-	return offset
-}
-
 func (x *UpdateBalanceReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -439,6 +362,7 @@ func (x *UpdateBalanceReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
 	return offset
 }
 
@@ -451,18 +375,26 @@ func (x *UpdateBalanceReq) fastWriteField1(buf []byte) (offset int) {
 }
 
 func (x *UpdateBalanceReq) fastWriteField2(buf []byte) (offset int) {
-	if x.OldBalance == nil {
+	if x.Oldbalance == 0 {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 2, x.GetOldBalance())
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetOldbalance())
 	return offset
 }
 
 func (x *UpdateBalanceReq) fastWriteField3(buf []byte) (offset int) {
-	if x.Balance == nil {
+	if x.Balance == 0 {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 3, x.GetBalance())
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetBalance())
+	return offset
+}
+
+func (x *UpdateBalanceReq) fastWriteField4(buf []byte) (offset int) {
+	if x.BalanceType == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 4, int32(x.GetBalanceType()))
 	return offset
 }
 
@@ -494,14 +426,32 @@ func (x *GetBalanceResp) FastWrite(buf []byte) (offset int) {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
 	return offset
 }
 
 func (x *GetBalanceResp) fastWriteField1(buf []byte) (offset int) {
-	if x.Balance == nil {
+	if x.Flow == 0 {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetBalance())
+	offset += fastpb.WriteInt64(buf[offset:], 1, x.GetFlow())
+	return offset
+}
+
+func (x *GetBalanceResp) fastWriteField2(buf []byte) (offset int) {
+	if x.Memory == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetMemory())
+	return offset
+}
+
+func (x *GetBalanceResp) fastWriteField3(buf []byte) (offset int) {
+	if x.Point == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetPoint())
 	return offset
 }
 
@@ -510,7 +460,6 @@ func (x *CreateBalanceReq) FastWrite(buf []byte) (offset int) {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
-	offset += x.fastWriteField2(buf[offset:])
 	return offset
 }
 
@@ -519,14 +468,6 @@ func (x *CreateBalanceReq) fastWriteField1(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 1, x.GetUserId())
-	return offset
-}
-
-func (x *CreateBalanceReq) fastWriteField2(buf []byte) (offset int) {
-	if x.Balance == nil {
-		return offset
-	}
-	offset += fastpb.WriteMessage(buf[offset:], 2, x.GetBalance())
 	return offset
 }
 
@@ -640,40 +581,6 @@ func (x *GetStocksResp) fastWriteField1(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *Balance) Size() (n int) {
-	if x == nil {
-		return n
-	}
-	n += x.sizeField1()
-	n += x.sizeField2()
-	n += x.sizeField3()
-	return n
-}
-
-func (x *Balance) sizeField1() (n int) {
-	if x.Flow == nil {
-		return n
-	}
-	n += fastpb.SizeInt64(1, x.GetFlow())
-	return n
-}
-
-func (x *Balance) sizeField2() (n int) {
-	if x.Memory == nil {
-		return n
-	}
-	n += fastpb.SizeInt64(2, x.GetMemory())
-	return n
-}
-
-func (x *Balance) sizeField3() (n int) {
-	if x.Point == nil {
-		return n
-	}
-	n += fastpb.SizeInt64(3, x.GetPoint())
-	return n
-}
-
 func (x *UpdateBalanceReq) Size() (n int) {
 	if x == nil {
 		return n
@@ -681,6 +588,7 @@ func (x *UpdateBalanceReq) Size() (n int) {
 	n += x.sizeField1()
 	n += x.sizeField2()
 	n += x.sizeField3()
+	n += x.sizeField4()
 	return n
 }
 
@@ -693,18 +601,26 @@ func (x *UpdateBalanceReq) sizeField1() (n int) {
 }
 
 func (x *UpdateBalanceReq) sizeField2() (n int) {
-	if x.OldBalance == nil {
+	if x.Oldbalance == 0 {
 		return n
 	}
-	n += fastpb.SizeMessage(2, x.GetOldBalance())
+	n += fastpb.SizeInt64(2, x.GetOldbalance())
 	return n
 }
 
 func (x *UpdateBalanceReq) sizeField3() (n int) {
-	if x.Balance == nil {
+	if x.Balance == 0 {
 		return n
 	}
-	n += fastpb.SizeMessage(3, x.GetBalance())
+	n += fastpb.SizeInt64(3, x.GetBalance())
+	return n
+}
+
+func (x *UpdateBalanceReq) sizeField4() (n int) {
+	if x.BalanceType == 0 {
+		return n
+	}
+	n += fastpb.SizeInt32(4, int32(x.GetBalanceType()))
 	return n
 }
 
@@ -736,14 +652,32 @@ func (x *GetBalanceResp) Size() (n int) {
 		return n
 	}
 	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
 	return n
 }
 
 func (x *GetBalanceResp) sizeField1() (n int) {
-	if x.Balance == nil {
+	if x.Flow == 0 {
 		return n
 	}
-	n += fastpb.SizeMessage(1, x.GetBalance())
+	n += fastpb.SizeInt64(1, x.GetFlow())
+	return n
+}
+
+func (x *GetBalanceResp) sizeField2() (n int) {
+	if x.Memory == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(2, x.GetMemory())
+	return n
+}
+
+func (x *GetBalanceResp) sizeField3() (n int) {
+	if x.Point == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(3, x.GetPoint())
 	return n
 }
 
@@ -752,7 +686,6 @@ func (x *CreateBalanceReq) Size() (n int) {
 		return n
 	}
 	n += x.sizeField1()
-	n += x.sizeField2()
 	return n
 }
 
@@ -761,14 +694,6 @@ func (x *CreateBalanceReq) sizeField1() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(1, x.GetUserId())
-	return n
-}
-
-func (x *CreateBalanceReq) sizeField2() (n int) {
-	if x.Balance == nil {
-		return n
-	}
-	n += fastpb.SizeMessage(2, x.GetBalance())
 	return n
 }
 
@@ -882,16 +807,11 @@ func (x *GetStocksResp) sizeField1() (n int) {
 	return n
 }
 
-var fieldIDToName_Balance = map[int32]string{
-	1: "Flow",
-	2: "Memory",
-	3: "Point",
-}
-
 var fieldIDToName_UpdateBalanceReq = map[int32]string{
 	1: "UserId",
-	2: "OldBalance",
+	2: "Oldbalance",
 	3: "Balance",
+	4: "BalanceType",
 }
 
 var fieldIDToName_UpdateBalanceResp = map[int32]string{}
@@ -901,12 +821,13 @@ var fieldIDToName_GetBalanceReq = map[int32]string{
 }
 
 var fieldIDToName_GetBalanceResp = map[int32]string{
-	1: "Balance",
+	1: "Flow",
+	2: "Memory",
+	3: "Point",
 }
 
 var fieldIDToName_CreateBalanceReq = map[int32]string{
 	1: "UserId",
-	2: "Balance",
 }
 
 var fieldIDToName_CreateBalanceResp = map[int32]string{}

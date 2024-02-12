@@ -2465,6 +2465,21 @@ func (x *GetUserDetailResp) FastRead(buf []byte, _type int8, number int32) (offs
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 7:
+		offset, err = x.fastReadField7(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 8:
+		offset, err = x.fastReadField8(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 9:
+		offset, err = x.fastReadField9(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -2505,6 +2520,21 @@ func (x *GetUserDetailResp) fastReadField5(buf []byte, _type int8) (offset int, 
 
 func (x *GetUserDetailResp) fastReadField6(buf []byte, _type int8) (offset int, err error) {
 	x.Url, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *GetUserDetailResp) fastReadField7(buf []byte, _type int8) (offset int, err error) {
+	x.Flow, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *GetUserDetailResp) fastReadField8(buf []byte, _type int8) (offset int, err error) {
+	x.Momery, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *GetUserDetailResp) fastReadField9(buf []byte, _type int8) (offset int, err error) {
+	x.Point, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -5965,6 +5995,9 @@ func (x *GetUserDetailResp) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField4(buf[offset:])
 	offset += x.fastWriteField5(buf[offset:])
 	offset += x.fastWriteField6(buf[offset:])
+	offset += x.fastWriteField7(buf[offset:])
+	offset += x.fastWriteField8(buf[offset:])
+	offset += x.fastWriteField9(buf[offset:])
 	return offset
 }
 
@@ -6013,6 +6046,30 @@ func (x *GetUserDetailResp) fastWriteField6(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 6, x.GetUrl())
+	return offset
+}
+
+func (x *GetUserDetailResp) fastWriteField7(buf []byte) (offset int) {
+	if x.Flow == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetFlow())
+	return offset
+}
+
+func (x *GetUserDetailResp) fastWriteField8(buf []byte) (offset int) {
+	if x.Momery == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 8, x.GetMomery())
+	return offset
+}
+
+func (x *GetUserDetailResp) fastWriteField9(buf []byte) (offset int) {
+	if x.Point == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 9, x.GetPoint())
 	return offset
 }
 
@@ -8995,6 +9052,9 @@ func (x *GetUserDetailResp) Size() (n int) {
 	n += x.sizeField4()
 	n += x.sizeField5()
 	n += x.sizeField6()
+	n += x.sizeField7()
+	n += x.sizeField8()
+	n += x.sizeField9()
 	return n
 }
 
@@ -9043,6 +9103,30 @@ func (x *GetUserDetailResp) sizeField6() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(6, x.GetUrl())
+	return n
+}
+
+func (x *GetUserDetailResp) sizeField7() (n int) {
+	if x.Flow == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(7, x.GetFlow())
+	return n
+}
+
+func (x *GetUserDetailResp) sizeField8() (n int) {
+	if x.Momery == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(8, x.GetMomery())
+	return n
+}
+
+func (x *GetUserDetailResp) sizeField9() (n int) {
+	if x.Point == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(9, x.GetPoint())
 	return n
 }
 
@@ -10613,6 +10697,9 @@ var fieldIDToName_GetUserDetailResp = map[int32]string{
 	4: "IdCard",
 	5: "Description",
 	6: "Url",
+	7: "Flow",
+	8: "Momery",
+	9: "Point",
 }
 
 var fieldIDToName_DeleteUserReq = map[int32]string{

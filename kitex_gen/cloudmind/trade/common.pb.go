@@ -21,67 +21,56 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type Balance struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
+type BalanceType int32
 
-	Flow   *int64 `protobuf:"varint,1,opt,name=flow,proto3,oneof" json:"flow,omitempty"`
-	Memory *int64 `protobuf:"varint,2,opt,name=memory,proto3,oneof" json:"memory,omitempty"`
-	Point  *int64 `protobuf:"varint,3,opt,name=point,proto3,oneof" json:"point,omitempty"`
-}
+const (
+	BalanceType_UnKnowBalanceType BalanceType = 0
+	BalanceType_FlowBalanceType   BalanceType = 1
+	BalanceType_MemoryBalanceType BalanceType = 2
+	BalanceType_PointBalanceType  BalanceType = 3
+)
 
-func (x *Balance) Reset() {
-	*x = Balance{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_trade_common_proto_msgTypes[0]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
+// Enum value maps for BalanceType.
+var (
+	BalanceType_name = map[int32]string{
+		0: "UnKnowBalanceType",
+		1: "FlowBalanceType",
+		2: "MemoryBalanceType",
+		3: "PointBalanceType",
 	}
-}
-
-func (x *Balance) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Balance) ProtoMessage() {}
-
-func (x *Balance) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_trade_common_proto_msgTypes[0]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
+	BalanceType_value = map[string]int32{
+		"UnKnowBalanceType": 0,
+		"FlowBalanceType":   1,
+		"MemoryBalanceType": 2,
+		"PointBalanceType":  3,
 	}
-	return mi.MessageOf(x)
+)
+
+func (x BalanceType) Enum() *BalanceType {
+	p := new(BalanceType)
+	*p = x
+	return p
 }
 
-// Deprecated: Use Balance.ProtoReflect.Descriptor instead.
-func (*Balance) Descriptor() ([]byte, []int) {
+func (x BalanceType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (BalanceType) Descriptor() protoreflect.EnumDescriptor {
+	return file_cloudmind_trade_common_proto_enumTypes[0].Descriptor()
+}
+
+func (BalanceType) Type() protoreflect.EnumType {
+	return &file_cloudmind_trade_common_proto_enumTypes[0]
+}
+
+func (x BalanceType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use BalanceType.Descriptor instead.
+func (BalanceType) EnumDescriptor() ([]byte, []int) {
 	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *Balance) GetFlow() int64 {
-	if x != nil && x.Flow != nil {
-		return *x.Flow
-	}
-	return 0
-}
-
-func (x *Balance) GetMemory() int64 {
-	if x != nil && x.Memory != nil {
-		return *x.Memory
-	}
-	return 0
-}
-
-func (x *Balance) GetPoint() int64 {
-	if x != nil && x.Point != nil {
-		return *x.Point
-	}
-	return 0
 }
 
 type UpdateBalanceReq struct {
@@ -89,15 +78,16 @@ type UpdateBalanceReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	UserId     string   `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
-	OldBalance *Balance `protobuf:"bytes,2,opt,name=oldBalance,proto3" json:"oldBalance,omitempty"`
-	Balance    *Balance `protobuf:"bytes,3,opt,name=balance,proto3" json:"balance,omitempty"`
+	UserId      string      `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
+	Oldbalance  int64       `protobuf:"varint,2,opt,name=oldbalance,proto3" json:"oldbalance,omitempty"`
+	Balance     int64       `protobuf:"varint,3,opt,name=balance,proto3" json:"balance,omitempty"`
+	BalanceType BalanceType `protobuf:"varint,4,opt,name=balanceType,proto3,enum=cloudmind.trade.BalanceType" json:"balanceType,omitempty"`
 }
 
 func (x *UpdateBalanceReq) Reset() {
 	*x = UpdateBalanceReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_trade_common_proto_msgTypes[1]
+		mi := &file_cloudmind_trade_common_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -110,7 +100,7 @@ func (x *UpdateBalanceReq) String() string {
 func (*UpdateBalanceReq) ProtoMessage() {}
 
 func (x *UpdateBalanceReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_trade_common_proto_msgTypes[1]
+	mi := &file_cloudmind_trade_common_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -123,7 +113,7 @@ func (x *UpdateBalanceReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateBalanceReq.ProtoReflect.Descriptor instead.
 func (*UpdateBalanceReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{1}
+	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *UpdateBalanceReq) GetUserId() string {
@@ -133,18 +123,25 @@ func (x *UpdateBalanceReq) GetUserId() string {
 	return ""
 }
 
-func (x *UpdateBalanceReq) GetOldBalance() *Balance {
+func (x *UpdateBalanceReq) GetOldbalance() int64 {
 	if x != nil {
-		return x.OldBalance
+		return x.Oldbalance
 	}
-	return nil
+	return 0
 }
 
-func (x *UpdateBalanceReq) GetBalance() *Balance {
+func (x *UpdateBalanceReq) GetBalance() int64 {
 	if x != nil {
 		return x.Balance
 	}
-	return nil
+	return 0
+}
+
+func (x *UpdateBalanceReq) GetBalanceType() BalanceType {
+	if x != nil {
+		return x.BalanceType
+	}
+	return BalanceType_UnKnowBalanceType
 }
 
 type UpdateBalanceResp struct {
@@ -156,7 +153,7 @@ type UpdateBalanceResp struct {
 func (x *UpdateBalanceResp) Reset() {
 	*x = UpdateBalanceResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_trade_common_proto_msgTypes[2]
+		mi := &file_cloudmind_trade_common_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -169,7 +166,7 @@ func (x *UpdateBalanceResp) String() string {
 func (*UpdateBalanceResp) ProtoMessage() {}
 
 func (x *UpdateBalanceResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_trade_common_proto_msgTypes[2]
+	mi := &file_cloudmind_trade_common_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -182,7 +179,7 @@ func (x *UpdateBalanceResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateBalanceResp.ProtoReflect.Descriptor instead.
 func (*UpdateBalanceResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{2}
+	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{1}
 }
 
 type GetBalanceReq struct {
@@ -196,7 +193,7 @@ type GetBalanceReq struct {
 func (x *GetBalanceReq) Reset() {
 	*x = GetBalanceReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_trade_common_proto_msgTypes[3]
+		mi := &file_cloudmind_trade_common_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -209,7 +206,7 @@ func (x *GetBalanceReq) String() string {
 func (*GetBalanceReq) ProtoMessage() {}
 
 func (x *GetBalanceReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_trade_common_proto_msgTypes[3]
+	mi := &file_cloudmind_trade_common_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -222,7 +219,7 @@ func (x *GetBalanceReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBalanceReq.ProtoReflect.Descriptor instead.
 func (*GetBalanceReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{3}
+	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *GetBalanceReq) GetUserId() string {
@@ -237,13 +234,15 @@ type GetBalanceResp struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Balance *Balance `protobuf:"bytes,1,opt,name=balance,proto3" json:"balance,omitempty"`
+	Flow   int64 `protobuf:"varint,1,opt,name=flow,proto3" json:"flow,omitempty"`
+	Memory int64 `protobuf:"varint,2,opt,name=memory,proto3" json:"memory,omitempty"`
+	Point  int64 `protobuf:"varint,3,opt,name=point,proto3" json:"point,omitempty"`
 }
 
 func (x *GetBalanceResp) Reset() {
 	*x = GetBalanceResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_trade_common_proto_msgTypes[4]
+		mi := &file_cloudmind_trade_common_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -256,7 +255,7 @@ func (x *GetBalanceResp) String() string {
 func (*GetBalanceResp) ProtoMessage() {}
 
 func (x *GetBalanceResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_trade_common_proto_msgTypes[4]
+	mi := &file_cloudmind_trade_common_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -269,14 +268,28 @@ func (x *GetBalanceResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBalanceResp.ProtoReflect.Descriptor instead.
 func (*GetBalanceResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{4}
+	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *GetBalanceResp) GetBalance() *Balance {
+func (x *GetBalanceResp) GetFlow() int64 {
 	if x != nil {
-		return x.Balance
+		return x.Flow
 	}
-	return nil
+	return 0
+}
+
+func (x *GetBalanceResp) GetMemory() int64 {
+	if x != nil {
+		return x.Memory
+	}
+	return 0
+}
+
+func (x *GetBalanceResp) GetPoint() int64 {
+	if x != nil {
+		return x.Point
+	}
+	return 0
 }
 
 type CreateBalanceReq struct {
@@ -284,14 +297,13 @@ type CreateBalanceReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	UserId  string   `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
-	Balance *Balance `protobuf:"bytes,2,opt,name=balance,proto3" json:"balance,omitempty"`
+	UserId string `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
 }
 
 func (x *CreateBalanceReq) Reset() {
 	*x = CreateBalanceReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_trade_common_proto_msgTypes[5]
+		mi := &file_cloudmind_trade_common_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -304,7 +316,7 @@ func (x *CreateBalanceReq) String() string {
 func (*CreateBalanceReq) ProtoMessage() {}
 
 func (x *CreateBalanceReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_trade_common_proto_msgTypes[5]
+	mi := &file_cloudmind_trade_common_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -317,7 +329,7 @@ func (x *CreateBalanceReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateBalanceReq.ProtoReflect.Descriptor instead.
 func (*CreateBalanceReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{5}
+	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *CreateBalanceReq) GetUserId() string {
@@ -325,13 +337,6 @@ func (x *CreateBalanceReq) GetUserId() string {
 		return x.UserId
 	}
 	return ""
-}
-
-func (x *CreateBalanceReq) GetBalance() *Balance {
-	if x != nil {
-		return x.Balance
-	}
-	return nil
 }
 
 type CreateBalanceResp struct {
@@ -343,7 +348,7 @@ type CreateBalanceResp struct {
 func (x *CreateBalanceResp) Reset() {
 	*x = CreateBalanceResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_trade_common_proto_msgTypes[6]
+		mi := &file_cloudmind_trade_common_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -356,7 +361,7 @@ func (x *CreateBalanceResp) String() string {
 func (*CreateBalanceResp) ProtoMessage() {}
 
 func (x *CreateBalanceResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_trade_common_proto_msgTypes[6]
+	mi := &file_cloudmind_trade_common_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -369,7 +374,7 @@ func (x *CreateBalanceResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateBalanceResp.ProtoReflect.Descriptor instead.
 func (*CreateBalanceResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{6}
+	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{5}
 }
 
 type AddStockReq struct {
@@ -384,7 +389,7 @@ type AddStockReq struct {
 func (x *AddStockReq) Reset() {
 	*x = AddStockReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_trade_common_proto_msgTypes[7]
+		mi := &file_cloudmind_trade_common_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -397,7 +402,7 @@ func (x *AddStockReq) String() string {
 func (*AddStockReq) ProtoMessage() {}
 
 func (x *AddStockReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_trade_common_proto_msgTypes[7]
+	mi := &file_cloudmind_trade_common_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -410,7 +415,7 @@ func (x *AddStockReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddStockReq.ProtoReflect.Descriptor instead.
 func (*AddStockReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{7}
+	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *AddStockReq) GetProductId() string {
@@ -436,7 +441,7 @@ type AddStockResp struct {
 func (x *AddStockResp) Reset() {
 	*x = AddStockResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_trade_common_proto_msgTypes[8]
+		mi := &file_cloudmind_trade_common_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -449,7 +454,7 @@ func (x *AddStockResp) String() string {
 func (*AddStockResp) ProtoMessage() {}
 
 func (x *AddStockResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_trade_common_proto_msgTypes[8]
+	mi := &file_cloudmind_trade_common_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -462,7 +467,7 @@ func (x *AddStockResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddStockResp.ProtoReflect.Descriptor instead.
 func (*AddStockResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{8}
+	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{7}
 }
 
 type GetStockReq struct {
@@ -476,7 +481,7 @@ type GetStockReq struct {
 func (x *GetStockReq) Reset() {
 	*x = GetStockReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_trade_common_proto_msgTypes[9]
+		mi := &file_cloudmind_trade_common_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -489,7 +494,7 @@ func (x *GetStockReq) String() string {
 func (*GetStockReq) ProtoMessage() {}
 
 func (x *GetStockReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_trade_common_proto_msgTypes[9]
+	mi := &file_cloudmind_trade_common_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -502,7 +507,7 @@ func (x *GetStockReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetStockReq.ProtoReflect.Descriptor instead.
 func (*GetStockReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{9}
+	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *GetStockReq) GetProductId() string {
@@ -523,7 +528,7 @@ type GetStockResp struct {
 func (x *GetStockResp) Reset() {
 	*x = GetStockResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_trade_common_proto_msgTypes[10]
+		mi := &file_cloudmind_trade_common_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -536,7 +541,7 @@ func (x *GetStockResp) String() string {
 func (*GetStockResp) ProtoMessage() {}
 
 func (x *GetStockResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_trade_common_proto_msgTypes[10]
+	mi := &file_cloudmind_trade_common_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -549,7 +554,7 @@ func (x *GetStockResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetStockResp.ProtoReflect.Descriptor instead.
 func (*GetStockResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{10}
+	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *GetStockResp) GetStock() int64 {
@@ -570,7 +575,7 @@ type GetStocksReq struct {
 func (x *GetStocksReq) Reset() {
 	*x = GetStocksReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_trade_common_proto_msgTypes[11]
+		mi := &file_cloudmind_trade_common_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -583,7 +588,7 @@ func (x *GetStocksReq) String() string {
 func (*GetStocksReq) ProtoMessage() {}
 
 func (x *GetStocksReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_trade_common_proto_msgTypes[11]
+	mi := &file_cloudmind_trade_common_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -596,7 +601,7 @@ func (x *GetStocksReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetStocksReq.ProtoReflect.Descriptor instead.
 func (*GetStocksReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{11}
+	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *GetStocksReq) GetProductIds() []string {
@@ -617,7 +622,7 @@ type GetStocksResp struct {
 func (x *GetStocksResp) Reset() {
 	*x = GetStocksResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_trade_common_proto_msgTypes[12]
+		mi := &file_cloudmind_trade_common_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -630,7 +635,7 @@ func (x *GetStocksResp) String() string {
 func (*GetStocksResp) ProtoMessage() {}
 
 func (x *GetStocksResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_trade_common_proto_msgTypes[12]
+	mi := &file_cloudmind_trade_common_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -643,7 +648,7 @@ func (x *GetStocksResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetStocksResp.ProtoReflect.Descriptor instead.
 func (*GetStocksResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{12}
+	return file_cloudmind_trade_common_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *GetStocksResp) GetStocks() []int64 {
@@ -659,60 +664,58 @@ var file_cloudmind_trade_common_proto_rawDesc = []byte{
 	0x0a, 0x1c, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2f, 0x74, 0x72, 0x61, 0x64,
 	0x65, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x0f,
 	0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x74, 0x72, 0x61, 0x64, 0x65, 0x22,
-	0x78, 0x0a, 0x07, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x12, 0x17, 0x0a, 0x04, 0x66, 0x6c,
-	0x6f, 0x77, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x48, 0x00, 0x52, 0x04, 0x66, 0x6c, 0x6f, 0x77,
-	0x88, 0x01, 0x01, 0x12, 0x1b, 0x0a, 0x06, 0x6d, 0x65, 0x6d, 0x6f, 0x72, 0x79, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x03, 0x48, 0x01, 0x52, 0x06, 0x6d, 0x65, 0x6d, 0x6f, 0x72, 0x79, 0x88, 0x01, 0x01,
-	0x12, 0x19, 0x0a, 0x05, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x48,
-	0x02, 0x52, 0x05, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x88, 0x01, 0x01, 0x42, 0x07, 0x0a, 0x05, 0x5f,
-	0x66, 0x6c, 0x6f, 0x77, 0x42, 0x09, 0x0a, 0x07, 0x5f, 0x6d, 0x65, 0x6d, 0x6f, 0x72, 0x79, 0x42,
-	0x08, 0x0a, 0x06, 0x5f, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x22, 0x98, 0x01, 0x0a, 0x10, 0x55, 0x70,
-	0x64, 0x61, 0x74, 0x65, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x71, 0x12, 0x16,
-	0x0a, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
-	0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x38, 0x0a, 0x0a, 0x6f, 0x6c, 0x64, 0x42, 0x61, 0x6c,
-	0x61, 0x6e, 0x63, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x63, 0x6c, 0x6f,
-	0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x74, 0x72, 0x61, 0x64, 0x65, 0x2e, 0x42, 0x61, 0x6c,
-	0x61, 0x6e, 0x63, 0x65, 0x52, 0x0a, 0x6f, 0x6c, 0x64, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65,
-	0x12, 0x32, 0x0a, 0x07, 0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28,
-	0x0b, 0x32, 0x18, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x74, 0x72,
-	0x61, 0x64, 0x65, 0x2e, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x07, 0x62, 0x61, 0x6c,
-	0x61, 0x6e, 0x63, 0x65, 0x22, 0x13, 0x0a, 0x11, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x42, 0x61,
-	0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x22, 0x27, 0x0a, 0x0d, 0x47, 0x65, 0x74,
-	0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x71, 0x12, 0x16, 0x0a, 0x06, 0x75, 0x73,
-	0x65, 0x72, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72,
-	0x49, 0x64, 0x22, 0x44, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65,
-	0x52, 0x65, 0x73, 0x70, 0x12, 0x32, 0x0a, 0x07, 0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e,
-	0x64, 0x2e, 0x74, 0x72, 0x61, 0x64, 0x65, 0x2e, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52,
-	0x07, 0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x22, 0x5e, 0x0a, 0x10, 0x43, 0x72, 0x65, 0x61,
+	0xa4, 0x01, 0x0a, 0x10, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63,
+	0x65, 0x52, 0x65, 0x71, 0x12, 0x16, 0x0a, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x1e, 0x0a, 0x0a,
+	0x6f, 0x6c, 0x64, 0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x0a, 0x6f, 0x6c, 0x64, 0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x12, 0x18, 0x0a, 0x07,
+	0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x62,
+	0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x12, 0x3e, 0x0a, 0x0b, 0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63,
+	0x65, 0x54, 0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x1c, 0x2e, 0x63, 0x6c,
+	0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x74, 0x72, 0x61, 0x64, 0x65, 0x2e, 0x42, 0x61,
+	0x6c, 0x61, 0x6e, 0x63, 0x65, 0x54, 0x79, 0x70, 0x65, 0x52, 0x0b, 0x62, 0x61, 0x6c, 0x61, 0x6e,
+	0x63, 0x65, 0x54, 0x79, 0x70, 0x65, 0x22, 0x13, 0x0a, 0x11, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65,
+	0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x22, 0x27, 0x0a, 0x0d, 0x47,
+	0x65, 0x74, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x71, 0x12, 0x16, 0x0a, 0x06,
+	0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73,
+	0x65, 0x72, 0x49, 0x64, 0x22, 0x52, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x42, 0x61, 0x6c, 0x61, 0x6e,
+	0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x66, 0x6c, 0x6f, 0x77, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x04, 0x66, 0x6c, 0x6f, 0x77, 0x12, 0x16, 0x0a, 0x06, 0x6d, 0x65,
+	0x6d, 0x6f, 0x72, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x6d, 0x65, 0x6d, 0x6f,
+	0x72, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x03, 0x52, 0x05, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x22, 0x2a, 0x0a, 0x10, 0x43, 0x72, 0x65, 0x61,
 	0x74, 0x65, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x71, 0x12, 0x16, 0x0a, 0x06,
 	0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73,
-	0x65, 0x72, 0x49, 0x64, 0x12, 0x32, 0x0a, 0x07, 0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x18,
-	0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e,
-	0x64, 0x2e, 0x74, 0x72, 0x61, 0x64, 0x65, 0x2e, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52,
-	0x07, 0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x22, 0x13, 0x0a, 0x11, 0x43, 0x72, 0x65, 0x61,
-	0x74, 0x65, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x22, 0x43, 0x0a,
-	0x0b, 0x41, 0x64, 0x64, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x52, 0x65, 0x71, 0x12, 0x1c, 0x0a, 0x09,
-	0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x09, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x61, 0x6d,
-	0x6f, 0x75, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75,
-	0x6e, 0x74, 0x22, 0x0e, 0x0a, 0x0c, 0x41, 0x64, 0x64, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x52, 0x65,
-	0x73, 0x70, 0x22, 0x2b, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x52, 0x65,
-	0x71, 0x12, 0x1c, 0x0a, 0x09, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x64, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x64, 0x22,
-	0x24, 0x0a, 0x0c, 0x47, 0x65, 0x74, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x12,
-	0x14, 0x0a, 0x05, 0x73, 0x74, 0x6f, 0x63, 0x6b, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05,
-	0x73, 0x74, 0x6f, 0x63, 0x6b, 0x22, 0x2e, 0x0a, 0x0c, 0x47, 0x65, 0x74, 0x53, 0x74, 0x6f, 0x63,
-	0x6b, 0x73, 0x52, 0x65, 0x71, 0x12, 0x1e, 0x0a, 0x0a, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74,
-	0x49, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x0a, 0x70, 0x72, 0x6f, 0x64, 0x75,
-	0x63, 0x74, 0x49, 0x64, 0x73, 0x22, 0x27, 0x0a, 0x0d, 0x47, 0x65, 0x74, 0x53, 0x74, 0x6f, 0x63,
-	0x6b, 0x73, 0x52, 0x65, 0x73, 0x70, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x74, 0x6f, 0x63, 0x6b, 0x73,
-	0x18, 0x01, 0x20, 0x03, 0x28, 0x03, 0x52, 0x06, 0x73, 0x74, 0x6f, 0x63, 0x6b, 0x73, 0x42, 0x46,
-	0x5a, 0x44, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x6c, 0x6f,
-	0x75, 0x64, 0x53, 0x74, 0x72, 0x69, 0x76, 0x65, 0x72, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63,
-	0x65, 0x2d, 0x69, 0x64, 0x6c, 0x2d, 0x67, 0x65, 0x6e, 0x2d, 0x67, 0x6f, 0x2f, 0x6b, 0x69, 0x74,
-	0x65, 0x78, 0x5f, 0x67, 0x65, 0x6e, 0x2f, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64,
-	0x2f, 0x74, 0x72, 0x61, 0x64, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x72, 0x49, 0x64, 0x22, 0x13, 0x0a, 0x11, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x42, 0x61,
+	0x6c, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x22, 0x43, 0x0a, 0x0b, 0x41, 0x64, 0x64,
+	0x53, 0x74, 0x6f, 0x63, 0x6b, 0x52, 0x65, 0x71, 0x12, 0x1c, 0x0a, 0x09, 0x70, 0x72, 0x6f, 0x64,
+	0x75, 0x63, 0x74, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x70, 0x72, 0x6f,
+	0x64, 0x75, 0x63, 0x74, 0x49, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x0e,
+	0x0a, 0x0c, 0x41, 0x64, 0x64, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x22, 0x2b,
+	0x0a, 0x0b, 0x47, 0x65, 0x74, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x52, 0x65, 0x71, 0x12, 0x1c, 0x0a,
+	0x09, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x09, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x64, 0x22, 0x24, 0x0a, 0x0c, 0x47,
+	0x65, 0x74, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x12, 0x14, 0x0a, 0x05, 0x73,
+	0x74, 0x6f, 0x63, 0x6b, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x73, 0x74, 0x6f, 0x63,
+	0x6b, 0x22, 0x2e, 0x0a, 0x0c, 0x47, 0x65, 0x74, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x73, 0x52, 0x65,
+	0x71, 0x12, 0x1e, 0x0a, 0x0a, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x64, 0x73, 0x18,
+	0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x0a, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x64,
+	0x73, 0x22, 0x27, 0x0a, 0x0d, 0x47, 0x65, 0x74, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x73, 0x52, 0x65,
+	0x73, 0x70, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x74, 0x6f, 0x63, 0x6b, 0x73, 0x18, 0x01, 0x20, 0x03,
+	0x28, 0x03, 0x52, 0x06, 0x73, 0x74, 0x6f, 0x63, 0x6b, 0x73, 0x2a, 0x66, 0x0a, 0x0b, 0x42, 0x61,
+	0x6c, 0x61, 0x6e, 0x63, 0x65, 0x54, 0x79, 0x70, 0x65, 0x12, 0x15, 0x0a, 0x11, 0x55, 0x6e, 0x4b,
+	0x6e, 0x6f, 0x77, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x54, 0x79, 0x70, 0x65, 0x10, 0x00,
+	0x12, 0x13, 0x0a, 0x0f, 0x46, 0x6c, 0x6f, 0x77, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x54,
+	0x79, 0x70, 0x65, 0x10, 0x01, 0x12, 0x15, 0x0a, 0x11, 0x4d, 0x65, 0x6d, 0x6f, 0x72, 0x79, 0x42,
+	0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x54, 0x79, 0x70, 0x65, 0x10, 0x02, 0x12, 0x14, 0x0a, 0x10,
+	0x50, 0x6f, 0x69, 0x6e, 0x74, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x54, 0x79, 0x70, 0x65,
+	0x10, 0x03, 0x42, 0x46, 0x5a, 0x44, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
+	0x2f, 0x43, 0x6c, 0x6f, 0x75, 0x64, 0x53, 0x74, 0x72, 0x69, 0x76, 0x65, 0x72, 0x2f, 0x73, 0x65,
+	0x72, 0x76, 0x69, 0x63, 0x65, 0x2d, 0x69, 0x64, 0x6c, 0x2d, 0x67, 0x65, 0x6e, 0x2d, 0x67, 0x6f,
+	0x2f, 0x6b, 0x69, 0x74, 0x65, 0x78, 0x5f, 0x67, 0x65, 0x6e, 0x2f, 0x63, 0x6c, 0x6f, 0x75, 0x64,
+	0x6d, 0x69, 0x6e, 0x64, 0x2f, 0x74, 0x72, 0x61, 0x64, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
 var (
@@ -727,9 +730,10 @@ func file_cloudmind_trade_common_proto_rawDescGZIP() []byte {
 	return file_cloudmind_trade_common_proto_rawDescData
 }
 
-var file_cloudmind_trade_common_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_cloudmind_trade_common_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_cloudmind_trade_common_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_cloudmind_trade_common_proto_goTypes = []interface{}{
-	(*Balance)(nil),           // 0: cloudmind.trade.Balance
+	(BalanceType)(0),          // 0: cloudmind.trade.BalanceType
 	(*UpdateBalanceReq)(nil),  // 1: cloudmind.trade.UpdateBalanceReq
 	(*UpdateBalanceResp)(nil), // 2: cloudmind.trade.UpdateBalanceResp
 	(*GetBalanceReq)(nil),     // 3: cloudmind.trade.GetBalanceReq
@@ -744,15 +748,12 @@ var file_cloudmind_trade_common_proto_goTypes = []interface{}{
 	(*GetStocksResp)(nil),     // 12: cloudmind.trade.GetStocksResp
 }
 var file_cloudmind_trade_common_proto_depIdxs = []int32{
-	0, // 0: cloudmind.trade.UpdateBalanceReq.oldBalance:type_name -> cloudmind.trade.Balance
-	0, // 1: cloudmind.trade.UpdateBalanceReq.balance:type_name -> cloudmind.trade.Balance
-	0, // 2: cloudmind.trade.GetBalanceResp.balance:type_name -> cloudmind.trade.Balance
-	0, // 3: cloudmind.trade.CreateBalanceReq.balance:type_name -> cloudmind.trade.Balance
-	4, // [4:4] is the sub-list for method output_type
-	4, // [4:4] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	0, // 0: cloudmind.trade.UpdateBalanceReq.balanceType:type_name -> cloudmind.trade.BalanceType
+	1, // [1:1] is the sub-list for method output_type
+	1, // [1:1] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_cloudmind_trade_common_proto_init() }
@@ -762,18 +763,6 @@ func file_cloudmind_trade_common_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_cloudmind_trade_common_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Balance); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_cloudmind_trade_common_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UpdateBalanceReq); i {
 			case 0:
 				return &v.state
@@ -785,7 +774,7 @@ func file_cloudmind_trade_common_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_trade_common_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_trade_common_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UpdateBalanceResp); i {
 			case 0:
 				return &v.state
@@ -797,7 +786,7 @@ func file_cloudmind_trade_common_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_trade_common_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_trade_common_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetBalanceReq); i {
 			case 0:
 				return &v.state
@@ -809,7 +798,7 @@ func file_cloudmind_trade_common_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_trade_common_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_trade_common_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetBalanceResp); i {
 			case 0:
 				return &v.state
@@ -821,7 +810,7 @@ func file_cloudmind_trade_common_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_trade_common_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_trade_common_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*CreateBalanceReq); i {
 			case 0:
 				return &v.state
@@ -833,7 +822,7 @@ func file_cloudmind_trade_common_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_trade_common_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_trade_common_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*CreateBalanceResp); i {
 			case 0:
 				return &v.state
@@ -845,7 +834,7 @@ func file_cloudmind_trade_common_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_trade_common_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_trade_common_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*AddStockReq); i {
 			case 0:
 				return &v.state
@@ -857,7 +846,7 @@ func file_cloudmind_trade_common_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_trade_common_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_trade_common_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*AddStockResp); i {
 			case 0:
 				return &v.state
@@ -869,7 +858,7 @@ func file_cloudmind_trade_common_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_trade_common_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_trade_common_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetStockReq); i {
 			case 0:
 				return &v.state
@@ -881,7 +870,7 @@ func file_cloudmind_trade_common_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_trade_common_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_trade_common_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetStockResp); i {
 			case 0:
 				return &v.state
@@ -893,7 +882,7 @@ func file_cloudmind_trade_common_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_trade_common_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_trade_common_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetStocksReq); i {
 			case 0:
 				return &v.state
@@ -905,7 +894,7 @@ func file_cloudmind_trade_common_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_trade_common_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_trade_common_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetStocksResp); i {
 			case 0:
 				return &v.state
@@ -918,19 +907,19 @@ func file_cloudmind_trade_common_proto_init() {
 			}
 		}
 	}
-	file_cloudmind_trade_common_proto_msgTypes[0].OneofWrappers = []interface{}{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_cloudmind_trade_common_proto_rawDesc,
-			NumEnums:      0,
-			NumMessages:   13,
+			NumEnums:      1,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_cloudmind_trade_common_proto_goTypes,
 		DependencyIndexes: file_cloudmind_trade_common_proto_depIdxs,
+		EnumInfos:         file_cloudmind_trade_common_proto_enumTypes,
 		MessageInfos:      file_cloudmind_trade_common_proto_msgTypes,
 	}.Build()
 	File_cloudmind_trade_common_proto = out.File
