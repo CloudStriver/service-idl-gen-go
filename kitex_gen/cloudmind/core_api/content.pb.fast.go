@@ -3729,8 +3729,13 @@ func (x *CreateProductReq) fastReadField5(buf []byte, _type int8) (offset int, e
 }
 
 func (x *CreateProductReq) fastReadField6(buf []byte, _type int8) (offset int, err error) {
-	x.Type, offset, err = fastpb.ReadInt64(buf, _type)
-	return offset, err
+	var v int32
+	v, offset, err = fastpb.ReadInt32(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Type = Product_Type(v)
+	return offset, nil
 }
 
 func (x *CreateProductReq) fastReadField7(buf []byte, _type int8) (offset int, err error) {
@@ -6909,7 +6914,7 @@ func (x *CreateProductReq) fastWriteField6(buf []byte) (offset int) {
 	if x.Type == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetType())
+	offset += fastpb.WriteInt32(buf[offset:], 6, int32(x.GetType()))
 	return offset
 }
 
@@ -9966,7 +9971,7 @@ func (x *CreateProductReq) sizeField6() (n int) {
 	if x.Type == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(6, x.GetType())
+	n += fastpb.SizeInt32(6, int32(x.GetType()))
 	return n
 }
 

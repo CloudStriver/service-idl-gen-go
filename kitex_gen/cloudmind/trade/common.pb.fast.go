@@ -53,27 +53,30 @@ func (x *UpdateBalanceReq) fastReadField1(buf []byte, _type int8) (offset int, e
 }
 
 func (x *UpdateBalanceReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.Oldbalance, offset, err = fastpb.ReadInt64(buf, _type)
+	tmp, offset, err := fastpb.ReadInt64(buf, _type)
+	x.Flow = &tmp
 	return offset, err
 }
 
 func (x *UpdateBalanceReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	x.Balance, offset, err = fastpb.ReadInt64(buf, _type)
+	tmp, offset, err := fastpb.ReadInt64(buf, _type)
+	x.Memory = &tmp
 	return offset, err
 }
 
 func (x *UpdateBalanceReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	var v int32
-	v, offset, err = fastpb.ReadInt32(buf, _type)
-	if err != nil {
-		return offset, err
-	}
-	x.BalanceType = BalanceType(v)
-	return offset, nil
+	tmp, offset, err := fastpb.ReadInt64(buf, _type)
+	x.Point = &tmp
+	return offset, err
 }
 
 func (x *UpdateBalanceResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -83,6 +86,13 @@ func (x *UpdateBalanceResp) FastRead(buf []byte, _type int8, number int32) (offs
 	return offset, nil
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_UpdateBalanceResp[number], err)
+}
+
+func (x *UpdateBalanceResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.Ok, offset, err = fastpb.ReadBool(buf, _type)
+	return offset, err
 }
 
 func (x *GetBalanceReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -375,26 +385,26 @@ func (x *UpdateBalanceReq) fastWriteField1(buf []byte) (offset int) {
 }
 
 func (x *UpdateBalanceReq) fastWriteField2(buf []byte) (offset int) {
-	if x.Oldbalance == 0 {
+	if x.Flow == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetOldbalance())
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetFlow())
 	return offset
 }
 
 func (x *UpdateBalanceReq) fastWriteField3(buf []byte) (offset int) {
-	if x.Balance == 0 {
+	if x.Memory == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetBalance())
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetMemory())
 	return offset
 }
 
 func (x *UpdateBalanceReq) fastWriteField4(buf []byte) (offset int) {
-	if x.BalanceType == 0 {
+	if x.Point == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 4, int32(x.GetBalanceType()))
+	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetPoint())
 	return offset
 }
 
@@ -402,6 +412,15 @@ func (x *UpdateBalanceResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *UpdateBalanceResp) fastWriteField1(buf []byte) (offset int) {
+	if !x.Ok {
+		return offset
+	}
+	offset += fastpb.WriteBool(buf[offset:], 1, x.GetOk())
 	return offset
 }
 
@@ -601,26 +620,26 @@ func (x *UpdateBalanceReq) sizeField1() (n int) {
 }
 
 func (x *UpdateBalanceReq) sizeField2() (n int) {
-	if x.Oldbalance == 0 {
+	if x.Flow == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(2, x.GetOldbalance())
+	n += fastpb.SizeInt64(2, x.GetFlow())
 	return n
 }
 
 func (x *UpdateBalanceReq) sizeField3() (n int) {
-	if x.Balance == 0 {
+	if x.Memory == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(3, x.GetBalance())
+	n += fastpb.SizeInt64(3, x.GetMemory())
 	return n
 }
 
 func (x *UpdateBalanceReq) sizeField4() (n int) {
-	if x.BalanceType == 0 {
+	if x.Point == nil {
 		return n
 	}
-	n += fastpb.SizeInt32(4, int32(x.GetBalanceType()))
+	n += fastpb.SizeInt64(4, x.GetPoint())
 	return n
 }
 
@@ -628,6 +647,15 @@ func (x *UpdateBalanceResp) Size() (n int) {
 	if x == nil {
 		return n
 	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *UpdateBalanceResp) sizeField1() (n int) {
+	if !x.Ok {
+		return n
+	}
+	n += fastpb.SizeBool(1, x.GetOk())
 	return n
 }
 
@@ -809,12 +837,14 @@ func (x *GetStocksResp) sizeField1() (n int) {
 
 var fieldIDToName_UpdateBalanceReq = map[int32]string{
 	1: "UserId",
-	2: "Oldbalance",
-	3: "Balance",
-	4: "BalanceType",
+	2: "Flow",
+	3: "Memory",
+	4: "Point",
 }
 
-var fieldIDToName_UpdateBalanceResp = map[int32]string{}
+var fieldIDToName_UpdateBalanceResp = map[int32]string{
+	1: "Ok",
+}
 
 var fieldIDToName_GetBalanceReq = map[int32]string{
 	1: "UserId",
