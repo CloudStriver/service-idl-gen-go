@@ -17,11 +17,6 @@ type Client interface {
 	GetLabels(ctx context.Context, Req *core_api.GetLabelsReq, callOptions ...callopt.Option) (r *core_api.GetLabelsResp, err error)
 	GetLabel(ctx context.Context, Req *core_api.GetLabelReq, callOptions ...callopt.Option) (r *core_api.GetLabelResp, err error)
 	GetLabelsInBatch(ctx context.Context, Req *core_api.GetLabelsInBatchReq, callOptions ...callopt.Option) (r *core_api.GetLabelsInBatchResp, err error)
-	CreateObject(ctx context.Context, Req *core_api.CreateObjectReq, callOptions ...callopt.Option) (r *core_api.CreateObjectResp, err error)
-	CreateObjects(ctx context.Context, Req *core_api.CreateObjectsReq, callOptions ...callopt.Option) (r *core_api.CreateObjectsResp, err error)
-	DeleteObject(ctx context.Context, Req *core_api.DeleteObjectReq, callOptions ...callopt.Option) (r *core_api.DeleteObjectResp, err error)
-	GetObjects(ctx context.Context, Req *core_api.GetObjectsReq, callOptions ...callopt.Option) (r *core_api.GetObjectsResp, err error)
-	UpdateObject(ctx context.Context, Req *core_api.UpdateObjectReq, callOptions ...callopt.Option) (r *core_api.UpdateObjectResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -81,29 +76,4 @@ func (p *kLabelClient) GetLabel(ctx context.Context, Req *core_api.GetLabelReq, 
 func (p *kLabelClient) GetLabelsInBatch(ctx context.Context, Req *core_api.GetLabelsInBatchReq, callOptions ...callopt.Option) (r *core_api.GetLabelsInBatchResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetLabelsInBatch(ctx, Req)
-}
-
-func (p *kLabelClient) CreateObject(ctx context.Context, Req *core_api.CreateObjectReq, callOptions ...callopt.Option) (r *core_api.CreateObjectResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.CreateObject(ctx, Req)
-}
-
-func (p *kLabelClient) CreateObjects(ctx context.Context, Req *core_api.CreateObjectsReq, callOptions ...callopt.Option) (r *core_api.CreateObjectsResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.CreateObjects(ctx, Req)
-}
-
-func (p *kLabelClient) DeleteObject(ctx context.Context, Req *core_api.DeleteObjectReq, callOptions ...callopt.Option) (r *core_api.DeleteObjectResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.DeleteObject(ctx, Req)
-}
-
-func (p *kLabelClient) GetObjects(ctx context.Context, Req *core_api.GetObjectsReq, callOptions ...callopt.Option) (r *core_api.GetObjectsResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.GetObjects(ctx, Req)
-}
-
-func (p *kLabelClient) UpdateObject(ctx context.Context, Req *core_api.UpdateObjectReq, callOptions ...callopt.Option) (r *core_api.UpdateObjectResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.UpdateObject(ctx, Req)
 }

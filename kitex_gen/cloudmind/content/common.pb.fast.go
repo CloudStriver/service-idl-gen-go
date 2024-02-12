@@ -721,6 +721,11 @@ func (x *FileFilterOptions) FastRead(buf []byte, _type int8, number int32) (offs
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 10:
+		offset, err = x.fastReadField10(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -783,6 +788,12 @@ func (x *FileFilterOptions) fastReadField9(buf []byte, _type int8) (offset int, 
 		return offset, err
 	}
 	x.OnlyType = append(x.OnlyType, v)
+	return offset, err
+}
+
+func (x *FileFilterOptions) fastReadField10(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadString(buf, _type)
+	x.OnlyLabelId = &tmp
 	return offset, err
 }
 
@@ -2468,6 +2479,7 @@ func (x *FileFilterOptions) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField7(buf[offset:])
 	offset += x.fastWriteField8(buf[offset:])
 	offset += x.fastWriteField9(buf[offset:])
+	offset += x.fastWriteField10(buf[offset:])
 	return offset
 }
 
@@ -2534,6 +2546,14 @@ func (x *FileFilterOptions) fastWriteField9(buf []byte) (offset int) {
 	for i := range x.GetOnlyType() {
 		offset += fastpb.WriteString(buf[offset:], 9, x.GetOnlyType()[i])
 	}
+	return offset
+}
+
+func (x *FileFilterOptions) fastWriteField10(buf []byte) (offset int) {
+	if x.OnlyLabelId == nil {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 10, x.GetOnlyLabelId())
 	return offset
 }
 
@@ -3966,6 +3986,7 @@ func (x *FileFilterOptions) Size() (n int) {
 	n += x.sizeField7()
 	n += x.sizeField8()
 	n += x.sizeField9()
+	n += x.sizeField10()
 	return n
 }
 
@@ -4032,6 +4053,14 @@ func (x *FileFilterOptions) sizeField9() (n int) {
 	for i := range x.GetOnlyType() {
 		n += fastpb.SizeString(9, x.GetOnlyType()[i])
 	}
+	return n
+}
+
+func (x *FileFilterOptions) sizeField10() (n int) {
+	if x.OnlyLabelId == nil {
+		return n
+	}
+	n += fastpb.SizeString(10, x.GetOnlyLabelId())
 	return n
 }
 
@@ -4995,14 +5024,15 @@ var fieldIDToName_SearchOptions = map[int32]string{
 }
 
 var fieldIDToName_FileFilterOptions = map[int32]string{
-	1: "OnlyUserId",
-	2: "OnlyFileId",
-	3: "OnlyFatherId",
-	5: "OnlyZone",
-	6: "OnlySubZone",
-	7: "OnlyIsDel",
-	8: "OnlyDocumentType",
-	9: "OnlyType",
+	1:  "OnlyUserId",
+	2:  "OnlyFileId",
+	3:  "OnlyFatherId",
+	5:  "OnlyZone",
+	6:  "OnlySubZone",
+	7:  "OnlyIsDel",
+	8:  "OnlyDocumentType",
+	9:  "OnlyType",
+	10: "OnlyLabelId",
 }
 
 var fieldIDToName_ShareFileFilterOptions = map[int32]string{

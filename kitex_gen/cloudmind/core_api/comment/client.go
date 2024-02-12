@@ -22,8 +22,6 @@ type Client interface {
 	CreateCommentSubject(ctx context.Context, Req *core_api.CreateCommentSubjectReq, callOptions ...callopt.Option) (r *core_api.CreateCommentSubjectResp, err error)
 	UpdateCommentSubject(ctx context.Context, Req *core_api.UpdateCommentSubjectReq, callOptions ...callopt.Option) (r *core_api.UpdateCommentSubjectResp, err error)
 	DeleteCommentSubject(ctx context.Context, Req *core_api.DeleteCommentSubjectReq, callOptions ...callopt.Option) (r *core_api.DeleteCommentSubjectResp, err error)
-	SetCommentSubjectState(ctx context.Context, Req *core_api.SetCommentSubjectStateReq, callOptions ...callopt.Option) (r *core_api.SetCommentSubjectStateResp, err error)
-	SetCommentSubjectAttrs(ctx context.Context, Req *core_api.SetCommentSubjectAttrsReq, callOptions ...callopt.Option) (r *core_api.SetCommentSubjectAttrsResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -108,14 +106,4 @@ func (p *kCommentClient) UpdateCommentSubject(ctx context.Context, Req *core_api
 func (p *kCommentClient) DeleteCommentSubject(ctx context.Context, Req *core_api.DeleteCommentSubjectReq, callOptions ...callopt.Option) (r *core_api.DeleteCommentSubjectResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.DeleteCommentSubject(ctx, Req)
-}
-
-func (p *kCommentClient) SetCommentSubjectState(ctx context.Context, Req *core_api.SetCommentSubjectStateReq, callOptions ...callopt.Option) (r *core_api.SetCommentSubjectStateResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.SetCommentSubjectState(ctx, Req)
-}
-
-func (p *kCommentClient) SetCommentSubjectAttrs(ctx context.Context, Req *core_api.SetCommentSubjectAttrsReq, callOptions ...callopt.Option) (r *core_api.SetCommentSubjectAttrsResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.SetCommentSubjectAttrs(ctx, Req)
 }
