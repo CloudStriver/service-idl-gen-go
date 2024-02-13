@@ -12,6 +12,176 @@ var (
 	_ = fastpb.Skip
 )
 
+func (x *FileInfo) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 6:
+		offset, err = x.fastReadField6(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 7:
+		offset, err = x.fastReadField7(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 8:
+		offset, err = x.fastReadField8(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 9:
+		offset, err = x.fastReadField9(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 10:
+		offset, err = x.fastReadField10(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 11:
+		offset, err = x.fastReadField11(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 12:
+		offset, err = x.fastReadField12(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 13:
+		offset, err = x.fastReadField13(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 14:
+		offset, err = x.fastReadField14(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 15:
+		offset, err = x.fastReadField15(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_FileInfo[number], err)
+}
+
+func (x *FileInfo) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.FileId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *FileInfo) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.UserId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *FileInfo) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.Name, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *FileInfo) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	x.Type, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *FileInfo) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	x.Path, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *FileInfo) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+	x.FatherId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *FileInfo) fastReadField7(buf []byte, _type int8) (offset int, err error) {
+	x.SpaceSize, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *FileInfo) fastReadField8(buf []byte, _type int8) (offset int, err error) {
+	x.Md5, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *FileInfo) fastReadField9(buf []byte, _type int8) (offset int, err error) {
+	x.IsDel, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *FileInfo) fastReadField10(buf []byte, _type int8) (offset int, err error) {
+	x.Zone, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *FileInfo) fastReadField11(buf []byte, _type int8) (offset int, err error) {
+	x.SubZone, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *FileInfo) fastReadField12(buf []byte, _type int8) (offset int, err error) {
+	x.Description, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *FileInfo) fastReadField13(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Labels = append(x.Labels, v)
+	return offset, err
+}
+
+func (x *FileInfo) fastReadField14(buf []byte, _type int8) (offset int, err error) {
+	x.CreateAt, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *FileInfo) fastReadField15(buf []byte, _type int8) (offset int, err error) {
+	x.UpdateAt, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
 func (x *File) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
@@ -160,166 +330,6 @@ func (x *File) fastReadField13(buf []byte, _type int8) (offset int, err error) {
 		return offset, err
 	}
 	x.Labels = append(x.Labels, v)
-	return offset, err
-}
-
-func (x *FileInfo) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
-	switch number {
-	case 1:
-		offset, err = x.fastReadField1(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 2:
-		offset, err = x.fastReadField2(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 3:
-		offset, err = x.fastReadField3(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 4:
-		offset, err = x.fastReadField4(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 5:
-		offset, err = x.fastReadField5(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 6:
-		offset, err = x.fastReadField6(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 7:
-		offset, err = x.fastReadField7(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 8:
-		offset, err = x.fastReadField8(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 9:
-		offset, err = x.fastReadField9(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 10:
-		offset, err = x.fastReadField10(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 11:
-		offset, err = x.fastReadField11(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 12:
-		offset, err = x.fastReadField12(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 13:
-		offset, err = x.fastReadField13(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 14:
-		offset, err = x.fastReadField14(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	default:
-		offset, err = fastpb.Skip(buf, _type, number)
-		if err != nil {
-			goto SkipFieldError
-		}
-	}
-	return offset, nil
-SkipFieldError:
-	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
-ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_FileInfo[number], err)
-}
-
-func (x *FileInfo) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	x.FileId, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *FileInfo) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.UserId, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *FileInfo) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	x.Name, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *FileInfo) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	x.Type, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *FileInfo) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	x.Path, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *FileInfo) fastReadField6(buf []byte, _type int8) (offset int, err error) {
-	x.FatherId, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *FileInfo) fastReadField7(buf []byte, _type int8) (offset int, err error) {
-	x.SpaceSize, offset, err = fastpb.ReadInt64(buf, _type)
-	return offset, err
-}
-
-func (x *FileInfo) fastReadField8(buf []byte, _type int8) (offset int, err error) {
-	x.IsDel, offset, err = fastpb.ReadInt64(buf, _type)
-	return offset, err
-}
-
-func (x *FileInfo) fastReadField9(buf []byte, _type int8) (offset int, err error) {
-	x.Zone, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *FileInfo) fastReadField10(buf []byte, _type int8) (offset int, err error) {
-	x.SubZone, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *FileInfo) fastReadField11(buf []byte, _type int8) (offset int, err error) {
-	x.Description, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *FileInfo) fastReadField12(buf []byte, _type int8) (offset int, err error) {
-	var v string
-	v, offset, err = fastpb.ReadString(buf, _type)
-	if err != nil {
-		return offset, err
-	}
-	x.Labels = append(x.Labels, v)
-	return offset, err
-}
-
-func (x *FileInfo) fastReadField13(buf []byte, _type int8) (offset int, err error) {
-	x.CreateAt, offset, err = fastpb.ReadInt64(buf, _type)
-	return offset, err
-}
-
-func (x *FileInfo) fastReadField14(buf []byte, _type int8) (offset int, err error) {
-	x.UpdateAt, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -1935,6 +1945,150 @@ func (x *UserFilterOptions) fastReadField1(buf []byte, _type int8) (offset int, 
 	return offset, err
 }
 
+func (x *FileInfo) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
+	offset += x.fastWriteField6(buf[offset:])
+	offset += x.fastWriteField7(buf[offset:])
+	offset += x.fastWriteField8(buf[offset:])
+	offset += x.fastWriteField9(buf[offset:])
+	offset += x.fastWriteField10(buf[offset:])
+	offset += x.fastWriteField11(buf[offset:])
+	offset += x.fastWriteField12(buf[offset:])
+	offset += x.fastWriteField13(buf[offset:])
+	offset += x.fastWriteField14(buf[offset:])
+	offset += x.fastWriteField15(buf[offset:])
+	return offset
+}
+
+func (x *FileInfo) fastWriteField1(buf []byte) (offset int) {
+	if x.FileId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetFileId())
+	return offset
+}
+
+func (x *FileInfo) fastWriteField2(buf []byte) (offset int) {
+	if x.UserId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetUserId())
+	return offset
+}
+
+func (x *FileInfo) fastWriteField3(buf []byte) (offset int) {
+	if x.Name == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetName())
+	return offset
+}
+
+func (x *FileInfo) fastWriteField4(buf []byte) (offset int) {
+	if x.Type == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetType())
+	return offset
+}
+
+func (x *FileInfo) fastWriteField5(buf []byte) (offset int) {
+	if x.Path == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 5, x.GetPath())
+	return offset
+}
+
+func (x *FileInfo) fastWriteField6(buf []byte) (offset int) {
+	if x.FatherId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 6, x.GetFatherId())
+	return offset
+}
+
+func (x *FileInfo) fastWriteField7(buf []byte) (offset int) {
+	if x.SpaceSize == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetSpaceSize())
+	return offset
+}
+
+func (x *FileInfo) fastWriteField8(buf []byte) (offset int) {
+	if x.Md5 == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 8, x.GetMd5())
+	return offset
+}
+
+func (x *FileInfo) fastWriteField9(buf []byte) (offset int) {
+	if x.IsDel == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 9, x.GetIsDel())
+	return offset
+}
+
+func (x *FileInfo) fastWriteField10(buf []byte) (offset int) {
+	if x.Zone == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 10, x.GetZone())
+	return offset
+}
+
+func (x *FileInfo) fastWriteField11(buf []byte) (offset int) {
+	if x.SubZone == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 11, x.GetSubZone())
+	return offset
+}
+
+func (x *FileInfo) fastWriteField12(buf []byte) (offset int) {
+	if x.Description == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 12, x.GetDescription())
+	return offset
+}
+
+func (x *FileInfo) fastWriteField13(buf []byte) (offset int) {
+	if len(x.Labels) == 0 {
+		return offset
+	}
+	for i := range x.GetLabels() {
+		offset += fastpb.WriteString(buf[offset:], 13, x.GetLabels()[i])
+	}
+	return offset
+}
+
+func (x *FileInfo) fastWriteField14(buf []byte) (offset int) {
+	if x.CreateAt == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 14, x.GetCreateAt())
+	return offset
+}
+
+func (x *FileInfo) fastWriteField15(buf []byte) (offset int) {
+	if x.UpdateAt == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 15, x.GetUpdateAt())
+	return offset
+}
+
 func (x *File) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -2058,141 +2212,6 @@ func (x *File) fastWriteField13(buf []byte) (offset int) {
 	for i := range x.GetLabels() {
 		offset += fastpb.WriteString(buf[offset:], 13, x.GetLabels()[i])
 	}
-	return offset
-}
-
-func (x *FileInfo) FastWrite(buf []byte) (offset int) {
-	if x == nil {
-		return offset
-	}
-	offset += x.fastWriteField1(buf[offset:])
-	offset += x.fastWriteField2(buf[offset:])
-	offset += x.fastWriteField3(buf[offset:])
-	offset += x.fastWriteField4(buf[offset:])
-	offset += x.fastWriteField5(buf[offset:])
-	offset += x.fastWriteField6(buf[offset:])
-	offset += x.fastWriteField7(buf[offset:])
-	offset += x.fastWriteField8(buf[offset:])
-	offset += x.fastWriteField9(buf[offset:])
-	offset += x.fastWriteField10(buf[offset:])
-	offset += x.fastWriteField11(buf[offset:])
-	offset += x.fastWriteField12(buf[offset:])
-	offset += x.fastWriteField13(buf[offset:])
-	offset += x.fastWriteField14(buf[offset:])
-	return offset
-}
-
-func (x *FileInfo) fastWriteField1(buf []byte) (offset int) {
-	if x.FileId == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 1, x.GetFileId())
-	return offset
-}
-
-func (x *FileInfo) fastWriteField2(buf []byte) (offset int) {
-	if x.UserId == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetUserId())
-	return offset
-}
-
-func (x *FileInfo) fastWriteField3(buf []byte) (offset int) {
-	if x.Name == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 3, x.GetName())
-	return offset
-}
-
-func (x *FileInfo) fastWriteField4(buf []byte) (offset int) {
-	if x.Type == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 4, x.GetType())
-	return offset
-}
-
-func (x *FileInfo) fastWriteField5(buf []byte) (offset int) {
-	if x.Path == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 5, x.GetPath())
-	return offset
-}
-
-func (x *FileInfo) fastWriteField6(buf []byte) (offset int) {
-	if x.FatherId == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 6, x.GetFatherId())
-	return offset
-}
-
-func (x *FileInfo) fastWriteField7(buf []byte) (offset int) {
-	if x.SpaceSize == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetSpaceSize())
-	return offset
-}
-
-func (x *FileInfo) fastWriteField8(buf []byte) (offset int) {
-	if x.IsDel == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 8, x.GetIsDel())
-	return offset
-}
-
-func (x *FileInfo) fastWriteField9(buf []byte) (offset int) {
-	if x.Zone == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 9, x.GetZone())
-	return offset
-}
-
-func (x *FileInfo) fastWriteField10(buf []byte) (offset int) {
-	if x.SubZone == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 10, x.GetSubZone())
-	return offset
-}
-
-func (x *FileInfo) fastWriteField11(buf []byte) (offset int) {
-	if x.Description == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 11, x.GetDescription())
-	return offset
-}
-
-func (x *FileInfo) fastWriteField12(buf []byte) (offset int) {
-	if len(x.Labels) == 0 {
-		return offset
-	}
-	for i := range x.GetLabels() {
-		offset += fastpb.WriteString(buf[offset:], 12, x.GetLabels()[i])
-	}
-	return offset
-}
-
-func (x *FileInfo) fastWriteField13(buf []byte) (offset int) {
-	if x.CreateAt == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 13, x.GetCreateAt())
-	return offset
-}
-
-func (x *FileInfo) fastWriteField14(buf []byte) (offset int) {
-	if x.UpdateAt == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 14, x.GetUpdateAt())
 	return offset
 }
 
@@ -3442,6 +3461,150 @@ func (x *UserFilterOptions) fastWriteField1(buf []byte) (offset int) {
 	return offset
 }
 
+func (x *FileInfo) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
+	n += x.sizeField6()
+	n += x.sizeField7()
+	n += x.sizeField8()
+	n += x.sizeField9()
+	n += x.sizeField10()
+	n += x.sizeField11()
+	n += x.sizeField12()
+	n += x.sizeField13()
+	n += x.sizeField14()
+	n += x.sizeField15()
+	return n
+}
+
+func (x *FileInfo) sizeField1() (n int) {
+	if x.FileId == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetFileId())
+	return n
+}
+
+func (x *FileInfo) sizeField2() (n int) {
+	if x.UserId == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetUserId())
+	return n
+}
+
+func (x *FileInfo) sizeField3() (n int) {
+	if x.Name == "" {
+		return n
+	}
+	n += fastpb.SizeString(3, x.GetName())
+	return n
+}
+
+func (x *FileInfo) sizeField4() (n int) {
+	if x.Type == "" {
+		return n
+	}
+	n += fastpb.SizeString(4, x.GetType())
+	return n
+}
+
+func (x *FileInfo) sizeField5() (n int) {
+	if x.Path == "" {
+		return n
+	}
+	n += fastpb.SizeString(5, x.GetPath())
+	return n
+}
+
+func (x *FileInfo) sizeField6() (n int) {
+	if x.FatherId == "" {
+		return n
+	}
+	n += fastpb.SizeString(6, x.GetFatherId())
+	return n
+}
+
+func (x *FileInfo) sizeField7() (n int) {
+	if x.SpaceSize == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(7, x.GetSpaceSize())
+	return n
+}
+
+func (x *FileInfo) sizeField8() (n int) {
+	if x.Md5 == "" {
+		return n
+	}
+	n += fastpb.SizeString(8, x.GetMd5())
+	return n
+}
+
+func (x *FileInfo) sizeField9() (n int) {
+	if x.IsDel == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(9, x.GetIsDel())
+	return n
+}
+
+func (x *FileInfo) sizeField10() (n int) {
+	if x.Zone == "" {
+		return n
+	}
+	n += fastpb.SizeString(10, x.GetZone())
+	return n
+}
+
+func (x *FileInfo) sizeField11() (n int) {
+	if x.SubZone == "" {
+		return n
+	}
+	n += fastpb.SizeString(11, x.GetSubZone())
+	return n
+}
+
+func (x *FileInfo) sizeField12() (n int) {
+	if x.Description == "" {
+		return n
+	}
+	n += fastpb.SizeString(12, x.GetDescription())
+	return n
+}
+
+func (x *FileInfo) sizeField13() (n int) {
+	if len(x.Labels) == 0 {
+		return n
+	}
+	for i := range x.GetLabels() {
+		n += fastpb.SizeString(13, x.GetLabels()[i])
+	}
+	return n
+}
+
+func (x *FileInfo) sizeField14() (n int) {
+	if x.CreateAt == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(14, x.GetCreateAt())
+	return n
+}
+
+func (x *FileInfo) sizeField15() (n int) {
+	if x.UpdateAt == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(15, x.GetUpdateAt())
+	return n
+}
+
 func (x *File) Size() (n int) {
 	if x == nil {
 		return n
@@ -3565,141 +3728,6 @@ func (x *File) sizeField13() (n int) {
 	for i := range x.GetLabels() {
 		n += fastpb.SizeString(13, x.GetLabels()[i])
 	}
-	return n
-}
-
-func (x *FileInfo) Size() (n int) {
-	if x == nil {
-		return n
-	}
-	n += x.sizeField1()
-	n += x.sizeField2()
-	n += x.sizeField3()
-	n += x.sizeField4()
-	n += x.sizeField5()
-	n += x.sizeField6()
-	n += x.sizeField7()
-	n += x.sizeField8()
-	n += x.sizeField9()
-	n += x.sizeField10()
-	n += x.sizeField11()
-	n += x.sizeField12()
-	n += x.sizeField13()
-	n += x.sizeField14()
-	return n
-}
-
-func (x *FileInfo) sizeField1() (n int) {
-	if x.FileId == "" {
-		return n
-	}
-	n += fastpb.SizeString(1, x.GetFileId())
-	return n
-}
-
-func (x *FileInfo) sizeField2() (n int) {
-	if x.UserId == "" {
-		return n
-	}
-	n += fastpb.SizeString(2, x.GetUserId())
-	return n
-}
-
-func (x *FileInfo) sizeField3() (n int) {
-	if x.Name == "" {
-		return n
-	}
-	n += fastpb.SizeString(3, x.GetName())
-	return n
-}
-
-func (x *FileInfo) sizeField4() (n int) {
-	if x.Type == "" {
-		return n
-	}
-	n += fastpb.SizeString(4, x.GetType())
-	return n
-}
-
-func (x *FileInfo) sizeField5() (n int) {
-	if x.Path == "" {
-		return n
-	}
-	n += fastpb.SizeString(5, x.GetPath())
-	return n
-}
-
-func (x *FileInfo) sizeField6() (n int) {
-	if x.FatherId == "" {
-		return n
-	}
-	n += fastpb.SizeString(6, x.GetFatherId())
-	return n
-}
-
-func (x *FileInfo) sizeField7() (n int) {
-	if x.SpaceSize == 0 {
-		return n
-	}
-	n += fastpb.SizeInt64(7, x.GetSpaceSize())
-	return n
-}
-
-func (x *FileInfo) sizeField8() (n int) {
-	if x.IsDel == 0 {
-		return n
-	}
-	n += fastpb.SizeInt64(8, x.GetIsDel())
-	return n
-}
-
-func (x *FileInfo) sizeField9() (n int) {
-	if x.Zone == "" {
-		return n
-	}
-	n += fastpb.SizeString(9, x.GetZone())
-	return n
-}
-
-func (x *FileInfo) sizeField10() (n int) {
-	if x.SubZone == "" {
-		return n
-	}
-	n += fastpb.SizeString(10, x.GetSubZone())
-	return n
-}
-
-func (x *FileInfo) sizeField11() (n int) {
-	if x.Description == "" {
-		return n
-	}
-	n += fastpb.SizeString(11, x.GetDescription())
-	return n
-}
-
-func (x *FileInfo) sizeField12() (n int) {
-	if len(x.Labels) == 0 {
-		return n
-	}
-	for i := range x.GetLabels() {
-		n += fastpb.SizeString(12, x.GetLabels()[i])
-	}
-	return n
-}
-
-func (x *FileInfo) sizeField13() (n int) {
-	if x.CreateAt == 0 {
-		return n
-	}
-	n += fastpb.SizeInt64(13, x.GetCreateAt())
-	return n
-}
-
-func (x *FileInfo) sizeField14() (n int) {
-	if x.UpdateAt == 0 {
-		return n
-	}
-	n += fastpb.SizeInt64(14, x.GetUpdateAt())
 	return n
 }
 
@@ -4949,6 +4977,24 @@ func (x *UserFilterOptions) sizeField1() (n int) {
 	return n
 }
 
+var fieldIDToName_FileInfo = map[int32]string{
+	1:  "FileId",
+	2:  "UserId",
+	3:  "Name",
+	4:  "Type",
+	5:  "Path",
+	6:  "FatherId",
+	7:  "SpaceSize",
+	8:  "Md5",
+	9:  "IsDel",
+	10: "Zone",
+	11: "SubZone",
+	12: "Description",
+	13: "Labels",
+	14: "CreateAt",
+	15: "UpdateAt",
+}
+
 var fieldIDToName_File = map[int32]string{
 	1:  "FileId",
 	2:  "UserId",
@@ -4963,23 +5009,6 @@ var fieldIDToName_File = map[int32]string{
 	11: "SubZone",
 	12: "Description",
 	13: "Labels",
-}
-
-var fieldIDToName_FileInfo = map[int32]string{
-	1:  "FileId",
-	2:  "UserId",
-	3:  "Name",
-	4:  "Type",
-	5:  "Path",
-	6:  "FatherId",
-	7:  "SpaceSize",
-	8:  "IsDel",
-	9:  "Zone",
-	10: "SubZone",
-	11: "Description",
-	12: "Labels",
-	13: "CreateAt",
-	14: "UpdateAt",
 }
 
 var fieldIDToName_Zone = map[int32]string{
