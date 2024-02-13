@@ -40,6 +40,11 @@ func (x *CreateRelationReq) FastRead(buf []byte, _type int8, number int32) (offs
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 6:
+		offset, err = x.fastReadField6(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -75,6 +80,11 @@ func (x *CreateRelationReq) fastReadField4(buf []byte, _type int8) (offset int, 
 
 func (x *CreateRelationReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	x.RelationType, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *CreateRelationReq) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+	x.IsOnly, offset, err = fastpb.ReadBool(buf, _type)
 	return offset, err
 }
 
@@ -568,6 +578,7 @@ func (x *CreateRelationReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
 	offset += x.fastWriteField5(buf[offset:])
+	offset += x.fastWriteField6(buf[offset:])
 	return offset
 }
 
@@ -608,6 +619,14 @@ func (x *CreateRelationReq) fastWriteField5(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetRelationType())
+	return offset
+}
+
+func (x *CreateRelationReq) fastWriteField6(buf []byte) (offset int) {
+	if !x.IsOnly {
+		return offset
+	}
+	offset += fastpb.WriteBool(buf[offset:], 6, x.GetIsOnly())
 	return offset
 }
 
@@ -951,6 +970,7 @@ func (x *CreateRelationReq) Size() (n int) {
 	n += x.sizeField3()
 	n += x.sizeField4()
 	n += x.sizeField5()
+	n += x.sizeField6()
 	return n
 }
 
@@ -991,6 +1011,14 @@ func (x *CreateRelationReq) sizeField5() (n int) {
 		return n
 	}
 	n += fastpb.SizeInt64(5, x.GetRelationType())
+	return n
+}
+
+func (x *CreateRelationReq) sizeField6() (n int) {
+	if !x.IsOnly {
+		return n
+	}
+	n += fastpb.SizeBool(6, x.GetIsOnly())
 	return n
 }
 
@@ -1331,6 +1359,7 @@ var fieldIDToName_CreateRelationReq = map[int32]string{
 	3: "ToType",
 	4: "ToId",
 	5: "RelationType",
+	6: "IsOnly",
 }
 
 var fieldIDToName_CreateRelationResp = map[int32]string{
