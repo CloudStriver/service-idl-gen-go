@@ -96,11 +96,6 @@ func (x *GetNotificationsResp) FastRead(buf []byte, _type int8, number int32) (o
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 3:
-		offset, err = x.fastReadField3(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -125,11 +120,6 @@ func (x *GetNotificationsResp) fastReadField1(buf []byte, _type int8) (offset in
 }
 
 func (x *GetNotificationsResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.Total, offset, err = fastpb.ReadInt64(buf, _type)
-	return offset, err
-}
-
-func (x *GetNotificationsResp) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	x.Token, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
@@ -282,7 +272,6 @@ func (x *GetNotificationsResp) FastWrite(buf []byte) (offset int) {
 	}
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
-	offset += x.fastWriteField3(buf[offset:])
 	return offset
 }
 
@@ -297,18 +286,10 @@ func (x *GetNotificationsResp) fastWriteField1(buf []byte) (offset int) {
 }
 
 func (x *GetNotificationsResp) fastWriteField2(buf []byte) (offset int) {
-	if x.Total == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetTotal())
-	return offset
-}
-
-func (x *GetNotificationsResp) fastWriteField3(buf []byte) (offset int) {
 	if x.Token == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 3, x.GetToken())
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetToken())
 	return offset
 }
 
@@ -425,7 +406,6 @@ func (x *GetNotificationsResp) Size() (n int) {
 	}
 	n += x.sizeField1()
 	n += x.sizeField2()
-	n += x.sizeField3()
 	return n
 }
 
@@ -440,18 +420,10 @@ func (x *GetNotificationsResp) sizeField1() (n int) {
 }
 
 func (x *GetNotificationsResp) sizeField2() (n int) {
-	if x.Total == 0 {
-		return n
-	}
-	n += fastpb.SizeInt64(2, x.GetTotal())
-	return n
-}
-
-func (x *GetNotificationsResp) sizeField3() (n int) {
 	if x.Token == "" {
 		return n
 	}
-	n += fastpb.SizeString(3, x.GetToken())
+	n += fastpb.SizeString(2, x.GetToken())
 	return n
 }
 
@@ -520,8 +492,7 @@ var fieldIDToName_GetNotificationsReq = map[int32]string{
 
 var fieldIDToName_GetNotificationsResp = map[int32]string{
 	1: "Notifications",
-	2: "Total",
-	3: "Token",
+	2: "Token",
 }
 
 var fieldIDToName_GetNotificationCountReq = map[int32]string{
