@@ -684,6 +684,16 @@ func (x *MoveFileReq) FastRead(buf []byte, _type int8, number int32) (offset int
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -708,13 +718,18 @@ func (x *MoveFileReq) fastReadField2(buf []byte, _type int8) (offset int, err er
 }
 
 func (x *MoveFileReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	var v FileInfo
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
-	if err != nil {
-		return offset, err
-	}
-	x.File = &v
-	return offset, nil
+	x.FileId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *MoveFileReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	x.OldPath, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *MoveFileReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	x.SpaceSize, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
 }
 
 func (x *MoveFileResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -757,6 +772,26 @@ func (x *SaveFileToPrivateSpaceReq) FastRead(buf []byte, _type int8, number int3
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 6:
+		offset, err = x.fastReadField6(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 7:
+		offset, err = x.fastReadField7(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 8:
+		offset, err = x.fastReadField8(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 9:
+		offset, err = x.fastReadField9(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -771,13 +806,8 @@ ReadFieldError:
 }
 
 func (x *SaveFileToPrivateSpaceReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v FileInfo
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
-	if err != nil {
-		return offset, err
-	}
-	x.File = &v
-	return offset, nil
+	x.FileId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
 }
 
 func (x *SaveFileToPrivateSpaceReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
@@ -796,6 +826,26 @@ func (x *SaveFileToPrivateSpaceReq) fastReadField4(buf []byte, _type int8) (offs
 }
 
 func (x *SaveFileToPrivateSpaceReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	x.Name, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *SaveFileToPrivateSpaceReq) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+	x.Type, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *SaveFileToPrivateSpaceReq) fastReadField7(buf []byte, _type int8) (offset int, err error) {
+	x.FileMd5, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *SaveFileToPrivateSpaceReq) fastReadField8(buf []byte, _type int8) (offset int, err error) {
+	x.SpaceSize, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *SaveFileToPrivateSpaceReq) fastReadField9(buf []byte, _type int8) (offset int, err error) {
 	x.DocumentType, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
@@ -832,6 +882,41 @@ func (x *AddFileToPublicSpaceReq) FastRead(buf []byte, _type int8, number int32)
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 6:
+		offset, err = x.fastReadField6(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 7:
+		offset, err = x.fastReadField7(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 8:
+		offset, err = x.fastReadField8(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -846,13 +931,48 @@ ReadFieldError:
 }
 
 func (x *AddFileToPublicSpaceReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v FileInfo
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	x.FileId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *AddFileToPublicSpaceReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.UserId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *AddFileToPublicSpaceReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.Path, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *AddFileToPublicSpaceReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	x.SpaceSize, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *AddFileToPublicSpaceReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	x.Zone, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *AddFileToPublicSpaceReq) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+	x.SubZone, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *AddFileToPublicSpaceReq) fastReadField7(buf []byte, _type int8) (offset int, err error) {
+	x.Description, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *AddFileToPublicSpaceReq) fastReadField8(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
 	if err != nil {
 		return offset, err
 	}
-	x.File = &v
-	return offset, nil
+	x.Labels = append(x.Labels, v)
+	return offset, err
 }
 
 func (x *AddFileToPublicSpaceResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -950,6 +1070,21 @@ func (x *DeleteFileReq) FastRead(buf []byte, _type int8, number int32) (offset i
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 6:
+		offset, err = x.fastReadField6(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -974,13 +1109,23 @@ func (x *DeleteFileReq) fastReadField2(buf []byte, _type int8) (offset int, err 
 }
 
 func (x *DeleteFileReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	var v FileInfo
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
-	if err != nil {
-		return offset, err
-	}
-	x.File = &v
-	return offset, nil
+	x.FileId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *DeleteFileReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	x.UserId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *DeleteFileReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	x.Path, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *DeleteFileReq) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+	x.SpaceSize, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
 }
 
 func (x *DeleteFileResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -1003,6 +1148,16 @@ func (x *RecoverRecycleBinFileReq) FastRead(buf []byte, _type int8, number int32
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -1017,13 +1172,18 @@ ReadFieldError:
 }
 
 func (x *RecoverRecycleBinFileReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v FileInfo
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
-	if err != nil {
-		return offset, err
-	}
-	x.File = &v
-	return offset, nil
+	x.UserId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *RecoverRecycleBinFileReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.Path, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *RecoverRecycleBinFileReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.SpaceSize, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
 }
 
 func (x *RecoverRecycleBinFileResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -4621,6 +4781,8 @@ func (x *MoveFileReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
 	return offset
 }
 
@@ -4641,10 +4803,26 @@ func (x *MoveFileReq) fastWriteField2(buf []byte) (offset int) {
 }
 
 func (x *MoveFileReq) fastWriteField3(buf []byte) (offset int) {
-	if x.File == nil {
+	if x.FileId == "" {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 3, x.GetFile())
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetFileId())
+	return offset
+}
+
+func (x *MoveFileReq) fastWriteField4(buf []byte) (offset int) {
+	if x.OldPath == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetOldPath())
+	return offset
+}
+
+func (x *MoveFileReq) fastWriteField5(buf []byte) (offset int) {
+	if x.SpaceSize == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetSpaceSize())
 	return offset
 }
 
@@ -4664,14 +4842,18 @@ func (x *SaveFileToPrivateSpaceReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
 	offset += x.fastWriteField5(buf[offset:])
+	offset += x.fastWriteField6(buf[offset:])
+	offset += x.fastWriteField7(buf[offset:])
+	offset += x.fastWriteField8(buf[offset:])
+	offset += x.fastWriteField9(buf[offset:])
 	return offset
 }
 
 func (x *SaveFileToPrivateSpaceReq) fastWriteField1(buf []byte) (offset int) {
-	if x.File == nil {
+	if x.FileId == "" {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetFile())
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetFileId())
 	return offset
 }
 
@@ -4700,10 +4882,42 @@ func (x *SaveFileToPrivateSpaceReq) fastWriteField4(buf []byte) (offset int) {
 }
 
 func (x *SaveFileToPrivateSpaceReq) fastWriteField5(buf []byte) (offset int) {
+	if x.Name == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 5, x.GetName())
+	return offset
+}
+
+func (x *SaveFileToPrivateSpaceReq) fastWriteField6(buf []byte) (offset int) {
+	if x.Type == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 6, x.GetType())
+	return offset
+}
+
+func (x *SaveFileToPrivateSpaceReq) fastWriteField7(buf []byte) (offset int) {
+	if x.FileMd5 == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 7, x.GetFileMd5())
+	return offset
+}
+
+func (x *SaveFileToPrivateSpaceReq) fastWriteField8(buf []byte) (offset int) {
+	if x.SpaceSize == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 8, x.GetSpaceSize())
+	return offset
+}
+
+func (x *SaveFileToPrivateSpaceReq) fastWriteField9(buf []byte) (offset int) {
 	if x.DocumentType == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetDocumentType())
+	offset += fastpb.WriteInt64(buf[offset:], 9, x.GetDocumentType())
 	return offset
 }
 
@@ -4728,14 +4942,79 @@ func (x *AddFileToPublicSpaceReq) FastWrite(buf []byte) (offset int) {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
+	offset += x.fastWriteField6(buf[offset:])
+	offset += x.fastWriteField7(buf[offset:])
+	offset += x.fastWriteField8(buf[offset:])
 	return offset
 }
 
 func (x *AddFileToPublicSpaceReq) fastWriteField1(buf []byte) (offset int) {
-	if x.File == nil {
+	if x.FileId == "" {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetFile())
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetFileId())
+	return offset
+}
+
+func (x *AddFileToPublicSpaceReq) fastWriteField2(buf []byte) (offset int) {
+	if x.UserId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetUserId())
+	return offset
+}
+
+func (x *AddFileToPublicSpaceReq) fastWriteField3(buf []byte) (offset int) {
+	if x.Path == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetPath())
+	return offset
+}
+
+func (x *AddFileToPublicSpaceReq) fastWriteField4(buf []byte) (offset int) {
+	if x.SpaceSize == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetSpaceSize())
+	return offset
+}
+
+func (x *AddFileToPublicSpaceReq) fastWriteField5(buf []byte) (offset int) {
+	if x.Zone == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 5, x.GetZone())
+	return offset
+}
+
+func (x *AddFileToPublicSpaceReq) fastWriteField6(buf []byte) (offset int) {
+	if x.SubZone == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 6, x.GetSubZone())
+	return offset
+}
+
+func (x *AddFileToPublicSpaceReq) fastWriteField7(buf []byte) (offset int) {
+	if x.Description == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 7, x.GetDescription())
+	return offset
+}
+
+func (x *AddFileToPublicSpaceReq) fastWriteField8(buf []byte) (offset int) {
+	if len(x.Labels) == 0 {
+		return offset
+	}
+	for i := range x.GetLabels() {
+		offset += fastpb.WriteString(buf[offset:], 8, x.GetLabels()[i])
+	}
 	return offset
 }
 
@@ -4796,6 +5075,9 @@ func (x *DeleteFileReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
+	offset += x.fastWriteField6(buf[offset:])
 	return offset
 }
 
@@ -4816,10 +5098,34 @@ func (x *DeleteFileReq) fastWriteField2(buf []byte) (offset int) {
 }
 
 func (x *DeleteFileReq) fastWriteField3(buf []byte) (offset int) {
-	if x.File == nil {
+	if x.FileId == "" {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 3, x.GetFile())
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetFileId())
+	return offset
+}
+
+func (x *DeleteFileReq) fastWriteField4(buf []byte) (offset int) {
+	if x.UserId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetUserId())
+	return offset
+}
+
+func (x *DeleteFileReq) fastWriteField5(buf []byte) (offset int) {
+	if x.Path == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 5, x.GetPath())
+	return offset
+}
+
+func (x *DeleteFileReq) fastWriteField6(buf []byte) (offset int) {
+	if x.SpaceSize == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetSpaceSize())
 	return offset
 }
 
@@ -4835,14 +5141,32 @@ func (x *RecoverRecycleBinFileReq) FastWrite(buf []byte) (offset int) {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
 	return offset
 }
 
 func (x *RecoverRecycleBinFileReq) fastWriteField1(buf []byte) (offset int) {
-	if x.File == nil {
+	if x.UserId == "" {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetFile())
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetUserId())
+	return offset
+}
+
+func (x *RecoverRecycleBinFileReq) fastWriteField2(buf []byte) (offset int) {
+	if x.Path == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetPath())
+	return offset
+}
+
+func (x *RecoverRecycleBinFileReq) fastWriteField3(buf []byte) (offset int) {
+	if x.SpaceSize == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetSpaceSize())
 	return offset
 }
 
@@ -7387,6 +7711,8 @@ func (x *MoveFileReq) Size() (n int) {
 	n += x.sizeField1()
 	n += x.sizeField2()
 	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
 	return n
 }
 
@@ -7407,10 +7733,26 @@ func (x *MoveFileReq) sizeField2() (n int) {
 }
 
 func (x *MoveFileReq) sizeField3() (n int) {
-	if x.File == nil {
+	if x.FileId == "" {
 		return n
 	}
-	n += fastpb.SizeMessage(3, x.GetFile())
+	n += fastpb.SizeString(3, x.GetFileId())
+	return n
+}
+
+func (x *MoveFileReq) sizeField4() (n int) {
+	if x.OldPath == "" {
+		return n
+	}
+	n += fastpb.SizeString(4, x.GetOldPath())
+	return n
+}
+
+func (x *MoveFileReq) sizeField5() (n int) {
+	if x.SpaceSize == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(5, x.GetSpaceSize())
 	return n
 }
 
@@ -7430,14 +7772,18 @@ func (x *SaveFileToPrivateSpaceReq) Size() (n int) {
 	n += x.sizeField3()
 	n += x.sizeField4()
 	n += x.sizeField5()
+	n += x.sizeField6()
+	n += x.sizeField7()
+	n += x.sizeField8()
+	n += x.sizeField9()
 	return n
 }
 
 func (x *SaveFileToPrivateSpaceReq) sizeField1() (n int) {
-	if x.File == nil {
+	if x.FileId == "" {
 		return n
 	}
-	n += fastpb.SizeMessage(1, x.GetFile())
+	n += fastpb.SizeString(1, x.GetFileId())
 	return n
 }
 
@@ -7466,10 +7812,42 @@ func (x *SaveFileToPrivateSpaceReq) sizeField4() (n int) {
 }
 
 func (x *SaveFileToPrivateSpaceReq) sizeField5() (n int) {
+	if x.Name == "" {
+		return n
+	}
+	n += fastpb.SizeString(5, x.GetName())
+	return n
+}
+
+func (x *SaveFileToPrivateSpaceReq) sizeField6() (n int) {
+	if x.Type == "" {
+		return n
+	}
+	n += fastpb.SizeString(6, x.GetType())
+	return n
+}
+
+func (x *SaveFileToPrivateSpaceReq) sizeField7() (n int) {
+	if x.FileMd5 == "" {
+		return n
+	}
+	n += fastpb.SizeString(7, x.GetFileMd5())
+	return n
+}
+
+func (x *SaveFileToPrivateSpaceReq) sizeField8() (n int) {
+	if x.SpaceSize == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(8, x.GetSpaceSize())
+	return n
+}
+
+func (x *SaveFileToPrivateSpaceReq) sizeField9() (n int) {
 	if x.DocumentType == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(5, x.GetDocumentType())
+	n += fastpb.SizeInt64(9, x.GetDocumentType())
 	return n
 }
 
@@ -7494,14 +7872,79 @@ func (x *AddFileToPublicSpaceReq) Size() (n int) {
 		return n
 	}
 	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
+	n += x.sizeField6()
+	n += x.sizeField7()
+	n += x.sizeField8()
 	return n
 }
 
 func (x *AddFileToPublicSpaceReq) sizeField1() (n int) {
-	if x.File == nil {
+	if x.FileId == "" {
 		return n
 	}
-	n += fastpb.SizeMessage(1, x.GetFile())
+	n += fastpb.SizeString(1, x.GetFileId())
+	return n
+}
+
+func (x *AddFileToPublicSpaceReq) sizeField2() (n int) {
+	if x.UserId == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetUserId())
+	return n
+}
+
+func (x *AddFileToPublicSpaceReq) sizeField3() (n int) {
+	if x.Path == "" {
+		return n
+	}
+	n += fastpb.SizeString(3, x.GetPath())
+	return n
+}
+
+func (x *AddFileToPublicSpaceReq) sizeField4() (n int) {
+	if x.SpaceSize == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(4, x.GetSpaceSize())
+	return n
+}
+
+func (x *AddFileToPublicSpaceReq) sizeField5() (n int) {
+	if x.Zone == "" {
+		return n
+	}
+	n += fastpb.SizeString(5, x.GetZone())
+	return n
+}
+
+func (x *AddFileToPublicSpaceReq) sizeField6() (n int) {
+	if x.SubZone == "" {
+		return n
+	}
+	n += fastpb.SizeString(6, x.GetSubZone())
+	return n
+}
+
+func (x *AddFileToPublicSpaceReq) sizeField7() (n int) {
+	if x.Description == "" {
+		return n
+	}
+	n += fastpb.SizeString(7, x.GetDescription())
+	return n
+}
+
+func (x *AddFileToPublicSpaceReq) sizeField8() (n int) {
+	if len(x.Labels) == 0 {
+		return n
+	}
+	for i := range x.GetLabels() {
+		n += fastpb.SizeString(8, x.GetLabels()[i])
+	}
 	return n
 }
 
@@ -7562,6 +8005,9 @@ func (x *DeleteFileReq) Size() (n int) {
 	n += x.sizeField1()
 	n += x.sizeField2()
 	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
+	n += x.sizeField6()
 	return n
 }
 
@@ -7582,10 +8028,34 @@ func (x *DeleteFileReq) sizeField2() (n int) {
 }
 
 func (x *DeleteFileReq) sizeField3() (n int) {
-	if x.File == nil {
+	if x.FileId == "" {
 		return n
 	}
-	n += fastpb.SizeMessage(3, x.GetFile())
+	n += fastpb.SizeString(3, x.GetFileId())
+	return n
+}
+
+func (x *DeleteFileReq) sizeField4() (n int) {
+	if x.UserId == "" {
+		return n
+	}
+	n += fastpb.SizeString(4, x.GetUserId())
+	return n
+}
+
+func (x *DeleteFileReq) sizeField5() (n int) {
+	if x.Path == "" {
+		return n
+	}
+	n += fastpb.SizeString(5, x.GetPath())
+	return n
+}
+
+func (x *DeleteFileReq) sizeField6() (n int) {
+	if x.SpaceSize == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(6, x.GetSpaceSize())
 	return n
 }
 
@@ -7601,14 +8071,32 @@ func (x *RecoverRecycleBinFileReq) Size() (n int) {
 		return n
 	}
 	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
 	return n
 }
 
 func (x *RecoverRecycleBinFileReq) sizeField1() (n int) {
-	if x.File == nil {
+	if x.UserId == "" {
 		return n
 	}
-	n += fastpb.SizeMessage(1, x.GetFile())
+	n += fastpb.SizeString(1, x.GetUserId())
+	return n
+}
+
+func (x *RecoverRecycleBinFileReq) sizeField2() (n int) {
+	if x.Path == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetPath())
+	return n
+}
+
+func (x *RecoverRecycleBinFileReq) sizeField3() (n int) {
+	if x.SpaceSize == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(3, x.GetSpaceSize())
 	return n
 }
 
@@ -9808,17 +10296,23 @@ var fieldIDToName_UpdateFileResp = map[int32]string{}
 var fieldIDToName_MoveFileReq = map[int32]string{
 	1: "FatherId",
 	2: "NewPath",
-	3: "File",
+	3: "FileId",
+	4: "OldPath",
+	5: "SpaceSize",
 }
 
 var fieldIDToName_MoveFileResp = map[int32]string{}
 
 var fieldIDToName_SaveFileToPrivateSpaceReq = map[int32]string{
-	1: "File",
+	1: "FileId",
 	2: "UserId",
 	3: "NewPath",
 	4: "FatherId",
-	5: "DocumentType",
+	5: "Name",
+	6: "Type",
+	7: "FileMd5",
+	8: "SpaceSize",
+	9: "DocumentType",
 }
 
 var fieldIDToName_SaveFileToPrivateSpaceResp = map[int32]string{
@@ -9826,7 +10320,14 @@ var fieldIDToName_SaveFileToPrivateSpaceResp = map[int32]string{
 }
 
 var fieldIDToName_AddFileToPublicSpaceReq = map[int32]string{
-	1: "File",
+	1: "FileId",
+	2: "UserId",
+	3: "Path",
+	4: "SpaceSize",
+	5: "Zone",
+	6: "SubZone",
+	7: "Description",
+	8: "Labels",
 }
 
 var fieldIDToName_AddFileToPublicSpaceResp = map[int32]string{
@@ -9843,13 +10344,18 @@ var fieldIDToName_CompletelyRemoveFileResp = map[int32]string{}
 var fieldIDToName_DeleteFileReq = map[int32]string{
 	1: "DeleteType",
 	2: "ClearCommunity",
-	3: "File",
+	3: "FileId",
+	4: "UserId",
+	5: "Path",
+	6: "SpaceSize",
 }
 
 var fieldIDToName_DeleteFileResp = map[int32]string{}
 
 var fieldIDToName_RecoverRecycleBinFileReq = map[int32]string{
-	1: "File",
+	1: "UserId",
+	2: "Path",
+	3: "SpaceSize",
 }
 
 var fieldIDToName_RecoverRecycleBinFileResp = map[int32]string{}
