@@ -41,11 +41,6 @@ func (x *GetNotificationsReq) FastRead(buf []byte, _type int8, number int32) (of
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 6:
-		offset, err = x.fastReadField6(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -66,30 +61,24 @@ func (x *GetNotificationsReq) fastReadField1(buf []byte, _type int8) (offset int
 }
 
 func (x *GetNotificationsReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadBool(buf, _type)
-	x.OnlyIsRead = &tmp
-	return offset, err
-}
-
-func (x *GetNotificationsReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
 	x.Limit = &tmp
 	return offset, err
 }
 
-func (x *GetNotificationsReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+func (x *GetNotificationsReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadString(buf, _type)
 	x.LastToken = &tmp
 	return offset, err
 }
 
-func (x *GetNotificationsReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+func (x *GetNotificationsReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadBool(buf, _type)
 	x.Backward = &tmp
 	return offset, err
 }
 
-func (x *GetNotificationsReq) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+func (x *GetNotificationsReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
 	x.Offset = &tmp
 	return offset, err
@@ -147,13 +136,8 @@ func (x *GetNotificationsResp) fastReadField3(buf []byte, _type int8) (offset in
 
 func (x *GetNotificationCountReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
-	case 2:
-		offset, err = x.fastReadField2(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 3:
-		offset, err = x.fastReadField3(buf, _type)
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
 		if err != nil {
 			goto ReadFieldError
 		}
@@ -170,15 +154,9 @@ ReadFieldError:
 	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetNotificationCountReq[number], err)
 }
 
-func (x *GetNotificationCountReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+func (x *GetNotificationCountReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
 	x.OnlyType = &tmp
-	return offset, err
-}
-
-func (x *GetNotificationCountReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadBool(buf, _type)
-	x.OnlyIsRead = &tmp
 	return offset, err
 }
 
@@ -207,80 +185,10 @@ func (x *GetNotificationCountResp) fastReadField1(buf []byte, _type int8) (offse
 	return offset, err
 }
 
-func (x *DeleteNotificationsReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
-	switch number {
-	case 1:
-		offset, err = x.fastReadField1(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 2:
-		offset, err = x.fastReadField2(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 3:
-		offset, err = x.fastReadField3(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	default:
-		offset, err = fastpb.Skip(buf, _type, number)
-		if err != nil {
-			goto SkipFieldError
-		}
-	}
-	return offset, nil
-SkipFieldError:
-	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
-ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_DeleteNotificationsReq[number], err)
-}
-
-func (x *DeleteNotificationsReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v string
-	v, offset, err = fastpb.ReadString(buf, _type)
-	if err != nil {
-		return offset, err
-	}
-	x.OnlyNotificationIds = append(x.OnlyNotificationIds, v)
-	return offset, err
-}
-
-func (x *DeleteNotificationsReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadInt64(buf, _type)
-	x.OnlyType = &tmp
-	return offset, err
-}
-
-func (x *DeleteNotificationsReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadBool(buf, _type)
-	x.OnlyIsRead = &tmp
-	return offset, err
-}
-
-func (x *DeleteNotificationsResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
-	switch number {
-	default:
-		offset, err = fastpb.Skip(buf, _type, number)
-		if err != nil {
-			goto SkipFieldError
-		}
-	}
-	return offset, nil
-SkipFieldError:
-	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
-}
-
 func (x *UpdateNotificationsReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 2:
-		offset, err = x.fastReadField2(buf, _type)
 		if err != nil {
 			goto ReadFieldError
 		}
@@ -298,16 +206,6 @@ ReadFieldError:
 }
 
 func (x *UpdateNotificationsReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v string
-	v, offset, err = fastpb.ReadString(buf, _type)
-	if err != nil {
-		return offset, err
-	}
-	x.OnlyNotificationIds = append(x.OnlyNotificationIds, v)
-	return offset, err
-}
-
-func (x *UpdateNotificationsReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
 	x.OnlyType = &tmp
 	return offset, err
@@ -335,7 +233,6 @@ func (x *GetNotificationsReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
 	offset += x.fastWriteField5(buf[offset:])
-	offset += x.fastWriteField6(buf[offset:])
 	return offset
 }
 
@@ -348,42 +245,34 @@ func (x *GetNotificationsReq) fastWriteField1(buf []byte) (offset int) {
 }
 
 func (x *GetNotificationsReq) fastWriteField2(buf []byte) (offset int) {
-	if x.OnlyIsRead == nil {
+	if x.Limit == nil {
 		return offset
 	}
-	offset += fastpb.WriteBool(buf[offset:], 2, x.GetOnlyIsRead())
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetLimit())
 	return offset
 }
 
 func (x *GetNotificationsReq) fastWriteField3(buf []byte) (offset int) {
-	if x.Limit == nil {
+	if x.LastToken == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetLimit())
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetLastToken())
 	return offset
 }
 
 func (x *GetNotificationsReq) fastWriteField4(buf []byte) (offset int) {
-	if x.LastToken == nil {
+	if x.Backward == nil {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 4, x.GetLastToken())
+	offset += fastpb.WriteBool(buf[offset:], 4, x.GetBackward())
 	return offset
 }
 
 func (x *GetNotificationsReq) fastWriteField5(buf []byte) (offset int) {
-	if x.Backward == nil {
-		return offset
-	}
-	offset += fastpb.WriteBool(buf[offset:], 5, x.GetBackward())
-	return offset
-}
-
-func (x *GetNotificationsReq) fastWriteField6(buf []byte) (offset int) {
 	if x.Offset == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetOffset())
+	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetOffset())
 	return offset
 }
 
@@ -427,24 +316,15 @@ func (x *GetNotificationCountReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
-	offset += x.fastWriteField2(buf[offset:])
-	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField1(buf[offset:])
 	return offset
 }
 
-func (x *GetNotificationCountReq) fastWriteField2(buf []byte) (offset int) {
+func (x *GetNotificationCountReq) fastWriteField1(buf []byte) (offset int) {
 	if x.OnlyType == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetOnlyType())
-	return offset
-}
-
-func (x *GetNotificationCountReq) fastWriteField3(buf []byte) (offset int) {
-	if x.OnlyIsRead == nil {
-		return offset
-	}
-	offset += fastpb.WriteBool(buf[offset:], 3, x.GetOnlyIsRead())
+	offset += fastpb.WriteInt64(buf[offset:], 1, x.GetOnlyType())
 	return offset
 }
 
@@ -464,73 +344,19 @@ func (x *GetNotificationCountResp) fastWriteField1(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *DeleteNotificationsReq) FastWrite(buf []byte) (offset int) {
-	if x == nil {
-		return offset
-	}
-	offset += x.fastWriteField1(buf[offset:])
-	offset += x.fastWriteField2(buf[offset:])
-	offset += x.fastWriteField3(buf[offset:])
-	return offset
-}
-
-func (x *DeleteNotificationsReq) fastWriteField1(buf []byte) (offset int) {
-	if len(x.OnlyNotificationIds) == 0 {
-		return offset
-	}
-	for i := range x.GetOnlyNotificationIds() {
-		offset += fastpb.WriteString(buf[offset:], 1, x.GetOnlyNotificationIds()[i])
-	}
-	return offset
-}
-
-func (x *DeleteNotificationsReq) fastWriteField2(buf []byte) (offset int) {
-	if x.OnlyType == nil {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetOnlyType())
-	return offset
-}
-
-func (x *DeleteNotificationsReq) fastWriteField3(buf []byte) (offset int) {
-	if x.OnlyIsRead == nil {
-		return offset
-	}
-	offset += fastpb.WriteBool(buf[offset:], 3, x.GetOnlyIsRead())
-	return offset
-}
-
-func (x *DeleteNotificationsResp) FastWrite(buf []byte) (offset int) {
-	if x == nil {
-		return offset
-	}
-	return offset
-}
-
 func (x *UpdateNotificationsReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
-	offset += x.fastWriteField2(buf[offset:])
 	return offset
 }
 
 func (x *UpdateNotificationsReq) fastWriteField1(buf []byte) (offset int) {
-	if len(x.OnlyNotificationIds) == 0 {
-		return offset
-	}
-	for i := range x.GetOnlyNotificationIds() {
-		offset += fastpb.WriteString(buf[offset:], 1, x.GetOnlyNotificationIds()[i])
-	}
-	return offset
-}
-
-func (x *UpdateNotificationsReq) fastWriteField2(buf []byte) (offset int) {
 	if x.OnlyType == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetOnlyType())
+	offset += fastpb.WriteInt64(buf[offset:], 1, x.GetOnlyType())
 	return offset
 }
 
@@ -550,7 +376,6 @@ func (x *GetNotificationsReq) Size() (n int) {
 	n += x.sizeField3()
 	n += x.sizeField4()
 	n += x.sizeField5()
-	n += x.sizeField6()
 	return n
 }
 
@@ -563,42 +388,34 @@ func (x *GetNotificationsReq) sizeField1() (n int) {
 }
 
 func (x *GetNotificationsReq) sizeField2() (n int) {
-	if x.OnlyIsRead == nil {
+	if x.Limit == nil {
 		return n
 	}
-	n += fastpb.SizeBool(2, x.GetOnlyIsRead())
+	n += fastpb.SizeInt64(2, x.GetLimit())
 	return n
 }
 
 func (x *GetNotificationsReq) sizeField3() (n int) {
-	if x.Limit == nil {
+	if x.LastToken == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(3, x.GetLimit())
+	n += fastpb.SizeString(3, x.GetLastToken())
 	return n
 }
 
 func (x *GetNotificationsReq) sizeField4() (n int) {
-	if x.LastToken == nil {
+	if x.Backward == nil {
 		return n
 	}
-	n += fastpb.SizeString(4, x.GetLastToken())
+	n += fastpb.SizeBool(4, x.GetBackward())
 	return n
 }
 
 func (x *GetNotificationsReq) sizeField5() (n int) {
-	if x.Backward == nil {
-		return n
-	}
-	n += fastpb.SizeBool(5, x.GetBackward())
-	return n
-}
-
-func (x *GetNotificationsReq) sizeField6() (n int) {
 	if x.Offset == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(6, x.GetOffset())
+	n += fastpb.SizeInt64(5, x.GetOffset())
 	return n
 }
 
@@ -642,24 +459,15 @@ func (x *GetNotificationCountReq) Size() (n int) {
 	if x == nil {
 		return n
 	}
-	n += x.sizeField2()
-	n += x.sizeField3()
+	n += x.sizeField1()
 	return n
 }
 
-func (x *GetNotificationCountReq) sizeField2() (n int) {
+func (x *GetNotificationCountReq) sizeField1() (n int) {
 	if x.OnlyType == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(2, x.GetOnlyType())
-	return n
-}
-
-func (x *GetNotificationCountReq) sizeField3() (n int) {
-	if x.OnlyIsRead == nil {
-		return n
-	}
-	n += fastpb.SizeBool(3, x.GetOnlyIsRead())
+	n += fastpb.SizeInt64(1, x.GetOnlyType())
 	return n
 }
 
@@ -679,73 +487,19 @@ func (x *GetNotificationCountResp) sizeField1() (n int) {
 	return n
 }
 
-func (x *DeleteNotificationsReq) Size() (n int) {
-	if x == nil {
-		return n
-	}
-	n += x.sizeField1()
-	n += x.sizeField2()
-	n += x.sizeField3()
-	return n
-}
-
-func (x *DeleteNotificationsReq) sizeField1() (n int) {
-	if len(x.OnlyNotificationIds) == 0 {
-		return n
-	}
-	for i := range x.GetOnlyNotificationIds() {
-		n += fastpb.SizeString(1, x.GetOnlyNotificationIds()[i])
-	}
-	return n
-}
-
-func (x *DeleteNotificationsReq) sizeField2() (n int) {
-	if x.OnlyType == nil {
-		return n
-	}
-	n += fastpb.SizeInt64(2, x.GetOnlyType())
-	return n
-}
-
-func (x *DeleteNotificationsReq) sizeField3() (n int) {
-	if x.OnlyIsRead == nil {
-		return n
-	}
-	n += fastpb.SizeBool(3, x.GetOnlyIsRead())
-	return n
-}
-
-func (x *DeleteNotificationsResp) Size() (n int) {
-	if x == nil {
-		return n
-	}
-	return n
-}
-
 func (x *UpdateNotificationsReq) Size() (n int) {
 	if x == nil {
 		return n
 	}
 	n += x.sizeField1()
-	n += x.sizeField2()
 	return n
 }
 
 func (x *UpdateNotificationsReq) sizeField1() (n int) {
-	if len(x.OnlyNotificationIds) == 0 {
-		return n
-	}
-	for i := range x.GetOnlyNotificationIds() {
-		n += fastpb.SizeString(1, x.GetOnlyNotificationIds()[i])
-	}
-	return n
-}
-
-func (x *UpdateNotificationsReq) sizeField2() (n int) {
 	if x.OnlyType == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(2, x.GetOnlyType())
+	n += fastpb.SizeInt64(1, x.GetOnlyType())
 	return n
 }
 
@@ -758,11 +512,10 @@ func (x *UpdateNotificationsResp) Size() (n int) {
 
 var fieldIDToName_GetNotificationsReq = map[int32]string{
 	1: "OnlyType",
-	2: "OnlyIsRead",
-	3: "Limit",
-	4: "LastToken",
-	5: "Backward",
-	6: "Offset",
+	2: "Limit",
+	3: "LastToken",
+	4: "Backward",
+	5: "Offset",
 }
 
 var fieldIDToName_GetNotificationsResp = map[int32]string{
@@ -772,25 +525,15 @@ var fieldIDToName_GetNotificationsResp = map[int32]string{
 }
 
 var fieldIDToName_GetNotificationCountReq = map[int32]string{
-	2: "OnlyType",
-	3: "OnlyIsRead",
+	1: "OnlyType",
 }
 
 var fieldIDToName_GetNotificationCountResp = map[int32]string{
 	1: "Total",
 }
 
-var fieldIDToName_DeleteNotificationsReq = map[int32]string{
-	1: "OnlyNotificationIds",
-	2: "OnlyType",
-	3: "OnlyIsRead",
-}
-
-var fieldIDToName_DeleteNotificationsResp = map[int32]string{}
-
 var fieldIDToName_UpdateNotificationsReq = map[int32]string{
-	1: "OnlyNotificationIds",
-	2: "OnlyType",
+	1: "OnlyType",
 }
 
 var fieldIDToName_UpdateNotificationsResp = map[int32]string{}

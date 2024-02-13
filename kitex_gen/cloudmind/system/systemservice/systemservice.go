@@ -29,7 +29,6 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"GetNotificationCount": kitex.NewMethodInfo(getNotificationCountHandler, newGetNotificationCountArgs, newGetNotificationCountResult, false),
 		"CreateNotifications":  kitex.NewMethodInfo(createNotificationsHandler, newCreateNotificationsArgs, newCreateNotificationsResult, false),
 		"UpdateNotifications":  kitex.NewMethodInfo(updateNotificationsHandler, newUpdateNotificationsArgs, newUpdateNotificationsResult, false),
-		"DeleteNotifications":  kitex.NewMethodInfo(deleteNotificationsHandler, newDeleteNotificationsArgs, newDeleteNotificationsResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName":     "cloudmind.system",
@@ -1270,159 +1269,6 @@ func (p *UpdateNotificationsResult) GetResult() interface{} {
 	return p.Success
 }
 
-func deleteNotificationsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	switch s := arg.(type) {
-	case *streaming.Args:
-		st := s.Stream
-		req := new(system.DeleteNotificationsReq)
-		if err := st.RecvMsg(req); err != nil {
-			return err
-		}
-		resp, err := handler.(system.SystemService).DeleteNotifications(ctx, req)
-		if err != nil {
-			return err
-		}
-		if err := st.SendMsg(resp); err != nil {
-			return err
-		}
-	case *DeleteNotificationsArgs:
-		success, err := handler.(system.SystemService).DeleteNotifications(ctx, s.Req)
-		if err != nil {
-			return err
-		}
-		realResult := result.(*DeleteNotificationsResult)
-		realResult.Success = success
-	}
-	return nil
-}
-func newDeleteNotificationsArgs() interface{} {
-	return &DeleteNotificationsArgs{}
-}
-
-func newDeleteNotificationsResult() interface{} {
-	return &DeleteNotificationsResult{}
-}
-
-type DeleteNotificationsArgs struct {
-	Req *system.DeleteNotificationsReq
-}
-
-func (p *DeleteNotificationsArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetReq() {
-		p.Req = new(system.DeleteNotificationsReq)
-	}
-	return p.Req.FastRead(buf, _type, number)
-}
-
-func (p *DeleteNotificationsArgs) FastWrite(buf []byte) (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.FastWrite(buf)
-}
-
-func (p *DeleteNotificationsArgs) Size() (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.Size()
-}
-
-func (p *DeleteNotificationsArgs) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetReq() {
-		return out, nil
-	}
-	return proto.Marshal(p.Req)
-}
-
-func (p *DeleteNotificationsArgs) Unmarshal(in []byte) error {
-	msg := new(system.DeleteNotificationsReq)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Req = msg
-	return nil
-}
-
-var DeleteNotificationsArgs_Req_DEFAULT *system.DeleteNotificationsReq
-
-func (p *DeleteNotificationsArgs) GetReq() *system.DeleteNotificationsReq {
-	if !p.IsSetReq() {
-		return DeleteNotificationsArgs_Req_DEFAULT
-	}
-	return p.Req
-}
-
-func (p *DeleteNotificationsArgs) IsSetReq() bool {
-	return p.Req != nil
-}
-
-func (p *DeleteNotificationsArgs) GetFirstArgument() interface{} {
-	return p.Req
-}
-
-type DeleteNotificationsResult struct {
-	Success *system.DeleteNotificationsResp
-}
-
-var DeleteNotificationsResult_Success_DEFAULT *system.DeleteNotificationsResp
-
-func (p *DeleteNotificationsResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetSuccess() {
-		p.Success = new(system.DeleteNotificationsResp)
-	}
-	return p.Success.FastRead(buf, _type, number)
-}
-
-func (p *DeleteNotificationsResult) FastWrite(buf []byte) (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.FastWrite(buf)
-}
-
-func (p *DeleteNotificationsResult) Size() (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.Size()
-}
-
-func (p *DeleteNotificationsResult) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetSuccess() {
-		return out, nil
-	}
-	return proto.Marshal(p.Success)
-}
-
-func (p *DeleteNotificationsResult) Unmarshal(in []byte) error {
-	msg := new(system.DeleteNotificationsResp)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Success = msg
-	return nil
-}
-
-func (p *DeleteNotificationsResult) GetSuccess() *system.DeleteNotificationsResp {
-	if !p.IsSetSuccess() {
-		return DeleteNotificationsResult_Success_DEFAULT
-	}
-	return p.Success
-}
-
-func (p *DeleteNotificationsResult) SetSuccess(x interface{}) {
-	p.Success = x.(*system.DeleteNotificationsResp)
-}
-
-func (p *DeleteNotificationsResult) IsSetSuccess() bool {
-	return p.Success != nil
-}
-
-func (p *DeleteNotificationsResult) GetResult() interface{} {
-	return p.Success
-}
-
 type kClient struct {
 	c client.Client
 }
@@ -1508,16 +1354,6 @@ func (p *kClient) UpdateNotifications(ctx context.Context, Req *system.UpdateNot
 	_args.Req = Req
 	var _result UpdateNotificationsResult
 	if err = p.c.Call(ctx, "UpdateNotifications", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
-}
-
-func (p *kClient) DeleteNotifications(ctx context.Context, Req *system.DeleteNotificationsReq) (r *system.DeleteNotificationsResp, err error) {
-	var _args DeleteNotificationsArgs
-	_args.Req = Req
-	var _result DeleteNotificationsResult
-	if err = p.c.Call(ctx, "DeleteNotifications", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

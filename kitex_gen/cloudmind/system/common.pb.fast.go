@@ -108,7 +108,7 @@ func (x *Notification) fastReadField7(buf []byte, _type int8) (offset int, err e
 }
 
 func (x *Notification) fastReadField8(buf []byte, _type int8) (offset int, err error) {
-	x.IsRead, offset, err = fastpb.ReadBool(buf, _type)
+	x.Status, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -360,10 +360,10 @@ func (x *Notification) fastWriteField7(buf []byte) (offset int) {
 }
 
 func (x *Notification) fastWriteField8(buf []byte) (offset int) {
-	if !x.IsRead {
+	if x.Status == 0 {
 		return offset
 	}
-	offset += fastpb.WriteBool(buf[offset:], 8, x.GetIsRead())
+	offset += fastpb.WriteInt64(buf[offset:], 8, x.GetStatus())
 	return offset
 }
 
@@ -588,10 +588,10 @@ func (x *Notification) sizeField7() (n int) {
 }
 
 func (x *Notification) sizeField8() (n int) {
-	if !x.IsRead {
+	if x.Status == 0 {
 		return n
 	}
-	n += fastpb.SizeBool(8, x.GetIsRead())
+	n += fastpb.SizeInt64(8, x.GetStatus())
 	return n
 }
 
@@ -751,7 +751,7 @@ var fieldIDToName_Notification = map[int32]string{
 	5: "TargetType",
 	6: "Type",
 	7: "Text",
-	8: "IsRead",
+	8: "Status",
 	9: "CreateTime",
 }
 
