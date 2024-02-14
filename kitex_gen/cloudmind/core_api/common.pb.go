@@ -2600,16 +2600,16 @@ type CommentInfo struct {
 	SubjectId  string   `protobuf:"bytes,2,opt,name=subjectId,proto3" json:"subjectId,omitempty"`
 	RootId     string   `protobuf:"bytes,3,opt,name=rootId,proto3" json:"rootId,omitempty"`
 	FatherId   string   `protobuf:"bytes,4,opt,name=fatherId,proto3" json:"fatherId,omitempty"`
-	Count      int64    `protobuf:"varint,5,opt,name=count,proto3" json:"count,omitempty"`       // 回复数
-	State      int64    `protobuf:"varint,6,opt,name=state,proto3" json:"state,omitempty"`       // 1: 正常, 2: 删除
-	Attrs      int64    `protobuf:"varint,7,opt,name=attrs,proto3" json:"attrs,omitempty"`       // 1: 无, 2: 置顶, 3: 精华, 4: 置顶+精华
-	Tags       []string `protobuf:"bytes,8,rep,name=tags,proto3" json:"tags,omitempty"`          // 标签：作者点赞，作者回复等
-	UserId     string   `protobuf:"bytes,9,opt,name=userId,proto3" json:"userId,omitempty"`      // 评论者
-	AtUserId   string   `protobuf:"bytes,10,opt,name=atUserId,proto3" json:"atUserId,omitempty"` // @谁
-	Content    string   `protobuf:"bytes,11,opt,name=content,proto3" json:"content,omitempty"`   // 内容
-	Meta       string   `protobuf:"bytes,12,opt,name=meta,proto3" json:"meta,omitempty"`         // 皮肤，字体等
-	CreateTime int64    `protobuf:"varint,13,opt,name=createTime,proto3" json:"createTime,omitempty"`
-	Like       int64    `protobuf:"varint,14,opt,name=like,proto3" json:"like,omitempty"`
+	Count      int64    `protobuf:"varint,5,opt,name=count,proto3" json:"count,omitempty"`            // 回复数
+	State      int64    `protobuf:"varint,6,opt,name=state,proto3" json:"state,omitempty"`            // 1: 正常, 2: 删除
+	Attrs      int64    `protobuf:"varint,7,opt,name=attrs,proto3" json:"attrs,omitempty"`            // 1: 无, 2: 置顶, 3: 精华, 4: 置顶+精华
+	Tags       []string `protobuf:"bytes,8,rep,name=tags,proto3" json:"tags,omitempty"`               // 标签：作者点赞，作者回复等
+	UserId     string   `protobuf:"bytes,9,opt,name=userId,proto3" json:"userId,omitempty"`           // 评论者
+	AtUserId   string   `protobuf:"bytes,10,opt,name=atUserId,proto3" json:"atUserId,omitempty"`      // @谁
+	Content    string   `protobuf:"bytes,11,opt,name=content,proto3" json:"content,omitempty"`        // 内容
+	Meta       string   `protobuf:"bytes,12,opt,name=meta,proto3" json:"meta,omitempty"`              // 皮肤，字体等
+	CreateTime int64    `protobuf:"varint,13,opt,name=createTime,proto3" json:"createTime,omitempty"` // 创建时间
+	Like       int64    `protobuf:"varint,14,opt,name=like,proto3" json:"like,omitempty"`             // 点赞数
 }
 
 func (x *CommentInfo) Reset() {

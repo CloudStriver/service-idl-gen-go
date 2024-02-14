@@ -17,7 +17,6 @@ type Client interface {
 	UpdateComment(ctx context.Context, Req *comment.UpdateCommentReq, callOptions ...callopt.Option) (r *comment.UpdateCommentResp, err error)
 	DeleteComment(ctx context.Context, Req *comment.DeleteCommentReq, callOptions ...callopt.Option) (r *comment.DeleteCommentResp, err error)
 	DeleteCommentWithUserId(ctx context.Context, Req *comment.DeleteCommentWithUserIdReq, callOptions ...callopt.Option) (r *comment.DeleteCommentWithUserIdResp, err error)
-	SetCommentState(ctx context.Context, Req *comment.SetCommentStateReq, callOptions ...callopt.Option) (r *comment.SetCommentStateResp, err error)
 	SetCommentAttrs(ctx context.Context, Req *comment.SetCommentAttrsReq, callOptions ...callopt.Option) (r *comment.SetCommentAttrsResp, err error)
 	GetCommentSubject(ctx context.Context, Req *comment.GetCommentSubjectReq, callOptions ...callopt.Option) (r *comment.GetCommentSubjectResp, err error)
 	CreateCommentSubject(ctx context.Context, Req *comment.CreateCommentSubjectReq, callOptions ...callopt.Option) (r *comment.CreateCommentSubjectResp, err error)
@@ -88,11 +87,6 @@ func (p *kCommentServiceClient) DeleteComment(ctx context.Context, Req *comment.
 func (p *kCommentServiceClient) DeleteCommentWithUserId(ctx context.Context, Req *comment.DeleteCommentWithUserIdReq, callOptions ...callopt.Option) (r *comment.DeleteCommentWithUserIdResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.DeleteCommentWithUserId(ctx, Req)
-}
-
-func (p *kCommentServiceClient) SetCommentState(ctx context.Context, Req *comment.SetCommentStateReq, callOptions ...callopt.Option) (r *comment.SetCommentStateResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.SetCommentState(ctx, Req)
 }
 
 func (p *kCommentServiceClient) SetCommentAttrs(ctx context.Context, Req *comment.SetCommentAttrsReq, callOptions ...callopt.Option) (r *comment.SetCommentAttrsResp, err error) {

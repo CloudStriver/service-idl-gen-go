@@ -26,7 +26,6 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"GetComments":          kitex.NewMethodInfo(getCommentsHandler, newGetCommentsArgs, newGetCommentsResult, false),
 		"DeleteComment":        kitex.NewMethodInfo(deleteCommentHandler, newDeleteCommentArgs, newDeleteCommentResult, false),
 		"UpdateComment":        kitex.NewMethodInfo(updateCommentHandler, newUpdateCommentArgs, newUpdateCommentResult, false),
-		"SetCommentState":      kitex.NewMethodInfo(setCommentStateHandler, newSetCommentStateArgs, newSetCommentStateResult, false),
 		"SetCommentAttrs":      kitex.NewMethodInfo(setCommentAttrsHandler, newSetCommentAttrsArgs, newSetCommentAttrsResult, false),
 		"GetCommentSubject":    kitex.NewMethodInfo(getCommentSubjectHandler, newGetCommentSubjectArgs, newGetCommentSubjectResult, false),
 		"CreateCommentSubject": kitex.NewMethodInfo(createCommentSubjectHandler, newCreateCommentSubjectArgs, newCreateCommentSubjectResult, false),
@@ -810,159 +809,6 @@ func (p *UpdateCommentResult) IsSetSuccess() bool {
 }
 
 func (p *UpdateCommentResult) GetResult() interface{} {
-	return p.Success
-}
-
-func setCommentStateHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	switch s := arg.(type) {
-	case *streaming.Args:
-		st := s.Stream
-		req := new(core_api.SetCommentStateReq)
-		if err := st.RecvMsg(req); err != nil {
-			return err
-		}
-		resp, err := handler.(core_api.Comment).SetCommentState(ctx, req)
-		if err != nil {
-			return err
-		}
-		if err := st.SendMsg(resp); err != nil {
-			return err
-		}
-	case *SetCommentStateArgs:
-		success, err := handler.(core_api.Comment).SetCommentState(ctx, s.Req)
-		if err != nil {
-			return err
-		}
-		realResult := result.(*SetCommentStateResult)
-		realResult.Success = success
-	}
-	return nil
-}
-func newSetCommentStateArgs() interface{} {
-	return &SetCommentStateArgs{}
-}
-
-func newSetCommentStateResult() interface{} {
-	return &SetCommentStateResult{}
-}
-
-type SetCommentStateArgs struct {
-	Req *core_api.SetCommentStateReq
-}
-
-func (p *SetCommentStateArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetReq() {
-		p.Req = new(core_api.SetCommentStateReq)
-	}
-	return p.Req.FastRead(buf, _type, number)
-}
-
-func (p *SetCommentStateArgs) FastWrite(buf []byte) (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.FastWrite(buf)
-}
-
-func (p *SetCommentStateArgs) Size() (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.Size()
-}
-
-func (p *SetCommentStateArgs) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetReq() {
-		return out, nil
-	}
-	return proto.Marshal(p.Req)
-}
-
-func (p *SetCommentStateArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.SetCommentStateReq)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Req = msg
-	return nil
-}
-
-var SetCommentStateArgs_Req_DEFAULT *core_api.SetCommentStateReq
-
-func (p *SetCommentStateArgs) GetReq() *core_api.SetCommentStateReq {
-	if !p.IsSetReq() {
-		return SetCommentStateArgs_Req_DEFAULT
-	}
-	return p.Req
-}
-
-func (p *SetCommentStateArgs) IsSetReq() bool {
-	return p.Req != nil
-}
-
-func (p *SetCommentStateArgs) GetFirstArgument() interface{} {
-	return p.Req
-}
-
-type SetCommentStateResult struct {
-	Success *core_api.SetCommentStateResp
-}
-
-var SetCommentStateResult_Success_DEFAULT *core_api.SetCommentStateResp
-
-func (p *SetCommentStateResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetSuccess() {
-		p.Success = new(core_api.SetCommentStateResp)
-	}
-	return p.Success.FastRead(buf, _type, number)
-}
-
-func (p *SetCommentStateResult) FastWrite(buf []byte) (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.FastWrite(buf)
-}
-
-func (p *SetCommentStateResult) Size() (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.Size()
-}
-
-func (p *SetCommentStateResult) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetSuccess() {
-		return out, nil
-	}
-	return proto.Marshal(p.Success)
-}
-
-func (p *SetCommentStateResult) Unmarshal(in []byte) error {
-	msg := new(core_api.SetCommentStateResp)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Success = msg
-	return nil
-}
-
-func (p *SetCommentStateResult) GetSuccess() *core_api.SetCommentStateResp {
-	if !p.IsSetSuccess() {
-		return SetCommentStateResult_Success_DEFAULT
-	}
-	return p.Success
-}
-
-func (p *SetCommentStateResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.SetCommentStateResp)
-}
-
-func (p *SetCommentStateResult) IsSetSuccess() bool {
-	return p.Success != nil
-}
-
-func (p *SetCommentStateResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -1786,16 +1632,6 @@ func (p *kClient) UpdateComment(ctx context.Context, Req *core_api.UpdateComment
 	_args.Req = Req
 	var _result UpdateCommentResult
 	if err = p.c.Call(ctx, "UpdateComment", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
-}
-
-func (p *kClient) SetCommentState(ctx context.Context, Req *core_api.SetCommentStateReq) (r *core_api.SetCommentStateResp, err error) {
-	var _args SetCommentStateArgs
-	_args.Req = Req
-	var _result SetCommentStateResult
-	if err = p.c.Call(ctx, "SetCommentState", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
