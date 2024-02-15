@@ -1828,6 +1828,11 @@ func (x *UpdateUserReq) FastRead(buf []byte, _type int8, number int32) (offset i
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 8:
+		offset, err = x.fastReadField8(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -1873,6 +1878,16 @@ func (x *UpdateUserReq) fastReadField6(buf []byte, _type int8) (offset int, err 
 
 func (x *UpdateUserReq) fastReadField7(buf []byte, _type int8) (offset int, err error) {
 	x.Url, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *UpdateUserReq) fastReadField8(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Labels = append(x.Labels, v)
 	return offset, err
 }
 
@@ -1956,6 +1971,11 @@ func (x *GetUserResp) FastRead(buf []byte, _type int8, number int32) (offset int
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 9:
+		offset, err = x.fastReadField9(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -2006,6 +2026,16 @@ func (x *GetUserResp) fastReadField7(buf []byte, _type int8) (offset int, err er
 
 func (x *GetUserResp) fastReadField8(buf []byte, _type int8) (offset int, err error) {
 	x.UpdateTime, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *GetUserResp) fastReadField9(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Labels = append(x.Labels, v)
 	return offset, err
 }
 
@@ -5548,6 +5578,7 @@ func (x *UpdateUserReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField5(buf[offset:])
 	offset += x.fastWriteField6(buf[offset:])
 	offset += x.fastWriteField7(buf[offset:])
+	offset += x.fastWriteField8(buf[offset:])
 	return offset
 }
 
@@ -5607,6 +5638,16 @@ func (x *UpdateUserReq) fastWriteField7(buf []byte) (offset int) {
 	return offset
 }
 
+func (x *UpdateUserReq) fastWriteField8(buf []byte) (offset int) {
+	if len(x.Labels) == 0 {
+		return offset
+	}
+	for i := range x.GetLabels() {
+		offset += fastpb.WriteString(buf[offset:], 8, x.GetLabels()[i])
+	}
+	return offset
+}
+
 func (x *UpdateUserResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -5642,6 +5683,7 @@ func (x *GetUserResp) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField6(buf[offset:])
 	offset += x.fastWriteField7(buf[offset:])
 	offset += x.fastWriteField8(buf[offset:])
+	offset += x.fastWriteField9(buf[offset:])
 	return offset
 }
 
@@ -5706,6 +5748,16 @@ func (x *GetUserResp) fastWriteField8(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteInt64(buf[offset:], 8, x.GetUpdateTime())
+	return offset
+}
+
+func (x *GetUserResp) fastWriteField9(buf []byte) (offset int) {
+	if len(x.Labels) == 0 {
+		return offset
+	}
+	for i := range x.GetLabels() {
+		offset += fastpb.WriteString(buf[offset:], 9, x.GetLabels()[i])
+	}
 	return offset
 }
 
@@ -8478,6 +8530,7 @@ func (x *UpdateUserReq) Size() (n int) {
 	n += x.sizeField5()
 	n += x.sizeField6()
 	n += x.sizeField7()
+	n += x.sizeField8()
 	return n
 }
 
@@ -8537,6 +8590,16 @@ func (x *UpdateUserReq) sizeField7() (n int) {
 	return n
 }
 
+func (x *UpdateUserReq) sizeField8() (n int) {
+	if len(x.Labels) == 0 {
+		return n
+	}
+	for i := range x.GetLabels() {
+		n += fastpb.SizeString(8, x.GetLabels()[i])
+	}
+	return n
+}
+
 func (x *UpdateUserResp) Size() (n int) {
 	if x == nil {
 		return n
@@ -8572,6 +8635,7 @@ func (x *GetUserResp) Size() (n int) {
 	n += x.sizeField6()
 	n += x.sizeField7()
 	n += x.sizeField8()
+	n += x.sizeField9()
 	return n
 }
 
@@ -8636,6 +8700,16 @@ func (x *GetUserResp) sizeField8() (n int) {
 		return n
 	}
 	n += fastpb.SizeInt64(8, x.GetUpdateTime())
+	return n
+}
+
+func (x *GetUserResp) sizeField9() (n int) {
+	if len(x.Labels) == 0 {
+		return n
+	}
+	for i := range x.GetLabels() {
+		n += fastpb.SizeString(9, x.GetLabels()[i])
+	}
 	return n
 }
 
@@ -10448,6 +10522,7 @@ var fieldIDToName_UpdateUserReq = map[int32]string{
 	5: "IdCard",
 	6: "Description",
 	7: "Url",
+	8: "Labels",
 }
 
 var fieldIDToName_UpdateUserResp = map[int32]string{}
@@ -10465,6 +10540,7 @@ var fieldIDToName_GetUserResp = map[int32]string{
 	6: "Url",
 	7: "CreateTime",
 	8: "UpdateTime",
+	9: "Labels",
 }
 
 var fieldIDToName_GetUsersReq = map[int32]string{
