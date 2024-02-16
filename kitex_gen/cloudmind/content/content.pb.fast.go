@@ -694,6 +694,11 @@ func (x *MoveFileReq) FastRead(buf []byte, _type int8, number int32) (offset int
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 6:
+		offset, err = x.fastReadField6(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -729,6 +734,11 @@ func (x *MoveFileReq) fastReadField4(buf []byte, _type int8) (offset int, err er
 
 func (x *MoveFileReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	x.SpaceSize, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *MoveFileReq) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+	x.UserId, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -1480,6 +1490,71 @@ SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 }
 
+func (x *CheckShareFileReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CheckShareFileReq[number], err)
+}
+
+func (x *CheckShareFileReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.FileIds = append(x.FileIds, v)
+	return offset, err
+}
+
+func (x *CheckShareFileReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.FileId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *CheckShareFileResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CheckShareFileResp[number], err)
+}
+
+func (x *CheckShareFileResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.Ok, offset, err = fastpb.ReadBool(buf, _type)
+	return offset, err
+}
+
 func (x *CreateShareCodeReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
@@ -1690,6 +1765,11 @@ func (x *DeleteShareCodeReq) FastRead(buf []byte, _type int8, number int32) (off
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -1704,13 +1784,13 @@ ReadFieldError:
 }
 
 func (x *DeleteShareCodeReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v ShareFileFilterOptions
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
-	if err != nil {
-		return offset, err
-	}
-	x.ShareFileFilterOptions = &v
-	return offset, nil
+	x.Code, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *DeleteShareCodeReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.UserId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
 }
 
 func (x *DeleteShareCodeResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -4813,6 +4893,7 @@ func (x *MoveFileReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
 	offset += x.fastWriteField5(buf[offset:])
+	offset += x.fastWriteField6(buf[offset:])
 	return offset
 }
 
@@ -4853,6 +4934,14 @@ func (x *MoveFileReq) fastWriteField5(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetSpaceSize())
+	return offset
+}
+
+func (x *MoveFileReq) fastWriteField6(buf []byte) (offset int) {
+	if x.UserId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 6, x.GetUserId())
 	return offset
 }
 
@@ -5378,6 +5467,49 @@ func (x *DeleteZoneResp) FastWrite(buf []byte) (offset int) {
 	return offset
 }
 
+func (x *CheckShareFileReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	return offset
+}
+
+func (x *CheckShareFileReq) fastWriteField1(buf []byte) (offset int) {
+	if len(x.FileIds) == 0 {
+		return offset
+	}
+	for i := range x.GetFileIds() {
+		offset += fastpb.WriteString(buf[offset:], 1, x.GetFileIds()[i])
+	}
+	return offset
+}
+
+func (x *CheckShareFileReq) fastWriteField2(buf []byte) (offset int) {
+	if x.FileId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetFileId())
+	return offset
+}
+
+func (x *CheckShareFileResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *CheckShareFileResp) fastWriteField1(buf []byte) (offset int) {
+	if !x.Ok {
+		return offset
+	}
+	offset += fastpb.WriteBool(buf[offset:], 1, x.GetOk())
+	return offset
+}
+
 func (x *CreateShareCodeReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -5508,14 +5640,23 @@ func (x *DeleteShareCodeReq) FastWrite(buf []byte) (offset int) {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
 	return offset
 }
 
 func (x *DeleteShareCodeReq) fastWriteField1(buf []byte) (offset int) {
-	if x.ShareFileFilterOptions == nil {
+	if x.Code == "" {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetShareFileFilterOptions())
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetCode())
+	return offset
+}
+
+func (x *DeleteShareCodeReq) fastWriteField2(buf []byte) (offset int) {
+	if x.UserId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetUserId())
 	return offset
 }
 
@@ -7765,6 +7906,7 @@ func (x *MoveFileReq) Size() (n int) {
 	n += x.sizeField3()
 	n += x.sizeField4()
 	n += x.sizeField5()
+	n += x.sizeField6()
 	return n
 }
 
@@ -7805,6 +7947,14 @@ func (x *MoveFileReq) sizeField5() (n int) {
 		return n
 	}
 	n += fastpb.SizeInt64(5, x.GetSpaceSize())
+	return n
+}
+
+func (x *MoveFileReq) sizeField6() (n int) {
+	if x.UserId == "" {
+		return n
+	}
+	n += fastpb.SizeString(6, x.GetUserId())
 	return n
 }
 
@@ -8330,6 +8480,49 @@ func (x *DeleteZoneResp) Size() (n int) {
 	return n
 }
 
+func (x *CheckShareFileReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	return n
+}
+
+func (x *CheckShareFileReq) sizeField1() (n int) {
+	if len(x.FileIds) == 0 {
+		return n
+	}
+	for i := range x.GetFileIds() {
+		n += fastpb.SizeString(1, x.GetFileIds()[i])
+	}
+	return n
+}
+
+func (x *CheckShareFileReq) sizeField2() (n int) {
+	if x.FileId == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetFileId())
+	return n
+}
+
+func (x *CheckShareFileResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *CheckShareFileResp) sizeField1() (n int) {
+	if !x.Ok {
+		return n
+	}
+	n += fastpb.SizeBool(1, x.GetOk())
+	return n
+}
+
 func (x *CreateShareCodeReq) Size() (n int) {
 	if x == nil {
 		return n
@@ -8460,14 +8653,23 @@ func (x *DeleteShareCodeReq) Size() (n int) {
 		return n
 	}
 	n += x.sizeField1()
+	n += x.sizeField2()
 	return n
 }
 
 func (x *DeleteShareCodeReq) sizeField1() (n int) {
-	if x.ShareFileFilterOptions == nil {
+	if x.Code == "" {
 		return n
 	}
-	n += fastpb.SizeMessage(1, x.GetShareFileFilterOptions())
+	n += fastpb.SizeString(1, x.GetCode())
+	return n
+}
+
+func (x *DeleteShareCodeReq) sizeField2() (n int) {
+	if x.UserId == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetUserId())
 	return n
 }
 
@@ -10373,6 +10575,7 @@ var fieldIDToName_MoveFileReq = map[int32]string{
 	3: "FileId",
 	4: "OldPath",
 	5: "SpaceSize",
+	6: "UserId",
 }
 
 var fieldIDToName_MoveFileResp = map[int32]string{}
@@ -10473,6 +10676,15 @@ var fieldIDToName_DeleteZoneReq = map[int32]string{
 
 var fieldIDToName_DeleteZoneResp = map[int32]string{}
 
+var fieldIDToName_CheckShareFileReq = map[int32]string{
+	1: "FileIds",
+	2: "FileId",
+}
+
+var fieldIDToName_CheckShareFileResp = map[int32]string{
+	1: "Ok",
+}
+
 var fieldIDToName_CreateShareCodeReq = map[int32]string{
 	1: "ShareFile",
 }
@@ -10500,7 +10712,8 @@ var fieldIDToName_UpdateShareCodeReq = map[int32]string{
 var fieldIDToName_UpdateShareCodeResp = map[int32]string{}
 
 var fieldIDToName_DeleteShareCodeReq = map[int32]string{
-	1: "ShareFileFilterOptions",
+	1: "Code",
+	2: "UserId",
 }
 
 var fieldIDToName_DeleteShareCodeResp = map[int32]string{}

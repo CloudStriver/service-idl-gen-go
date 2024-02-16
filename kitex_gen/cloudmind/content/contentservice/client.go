@@ -31,6 +31,7 @@ type Client interface {
 	UpdateZone(ctx context.Context, Req *content.UpdateZoneReq, callOptions ...callopt.Option) (r *content.UpdateZoneResp, err error)
 	DeleteZone(ctx context.Context, Req *content.DeleteZoneReq, callOptions ...callopt.Option) (r *content.DeleteZoneResp, err error)
 	GetShareList(ctx context.Context, Req *content.GetShareListReq, callOptions ...callopt.Option) (r *content.GetShareListResp, err error)
+	CheckShareFile(ctx context.Context, Req *content.CheckShareFileReq, callOptions ...callopt.Option) (r *content.CheckShareFileResp, err error)
 	CreateShareCode(ctx context.Context, Req *content.CreateShareCodeReq, callOptions ...callopt.Option) (r *content.CreateShareCodeResp, err error)
 	UpdateShareCode(ctx context.Context, Req *content.UpdateShareCodeReq, callOptions ...callopt.Option) (r *content.UpdateShareCodeResp, err error)
 	DeleteShareCode(ctx context.Context, Req *content.DeleteShareCodeReq, callOptions ...callopt.Option) (r *content.DeleteShareCodeResp, err error)
@@ -197,6 +198,11 @@ func (p *kContentServiceClient) DeleteZone(ctx context.Context, Req *content.Del
 func (p *kContentServiceClient) GetShareList(ctx context.Context, Req *content.GetShareListReq, callOptions ...callopt.Option) (r *content.GetShareListResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetShareList(ctx, Req)
+}
+
+func (p *kContentServiceClient) CheckShareFile(ctx context.Context, Req *content.CheckShareFileReq, callOptions ...callopt.Option) (r *content.CheckShareFileResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CheckShareFile(ctx, Req)
 }
 
 func (p *kContentServiceClient) CreateShareCode(ctx context.Context, Req *content.CreateShareCodeReq, callOptions ...callopt.Option) (r *content.CreateShareCodeResp, err error) {

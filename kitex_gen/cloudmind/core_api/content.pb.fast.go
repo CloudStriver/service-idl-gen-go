@@ -997,7 +997,7 @@ ReadFieldError:
 }
 
 func (x *GetFileBySharingCodeReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	x.SharingCode, offset, err = fastpb.ReadString(buf, _type)
+	x.Code, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -1316,6 +1316,16 @@ func (x *SaveFileToPrivateSpaceReq) FastRead(buf []byte, _type int8, number int3
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -1347,6 +1357,18 @@ func (x *SaveFileToPrivateSpaceReq) fastReadField3(buf []byte, _type int8) (offs
 	}
 	x.DocumentType = DocumentType(v)
 	return offset, nil
+}
+
+func (x *SaveFileToPrivateSpaceReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadString(buf, _type)
+	x.Code = &tmp
+	return offset, err
+}
+
+func (x *SaveFileToPrivateSpaceReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadString(buf, _type)
+	x.Key = &tmp
+	return offset, err
 }
 
 func (x *SaveFileToPrivateSpaceResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -5030,10 +5052,10 @@ func (x *GetFileBySharingCodeReq) FastWrite(buf []byte) (offset int) {
 }
 
 func (x *GetFileBySharingCodeReq) fastWriteField1(buf []byte) (offset int) {
-	if x.SharingCode == "" {
+	if x.Code == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 1, x.GetSharingCode())
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetCode())
 	return offset
 }
 
@@ -5286,6 +5308,8 @@ func (x *SaveFileToPrivateSpaceReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
 	return offset
 }
 
@@ -5310,6 +5334,22 @@ func (x *SaveFileToPrivateSpaceReq) fastWriteField3(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteInt32(buf[offset:], 3, int32(x.GetDocumentType()))
+	return offset
+}
+
+func (x *SaveFileToPrivateSpaceReq) fastWriteField4(buf []byte) (offset int) {
+	if x.Code == nil {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetCode())
+	return offset
+}
+
+func (x *SaveFileToPrivateSpaceReq) fastWriteField5(buf []byte) (offset int) {
+	if x.Key == nil {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 5, x.GetKey())
 	return offset
 }
 
@@ -8127,10 +8167,10 @@ func (x *GetFileBySharingCodeReq) Size() (n int) {
 }
 
 func (x *GetFileBySharingCodeReq) sizeField1() (n int) {
-	if x.SharingCode == "" {
+	if x.Code == "" {
 		return n
 	}
-	n += fastpb.SizeString(1, x.GetSharingCode())
+	n += fastpb.SizeString(1, x.GetCode())
 	return n
 }
 
@@ -8383,6 +8423,8 @@ func (x *SaveFileToPrivateSpaceReq) Size() (n int) {
 	n += x.sizeField1()
 	n += x.sizeField2()
 	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
 	return n
 }
 
@@ -8407,6 +8449,22 @@ func (x *SaveFileToPrivateSpaceReq) sizeField3() (n int) {
 		return n
 	}
 	n += fastpb.SizeInt32(3, int32(x.GetDocumentType()))
+	return n
+}
+
+func (x *SaveFileToPrivateSpaceReq) sizeField4() (n int) {
+	if x.Code == nil {
+		return n
+	}
+	n += fastpb.SizeString(4, x.GetCode())
+	return n
+}
+
+func (x *SaveFileToPrivateSpaceReq) sizeField5() (n int) {
+	if x.Key == nil {
+		return n
+	}
+	n += fastpb.SizeString(5, x.GetKey())
 	return n
 }
 
@@ -10626,7 +10684,7 @@ var fieldIDToName_GetRecycleBinFilesResp = map[int32]string{
 }
 
 var fieldIDToName_GetFileBySharingCodeReq = map[int32]string{
-	1: "SharingCode",
+	1: "Code",
 	2: "Key",
 	3: "OnlyFatherId",
 	4: "Limit",
@@ -10674,6 +10732,8 @@ var fieldIDToName_SaveFileToPrivateSpaceReq = map[int32]string{
 	1: "FileId",
 	2: "FatherId",
 	3: "DocumentType",
+	4: "Code",
+	5: "Key",
 }
 
 var fieldIDToName_SaveFileToPrivateSpaceResp = map[int32]string{

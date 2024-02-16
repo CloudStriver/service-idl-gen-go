@@ -28,7 +28,6 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"UpdateComment":        kitex.NewMethodInfo(updateCommentHandler, newUpdateCommentArgs, newUpdateCommentResult, false),
 		"SetCommentAttrs":      kitex.NewMethodInfo(setCommentAttrsHandler, newSetCommentAttrsArgs, newSetCommentAttrsResult, false),
 		"GetCommentSubject":    kitex.NewMethodInfo(getCommentSubjectHandler, newGetCommentSubjectArgs, newGetCommentSubjectResult, false),
-		"CreateCommentSubject": kitex.NewMethodInfo(createCommentSubjectHandler, newCreateCommentSubjectArgs, newCreateCommentSubjectResult, false),
 		"UpdateCommentSubject": kitex.NewMethodInfo(updateCommentSubjectHandler, newUpdateCommentSubjectArgs, newUpdateCommentSubjectResult, false),
 		"DeleteCommentSubject": kitex.NewMethodInfo(deleteCommentSubjectHandler, newDeleteCommentSubjectArgs, newDeleteCommentSubjectResult, false),
 	}
@@ -1118,159 +1117,6 @@ func (p *GetCommentSubjectResult) GetResult() interface{} {
 	return p.Success
 }
 
-func createCommentSubjectHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	switch s := arg.(type) {
-	case *streaming.Args:
-		st := s.Stream
-		req := new(core_api.CreateCommentSubjectReq)
-		if err := st.RecvMsg(req); err != nil {
-			return err
-		}
-		resp, err := handler.(core_api.Comment).CreateCommentSubject(ctx, req)
-		if err != nil {
-			return err
-		}
-		if err := st.SendMsg(resp); err != nil {
-			return err
-		}
-	case *CreateCommentSubjectArgs:
-		success, err := handler.(core_api.Comment).CreateCommentSubject(ctx, s.Req)
-		if err != nil {
-			return err
-		}
-		realResult := result.(*CreateCommentSubjectResult)
-		realResult.Success = success
-	}
-	return nil
-}
-func newCreateCommentSubjectArgs() interface{} {
-	return &CreateCommentSubjectArgs{}
-}
-
-func newCreateCommentSubjectResult() interface{} {
-	return &CreateCommentSubjectResult{}
-}
-
-type CreateCommentSubjectArgs struct {
-	Req *core_api.CreateCommentSubjectReq
-}
-
-func (p *CreateCommentSubjectArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetReq() {
-		p.Req = new(core_api.CreateCommentSubjectReq)
-	}
-	return p.Req.FastRead(buf, _type, number)
-}
-
-func (p *CreateCommentSubjectArgs) FastWrite(buf []byte) (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.FastWrite(buf)
-}
-
-func (p *CreateCommentSubjectArgs) Size() (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.Size()
-}
-
-func (p *CreateCommentSubjectArgs) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetReq() {
-		return out, nil
-	}
-	return proto.Marshal(p.Req)
-}
-
-func (p *CreateCommentSubjectArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.CreateCommentSubjectReq)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Req = msg
-	return nil
-}
-
-var CreateCommentSubjectArgs_Req_DEFAULT *core_api.CreateCommentSubjectReq
-
-func (p *CreateCommentSubjectArgs) GetReq() *core_api.CreateCommentSubjectReq {
-	if !p.IsSetReq() {
-		return CreateCommentSubjectArgs_Req_DEFAULT
-	}
-	return p.Req
-}
-
-func (p *CreateCommentSubjectArgs) IsSetReq() bool {
-	return p.Req != nil
-}
-
-func (p *CreateCommentSubjectArgs) GetFirstArgument() interface{} {
-	return p.Req
-}
-
-type CreateCommentSubjectResult struct {
-	Success *core_api.CreateCommentSubjectResp
-}
-
-var CreateCommentSubjectResult_Success_DEFAULT *core_api.CreateCommentSubjectResp
-
-func (p *CreateCommentSubjectResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetSuccess() {
-		p.Success = new(core_api.CreateCommentSubjectResp)
-	}
-	return p.Success.FastRead(buf, _type, number)
-}
-
-func (p *CreateCommentSubjectResult) FastWrite(buf []byte) (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.FastWrite(buf)
-}
-
-func (p *CreateCommentSubjectResult) Size() (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.Size()
-}
-
-func (p *CreateCommentSubjectResult) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetSuccess() {
-		return out, nil
-	}
-	return proto.Marshal(p.Success)
-}
-
-func (p *CreateCommentSubjectResult) Unmarshal(in []byte) error {
-	msg := new(core_api.CreateCommentSubjectResp)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Success = msg
-	return nil
-}
-
-func (p *CreateCommentSubjectResult) GetSuccess() *core_api.CreateCommentSubjectResp {
-	if !p.IsSetSuccess() {
-		return CreateCommentSubjectResult_Success_DEFAULT
-	}
-	return p.Success
-}
-
-func (p *CreateCommentSubjectResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.CreateCommentSubjectResp)
-}
-
-func (p *CreateCommentSubjectResult) IsSetSuccess() bool {
-	return p.Success != nil
-}
-
-func (p *CreateCommentSubjectResult) GetResult() interface{} {
-	return p.Success
-}
-
 func updateCommentSubjectHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
@@ -1652,16 +1498,6 @@ func (p *kClient) GetCommentSubject(ctx context.Context, Req *core_api.GetCommen
 	_args.Req = Req
 	var _result GetCommentSubjectResult
 	if err = p.c.Call(ctx, "GetCommentSubject", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
-}
-
-func (p *kClient) CreateCommentSubject(ctx context.Context, Req *core_api.CreateCommentSubjectReq) (r *core_api.CreateCommentSubjectResp, err error) {
-	var _args CreateCommentSubjectArgs
-	_args.Req = Req
-	var _result CreateCommentSubjectResult
-	if err = p.c.Call(ctx, "CreateCommentSubject", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

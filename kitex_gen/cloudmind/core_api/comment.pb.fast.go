@@ -540,61 +540,6 @@ func (x *GetCommentSubjectResp) fastReadField1(buf []byte, _type int8) (offset i
 	return offset, nil
 }
 
-func (x *CreateCommentSubjectReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
-	switch number {
-	case 1:
-		offset, err = x.fastReadField1(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	default:
-		offset, err = fastpb.Skip(buf, _type, number)
-		if err != nil {
-			goto SkipFieldError
-		}
-	}
-	return offset, nil
-SkipFieldError:
-	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
-ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CreateCommentSubjectReq[number], err)
-}
-
-func (x *CreateCommentSubjectReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v Subject
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
-	if err != nil {
-		return offset, err
-	}
-	x.Subject = &v
-	return offset, nil
-}
-
-func (x *CreateCommentSubjectResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
-	switch number {
-	case 1:
-		offset, err = x.fastReadField1(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	default:
-		offset, err = fastpb.Skip(buf, _type, number)
-		if err != nil {
-			goto SkipFieldError
-		}
-	}
-	return offset, nil
-SkipFieldError:
-	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
-ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CreateCommentSubjectResp[number], err)
-}
-
-func (x *CreateCommentSubjectResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	x.SubjectId, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
 func (x *UpdateCommentSubjectReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
@@ -1398,38 +1343,6 @@ func (x *GetCommentSubjectResp) fastWriteField1(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *CreateCommentSubjectReq) FastWrite(buf []byte) (offset int) {
-	if x == nil {
-		return offset
-	}
-	offset += x.fastWriteField1(buf[offset:])
-	return offset
-}
-
-func (x *CreateCommentSubjectReq) fastWriteField1(buf []byte) (offset int) {
-	if x.Subject == nil {
-		return offset
-	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetSubject())
-	return offset
-}
-
-func (x *CreateCommentSubjectResp) FastWrite(buf []byte) (offset int) {
-	if x == nil {
-		return offset
-	}
-	offset += x.fastWriteField1(buf[offset:])
-	return offset
-}
-
-func (x *CreateCommentSubjectResp) fastWriteField1(buf []byte) (offset int) {
-	if x.SubjectId == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 1, x.GetSubjectId())
-	return offset
-}
-
 func (x *UpdateCommentSubjectReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -2062,38 +1975,6 @@ func (x *GetCommentSubjectResp) sizeField1() (n int) {
 	return n
 }
 
-func (x *CreateCommentSubjectReq) Size() (n int) {
-	if x == nil {
-		return n
-	}
-	n += x.sizeField1()
-	return n
-}
-
-func (x *CreateCommentSubjectReq) sizeField1() (n int) {
-	if x.Subject == nil {
-		return n
-	}
-	n += fastpb.SizeMessage(1, x.GetSubject())
-	return n
-}
-
-func (x *CreateCommentSubjectResp) Size() (n int) {
-	if x == nil {
-		return n
-	}
-	n += x.sizeField1()
-	return n
-}
-
-func (x *CreateCommentSubjectResp) sizeField1() (n int) {
-	if x.SubjectId == "" {
-		return n
-	}
-	n += fastpb.SizeString(1, x.GetSubjectId())
-	return n
-}
-
 func (x *UpdateCommentSubjectReq) Size() (n int) {
 	if x == nil {
 		return n
@@ -2439,14 +2320,6 @@ var fieldIDToName_GetCommentSubjectReq = map[int32]string{
 
 var fieldIDToName_GetCommentSubjectResp = map[int32]string{
 	1: "Subject",
-}
-
-var fieldIDToName_CreateCommentSubjectReq = map[int32]string{
-	1: "Subject",
-}
-
-var fieldIDToName_CreateCommentSubjectResp = map[int32]string{
-	1: "SubjectId",
 }
 
 var fieldIDToName_UpdateCommentSubjectReq = map[int32]string{

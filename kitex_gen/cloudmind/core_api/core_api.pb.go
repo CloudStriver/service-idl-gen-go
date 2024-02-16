@@ -513,7 +513,7 @@ var file_cloudmind_core_api_core_api_proto_rawDesc = []byte{
 	0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x73, 0x70, 0x22, 0x1f,
 	0xd2, 0xc1, 0x18, 0x1b, 0x2f, 0x73, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x2f, 0x75, 0x70, 0x64, 0x61,
 	0x74, 0x65, 0x4e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x32,
-	0xaa, 0x0a, 0x0a, 0x07, 0x63, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x78, 0x0a, 0x0d, 0x43,
+	0x93, 0x09, 0x0a, 0x07, 0x63, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x78, 0x0a, 0x0d, 0x43,
 	0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x24, 0x2e, 0x63,
 	0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70,
 	0x69, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x52,
@@ -567,83 +567,74 @@ var file_cloudmind_core_api_core_api_proto_rawDesc = []byte{
 	0x69, 0x2e, 0x47, 0x65, 0x74, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x75, 0x62, 0x6a,
 	0x65, 0x63, 0x74, 0x52, 0x65, 0x73, 0x70, 0x22, 0x1e, 0xca, 0xc1, 0x18, 0x1a, 0x2f, 0x63, 0x6f,
 	0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x2f, 0x67, 0x65, 0x74, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74,
-	0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x94, 0x01, 0x0a, 0x14, 0x43, 0x72, 0x65, 0x61,
+	0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x94, 0x01, 0x0a, 0x14, 0x55, 0x70, 0x64, 0x61,
 	0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74,
 	0x12, 0x2b, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72,
-	0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d,
+	0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d,
 	0x65, 0x6e, 0x74, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x52, 0x65, 0x71, 0x1a, 0x2c, 0x2e,
 	0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61,
-	0x70, 0x69, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74,
+	0x70, 0x69, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74,
 	0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x52, 0x65, 0x73, 0x70, 0x22, 0x21, 0xd2, 0xc1, 0x18,
-	0x1d, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x2f, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65,
+	0x1d, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x2f, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65,
 	0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x94,
-	0x01, 0x0a, 0x14, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74,
+	0x01, 0x0a, 0x14, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74,
 	0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x2b, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d,
-	0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x55, 0x70, 0x64,
-	0x61, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63,
+	0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x44, 0x65, 0x6c,
+	0x65, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63,
 	0x74, 0x52, 0x65, 0x71, 0x1a, 0x2c, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64,
-	0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65,
+	0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65,
 	0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x52, 0x65,
 	0x73, 0x70, 0x22, 0x21, 0xd2, 0xc1, 0x18, 0x1d, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74,
-	0x2f, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x75,
-	0x62, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x94, 0x01, 0x0a, 0x14, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65,
-	0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x2b,
+	0x2f, 0x64, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x75,
+	0x62, 0x6a, 0x65, 0x63, 0x74, 0x32, 0xa8, 0x05, 0x0a, 0x05, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x12,
+	0x6e, 0x0a, 0x0b, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x12, 0x22,
 	0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f,
-	0x61, 0x70, 0x69, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e,
-	0x74, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x52, 0x65, 0x71, 0x1a, 0x2c, 0x2e, 0x63, 0x6c,
-	0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69,
-	0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x75,
-	0x62, 0x6a, 0x65, 0x63, 0x74, 0x52, 0x65, 0x73, 0x70, 0x22, 0x21, 0xd2, 0xc1, 0x18, 0x1d, 0x2f,
-	0x63, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x2f, 0x64, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x43, 0x6f,
-	0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x32, 0xa8, 0x05, 0x0a,
-	0x05, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x12, 0x6e, 0x0a, 0x0b, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65,
-	0x4c, 0x61, 0x62, 0x65, 0x6c, 0x12, 0x22, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e,
-	0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74,
-	0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52, 0x65, 0x71, 0x1a, 0x23, 0x2e, 0x63, 0x6c, 0x6f, 0x75,
-	0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x43,
-	0x72, 0x65, 0x61, 0x74, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x22, 0x16,
-	0xd2, 0xc1, 0x18, 0x12, 0x2f, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x2f, 0x63, 0x72, 0x65, 0x61, 0x74,
-	0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x12, 0x6e, 0x0a, 0x0b, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65,
-	0x4c, 0x61, 0x62, 0x65, 0x6c, 0x12, 0x22, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e,
-	0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74,
-	0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52, 0x65, 0x71, 0x1a, 0x23, 0x2e, 0x63, 0x6c, 0x6f, 0x75,
-	0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x44,
-	0x65, 0x6c, 0x65, 0x74, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x22, 0x16,
-	0xd2, 0xc1, 0x18, 0x12, 0x2f, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x2f, 0x64, 0x65, 0x6c, 0x65, 0x74,
-	0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x12, 0x6e, 0x0a, 0x0b, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65,
-	0x4c, 0x61, 0x62, 0x65, 0x6c, 0x12, 0x22, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e,
-	0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74,
-	0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52, 0x65, 0x71, 0x1a, 0x23, 0x2e, 0x63, 0x6c, 0x6f, 0x75,
-	0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x55,
-	0x70, 0x64, 0x61, 0x74, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x22, 0x16,
-	0xd2, 0xc1, 0x18, 0x12, 0x2f, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x2f, 0x75, 0x70, 0x64, 0x61, 0x74,
-	0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x12, 0x66, 0x0a, 0x09, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x62,
-	0x65, 0x6c, 0x73, 0x12, 0x20, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52,
+	0x65, 0x71, 0x1a, 0x23, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63,
+	0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4c, 0x61,
+	0x62, 0x65, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x22, 0x16, 0xd2, 0xc1, 0x18, 0x12, 0x2f, 0x6c, 0x61,
+	0x62, 0x65, 0x6c, 0x2f, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x12,
+	0x6e, 0x0a, 0x0b, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x12, 0x22,
+	0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f,
+	0x61, 0x70, 0x69, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52,
+	0x65, 0x71, 0x1a, 0x23, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63,
+	0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4c, 0x61,
+	0x62, 0x65, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x22, 0x16, 0xd2, 0xc1, 0x18, 0x12, 0x2f, 0x6c, 0x61,
+	0x62, 0x65, 0x6c, 0x2f, 0x64, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x12,
+	0x6e, 0x0a, 0x0b, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x12, 0x22,
+	0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f,
+	0x61, 0x70, 0x69, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52,
+	0x65, 0x71, 0x1a, 0x23, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63,
+	0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4c, 0x61,
+	0x62, 0x65, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x22, 0x16, 0xd2, 0xc1, 0x18, 0x12, 0x2f, 0x6c, 0x61,
+	0x62, 0x65, 0x6c, 0x2f, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x12,
+	0x66, 0x0a, 0x09, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x12, 0x20, 0x2e, 0x63,
+	0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70,
+	0x69, 0x2e, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x52, 0x65, 0x71, 0x1a, 0x21,
+	0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f,
+	0x61, 0x70, 0x69, 0x2e, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x52, 0x65, 0x73,
+	0x70, 0x22, 0x14, 0xca, 0xc1, 0x18, 0x10, 0x2f, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x2f, 0x67, 0x65,
+	0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x12, 0x62, 0x0a, 0x08, 0x47, 0x65, 0x74, 0x4c, 0x61,
+	0x62, 0x65, 0x6c, 0x12, 0x1f, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e,
 	0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65,
-	0x6c, 0x73, 0x52, 0x65, 0x71, 0x1a, 0x21, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e,
-	0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x47, 0x65, 0x74, 0x4c, 0x61,
-	0x62, 0x65, 0x6c, 0x73, 0x52, 0x65, 0x73, 0x70, 0x22, 0x14, 0xca, 0xc1, 0x18, 0x10, 0x2f, 0x6c,
-	0x61, 0x62, 0x65, 0x6c, 0x2f, 0x67, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x12, 0x62,
-	0x0a, 0x08, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x12, 0x1f, 0x2e, 0x63, 0x6c, 0x6f,
-	0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e,
-	0x47, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52, 0x65, 0x71, 0x1a, 0x20, 0x2e, 0x63, 0x6c,
-	0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69,
-	0x2e, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x22, 0x13, 0xca,
-	0xc1, 0x18, 0x0f, 0x2f, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x2f, 0x67, 0x65, 0x74, 0x4c, 0x61, 0x62,
-	0x65, 0x6c, 0x12, 0x82, 0x01, 0x0a, 0x10, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73,
-	0x49, 0x6e, 0x42, 0x61, 0x74, 0x63, 0x68, 0x12, 0x27, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d,
-	0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x47, 0x65, 0x74,
-	0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x49, 0x6e, 0x42, 0x61, 0x74, 0x63, 0x68, 0x52, 0x65, 0x71,
-	0x1a, 0x28, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72,
+	0x6c, 0x52, 0x65, 0x71, 0x1a, 0x20, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64,
+	0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x62,
+	0x65, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x22, 0x13, 0xca, 0xc1, 0x18, 0x0f, 0x2f, 0x6c, 0x61, 0x62,
+	0x65, 0x6c, 0x2f, 0x67, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x12, 0x82, 0x01, 0x0a, 0x10,
+	0x47, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x49, 0x6e, 0x42, 0x61, 0x74, 0x63, 0x68,
+	0x12, 0x27, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72,
 	0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x49,
-	0x6e, 0x42, 0x61, 0x74, 0x63, 0x68, 0x52, 0x65, 0x73, 0x70, 0x22, 0x1b, 0xca, 0xc1, 0x18, 0x17,
-	0x2f, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x2f, 0x67, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73,
-	0x49, 0x6e, 0x42, 0x61, 0x74, 0x63, 0x68, 0x42, 0x49, 0x5a, 0x47, 0x67, 0x69, 0x74, 0x68, 0x75,
-	0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x6c, 0x6f, 0x75, 0x64, 0x53, 0x74, 0x72, 0x69, 0x76,
-	0x65, 0x72, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2d, 0x69, 0x64, 0x6c, 0x2d, 0x67,
-	0x65, 0x6e, 0x2d, 0x67, 0x6f, 0x2f, 0x6b, 0x69, 0x74, 0x65, 0x78, 0x5f, 0x67, 0x65, 0x6e, 0x2f,
-	0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2f, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61,
-	0x70, 0x69, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6e, 0x42, 0x61, 0x74, 0x63, 0x68, 0x52, 0x65, 0x71, 0x1a, 0x28, 0x2e, 0x63, 0x6c, 0x6f, 0x75,
+	0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x47,
+	0x65, 0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x49, 0x6e, 0x42, 0x61, 0x74, 0x63, 0x68, 0x52,
+	0x65, 0x73, 0x70, 0x22, 0x1b, 0xca, 0xc1, 0x18, 0x17, 0x2f, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x2f,
+	0x67, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x49, 0x6e, 0x42, 0x61, 0x74, 0x63, 0x68,
+	0x42, 0x49, 0x5a, 0x47, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43,
+	0x6c, 0x6f, 0x75, 0x64, 0x53, 0x74, 0x72, 0x69, 0x76, 0x65, 0x72, 0x2f, 0x73, 0x65, 0x72, 0x76,
+	0x69, 0x63, 0x65, 0x2d, 0x69, 0x64, 0x6c, 0x2d, 0x67, 0x65, 0x6e, 0x2d, 0x67, 0x6f, 0x2f, 0x6b,
+	0x69, 0x74, 0x65, 0x78, 0x5f, 0x67, 0x65, 0x6e, 0x2f, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69,
+	0x6e, 0x64, 0x2f, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
 }
 
 var file_cloudmind_core_api_core_api_proto_goTypes = []interface{}{
@@ -714,89 +705,87 @@ var file_cloudmind_core_api_core_api_proto_goTypes = []interface{}{
 	(*UpdateCommentReq)(nil),           // 64: cloudmind.core_api.UpdateCommentReq
 	(*SetCommentAttrsReq)(nil),         // 65: cloudmind.core_api.SetCommentAttrsReq
 	(*GetCommentSubjectReq)(nil),       // 66: cloudmind.core_api.GetCommentSubjectReq
-	(*CreateCommentSubjectReq)(nil),    // 67: cloudmind.core_api.CreateCommentSubjectReq
-	(*UpdateCommentSubjectReq)(nil),    // 68: cloudmind.core_api.UpdateCommentSubjectReq
-	(*DeleteCommentSubjectReq)(nil),    // 69: cloudmind.core_api.DeleteCommentSubjectReq
-	(*CreateLabelReq)(nil),             // 70: cloudmind.core_api.CreateLabelReq
-	(*DeleteLabelReq)(nil),             // 71: cloudmind.core_api.DeleteLabelReq
-	(*UpdateLabelReq)(nil),             // 72: cloudmind.core_api.UpdateLabelReq
-	(*GetLabelsReq)(nil),               // 73: cloudmind.core_api.GetLabelsReq
-	(*GetLabelReq)(nil),                // 74: cloudmind.core_api.GetLabelReq
-	(*GetLabelsInBatchReq)(nil),        // 75: cloudmind.core_api.GetLabelsInBatchReq
-	(*UpdateUserResp)(nil),             // 76: cloudmind.core_api.UpdateUserResp
-	(*SearchUserResp)(nil),             // 77: cloudmind.core_api.SearchUserResp
-	(*GetUserResp)(nil),                // 78: cloudmind.core_api.GetUserResp
-	(*GetUserDetailResp)(nil),          // 79: cloudmind.core_api.GetUserDetailResp
-	(*AskUploadAvatarResp)(nil),        // 80: cloudmind.core_api.AskUploadAvatarResp
-	(*GetPublicFilesResp)(nil),         // 81: cloudmind.core_api.GetPublicFilesResp
-	(*GetPrivateFileResp)(nil),         // 82: cloudmind.core_api.GetPrivateFileResp
-	(*GetPrivateFilesResp)(nil),        // 83: cloudmind.core_api.GetPrivateFilesResp
-	(*GetRecycleBinFilesResp)(nil),     // 84: cloudmind.core_api.GetRecycleBinFilesResp
-	(*GetFileBySharingCodeResp)(nil),   // 85: cloudmind.core_api.GetFileBySharingCodeResp
-	(*CreateFileResp)(nil),             // 86: cloudmind.core_api.CreateFileResp
-	(*UpdateFileResp)(nil),             // 87: cloudmind.core_api.UpdateFileResp
-	(*MoveFileResp)(nil),               // 88: cloudmind.core_api.MoveFileResp
-	(*SaveFileToPrivateSpaceResp)(nil), // 89: cloudmind.core_api.SaveFileToPrivateSpaceResp
-	(*AddFileToPublicSpaceResp)(nil),   // 90: cloudmind.core_api.AddFileToPublicSpaceResp
-	(*DeleteFileResp)(nil),             // 91: cloudmind.core_api.DeleteFileResp
-	(*RecoverRecycleBinFileResp)(nil),  // 92: cloudmind.core_api.RecoverRecycleBinFileResp
-	(*CreateZoneResp)(nil),             // 93: cloudmind.core_api.CreateZoneResp
-	(*UpdateZoneResp)(nil),             // 94: cloudmind.core_api.UpdateZoneResp
-	(*GetZoneResp)(nil),                // 95: cloudmind.core_api.GetZoneResp
-	(*DeleteZoneResp)(nil),             // 96: cloudmind.core_api.DeleteZoneResp
-	(*CreateShareCodeResp)(nil),        // 97: cloudmind.core_api.CreateShareCodeResp
-	(*GetShareListResp)(nil),           // 98: cloudmind.core_api.GetShareListResp
-	(*DeleteShareCodeResp)(nil),        // 99: cloudmind.core_api.DeleteShareCodeResp
-	(*ParsingShareCodeResp)(nil),       // 100: cloudmind.core_api.ParsingShareCodeResp
-	(*AskUploadFileResp)(nil),          // 101: cloudmind.core_api.AskUploadFileResp
-	(*AskDownloadFileResp)(nil),        // 102: cloudmind.core_api.AskDownloadFileResp
-	(*CreatePostResp)(nil),             // 103: cloudmind.core_api.CreatePostResp
-	(*DeletePostResp)(nil),             // 104: cloudmind.core_api.DeletePostResp
-	(*UpdatePostResp)(nil),             // 105: cloudmind.core_api.UpdatePostResp
-	(*GetPostsResp)(nil),               // 106: cloudmind.core_api.GetPostsResp
-	(*GetPostResp)(nil),                // 107: cloudmind.core_api.GetPostResp
-	(*GetRecommendByUserResp)(nil),     // 108: cloudmind.core_api.GetRecommendByUserResp
-	(*GetRecommendByItemResp)(nil),     // 109: cloudmind.core_api.GetRecommendByItemResp
-	(*CreateFeedBackResp)(nil),         // 110: cloudmind.core_api.CreateFeedBackResp
-	(*GetPopularRecommendResp)(nil),    // 111: cloudmind.core_api.GetPopularRecommendResp
-	(*GetLatestRecommendResp)(nil),     // 112: cloudmind.core_api.GetLatestRecommendResp
-	(*CreateProductResp)(nil),          // 113: cloudmind.core_api.CreateProductResp
-	(*GetProductResp)(nil),             // 114: cloudmind.core_api.GetProductResp
-	(*GetProductsResp)(nil),            // 115: cloudmind.core_api.GetProductsResp
-	(*UpdateProductResp)(nil),          // 116: cloudmind.core_api.UpdateProductResp
-	(*DeleteProductResp)(nil),          // 117: cloudmind.core_api.DeleteProductResp
-	(*RegisterResp)(nil),               // 118: cloudmind.core_api.RegisterResp
-	(*CheckEmailResp)(nil),             // 119: cloudmind.core_api.CheckEmailResp
-	(*EmailLoginResp)(nil),             // 120: cloudmind.core_api.EmailLoginResp
-	(*GithubLoginResp)(nil),            // 121: cloudmind.core_api.GithubLoginResp
-	(*GiteeLoginResp)(nil),             // 122: cloudmind.core_api.GiteeLoginResp
-	(*RefreshTokenResp)(nil),           // 123: cloudmind.core_api.RefreshTokenResp
-	(*SendEmailResp)(nil),              // 124: cloudmind.core_api.SendEmailResp
-	(*SetPasswordByEmailResp)(nil),     // 125: cloudmind.core_api.SetPasswordByEmailResp
-	(*CreateRelationResp)(nil),         // 126: cloudmind.core_api.CreateRelationResp
-	(*GetFromRelationsResp)(nil),       // 127: cloudmind.core_api.GetFromRelationsResp
-	(*GetToRelationsResp)(nil),         // 128: cloudmind.core_api.GetToRelationsResp
-	(*GetRelationResp)(nil),            // 129: cloudmind.core_api.GetRelationResp
-	(*DeleteRelationResp)(nil),         // 130: cloudmind.core_api.DeleteRelationResp
-	(*GetNotificationsResp)(nil),       // 131: cloudmind.core_api.GetNotificationsResp
-	(*GetNotificationCountResp)(nil),   // 132: cloudmind.core_api.GetNotificationCountResp
-	(*UpdateNotificationsResp)(nil),    // 133: cloudmind.core_api.UpdateNotificationsResp
-	(*CreateCommentResp)(nil),          // 134: cloudmind.core_api.CreateCommentResp
-	(*GetCommentResp)(nil),             // 135: cloudmind.core_api.GetCommentResp
-	(*GetCommentsResp)(nil),            // 136: cloudmind.core_api.GetCommentsResp
-	(*DeleteCommentResp)(nil),          // 137: cloudmind.core_api.DeleteCommentResp
-	(*UpdateCommentResp)(nil),          // 138: cloudmind.core_api.UpdateCommentResp
-	(*SetCommentAttrsResp)(nil),        // 139: cloudmind.core_api.SetCommentAttrsResp
-	(*GetCommentSubjectResp)(nil),      // 140: cloudmind.core_api.GetCommentSubjectResp
-	(*CreateCommentSubjectResp)(nil),   // 141: cloudmind.core_api.CreateCommentSubjectResp
-	(*UpdateCommentSubjectResp)(nil),   // 142: cloudmind.core_api.UpdateCommentSubjectResp
-	(*DeleteCommentSubjectResp)(nil),   // 143: cloudmind.core_api.DeleteCommentSubjectResp
-	(*CreateLabelResp)(nil),            // 144: cloudmind.core_api.CreateLabelResp
-	(*DeleteLabelResp)(nil),            // 145: cloudmind.core_api.DeleteLabelResp
-	(*UpdateLabelResp)(nil),            // 146: cloudmind.core_api.UpdateLabelResp
-	(*GetLabelsResp)(nil),              // 147: cloudmind.core_api.GetLabelsResp
-	(*GetLabelResp)(nil),               // 148: cloudmind.core_api.GetLabelResp
-	(*GetLabelsInBatchResp)(nil),       // 149: cloudmind.core_api.GetLabelsInBatchResp
+	(*UpdateCommentSubjectReq)(nil),    // 67: cloudmind.core_api.UpdateCommentSubjectReq
+	(*DeleteCommentSubjectReq)(nil),    // 68: cloudmind.core_api.DeleteCommentSubjectReq
+	(*CreateLabelReq)(nil),             // 69: cloudmind.core_api.CreateLabelReq
+	(*DeleteLabelReq)(nil),             // 70: cloudmind.core_api.DeleteLabelReq
+	(*UpdateLabelReq)(nil),             // 71: cloudmind.core_api.UpdateLabelReq
+	(*GetLabelsReq)(nil),               // 72: cloudmind.core_api.GetLabelsReq
+	(*GetLabelReq)(nil),                // 73: cloudmind.core_api.GetLabelReq
+	(*GetLabelsInBatchReq)(nil),        // 74: cloudmind.core_api.GetLabelsInBatchReq
+	(*UpdateUserResp)(nil),             // 75: cloudmind.core_api.UpdateUserResp
+	(*SearchUserResp)(nil),             // 76: cloudmind.core_api.SearchUserResp
+	(*GetUserResp)(nil),                // 77: cloudmind.core_api.GetUserResp
+	(*GetUserDetailResp)(nil),          // 78: cloudmind.core_api.GetUserDetailResp
+	(*AskUploadAvatarResp)(nil),        // 79: cloudmind.core_api.AskUploadAvatarResp
+	(*GetPublicFilesResp)(nil),         // 80: cloudmind.core_api.GetPublicFilesResp
+	(*GetPrivateFileResp)(nil),         // 81: cloudmind.core_api.GetPrivateFileResp
+	(*GetPrivateFilesResp)(nil),        // 82: cloudmind.core_api.GetPrivateFilesResp
+	(*GetRecycleBinFilesResp)(nil),     // 83: cloudmind.core_api.GetRecycleBinFilesResp
+	(*GetFileBySharingCodeResp)(nil),   // 84: cloudmind.core_api.GetFileBySharingCodeResp
+	(*CreateFileResp)(nil),             // 85: cloudmind.core_api.CreateFileResp
+	(*UpdateFileResp)(nil),             // 86: cloudmind.core_api.UpdateFileResp
+	(*MoveFileResp)(nil),               // 87: cloudmind.core_api.MoveFileResp
+	(*SaveFileToPrivateSpaceResp)(nil), // 88: cloudmind.core_api.SaveFileToPrivateSpaceResp
+	(*AddFileToPublicSpaceResp)(nil),   // 89: cloudmind.core_api.AddFileToPublicSpaceResp
+	(*DeleteFileResp)(nil),             // 90: cloudmind.core_api.DeleteFileResp
+	(*RecoverRecycleBinFileResp)(nil),  // 91: cloudmind.core_api.RecoverRecycleBinFileResp
+	(*CreateZoneResp)(nil),             // 92: cloudmind.core_api.CreateZoneResp
+	(*UpdateZoneResp)(nil),             // 93: cloudmind.core_api.UpdateZoneResp
+	(*GetZoneResp)(nil),                // 94: cloudmind.core_api.GetZoneResp
+	(*DeleteZoneResp)(nil),             // 95: cloudmind.core_api.DeleteZoneResp
+	(*CreateShareCodeResp)(nil),        // 96: cloudmind.core_api.CreateShareCodeResp
+	(*GetShareListResp)(nil),           // 97: cloudmind.core_api.GetShareListResp
+	(*DeleteShareCodeResp)(nil),        // 98: cloudmind.core_api.DeleteShareCodeResp
+	(*ParsingShareCodeResp)(nil),       // 99: cloudmind.core_api.ParsingShareCodeResp
+	(*AskUploadFileResp)(nil),          // 100: cloudmind.core_api.AskUploadFileResp
+	(*AskDownloadFileResp)(nil),        // 101: cloudmind.core_api.AskDownloadFileResp
+	(*CreatePostResp)(nil),             // 102: cloudmind.core_api.CreatePostResp
+	(*DeletePostResp)(nil),             // 103: cloudmind.core_api.DeletePostResp
+	(*UpdatePostResp)(nil),             // 104: cloudmind.core_api.UpdatePostResp
+	(*GetPostsResp)(nil),               // 105: cloudmind.core_api.GetPostsResp
+	(*GetPostResp)(nil),                // 106: cloudmind.core_api.GetPostResp
+	(*GetRecommendByUserResp)(nil),     // 107: cloudmind.core_api.GetRecommendByUserResp
+	(*GetRecommendByItemResp)(nil),     // 108: cloudmind.core_api.GetRecommendByItemResp
+	(*CreateFeedBackResp)(nil),         // 109: cloudmind.core_api.CreateFeedBackResp
+	(*GetPopularRecommendResp)(nil),    // 110: cloudmind.core_api.GetPopularRecommendResp
+	(*GetLatestRecommendResp)(nil),     // 111: cloudmind.core_api.GetLatestRecommendResp
+	(*CreateProductResp)(nil),          // 112: cloudmind.core_api.CreateProductResp
+	(*GetProductResp)(nil),             // 113: cloudmind.core_api.GetProductResp
+	(*GetProductsResp)(nil),            // 114: cloudmind.core_api.GetProductsResp
+	(*UpdateProductResp)(nil),          // 115: cloudmind.core_api.UpdateProductResp
+	(*DeleteProductResp)(nil),          // 116: cloudmind.core_api.DeleteProductResp
+	(*RegisterResp)(nil),               // 117: cloudmind.core_api.RegisterResp
+	(*CheckEmailResp)(nil),             // 118: cloudmind.core_api.CheckEmailResp
+	(*EmailLoginResp)(nil),             // 119: cloudmind.core_api.EmailLoginResp
+	(*GithubLoginResp)(nil),            // 120: cloudmind.core_api.GithubLoginResp
+	(*GiteeLoginResp)(nil),             // 121: cloudmind.core_api.GiteeLoginResp
+	(*RefreshTokenResp)(nil),           // 122: cloudmind.core_api.RefreshTokenResp
+	(*SendEmailResp)(nil),              // 123: cloudmind.core_api.SendEmailResp
+	(*SetPasswordByEmailResp)(nil),     // 124: cloudmind.core_api.SetPasswordByEmailResp
+	(*CreateRelationResp)(nil),         // 125: cloudmind.core_api.CreateRelationResp
+	(*GetFromRelationsResp)(nil),       // 126: cloudmind.core_api.GetFromRelationsResp
+	(*GetToRelationsResp)(nil),         // 127: cloudmind.core_api.GetToRelationsResp
+	(*GetRelationResp)(nil),            // 128: cloudmind.core_api.GetRelationResp
+	(*DeleteRelationResp)(nil),         // 129: cloudmind.core_api.DeleteRelationResp
+	(*GetNotificationsResp)(nil),       // 130: cloudmind.core_api.GetNotificationsResp
+	(*GetNotificationCountResp)(nil),   // 131: cloudmind.core_api.GetNotificationCountResp
+	(*UpdateNotificationsResp)(nil),    // 132: cloudmind.core_api.UpdateNotificationsResp
+	(*CreateCommentResp)(nil),          // 133: cloudmind.core_api.CreateCommentResp
+	(*GetCommentResp)(nil),             // 134: cloudmind.core_api.GetCommentResp
+	(*GetCommentsResp)(nil),            // 135: cloudmind.core_api.GetCommentsResp
+	(*DeleteCommentResp)(nil),          // 136: cloudmind.core_api.DeleteCommentResp
+	(*UpdateCommentResp)(nil),          // 137: cloudmind.core_api.UpdateCommentResp
+	(*SetCommentAttrsResp)(nil),        // 138: cloudmind.core_api.SetCommentAttrsResp
+	(*GetCommentSubjectResp)(nil),      // 139: cloudmind.core_api.GetCommentSubjectResp
+	(*UpdateCommentSubjectResp)(nil),   // 140: cloudmind.core_api.UpdateCommentSubjectResp
+	(*DeleteCommentSubjectResp)(nil),   // 141: cloudmind.core_api.DeleteCommentSubjectResp
+	(*CreateLabelResp)(nil),            // 142: cloudmind.core_api.CreateLabelResp
+	(*DeleteLabelResp)(nil),            // 143: cloudmind.core_api.DeleteLabelResp
+	(*UpdateLabelResp)(nil),            // 144: cloudmind.core_api.UpdateLabelResp
+	(*GetLabelsResp)(nil),              // 145: cloudmind.core_api.GetLabelsResp
+	(*GetLabelResp)(nil),               // 146: cloudmind.core_api.GetLabelResp
+	(*GetLabelsInBatchResp)(nil),       // 147: cloudmind.core_api.GetLabelsInBatchResp
 }
 var file_cloudmind_core_api_core_api_proto_depIdxs = []int32{
 	0,   // 0: cloudmind.core_api.content.UpdateUser:input_type -> cloudmind.core_api.UpdateUserReq
@@ -867,94 +856,92 @@ var file_cloudmind_core_api_core_api_proto_depIdxs = []int32{
 	64,  // 65: cloudmind.core_api.comment.UpdateComment:input_type -> cloudmind.core_api.UpdateCommentReq
 	65,  // 66: cloudmind.core_api.comment.SetCommentAttrs:input_type -> cloudmind.core_api.SetCommentAttrsReq
 	66,  // 67: cloudmind.core_api.comment.GetCommentSubject:input_type -> cloudmind.core_api.GetCommentSubjectReq
-	67,  // 68: cloudmind.core_api.comment.CreateCommentSubject:input_type -> cloudmind.core_api.CreateCommentSubjectReq
-	68,  // 69: cloudmind.core_api.comment.UpdateCommentSubject:input_type -> cloudmind.core_api.UpdateCommentSubjectReq
-	69,  // 70: cloudmind.core_api.comment.DeleteCommentSubject:input_type -> cloudmind.core_api.DeleteCommentSubjectReq
-	70,  // 71: cloudmind.core_api.label.CreateLabel:input_type -> cloudmind.core_api.CreateLabelReq
-	71,  // 72: cloudmind.core_api.label.DeleteLabel:input_type -> cloudmind.core_api.DeleteLabelReq
-	72,  // 73: cloudmind.core_api.label.UpdateLabel:input_type -> cloudmind.core_api.UpdateLabelReq
-	73,  // 74: cloudmind.core_api.label.GetLabels:input_type -> cloudmind.core_api.GetLabelsReq
-	74,  // 75: cloudmind.core_api.label.GetLabel:input_type -> cloudmind.core_api.GetLabelReq
-	75,  // 76: cloudmind.core_api.label.GetLabelsInBatch:input_type -> cloudmind.core_api.GetLabelsInBatchReq
-	76,  // 77: cloudmind.core_api.content.UpdateUser:output_type -> cloudmind.core_api.UpdateUserResp
-	77,  // 78: cloudmind.core_api.content.SearchUser:output_type -> cloudmind.core_api.SearchUserResp
-	78,  // 79: cloudmind.core_api.content.GetUser:output_type -> cloudmind.core_api.GetUserResp
-	79,  // 80: cloudmind.core_api.content.GetUserDetail:output_type -> cloudmind.core_api.GetUserDetailResp
-	80,  // 81: cloudmind.core_api.content.AskUploadAvatar:output_type -> cloudmind.core_api.AskUploadAvatarResp
-	81,  // 82: cloudmind.core_api.content.GetPublicFile:output_type -> cloudmind.core_api.GetPublicFilesResp
-	82,  // 83: cloudmind.core_api.content.GetPrivateFile:output_type -> cloudmind.core_api.GetPrivateFileResp
-	83,  // 84: cloudmind.core_api.content.GetPrivateFiles:output_type -> cloudmind.core_api.GetPrivateFilesResp
-	81,  // 85: cloudmind.core_api.content.GetPublicFiles:output_type -> cloudmind.core_api.GetPublicFilesResp
-	84,  // 86: cloudmind.core_api.content.GetRecycleBinFiles:output_type -> cloudmind.core_api.GetRecycleBinFilesResp
-	85,  // 87: cloudmind.core_api.content.GetFileBySharingCode:output_type -> cloudmind.core_api.GetFileBySharingCodeResp
-	86,  // 88: cloudmind.core_api.content.CreateFile:output_type -> cloudmind.core_api.CreateFileResp
-	87,  // 89: cloudmind.core_api.content.UpdateFile:output_type -> cloudmind.core_api.UpdateFileResp
-	88,  // 90: cloudmind.core_api.content.MoveFile:output_type -> cloudmind.core_api.MoveFileResp
-	89,  // 91: cloudmind.core_api.content.SaveFileToPrivateSpace:output_type -> cloudmind.core_api.SaveFileToPrivateSpaceResp
-	90,  // 92: cloudmind.core_api.content.AddFileToPublicSpace:output_type -> cloudmind.core_api.AddFileToPublicSpaceResp
-	15,  // 93: cloudmind.core_api.content.CompletelyRemoveFile:output_type -> cloudmind.core_api.CompletelyRemoveFileReq
-	91,  // 94: cloudmind.core_api.content.DeleteFile:output_type -> cloudmind.core_api.DeleteFileResp
-	92,  // 95: cloudmind.core_api.content.RecoverRecycleBinFile:output_type -> cloudmind.core_api.RecoverRecycleBinFileResp
-	93,  // 96: cloudmind.core_api.content.CreateZone:output_type -> cloudmind.core_api.CreateZoneResp
-	94,  // 97: cloudmind.core_api.content.UpdateZone:output_type -> cloudmind.core_api.UpdateZoneResp
-	95,  // 98: cloudmind.core_api.content.GetZone:output_type -> cloudmind.core_api.GetZoneResp
-	96,  // 99: cloudmind.core_api.content.DeleteZone:output_type -> cloudmind.core_api.DeleteZoneResp
-	97,  // 100: cloudmind.core_api.content.CreateShareCode:output_type -> cloudmind.core_api.CreateShareCodeResp
-	98,  // 101: cloudmind.core_api.content.GetShareList:output_type -> cloudmind.core_api.GetShareListResp
-	99,  // 102: cloudmind.core_api.content.DeleteShareCode:output_type -> cloudmind.core_api.DeleteShareCodeResp
-	100, // 103: cloudmind.core_api.content.ParsingShareCode:output_type -> cloudmind.core_api.ParsingShareCodeResp
-	101, // 104: cloudmind.core_api.content.AskUploadFile:output_type -> cloudmind.core_api.AskUploadFileResp
-	102, // 105: cloudmind.core_api.content.AskDownloadFile:output_type -> cloudmind.core_api.AskDownloadFileResp
-	103, // 106: cloudmind.core_api.content.CreatePost:output_type -> cloudmind.core_api.CreatePostResp
-	104, // 107: cloudmind.core_api.content.DeletePost:output_type -> cloudmind.core_api.DeletePostResp
-	105, // 108: cloudmind.core_api.content.UpdatePost:output_type -> cloudmind.core_api.UpdatePostResp
-	106, // 109: cloudmind.core_api.content.GetPosts:output_type -> cloudmind.core_api.GetPostsResp
-	107, // 110: cloudmind.core_api.content.GetPost:output_type -> cloudmind.core_api.GetPostResp
-	108, // 111: cloudmind.core_api.content.GetRecommendByUser:output_type -> cloudmind.core_api.GetRecommendByUserResp
-	109, // 112: cloudmind.core_api.content.GetRecommendByItem:output_type -> cloudmind.core_api.GetRecommendByItemResp
-	110, // 113: cloudmind.core_api.content.CreateFeedBack:output_type -> cloudmind.core_api.CreateFeedBackResp
-	111, // 114: cloudmind.core_api.content.GetPopularRecommend:output_type -> cloudmind.core_api.GetPopularRecommendResp
-	112, // 115: cloudmind.core_api.content.GetLatestRecommend:output_type -> cloudmind.core_api.GetLatestRecommendResp
-	113, // 116: cloudmind.core_api.content.CreateProduct:output_type -> cloudmind.core_api.CreateProductResp
-	114, // 117: cloudmind.core_api.content.GetProduct:output_type -> cloudmind.core_api.GetProductResp
-	115, // 118: cloudmind.core_api.content.GetProducts:output_type -> cloudmind.core_api.GetProductsResp
-	116, // 119: cloudmind.core_api.content.UpdateProduct:output_type -> cloudmind.core_api.UpdateProductResp
-	117, // 120: cloudmind.core_api.content.DeleteProduct:output_type -> cloudmind.core_api.DeleteProductResp
-	118, // 121: cloudmind.core_api.auth.Register:output_type -> cloudmind.core_api.RegisterResp
-	119, // 122: cloudmind.core_api.auth.CheckEmail:output_type -> cloudmind.core_api.CheckEmailResp
-	120, // 123: cloudmind.core_api.auth.EmailLogin:output_type -> cloudmind.core_api.EmailLoginResp
-	121, // 124: cloudmind.core_api.auth.GithubLogin:output_type -> cloudmind.core_api.GithubLoginResp
-	122, // 125: cloudmind.core_api.auth.GiteeLogin:output_type -> cloudmind.core_api.GiteeLoginResp
-	123, // 126: cloudmind.core_api.auth.RefreshToken:output_type -> cloudmind.core_api.RefreshTokenResp
-	124, // 127: cloudmind.core_api.auth.SendEmail:output_type -> cloudmind.core_api.SendEmailResp
-	125, // 128: cloudmind.core_api.auth.SetPasswordByEmail:output_type -> cloudmind.core_api.SetPasswordByEmailResp
-	51,  // 129: cloudmind.core_api.auth.SetPasswordByPassword:output_type -> cloudmind.core_api.SetPasswordByPasswordReq
-	126, // 130: cloudmind.core_api.relation.CreateRelation:output_type -> cloudmind.core_api.CreateRelationResp
-	127, // 131: cloudmind.core_api.relation.GetFromRelations:output_type -> cloudmind.core_api.GetFromRelationsResp
-	128, // 132: cloudmind.core_api.relation.GetToRelations:output_type -> cloudmind.core_api.GetToRelationsResp
-	129, // 133: cloudmind.core_api.relation.GetRelation:output_type -> cloudmind.core_api.GetRelationResp
-	130, // 134: cloudmind.core_api.relation.DeleteRelation:output_type -> cloudmind.core_api.DeleteRelationResp
-	131, // 135: cloudmind.core_api.system.GetNotifications:output_type -> cloudmind.core_api.GetNotificationsResp
-	132, // 136: cloudmind.core_api.system.GetNotificationCount:output_type -> cloudmind.core_api.GetNotificationCountResp
-	133, // 137: cloudmind.core_api.system.UpdateNotifications:output_type -> cloudmind.core_api.UpdateNotificationsResp
-	134, // 138: cloudmind.core_api.comment.CreateComment:output_type -> cloudmind.core_api.CreateCommentResp
-	135, // 139: cloudmind.core_api.comment.GetComment:output_type -> cloudmind.core_api.GetCommentResp
-	136, // 140: cloudmind.core_api.comment.GetComments:output_type -> cloudmind.core_api.GetCommentsResp
-	137, // 141: cloudmind.core_api.comment.DeleteComment:output_type -> cloudmind.core_api.DeleteCommentResp
-	138, // 142: cloudmind.core_api.comment.UpdateComment:output_type -> cloudmind.core_api.UpdateCommentResp
-	139, // 143: cloudmind.core_api.comment.SetCommentAttrs:output_type -> cloudmind.core_api.SetCommentAttrsResp
-	140, // 144: cloudmind.core_api.comment.GetCommentSubject:output_type -> cloudmind.core_api.GetCommentSubjectResp
-	141, // 145: cloudmind.core_api.comment.CreateCommentSubject:output_type -> cloudmind.core_api.CreateCommentSubjectResp
-	142, // 146: cloudmind.core_api.comment.UpdateCommentSubject:output_type -> cloudmind.core_api.UpdateCommentSubjectResp
-	143, // 147: cloudmind.core_api.comment.DeleteCommentSubject:output_type -> cloudmind.core_api.DeleteCommentSubjectResp
-	144, // 148: cloudmind.core_api.label.CreateLabel:output_type -> cloudmind.core_api.CreateLabelResp
-	145, // 149: cloudmind.core_api.label.DeleteLabel:output_type -> cloudmind.core_api.DeleteLabelResp
-	146, // 150: cloudmind.core_api.label.UpdateLabel:output_type -> cloudmind.core_api.UpdateLabelResp
-	147, // 151: cloudmind.core_api.label.GetLabels:output_type -> cloudmind.core_api.GetLabelsResp
-	148, // 152: cloudmind.core_api.label.GetLabel:output_type -> cloudmind.core_api.GetLabelResp
-	149, // 153: cloudmind.core_api.label.GetLabelsInBatch:output_type -> cloudmind.core_api.GetLabelsInBatchResp
-	77,  // [77:154] is the sub-list for method output_type
-	0,   // [0:77] is the sub-list for method input_type
+	67,  // 68: cloudmind.core_api.comment.UpdateCommentSubject:input_type -> cloudmind.core_api.UpdateCommentSubjectReq
+	68,  // 69: cloudmind.core_api.comment.DeleteCommentSubject:input_type -> cloudmind.core_api.DeleteCommentSubjectReq
+	69,  // 70: cloudmind.core_api.label.CreateLabel:input_type -> cloudmind.core_api.CreateLabelReq
+	70,  // 71: cloudmind.core_api.label.DeleteLabel:input_type -> cloudmind.core_api.DeleteLabelReq
+	71,  // 72: cloudmind.core_api.label.UpdateLabel:input_type -> cloudmind.core_api.UpdateLabelReq
+	72,  // 73: cloudmind.core_api.label.GetLabels:input_type -> cloudmind.core_api.GetLabelsReq
+	73,  // 74: cloudmind.core_api.label.GetLabel:input_type -> cloudmind.core_api.GetLabelReq
+	74,  // 75: cloudmind.core_api.label.GetLabelsInBatch:input_type -> cloudmind.core_api.GetLabelsInBatchReq
+	75,  // 76: cloudmind.core_api.content.UpdateUser:output_type -> cloudmind.core_api.UpdateUserResp
+	76,  // 77: cloudmind.core_api.content.SearchUser:output_type -> cloudmind.core_api.SearchUserResp
+	77,  // 78: cloudmind.core_api.content.GetUser:output_type -> cloudmind.core_api.GetUserResp
+	78,  // 79: cloudmind.core_api.content.GetUserDetail:output_type -> cloudmind.core_api.GetUserDetailResp
+	79,  // 80: cloudmind.core_api.content.AskUploadAvatar:output_type -> cloudmind.core_api.AskUploadAvatarResp
+	80,  // 81: cloudmind.core_api.content.GetPublicFile:output_type -> cloudmind.core_api.GetPublicFilesResp
+	81,  // 82: cloudmind.core_api.content.GetPrivateFile:output_type -> cloudmind.core_api.GetPrivateFileResp
+	82,  // 83: cloudmind.core_api.content.GetPrivateFiles:output_type -> cloudmind.core_api.GetPrivateFilesResp
+	80,  // 84: cloudmind.core_api.content.GetPublicFiles:output_type -> cloudmind.core_api.GetPublicFilesResp
+	83,  // 85: cloudmind.core_api.content.GetRecycleBinFiles:output_type -> cloudmind.core_api.GetRecycleBinFilesResp
+	84,  // 86: cloudmind.core_api.content.GetFileBySharingCode:output_type -> cloudmind.core_api.GetFileBySharingCodeResp
+	85,  // 87: cloudmind.core_api.content.CreateFile:output_type -> cloudmind.core_api.CreateFileResp
+	86,  // 88: cloudmind.core_api.content.UpdateFile:output_type -> cloudmind.core_api.UpdateFileResp
+	87,  // 89: cloudmind.core_api.content.MoveFile:output_type -> cloudmind.core_api.MoveFileResp
+	88,  // 90: cloudmind.core_api.content.SaveFileToPrivateSpace:output_type -> cloudmind.core_api.SaveFileToPrivateSpaceResp
+	89,  // 91: cloudmind.core_api.content.AddFileToPublicSpace:output_type -> cloudmind.core_api.AddFileToPublicSpaceResp
+	15,  // 92: cloudmind.core_api.content.CompletelyRemoveFile:output_type -> cloudmind.core_api.CompletelyRemoveFileReq
+	90,  // 93: cloudmind.core_api.content.DeleteFile:output_type -> cloudmind.core_api.DeleteFileResp
+	91,  // 94: cloudmind.core_api.content.RecoverRecycleBinFile:output_type -> cloudmind.core_api.RecoverRecycleBinFileResp
+	92,  // 95: cloudmind.core_api.content.CreateZone:output_type -> cloudmind.core_api.CreateZoneResp
+	93,  // 96: cloudmind.core_api.content.UpdateZone:output_type -> cloudmind.core_api.UpdateZoneResp
+	94,  // 97: cloudmind.core_api.content.GetZone:output_type -> cloudmind.core_api.GetZoneResp
+	95,  // 98: cloudmind.core_api.content.DeleteZone:output_type -> cloudmind.core_api.DeleteZoneResp
+	96,  // 99: cloudmind.core_api.content.CreateShareCode:output_type -> cloudmind.core_api.CreateShareCodeResp
+	97,  // 100: cloudmind.core_api.content.GetShareList:output_type -> cloudmind.core_api.GetShareListResp
+	98,  // 101: cloudmind.core_api.content.DeleteShareCode:output_type -> cloudmind.core_api.DeleteShareCodeResp
+	99,  // 102: cloudmind.core_api.content.ParsingShareCode:output_type -> cloudmind.core_api.ParsingShareCodeResp
+	100, // 103: cloudmind.core_api.content.AskUploadFile:output_type -> cloudmind.core_api.AskUploadFileResp
+	101, // 104: cloudmind.core_api.content.AskDownloadFile:output_type -> cloudmind.core_api.AskDownloadFileResp
+	102, // 105: cloudmind.core_api.content.CreatePost:output_type -> cloudmind.core_api.CreatePostResp
+	103, // 106: cloudmind.core_api.content.DeletePost:output_type -> cloudmind.core_api.DeletePostResp
+	104, // 107: cloudmind.core_api.content.UpdatePost:output_type -> cloudmind.core_api.UpdatePostResp
+	105, // 108: cloudmind.core_api.content.GetPosts:output_type -> cloudmind.core_api.GetPostsResp
+	106, // 109: cloudmind.core_api.content.GetPost:output_type -> cloudmind.core_api.GetPostResp
+	107, // 110: cloudmind.core_api.content.GetRecommendByUser:output_type -> cloudmind.core_api.GetRecommendByUserResp
+	108, // 111: cloudmind.core_api.content.GetRecommendByItem:output_type -> cloudmind.core_api.GetRecommendByItemResp
+	109, // 112: cloudmind.core_api.content.CreateFeedBack:output_type -> cloudmind.core_api.CreateFeedBackResp
+	110, // 113: cloudmind.core_api.content.GetPopularRecommend:output_type -> cloudmind.core_api.GetPopularRecommendResp
+	111, // 114: cloudmind.core_api.content.GetLatestRecommend:output_type -> cloudmind.core_api.GetLatestRecommendResp
+	112, // 115: cloudmind.core_api.content.CreateProduct:output_type -> cloudmind.core_api.CreateProductResp
+	113, // 116: cloudmind.core_api.content.GetProduct:output_type -> cloudmind.core_api.GetProductResp
+	114, // 117: cloudmind.core_api.content.GetProducts:output_type -> cloudmind.core_api.GetProductsResp
+	115, // 118: cloudmind.core_api.content.UpdateProduct:output_type -> cloudmind.core_api.UpdateProductResp
+	116, // 119: cloudmind.core_api.content.DeleteProduct:output_type -> cloudmind.core_api.DeleteProductResp
+	117, // 120: cloudmind.core_api.auth.Register:output_type -> cloudmind.core_api.RegisterResp
+	118, // 121: cloudmind.core_api.auth.CheckEmail:output_type -> cloudmind.core_api.CheckEmailResp
+	119, // 122: cloudmind.core_api.auth.EmailLogin:output_type -> cloudmind.core_api.EmailLoginResp
+	120, // 123: cloudmind.core_api.auth.GithubLogin:output_type -> cloudmind.core_api.GithubLoginResp
+	121, // 124: cloudmind.core_api.auth.GiteeLogin:output_type -> cloudmind.core_api.GiteeLoginResp
+	122, // 125: cloudmind.core_api.auth.RefreshToken:output_type -> cloudmind.core_api.RefreshTokenResp
+	123, // 126: cloudmind.core_api.auth.SendEmail:output_type -> cloudmind.core_api.SendEmailResp
+	124, // 127: cloudmind.core_api.auth.SetPasswordByEmail:output_type -> cloudmind.core_api.SetPasswordByEmailResp
+	51,  // 128: cloudmind.core_api.auth.SetPasswordByPassword:output_type -> cloudmind.core_api.SetPasswordByPasswordReq
+	125, // 129: cloudmind.core_api.relation.CreateRelation:output_type -> cloudmind.core_api.CreateRelationResp
+	126, // 130: cloudmind.core_api.relation.GetFromRelations:output_type -> cloudmind.core_api.GetFromRelationsResp
+	127, // 131: cloudmind.core_api.relation.GetToRelations:output_type -> cloudmind.core_api.GetToRelationsResp
+	128, // 132: cloudmind.core_api.relation.GetRelation:output_type -> cloudmind.core_api.GetRelationResp
+	129, // 133: cloudmind.core_api.relation.DeleteRelation:output_type -> cloudmind.core_api.DeleteRelationResp
+	130, // 134: cloudmind.core_api.system.GetNotifications:output_type -> cloudmind.core_api.GetNotificationsResp
+	131, // 135: cloudmind.core_api.system.GetNotificationCount:output_type -> cloudmind.core_api.GetNotificationCountResp
+	132, // 136: cloudmind.core_api.system.UpdateNotifications:output_type -> cloudmind.core_api.UpdateNotificationsResp
+	133, // 137: cloudmind.core_api.comment.CreateComment:output_type -> cloudmind.core_api.CreateCommentResp
+	134, // 138: cloudmind.core_api.comment.GetComment:output_type -> cloudmind.core_api.GetCommentResp
+	135, // 139: cloudmind.core_api.comment.GetComments:output_type -> cloudmind.core_api.GetCommentsResp
+	136, // 140: cloudmind.core_api.comment.DeleteComment:output_type -> cloudmind.core_api.DeleteCommentResp
+	137, // 141: cloudmind.core_api.comment.UpdateComment:output_type -> cloudmind.core_api.UpdateCommentResp
+	138, // 142: cloudmind.core_api.comment.SetCommentAttrs:output_type -> cloudmind.core_api.SetCommentAttrsResp
+	139, // 143: cloudmind.core_api.comment.GetCommentSubject:output_type -> cloudmind.core_api.GetCommentSubjectResp
+	140, // 144: cloudmind.core_api.comment.UpdateCommentSubject:output_type -> cloudmind.core_api.UpdateCommentSubjectResp
+	141, // 145: cloudmind.core_api.comment.DeleteCommentSubject:output_type -> cloudmind.core_api.DeleteCommentSubjectResp
+	142, // 146: cloudmind.core_api.label.CreateLabel:output_type -> cloudmind.core_api.CreateLabelResp
+	143, // 147: cloudmind.core_api.label.DeleteLabel:output_type -> cloudmind.core_api.DeleteLabelResp
+	144, // 148: cloudmind.core_api.label.UpdateLabel:output_type -> cloudmind.core_api.UpdateLabelResp
+	145, // 149: cloudmind.core_api.label.GetLabels:output_type -> cloudmind.core_api.GetLabelsResp
+	146, // 150: cloudmind.core_api.label.GetLabel:output_type -> cloudmind.core_api.GetLabelResp
+	147, // 151: cloudmind.core_api.label.GetLabelsInBatch:output_type -> cloudmind.core_api.GetLabelsInBatchResp
+	76,  // [76:152] is the sub-list for method output_type
+	0,   // [0:76] is the sub-list for method input_type
 	0,   // [0:0] is the sub-list for extension type_name
 	0,   // [0:0] is the sub-list for extension extendee
 	0,   // [0:0] is the sub-list for field type_name
@@ -1074,7 +1061,6 @@ type Comment interface {
 	UpdateComment(ctx context.Context, req *UpdateCommentReq) (res *UpdateCommentResp, err error)
 	SetCommentAttrs(ctx context.Context, req *SetCommentAttrsReq) (res *SetCommentAttrsResp, err error)
 	GetCommentSubject(ctx context.Context, req *GetCommentSubjectReq) (res *GetCommentSubjectResp, err error)
-	CreateCommentSubject(ctx context.Context, req *CreateCommentSubjectReq) (res *CreateCommentSubjectResp, err error)
 	UpdateCommentSubject(ctx context.Context, req *UpdateCommentSubjectReq) (res *UpdateCommentSubjectResp, err error)
 	DeleteCommentSubject(ctx context.Context, req *DeleteCommentSubjectReq) (res *DeleteCommentSubjectResp, err error)
 }

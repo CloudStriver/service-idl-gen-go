@@ -41,6 +41,7 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"UpdateZone":             kitex.NewMethodInfo(updateZoneHandler, newUpdateZoneArgs, newUpdateZoneResult, false),
 		"DeleteZone":             kitex.NewMethodInfo(deleteZoneHandler, newDeleteZoneArgs, newDeleteZoneResult, false),
 		"GetShareList":           kitex.NewMethodInfo(getShareListHandler, newGetShareListArgs, newGetShareListResult, false),
+		"CheckShareFile":         kitex.NewMethodInfo(checkShareFileHandler, newCheckShareFileArgs, newCheckShareFileResult, false),
 		"CreateShareCode":        kitex.NewMethodInfo(createShareCodeHandler, newCreateShareCodeArgs, newCreateShareCodeResult, false),
 		"UpdateShareCode":        kitex.NewMethodInfo(updateShareCodeHandler, newUpdateShareCodeArgs, newUpdateShareCodeResult, false),
 		"DeleteShareCode":        kitex.NewMethodInfo(deleteShareCodeHandler, newDeleteShareCodeArgs, newDeleteShareCodeResult, false),
@@ -3151,6 +3152,159 @@ func (p *GetShareListResult) IsSetSuccess() bool {
 }
 
 func (p *GetShareListResult) GetResult() interface{} {
+	return p.Success
+}
+
+func checkShareFileHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.CheckShareFileReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).CheckShareFile(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *CheckShareFileArgs:
+		success, err := handler.(content.ContentService).CheckShareFile(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*CheckShareFileResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newCheckShareFileArgs() interface{} {
+	return &CheckShareFileArgs{}
+}
+
+func newCheckShareFileResult() interface{} {
+	return &CheckShareFileResult{}
+}
+
+type CheckShareFileArgs struct {
+	Req *content.CheckShareFileReq
+}
+
+func (p *CheckShareFileArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.CheckShareFileReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *CheckShareFileArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *CheckShareFileArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *CheckShareFileArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *CheckShareFileArgs) Unmarshal(in []byte) error {
+	msg := new(content.CheckShareFileReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var CheckShareFileArgs_Req_DEFAULT *content.CheckShareFileReq
+
+func (p *CheckShareFileArgs) GetReq() *content.CheckShareFileReq {
+	if !p.IsSetReq() {
+		return CheckShareFileArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *CheckShareFileArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *CheckShareFileArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type CheckShareFileResult struct {
+	Success *content.CheckShareFileResp
+}
+
+var CheckShareFileResult_Success_DEFAULT *content.CheckShareFileResp
+
+func (p *CheckShareFileResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.CheckShareFileResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *CheckShareFileResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *CheckShareFileResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *CheckShareFileResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *CheckShareFileResult) Unmarshal(in []byte) error {
+	msg := new(content.CheckShareFileResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *CheckShareFileResult) GetSuccess() *content.CheckShareFileResp {
+	if !p.IsSetSuccess() {
+		return CheckShareFileResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *CheckShareFileResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.CheckShareFileResp)
+}
+
+func (p *CheckShareFileResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *CheckShareFileResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -9020,6 +9174,16 @@ func (p *kClient) GetShareList(ctx context.Context, Req *content.GetShareListReq
 	_args.Req = Req
 	var _result GetShareListResult
 	if err = p.c.Call(ctx, "GetShareList", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CheckShareFile(ctx context.Context, Req *content.CheckShareFileReq) (r *content.CheckShareFileResp, err error) {
+	var _args CheckShareFileArgs
+	_args.Req = Req
+	var _result CheckShareFileResult
+	if err = p.c.Call(ctx, "CheckShareFile", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

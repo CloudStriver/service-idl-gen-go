@@ -790,100 +790,6 @@ func (x *GetCommentSubjectResp) GetSubject() *SubjectDetails {
 	return nil
 }
 
-type CreateCommentSubjectReq struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Subject *Subject `protobuf:"bytes,1,opt,name=subject,proto3" json:"subject,omitempty"`
-}
-
-func (x *CreateCommentSubjectReq) Reset() {
-	*x = CreateCommentSubjectReq{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_comment_proto_msgTypes[14]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *CreateCommentSubjectReq) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateCommentSubjectReq) ProtoMessage() {}
-
-func (x *CreateCommentSubjectReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_comment_proto_msgTypes[14]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateCommentSubjectReq.ProtoReflect.Descriptor instead.
-func (*CreateCommentSubjectReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{14}
-}
-
-func (x *CreateCommentSubjectReq) GetSubject() *Subject {
-	if x != nil {
-		return x.Subject
-	}
-	return nil
-}
-
-type CreateCommentSubjectResp struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	SubjectId string `protobuf:"bytes,1,opt,name=subjectId,proto3" json:"subjectId,omitempty"`
-}
-
-func (x *CreateCommentSubjectResp) Reset() {
-	*x = CreateCommentSubjectResp{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_comment_proto_msgTypes[15]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *CreateCommentSubjectResp) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateCommentSubjectResp) ProtoMessage() {}
-
-func (x *CreateCommentSubjectResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_comment_proto_msgTypes[15]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateCommentSubjectResp.ProtoReflect.Descriptor instead.
-func (*CreateCommentSubjectResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{15}
-}
-
-func (x *CreateCommentSubjectResp) GetSubjectId() string {
-	if x != nil {
-		return x.SubjectId
-	}
-	return ""
-}
-
 type UpdateCommentSubjectReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -895,7 +801,7 @@ type UpdateCommentSubjectReq struct {
 func (x *UpdateCommentSubjectReq) Reset() {
 	*x = UpdateCommentSubjectReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_comment_proto_msgTypes[16]
+		mi := &file_cloudmind_core_api_comment_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -908,7 +814,7 @@ func (x *UpdateCommentSubjectReq) String() string {
 func (*UpdateCommentSubjectReq) ProtoMessage() {}
 
 func (x *UpdateCommentSubjectReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_comment_proto_msgTypes[16]
+	mi := &file_cloudmind_core_api_comment_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -921,7 +827,7 @@ func (x *UpdateCommentSubjectReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateCommentSubjectReq.ProtoReflect.Descriptor instead.
 func (*UpdateCommentSubjectReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{16}
+	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *UpdateCommentSubjectReq) GetSubject() *Subject {
@@ -940,7 +846,7 @@ type UpdateCommentSubjectResp struct {
 func (x *UpdateCommentSubjectResp) Reset() {
 	*x = UpdateCommentSubjectResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_comment_proto_msgTypes[17]
+		mi := &file_cloudmind_core_api_comment_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -953,7 +859,7 @@ func (x *UpdateCommentSubjectResp) String() string {
 func (*UpdateCommentSubjectResp) ProtoMessage() {}
 
 func (x *UpdateCommentSubjectResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_comment_proto_msgTypes[17]
+	mi := &file_cloudmind_core_api_comment_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -966,7 +872,7 @@ func (x *UpdateCommentSubjectResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateCommentSubjectResp.ProtoReflect.Descriptor instead.
 func (*UpdateCommentSubjectResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{17}
+	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{15}
 }
 
 type DeleteCommentSubjectReq struct {
@@ -980,7 +886,7 @@ type DeleteCommentSubjectReq struct {
 func (x *DeleteCommentSubjectReq) Reset() {
 	*x = DeleteCommentSubjectReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_comment_proto_msgTypes[18]
+		mi := &file_cloudmind_core_api_comment_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -993,7 +899,7 @@ func (x *DeleteCommentSubjectReq) String() string {
 func (*DeleteCommentSubjectReq) ProtoMessage() {}
 
 func (x *DeleteCommentSubjectReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_comment_proto_msgTypes[18]
+	mi := &file_cloudmind_core_api_comment_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1006,7 +912,7 @@ func (x *DeleteCommentSubjectReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteCommentSubjectReq.ProtoReflect.Descriptor instead.
 func (*DeleteCommentSubjectReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{18}
+	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *DeleteCommentSubjectReq) GetId() string {
@@ -1025,7 +931,7 @@ type DeleteCommentSubjectResp struct {
 func (x *DeleteCommentSubjectResp) Reset() {
 	*x = DeleteCommentSubjectResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_comment_proto_msgTypes[19]
+		mi := &file_cloudmind_core_api_comment_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1038,7 +944,7 @@ func (x *DeleteCommentSubjectResp) String() string {
 func (*DeleteCommentSubjectResp) ProtoMessage() {}
 
 func (x *DeleteCommentSubjectResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_comment_proto_msgTypes[19]
+	mi := &file_cloudmind_core_api_comment_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1051,7 +957,7 @@ func (x *DeleteCommentSubjectResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteCommentSubjectResp.ProtoReflect.Descriptor instead.
 func (*DeleteCommentSubjectResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{19}
+	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{17}
 }
 
 type CreateLabelReq struct {
@@ -1065,7 +971,7 @@ type CreateLabelReq struct {
 func (x *CreateLabelReq) Reset() {
 	*x = CreateLabelReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_comment_proto_msgTypes[20]
+		mi := &file_cloudmind_core_api_comment_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1078,7 +984,7 @@ func (x *CreateLabelReq) String() string {
 func (*CreateLabelReq) ProtoMessage() {}
 
 func (x *CreateLabelReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_comment_proto_msgTypes[20]
+	mi := &file_cloudmind_core_api_comment_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1091,7 +997,7 @@ func (x *CreateLabelReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateLabelReq.ProtoReflect.Descriptor instead.
 func (*CreateLabelReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{20}
+	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *CreateLabelReq) GetLabel() *Label {
@@ -1112,7 +1018,7 @@ type CreateLabelResp struct {
 func (x *CreateLabelResp) Reset() {
 	*x = CreateLabelResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_comment_proto_msgTypes[21]
+		mi := &file_cloudmind_core_api_comment_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1125,7 +1031,7 @@ func (x *CreateLabelResp) String() string {
 func (*CreateLabelResp) ProtoMessage() {}
 
 func (x *CreateLabelResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_comment_proto_msgTypes[21]
+	mi := &file_cloudmind_core_api_comment_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1138,7 +1044,7 @@ func (x *CreateLabelResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateLabelResp.ProtoReflect.Descriptor instead.
 func (*CreateLabelResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{21}
+	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *CreateLabelResp) GetLabelId() string {
@@ -1159,7 +1065,7 @@ type DeleteLabelReq struct {
 func (x *DeleteLabelReq) Reset() {
 	*x = DeleteLabelReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_comment_proto_msgTypes[22]
+		mi := &file_cloudmind_core_api_comment_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1172,7 +1078,7 @@ func (x *DeleteLabelReq) String() string {
 func (*DeleteLabelReq) ProtoMessage() {}
 
 func (x *DeleteLabelReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_comment_proto_msgTypes[22]
+	mi := &file_cloudmind_core_api_comment_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1185,7 +1091,7 @@ func (x *DeleteLabelReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteLabelReq.ProtoReflect.Descriptor instead.
 func (*DeleteLabelReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{22}
+	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *DeleteLabelReq) GetLabelId() string {
@@ -1204,7 +1110,7 @@ type DeleteLabelResp struct {
 func (x *DeleteLabelResp) Reset() {
 	*x = DeleteLabelResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_comment_proto_msgTypes[23]
+		mi := &file_cloudmind_core_api_comment_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1217,7 +1123,7 @@ func (x *DeleteLabelResp) String() string {
 func (*DeleteLabelResp) ProtoMessage() {}
 
 func (x *DeleteLabelResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_comment_proto_msgTypes[23]
+	mi := &file_cloudmind_core_api_comment_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1230,7 +1136,7 @@ func (x *DeleteLabelResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteLabelResp.ProtoReflect.Descriptor instead.
 func (*DeleteLabelResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{23}
+	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{21}
 }
 
 type GetLabelReq struct {
@@ -1244,7 +1150,7 @@ type GetLabelReq struct {
 func (x *GetLabelReq) Reset() {
 	*x = GetLabelReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_comment_proto_msgTypes[24]
+		mi := &file_cloudmind_core_api_comment_proto_msgTypes[22]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1257,7 +1163,7 @@ func (x *GetLabelReq) String() string {
 func (*GetLabelReq) ProtoMessage() {}
 
 func (x *GetLabelReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_comment_proto_msgTypes[24]
+	mi := &file_cloudmind_core_api_comment_proto_msgTypes[22]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1270,7 +1176,7 @@ func (x *GetLabelReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetLabelReq.ProtoReflect.Descriptor instead.
 func (*GetLabelReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{24}
+	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *GetLabelReq) GetLabelId() string {
@@ -1291,7 +1197,7 @@ type GetLabelResp struct {
 func (x *GetLabelResp) Reset() {
 	*x = GetLabelResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_comment_proto_msgTypes[25]
+		mi := &file_cloudmind_core_api_comment_proto_msgTypes[23]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1304,7 +1210,7 @@ func (x *GetLabelResp) String() string {
 func (*GetLabelResp) ProtoMessage() {}
 
 func (x *GetLabelResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_comment_proto_msgTypes[25]
+	mi := &file_cloudmind_core_api_comment_proto_msgTypes[23]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1317,7 +1223,7 @@ func (x *GetLabelResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetLabelResp.ProtoReflect.Descriptor instead.
 func (*GetLabelResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{25}
+	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *GetLabelResp) GetLabel() *Label {
@@ -1338,7 +1244,7 @@ type UpdateLabelReq struct {
 func (x *UpdateLabelReq) Reset() {
 	*x = UpdateLabelReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_comment_proto_msgTypes[26]
+		mi := &file_cloudmind_core_api_comment_proto_msgTypes[24]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1351,7 +1257,7 @@ func (x *UpdateLabelReq) String() string {
 func (*UpdateLabelReq) ProtoMessage() {}
 
 func (x *UpdateLabelReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_comment_proto_msgTypes[26]
+	mi := &file_cloudmind_core_api_comment_proto_msgTypes[24]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1364,7 +1270,7 @@ func (x *UpdateLabelReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateLabelReq.ProtoReflect.Descriptor instead.
 func (*UpdateLabelReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{26}
+	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *UpdateLabelReq) GetLabel() *Label {
@@ -1383,7 +1289,7 @@ type UpdateLabelResp struct {
 func (x *UpdateLabelResp) Reset() {
 	*x = UpdateLabelResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_comment_proto_msgTypes[27]
+		mi := &file_cloudmind_core_api_comment_proto_msgTypes[25]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1396,7 +1302,7 @@ func (x *UpdateLabelResp) String() string {
 func (*UpdateLabelResp) ProtoMessage() {}
 
 func (x *UpdateLabelResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_comment_proto_msgTypes[27]
+	mi := &file_cloudmind_core_api_comment_proto_msgTypes[25]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1409,7 +1315,7 @@ func (x *UpdateLabelResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateLabelResp.ProtoReflect.Descriptor instead.
 func (*UpdateLabelResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{27}
+	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{25}
 }
 
 type GetLabelsReq struct {
@@ -1427,7 +1333,7 @@ type GetLabelsReq struct {
 func (x *GetLabelsReq) Reset() {
 	*x = GetLabelsReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_comment_proto_msgTypes[28]
+		mi := &file_cloudmind_core_api_comment_proto_msgTypes[26]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1440,7 +1346,7 @@ func (x *GetLabelsReq) String() string {
 func (*GetLabelsReq) ProtoMessage() {}
 
 func (x *GetLabelsReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_comment_proto_msgTypes[28]
+	mi := &file_cloudmind_core_api_comment_proto_msgTypes[26]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1453,7 +1359,7 @@ func (x *GetLabelsReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetLabelsReq.ProtoReflect.Descriptor instead.
 func (*GetLabelsReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{28}
+	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *GetLabelsReq) GetKey() string {
@@ -1504,7 +1410,7 @@ type GetLabelsResp struct {
 func (x *GetLabelsResp) Reset() {
 	*x = GetLabelsResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_comment_proto_msgTypes[29]
+		mi := &file_cloudmind_core_api_comment_proto_msgTypes[27]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1517,7 +1423,7 @@ func (x *GetLabelsResp) String() string {
 func (*GetLabelsResp) ProtoMessage() {}
 
 func (x *GetLabelsResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_comment_proto_msgTypes[29]
+	mi := &file_cloudmind_core_api_comment_proto_msgTypes[27]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1530,7 +1436,7 @@ func (x *GetLabelsResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetLabelsResp.ProtoReflect.Descriptor instead.
 func (*GetLabelsResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{29}
+	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *GetLabelsResp) GetLabels() []*Label {
@@ -1565,7 +1471,7 @@ type GetLabelsInBatchReq struct {
 func (x *GetLabelsInBatchReq) Reset() {
 	*x = GetLabelsInBatchReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_comment_proto_msgTypes[30]
+		mi := &file_cloudmind_core_api_comment_proto_msgTypes[28]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1578,7 +1484,7 @@ func (x *GetLabelsInBatchReq) String() string {
 func (*GetLabelsInBatchReq) ProtoMessage() {}
 
 func (x *GetLabelsInBatchReq) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_comment_proto_msgTypes[30]
+	mi := &file_cloudmind_core_api_comment_proto_msgTypes[28]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1591,7 +1497,7 @@ func (x *GetLabelsInBatchReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetLabelsInBatchReq.ProtoReflect.Descriptor instead.
 func (*GetLabelsInBatchReq) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{30}
+	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *GetLabelsInBatchReq) GetLabelIds() []string {
@@ -1612,7 +1518,7 @@ type GetLabelsInBatchResp struct {
 func (x *GetLabelsInBatchResp) Reset() {
 	*x = GetLabelsInBatchResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cloudmind_core_api_comment_proto_msgTypes[31]
+		mi := &file_cloudmind_core_api_comment_proto_msgTypes[29]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1625,7 +1531,7 @@ func (x *GetLabelsInBatchResp) String() string {
 func (*GetLabelsInBatchResp) ProtoMessage() {}
 
 func (x *GetLabelsInBatchResp) ProtoReflect() protoreflect.Message {
-	mi := &file_cloudmind_core_api_comment_proto_msgTypes[31]
+	mi := &file_cloudmind_core_api_comment_proto_msgTypes[29]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1638,7 +1544,7 @@ func (x *GetLabelsInBatchResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetLabelsInBatchResp.ProtoReflect.Descriptor instead.
 func (*GetLabelsInBatchResp) Descriptor() ([]byte, []int) {
-	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{31}
+	return file_cloudmind_core_api_comment_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *GetLabelsInBatchResp) GetLabels() []*Label {
@@ -1754,82 +1660,74 @@ var file_cloudmind_core_api_comment_proto_rawDesc = []byte{
 	0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e,
 	0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74,
 	0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x52, 0x07, 0x73, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74,
-	0x22, 0x50, 0x0a, 0x17, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e,
+	0x22, 0x50, 0x0a, 0x17, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e,
 	0x74, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x52, 0x65, 0x71, 0x12, 0x35, 0x0a, 0x07, 0x73,
 	0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x63,
 	0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70,
 	0x69, 0x2e, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x52, 0x07, 0x73, 0x75, 0x62, 0x6a, 0x65,
-	0x63, 0x74, 0x22, 0x38, 0x0a, 0x18, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d,
-	0x65, 0x6e, 0x74, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x52, 0x65, 0x73, 0x70, 0x12, 0x1c,
-	0x0a, 0x09, 0x73, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x09, 0x73, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x64, 0x22, 0x50, 0x0a, 0x17,
-	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x75, 0x62,
-	0x6a, 0x65, 0x63, 0x74, 0x52, 0x65, 0x71, 0x12, 0x35, 0x0a, 0x07, 0x73, 0x75, 0x62, 0x6a, 0x65,
-	0x63, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64,
-	0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x53, 0x75,
-	0x62, 0x6a, 0x65, 0x63, 0x74, 0x52, 0x07, 0x73, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x22, 0x1a,
-	0x0a, 0x18, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x53,
-	0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x52, 0x65, 0x73, 0x70, 0x22, 0x29, 0x0a, 0x17, 0x44, 0x65,
-	0x6c, 0x65, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x75, 0x62, 0x6a, 0x65,
-	0x63, 0x74, 0x52, 0x65, 0x71, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x1a, 0x0a, 0x18, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x43,
-	0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x52, 0x65, 0x73,
-	0x70, 0x22, 0x41, 0x0a, 0x0e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c,
-	0x52, 0x65, 0x71, 0x12, 0x2f, 0x0a, 0x05, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63,
-	0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52, 0x05, 0x6c,
-	0x61, 0x62, 0x65, 0x6c, 0x22, 0x2b, 0x0a, 0x0f, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4c, 0x61,
-	0x62, 0x65, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x12, 0x18, 0x0a, 0x07, 0x6c, 0x61, 0x62, 0x65, 0x6c,
+	0x63, 0x74, 0x22, 0x1a, 0x0a, 0x18, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d,
+	0x65, 0x6e, 0x74, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x52, 0x65, 0x73, 0x70, 0x22, 0x29,
+	0x0a, 0x17, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x53,
+	0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x52, 0x65, 0x71, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x1a, 0x0a, 0x18, 0x44, 0x65, 0x6c,
+	0x65, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63,
+	0x74, 0x52, 0x65, 0x73, 0x70, 0x22, 0x41, 0x0a, 0x0e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4c,
+	0x61, 0x62, 0x65, 0x6c, 0x52, 0x65, 0x71, 0x12, 0x2f, 0x0a, 0x05, 0x6c, 0x61, 0x62, 0x65, 0x6c,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69,
+	0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x4c, 0x61, 0x62, 0x65,
+	0x6c, 0x52, 0x05, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x22, 0x2b, 0x0a, 0x0f, 0x43, 0x72, 0x65, 0x61,
+	0x74, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x12, 0x18, 0x0a, 0x07, 0x6c,
+	0x61, 0x62, 0x65, 0x6c, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6c, 0x61,
+	0x62, 0x65, 0x6c, 0x49, 0x64, 0x22, 0x2a, 0x0a, 0x0e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4c,
+	0x61, 0x62, 0x65, 0x6c, 0x52, 0x65, 0x71, 0x12, 0x18, 0x0a, 0x07, 0x6c, 0x61, 0x62, 0x65, 0x6c,
 	0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x49,
-	0x64, 0x22, 0x2a, 0x0a, 0x0e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c,
+	0x64, 0x22, 0x11, 0x0a, 0x0f, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c,
+	0x52, 0x65, 0x73, 0x70, 0x22, 0x27, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c,
 	0x52, 0x65, 0x71, 0x12, 0x18, 0x0a, 0x07, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x49, 0x64, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x49, 0x64, 0x22, 0x11, 0x0a,
-	0x0f, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52, 0x65, 0x73, 0x70,
-	0x22, 0x27, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52, 0x65, 0x71, 0x12,
-	0x18, 0x0a, 0x07, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x07, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x49, 0x64, 0x22, 0x3f, 0x0a, 0x0c, 0x47, 0x65, 0x74,
-	0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x12, 0x2f, 0x0a, 0x05, 0x6c, 0x61, 0x62,
-	0x65, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64,
-	0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x4c, 0x61,
-	0x62, 0x65, 0x6c, 0x52, 0x05, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x22, 0x41, 0x0a, 0x0e, 0x55, 0x70,
-	0x64, 0x61, 0x74, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52, 0x65, 0x71, 0x12, 0x2f, 0x0a, 0x05,
-	0x6c, 0x61, 0x62, 0x65, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6c,
-	0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69,
-	0x2e, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52, 0x05, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x22, 0x11, 0x0a,
-	0x0f, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52, 0x65, 0x73, 0x70,
-	0x22, 0xcc, 0x01, 0x0a, 0x0c, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x52, 0x65,
-	0x71, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03,
-	0x6b, 0x65, 0x79, 0x12, 0x19, 0x0a, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x18, 0x02, 0x20, 0x01,
-	0x28, 0x03, 0x48, 0x00, 0x52, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x88, 0x01, 0x01, 0x12, 0x21,
-	0x0a, 0x09, 0x6c, 0x61, 0x73, 0x74, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28,
-	0x09, 0x48, 0x01, 0x52, 0x09, 0x6c, 0x61, 0x73, 0x74, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x88, 0x01,
-	0x01, 0x12, 0x1f, 0x0a, 0x08, 0x62, 0x61, 0x63, 0x6b, 0x77, 0x61, 0x72, 0x64, 0x18, 0x04, 0x20,
-	0x01, 0x28, 0x08, 0x48, 0x02, 0x52, 0x08, 0x62, 0x61, 0x63, 0x6b, 0x77, 0x61, 0x72, 0x64, 0x88,
-	0x01, 0x01, 0x12, 0x1b, 0x0a, 0x06, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x18, 0x05, 0x20, 0x01,
-	0x28, 0x03, 0x48, 0x03, 0x52, 0x06, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x88, 0x01, 0x01, 0x42,
-	0x08, 0x0a, 0x06, 0x5f, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x42, 0x0c, 0x0a, 0x0a, 0x5f, 0x6c, 0x61,
-	0x73, 0x74, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x42, 0x0b, 0x0a, 0x09, 0x5f, 0x62, 0x61, 0x63, 0x6b,
-	0x77, 0x61, 0x72, 0x64, 0x42, 0x09, 0x0a, 0x07, 0x5f, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x22,
-	0x6e, 0x0a, 0x0d, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x52, 0x65, 0x73, 0x70,
-	0x12, 0x31, 0x0a, 0x06, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
-	0x32, 0x19, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72,
-	0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52, 0x06, 0x6c, 0x61, 0x62,
-	0x65, 0x6c, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x18, 0x02, 0x20, 0x01,
-	0x28, 0x03, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x6b,
-	0x65, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x22,
-	0x31, 0x0a, 0x13, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x49, 0x6e, 0x42, 0x61,
-	0x74, 0x63, 0x68, 0x52, 0x65, 0x71, 0x12, 0x1a, 0x0a, 0x08, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x49,
-	0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x08, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x49,
-	0x64, 0x73, 0x22, 0x49, 0x0a, 0x14, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x49,
-	0x6e, 0x42, 0x61, 0x74, 0x63, 0x68, 0x52, 0x65, 0x73, 0x70, 0x12, 0x31, 0x0a, 0x06, 0x6c, 0x61,
-	0x62, 0x65, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6c, 0x6f,
-	0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e,
-	0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52, 0x06, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x42, 0x49, 0x5a,
-	0x47, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x6c, 0x6f, 0x75,
-	0x64, 0x53, 0x74, 0x72, 0x69, 0x76, 0x65, 0x72, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
-	0x2d, 0x69, 0x64, 0x6c, 0x2d, 0x67, 0x65, 0x6e, 0x2d, 0x67, 0x6f, 0x2f, 0x6b, 0x69, 0x74, 0x65,
-	0x78, 0x5f, 0x67, 0x65, 0x6e, 0x2f, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2f,
-	0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x49, 0x64, 0x22, 0x3f, 0x0a,
+	0x0c, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x12, 0x2f, 0x0a,
+	0x05, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63,
+	0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70,
+	0x69, 0x2e, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52, 0x05, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x22, 0x41,
+	0x0a, 0x0e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52, 0x65, 0x71,
+	0x12, 0x2f, 0x0a, 0x05, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x19, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65,
+	0x5f, 0x61, 0x70, 0x69, 0x2e, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52, 0x05, 0x6c, 0x61, 0x62, 0x65,
+	0x6c, 0x22, 0x11, 0x0a, 0x0f, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c,
+	0x52, 0x65, 0x73, 0x70, 0x22, 0xcc, 0x01, 0x0a, 0x0c, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65,
+	0x6c, 0x73, 0x52, 0x65, 0x71, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x19, 0x0a, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x48, 0x00, 0x52, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x88,
+	0x01, 0x01, 0x12, 0x21, 0x0a, 0x09, 0x6c, 0x61, 0x73, 0x74, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x09, 0x48, 0x01, 0x52, 0x09, 0x6c, 0x61, 0x73, 0x74, 0x54, 0x6f, 0x6b,
+	0x65, 0x6e, 0x88, 0x01, 0x01, 0x12, 0x1f, 0x0a, 0x08, 0x62, 0x61, 0x63, 0x6b, 0x77, 0x61, 0x72,
+	0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x08, 0x48, 0x02, 0x52, 0x08, 0x62, 0x61, 0x63, 0x6b, 0x77,
+	0x61, 0x72, 0x64, 0x88, 0x01, 0x01, 0x12, 0x1b, 0x0a, 0x06, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74,
+	0x18, 0x05, 0x20, 0x01, 0x28, 0x03, 0x48, 0x03, 0x52, 0x06, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74,
+	0x88, 0x01, 0x01, 0x42, 0x08, 0x0a, 0x06, 0x5f, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x42, 0x0c, 0x0a,
+	0x0a, 0x5f, 0x6c, 0x61, 0x73, 0x74, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x42, 0x0b, 0x0a, 0x09, 0x5f,
+	0x62, 0x61, 0x63, 0x6b, 0x77, 0x61, 0x72, 0x64, 0x42, 0x09, 0x0a, 0x07, 0x5f, 0x6f, 0x66, 0x66,
+	0x73, 0x65, 0x74, 0x22, 0x6e, 0x0a, 0x0d, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73,
+	0x52, 0x65, 0x73, 0x70, 0x12, 0x31, 0x0a, 0x06, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x18, 0x01,
+	0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64,
+	0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x2e, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52,
+	0x06, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x12, 0x14, 0x0a,
+	0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x74, 0x6f,
+	0x6b, 0x65, 0x6e, 0x22, 0x31, 0x0a, 0x13, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73,
+	0x49, 0x6e, 0x42, 0x61, 0x74, 0x63, 0x68, 0x52, 0x65, 0x71, 0x12, 0x1a, 0x0a, 0x08, 0x6c, 0x61,
+	0x62, 0x65, 0x6c, 0x49, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x08, 0x6c, 0x61,
+	0x62, 0x65, 0x6c, 0x49, 0x64, 0x73, 0x22, 0x49, 0x0a, 0x14, 0x47, 0x65, 0x74, 0x4c, 0x61, 0x62,
+	0x65, 0x6c, 0x73, 0x49, 0x6e, 0x42, 0x61, 0x74, 0x63, 0x68, 0x52, 0x65, 0x73, 0x70, 0x12, 0x31,
+	0x0a, 0x06, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19,
+	0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d, 0x69, 0x6e, 0x64, 0x2e, 0x63, 0x6f, 0x72, 0x65, 0x5f,
+	0x61, 0x70, 0x69, 0x2e, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52, 0x06, 0x6c, 0x61, 0x62, 0x65, 0x6c,
+	0x73, 0x42, 0x49, 0x5a, 0x47, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f,
+	0x43, 0x6c, 0x6f, 0x75, 0x64, 0x53, 0x74, 0x72, 0x69, 0x76, 0x65, 0x72, 0x2f, 0x73, 0x65, 0x72,
+	0x76, 0x69, 0x63, 0x65, 0x2d, 0x69, 0x64, 0x6c, 0x2d, 0x67, 0x65, 0x6e, 0x2d, 0x67, 0x6f, 0x2f,
+	0x6b, 0x69, 0x74, 0x65, 0x78, 0x5f, 0x67, 0x65, 0x6e, 0x2f, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x6d,
+	0x69, 0x6e, 0x64, 0x2f, 0x63, 0x6f, 0x72, 0x65, 0x5f, 0x61, 0x70, 0x69, 0x62, 0x06, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1844,7 +1742,7 @@ func file_cloudmind_core_api_comment_proto_rawDescGZIP() []byte {
 	return file_cloudmind_core_api_comment_proto_rawDescData
 }
 
-var file_cloudmind_core_api_comment_proto_msgTypes = make([]protoimpl.MessageInfo, 32)
+var file_cloudmind_core_api_comment_proto_msgTypes = make([]protoimpl.MessageInfo, 30)
 var file_cloudmind_core_api_comment_proto_goTypes = []interface{}{
 	(*CreateCommentReq)(nil),         // 0: cloudmind.core_api.CreateCommentReq
 	(*CreateCommentResp)(nil),        // 1: cloudmind.core_api.CreateCommentResp
@@ -1860,50 +1758,47 @@ var file_cloudmind_core_api_comment_proto_goTypes = []interface{}{
 	(*SetCommentAttrsResp)(nil),      // 11: cloudmind.core_api.SetCommentAttrsResp
 	(*GetCommentSubjectReq)(nil),     // 12: cloudmind.core_api.GetCommentSubjectReq
 	(*GetCommentSubjectResp)(nil),    // 13: cloudmind.core_api.GetCommentSubjectResp
-	(*CreateCommentSubjectReq)(nil),  // 14: cloudmind.core_api.CreateCommentSubjectReq
-	(*CreateCommentSubjectResp)(nil), // 15: cloudmind.core_api.CreateCommentSubjectResp
-	(*UpdateCommentSubjectReq)(nil),  // 16: cloudmind.core_api.UpdateCommentSubjectReq
-	(*UpdateCommentSubjectResp)(nil), // 17: cloudmind.core_api.UpdateCommentSubjectResp
-	(*DeleteCommentSubjectReq)(nil),  // 18: cloudmind.core_api.DeleteCommentSubjectReq
-	(*DeleteCommentSubjectResp)(nil), // 19: cloudmind.core_api.DeleteCommentSubjectResp
-	(*CreateLabelReq)(nil),           // 20: cloudmind.core_api.CreateLabelReq
-	(*CreateLabelResp)(nil),          // 21: cloudmind.core_api.CreateLabelResp
-	(*DeleteLabelReq)(nil),           // 22: cloudmind.core_api.DeleteLabelReq
-	(*DeleteLabelResp)(nil),          // 23: cloudmind.core_api.DeleteLabelResp
-	(*GetLabelReq)(nil),              // 24: cloudmind.core_api.GetLabelReq
-	(*GetLabelResp)(nil),             // 25: cloudmind.core_api.GetLabelResp
-	(*UpdateLabelReq)(nil),           // 26: cloudmind.core_api.UpdateLabelReq
-	(*UpdateLabelResp)(nil),          // 27: cloudmind.core_api.UpdateLabelResp
-	(*GetLabelsReq)(nil),             // 28: cloudmind.core_api.GetLabelsReq
-	(*GetLabelsResp)(nil),            // 29: cloudmind.core_api.GetLabelsResp
-	(*GetLabelsInBatchReq)(nil),      // 30: cloudmind.core_api.GetLabelsInBatchReq
-	(*GetLabelsInBatchResp)(nil),     // 31: cloudmind.core_api.GetLabelsInBatchResp
-	(*Comment)(nil),                  // 32: cloudmind.core_api.Comment
-	(*CommentInfo)(nil),              // 33: cloudmind.core_api.CommentInfo
-	(Attrs)(0),                       // 34: cloudmind.core_api.Attrs
-	(*SubjectDetails)(nil),           // 35: cloudmind.core_api.SubjectDetails
-	(*Subject)(nil),                  // 36: cloudmind.core_api.Subject
-	(*Label)(nil),                    // 37: cloudmind.core_api.Label
+	(*UpdateCommentSubjectReq)(nil),  // 14: cloudmind.core_api.UpdateCommentSubjectReq
+	(*UpdateCommentSubjectResp)(nil), // 15: cloudmind.core_api.UpdateCommentSubjectResp
+	(*DeleteCommentSubjectReq)(nil),  // 16: cloudmind.core_api.DeleteCommentSubjectReq
+	(*DeleteCommentSubjectResp)(nil), // 17: cloudmind.core_api.DeleteCommentSubjectResp
+	(*CreateLabelReq)(nil),           // 18: cloudmind.core_api.CreateLabelReq
+	(*CreateLabelResp)(nil),          // 19: cloudmind.core_api.CreateLabelResp
+	(*DeleteLabelReq)(nil),           // 20: cloudmind.core_api.DeleteLabelReq
+	(*DeleteLabelResp)(nil),          // 21: cloudmind.core_api.DeleteLabelResp
+	(*GetLabelReq)(nil),              // 22: cloudmind.core_api.GetLabelReq
+	(*GetLabelResp)(nil),             // 23: cloudmind.core_api.GetLabelResp
+	(*UpdateLabelReq)(nil),           // 24: cloudmind.core_api.UpdateLabelReq
+	(*UpdateLabelResp)(nil),          // 25: cloudmind.core_api.UpdateLabelResp
+	(*GetLabelsReq)(nil),             // 26: cloudmind.core_api.GetLabelsReq
+	(*GetLabelsResp)(nil),            // 27: cloudmind.core_api.GetLabelsResp
+	(*GetLabelsInBatchReq)(nil),      // 28: cloudmind.core_api.GetLabelsInBatchReq
+	(*GetLabelsInBatchResp)(nil),     // 29: cloudmind.core_api.GetLabelsInBatchResp
+	(*Comment)(nil),                  // 30: cloudmind.core_api.Comment
+	(*CommentInfo)(nil),              // 31: cloudmind.core_api.CommentInfo
+	(Attrs)(0),                       // 32: cloudmind.core_api.Attrs
+	(*SubjectDetails)(nil),           // 33: cloudmind.core_api.SubjectDetails
+	(*Subject)(nil),                  // 34: cloudmind.core_api.Subject
+	(*Label)(nil),                    // 35: cloudmind.core_api.Label
 }
 var file_cloudmind_core_api_comment_proto_depIdxs = []int32{
-	32, // 0: cloudmind.core_api.CreateCommentReq.comment:type_name -> cloudmind.core_api.Comment
-	33, // 1: cloudmind.core_api.GetCommentResp.comment:type_name -> cloudmind.core_api.CommentInfo
-	33, // 2: cloudmind.core_api.GetCommentsResp.comments:type_name -> cloudmind.core_api.CommentInfo
-	32, // 3: cloudmind.core_api.UpdateCommentReq.comment:type_name -> cloudmind.core_api.Comment
-	34, // 4: cloudmind.core_api.SetCommentAttrsReq.attrs:type_name -> cloudmind.core_api.Attrs
-	35, // 5: cloudmind.core_api.GetCommentSubjectResp.subject:type_name -> cloudmind.core_api.SubjectDetails
-	36, // 6: cloudmind.core_api.CreateCommentSubjectReq.subject:type_name -> cloudmind.core_api.Subject
-	36, // 7: cloudmind.core_api.UpdateCommentSubjectReq.subject:type_name -> cloudmind.core_api.Subject
-	37, // 8: cloudmind.core_api.CreateLabelReq.label:type_name -> cloudmind.core_api.Label
-	37, // 9: cloudmind.core_api.GetLabelResp.label:type_name -> cloudmind.core_api.Label
-	37, // 10: cloudmind.core_api.UpdateLabelReq.label:type_name -> cloudmind.core_api.Label
-	37, // 11: cloudmind.core_api.GetLabelsResp.labels:type_name -> cloudmind.core_api.Label
-	37, // 12: cloudmind.core_api.GetLabelsInBatchResp.labels:type_name -> cloudmind.core_api.Label
-	13, // [13:13] is the sub-list for method output_type
-	13, // [13:13] is the sub-list for method input_type
-	13, // [13:13] is the sub-list for extension type_name
-	13, // [13:13] is the sub-list for extension extendee
-	0,  // [0:13] is the sub-list for field type_name
+	30, // 0: cloudmind.core_api.CreateCommentReq.comment:type_name -> cloudmind.core_api.Comment
+	31, // 1: cloudmind.core_api.GetCommentResp.comment:type_name -> cloudmind.core_api.CommentInfo
+	31, // 2: cloudmind.core_api.GetCommentsResp.comments:type_name -> cloudmind.core_api.CommentInfo
+	30, // 3: cloudmind.core_api.UpdateCommentReq.comment:type_name -> cloudmind.core_api.Comment
+	32, // 4: cloudmind.core_api.SetCommentAttrsReq.attrs:type_name -> cloudmind.core_api.Attrs
+	33, // 5: cloudmind.core_api.GetCommentSubjectResp.subject:type_name -> cloudmind.core_api.SubjectDetails
+	34, // 6: cloudmind.core_api.UpdateCommentSubjectReq.subject:type_name -> cloudmind.core_api.Subject
+	35, // 7: cloudmind.core_api.CreateLabelReq.label:type_name -> cloudmind.core_api.Label
+	35, // 8: cloudmind.core_api.GetLabelResp.label:type_name -> cloudmind.core_api.Label
+	35, // 9: cloudmind.core_api.UpdateLabelReq.label:type_name -> cloudmind.core_api.Label
+	35, // 10: cloudmind.core_api.GetLabelsResp.labels:type_name -> cloudmind.core_api.Label
+	35, // 11: cloudmind.core_api.GetLabelsInBatchResp.labels:type_name -> cloudmind.core_api.Label
+	12, // [12:12] is the sub-list for method output_type
+	12, // [12:12] is the sub-list for method input_type
+	12, // [12:12] is the sub-list for extension type_name
+	12, // [12:12] is the sub-list for extension extendee
+	0,  // [0:12] is the sub-list for field type_name
 }
 
 func init() { file_cloudmind_core_api_comment_proto_init() }
@@ -2082,30 +1977,6 @@ func file_cloudmind_core_api_comment_proto_init() {
 			}
 		}
 		file_cloudmind_core_api_comment_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateCommentSubjectReq); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_cloudmind_core_api_comment_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateCommentSubjectResp); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_cloudmind_core_api_comment_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UpdateCommentSubjectReq); i {
 			case 0:
 				return &v.state
@@ -2117,7 +1988,7 @@ func file_cloudmind_core_api_comment_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_core_api_comment_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_core_api_comment_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UpdateCommentSubjectResp); i {
 			case 0:
 				return &v.state
@@ -2129,7 +2000,7 @@ func file_cloudmind_core_api_comment_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_core_api_comment_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_core_api_comment_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DeleteCommentSubjectReq); i {
 			case 0:
 				return &v.state
@@ -2141,7 +2012,7 @@ func file_cloudmind_core_api_comment_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_core_api_comment_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_core_api_comment_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DeleteCommentSubjectResp); i {
 			case 0:
 				return &v.state
@@ -2153,7 +2024,7 @@ func file_cloudmind_core_api_comment_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_core_api_comment_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_core_api_comment_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*CreateLabelReq); i {
 			case 0:
 				return &v.state
@@ -2165,7 +2036,7 @@ func file_cloudmind_core_api_comment_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_core_api_comment_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_core_api_comment_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*CreateLabelResp); i {
 			case 0:
 				return &v.state
@@ -2177,7 +2048,7 @@ func file_cloudmind_core_api_comment_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_core_api_comment_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_core_api_comment_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DeleteLabelReq); i {
 			case 0:
 				return &v.state
@@ -2189,7 +2060,7 @@ func file_cloudmind_core_api_comment_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_core_api_comment_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_core_api_comment_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DeleteLabelResp); i {
 			case 0:
 				return &v.state
@@ -2201,7 +2072,7 @@ func file_cloudmind_core_api_comment_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_core_api_comment_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_core_api_comment_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetLabelReq); i {
 			case 0:
 				return &v.state
@@ -2213,7 +2084,7 @@ func file_cloudmind_core_api_comment_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_core_api_comment_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_core_api_comment_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetLabelResp); i {
 			case 0:
 				return &v.state
@@ -2225,7 +2096,7 @@ func file_cloudmind_core_api_comment_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_core_api_comment_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_core_api_comment_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UpdateLabelReq); i {
 			case 0:
 				return &v.state
@@ -2237,7 +2108,7 @@ func file_cloudmind_core_api_comment_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_core_api_comment_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_core_api_comment_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UpdateLabelResp); i {
 			case 0:
 				return &v.state
@@ -2249,7 +2120,7 @@ func file_cloudmind_core_api_comment_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_core_api_comment_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_core_api_comment_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetLabelsReq); i {
 			case 0:
 				return &v.state
@@ -2261,7 +2132,7 @@ func file_cloudmind_core_api_comment_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_core_api_comment_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_core_api_comment_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetLabelsResp); i {
 			case 0:
 				return &v.state
@@ -2273,7 +2144,7 @@ func file_cloudmind_core_api_comment_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_core_api_comment_proto_msgTypes[30].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_core_api_comment_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetLabelsInBatchReq); i {
 			case 0:
 				return &v.state
@@ -2285,7 +2156,7 @@ func file_cloudmind_core_api_comment_proto_init() {
 				return nil
 			}
 		}
-		file_cloudmind_core_api_comment_proto_msgTypes[31].Exporter = func(v interface{}, i int) interface{} {
+		file_cloudmind_core_api_comment_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetLabelsInBatchResp); i {
 			case 0:
 				return &v.state
@@ -2299,14 +2170,14 @@ func file_cloudmind_core_api_comment_proto_init() {
 		}
 	}
 	file_cloudmind_core_api_comment_proto_msgTypes[4].OneofWrappers = []interface{}{}
-	file_cloudmind_core_api_comment_proto_msgTypes[28].OneofWrappers = []interface{}{}
+	file_cloudmind_core_api_comment_proto_msgTypes[26].OneofWrappers = []interface{}{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_cloudmind_core_api_comment_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   32,
+			NumMessages:   30,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

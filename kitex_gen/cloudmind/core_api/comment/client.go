@@ -18,7 +18,6 @@ type Client interface {
 	UpdateComment(ctx context.Context, Req *core_api.UpdateCommentReq, callOptions ...callopt.Option) (r *core_api.UpdateCommentResp, err error)
 	SetCommentAttrs(ctx context.Context, Req *core_api.SetCommentAttrsReq, callOptions ...callopt.Option) (r *core_api.SetCommentAttrsResp, err error)
 	GetCommentSubject(ctx context.Context, Req *core_api.GetCommentSubjectReq, callOptions ...callopt.Option) (r *core_api.GetCommentSubjectResp, err error)
-	CreateCommentSubject(ctx context.Context, Req *core_api.CreateCommentSubjectReq, callOptions ...callopt.Option) (r *core_api.CreateCommentSubjectResp, err error)
 	UpdateCommentSubject(ctx context.Context, Req *core_api.UpdateCommentSubjectReq, callOptions ...callopt.Option) (r *core_api.UpdateCommentSubjectResp, err error)
 	DeleteCommentSubject(ctx context.Context, Req *core_api.DeleteCommentSubjectReq, callOptions ...callopt.Option) (r *core_api.DeleteCommentSubjectResp, err error)
 }
@@ -85,11 +84,6 @@ func (p *kCommentClient) SetCommentAttrs(ctx context.Context, Req *core_api.SetC
 func (p *kCommentClient) GetCommentSubject(ctx context.Context, Req *core_api.GetCommentSubjectReq, callOptions ...callopt.Option) (r *core_api.GetCommentSubjectResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetCommentSubject(ctx, Req)
-}
-
-func (p *kCommentClient) CreateCommentSubject(ctx context.Context, Req *core_api.CreateCommentSubjectReq, callOptions ...callopt.Option) (r *core_api.CreateCommentSubjectResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.CreateCommentSubject(ctx, Req)
 }
 
 func (p *kCommentClient) UpdateCommentSubject(ctx context.Context, Req *core_api.UpdateCommentSubjectReq, callOptions ...callopt.Option) (r *core_api.UpdateCommentSubjectResp, err error) {
