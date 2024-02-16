@@ -891,6 +891,11 @@ func (x *User) FastRead(buf []byte, _type int8, number int32) (offset int, err e
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 10:
+		offset, err = x.fastReadField10(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -946,6 +951,16 @@ func (x *User) fastReadField8(buf []byte, _type int8) (offset int, err error) {
 
 func (x *User) fastReadField9(buf []byte, _type int8) (offset int, err error) {
 	x.Url, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *User) fastReadField10(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Labels = append(x.Labels, v)
 	return offset, err
 }
 
@@ -2614,6 +2629,7 @@ func (x *User) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField7(buf[offset:])
 	offset += x.fastWriteField8(buf[offset:])
 	offset += x.fastWriteField9(buf[offset:])
+	offset += x.fastWriteField10(buf[offset:])
 	return offset
 }
 
@@ -2686,6 +2702,16 @@ func (x *User) fastWriteField9(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 9, x.GetUrl())
+	return offset
+}
+
+func (x *User) fastWriteField10(buf []byte) (offset int) {
+	if len(x.Labels) == 0 {
+		return offset
+	}
+	for i := range x.GetLabels() {
+		offset += fastpb.WriteString(buf[offset:], 10, x.GetLabels()[i])
+	}
 	return offset
 }
 
@@ -4130,6 +4156,7 @@ func (x *User) Size() (n int) {
 	n += x.sizeField7()
 	n += x.sizeField8()
 	n += x.sizeField9()
+	n += x.sizeField10()
 	return n
 }
 
@@ -4202,6 +4229,16 @@ func (x *User) sizeField9() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(9, x.GetUrl())
+	return n
+}
+
+func (x *User) sizeField10() (n int) {
+	if len(x.Labels) == 0 {
+		return n
+	}
+	for i := range x.GetLabels() {
+		n += fastpb.SizeString(10, x.GetLabels()[i])
+	}
 	return n
 }
 
@@ -5070,15 +5107,16 @@ var fieldIDToName_ShareFileFilterOptions = map[int32]string{
 }
 
 var fieldIDToName_User = map[int32]string{
-	1: "UserId",
-	2: "Name",
-	3: "Sex",
-	4: "FullName",
-	5: "IdCard",
-	6: "CreateTime",
-	7: "UpdateTime",
-	8: "Description",
-	9: "Url",
+	1:  "UserId",
+	2:  "Name",
+	3:  "Sex",
+	4:  "FullName",
+	5:  "IdCard",
+	6:  "CreateTime",
+	7:  "UpdateTime",
+	8:  "Description",
+	9:  "Url",
+	10: "Labels",
 }
 
 var fieldIDToName_Post = map[int32]string{
