@@ -89,6 +89,11 @@ func (x *RecommendUser) FastRead(buf []byte, _type int8, number int32) (offset i
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 6:
+		offset, err = x.fastReadField6(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -124,6 +129,16 @@ func (x *RecommendUser) fastReadField4(buf []byte, _type int8) (offset int, err 
 
 func (x *RecommendUser) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	x.Description, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *RecommendUser) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Labels = append(x.Labels, v)
 	return offset, err
 }
 
@@ -2695,6 +2710,7 @@ func (x *RecommendUser) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
 	offset += x.fastWriteField5(buf[offset:])
+	offset += x.fastWriteField6(buf[offset:])
 	return offset
 }
 
@@ -2735,6 +2751,16 @@ func (x *RecommendUser) fastWriteField5(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 5, x.GetDescription())
+	return offset
+}
+
+func (x *RecommendUser) fastWriteField6(buf []byte) (offset int) {
+	if len(x.Labels) == 0 {
+		return offset
+	}
+	for i := range x.GetLabels() {
+		offset += fastpb.WriteString(buf[offset:], 6, x.GetLabels()[i])
+	}
 	return offset
 }
 
@@ -4763,6 +4789,7 @@ func (x *RecommendUser) Size() (n int) {
 	n += x.sizeField3()
 	n += x.sizeField4()
 	n += x.sizeField5()
+	n += x.sizeField6()
 	return n
 }
 
@@ -4803,6 +4830,16 @@ func (x *RecommendUser) sizeField5() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(5, x.GetDescription())
+	return n
+}
+
+func (x *RecommendUser) sizeField6() (n int) {
+	if len(x.Labels) == 0 {
+		return n
+	}
+	for i := range x.GetLabels() {
+		n += fastpb.SizeString(6, x.GetLabels()[i])
+	}
 	return n
 }
 
@@ -6800,6 +6837,7 @@ var fieldIDToName_RecommendUser = map[int32]string{
 	3: "Url",
 	4: "FollowCount",
 	5: "Description",
+	6: "Labels",
 }
 
 var fieldIDToName_UserDetail = map[int32]string{

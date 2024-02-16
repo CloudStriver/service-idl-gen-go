@@ -2191,11 +2191,6 @@ func (x *GetUsersResp) FastRead(buf []byte, _type int8, number int32) (offset in
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 3:
-		offset, err = x.fastReadField3(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -2220,11 +2215,6 @@ func (x *GetUsersResp) fastReadField1(buf []byte, _type int8) (offset int, err e
 }
 
 func (x *GetUsersResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.Total, offset, err = fastpb.ReadInt64(buf, _type)
-	return offset, err
-}
-
-func (x *GetUsersResp) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	x.LastToken, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
@@ -5942,7 +5932,6 @@ func (x *GetUsersResp) FastWrite(buf []byte) (offset int) {
 	}
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
-	offset += x.fastWriteField3(buf[offset:])
 	return offset
 }
 
@@ -5957,18 +5946,10 @@ func (x *GetUsersResp) fastWriteField1(buf []byte) (offset int) {
 }
 
 func (x *GetUsersResp) fastWriteField2(buf []byte) (offset int) {
-	if x.Total == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetTotal())
-	return offset
-}
-
-func (x *GetUsersResp) fastWriteField3(buf []byte) (offset int) {
 	if x.LastToken == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 3, x.GetLastToken())
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetLastToken())
 	return offset
 }
 
@@ -8955,7 +8936,6 @@ func (x *GetUsersResp) Size() (n int) {
 	}
 	n += x.sizeField1()
 	n += x.sizeField2()
-	n += x.sizeField3()
 	return n
 }
 
@@ -8970,18 +8950,10 @@ func (x *GetUsersResp) sizeField1() (n int) {
 }
 
 func (x *GetUsersResp) sizeField2() (n int) {
-	if x.Total == 0 {
-		return n
-	}
-	n += fastpb.SizeInt64(2, x.GetTotal())
-	return n
-}
-
-func (x *GetUsersResp) sizeField3() (n int) {
 	if x.LastToken == "" {
 		return n
 	}
-	n += fastpb.SizeString(3, x.GetLastToken())
+	n += fastpb.SizeString(2, x.GetLastToken())
 	return n
 }
 
@@ -10764,8 +10736,7 @@ var fieldIDToName_GetUsersReq = map[int32]string{
 
 var fieldIDToName_GetUsersResp = map[int32]string{
 	1: "Users",
-	2: "Total",
-	3: "LastToken",
+	2: "LastToken",
 }
 
 var fieldIDToName_CreateUserReq = map[int32]string{
