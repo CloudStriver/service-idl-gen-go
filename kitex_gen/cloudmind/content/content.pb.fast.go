@@ -2786,6 +2786,66 @@ func (x *GetPostsResp) fastReadField3(buf []byte, _type int8) (offset int, err e
 	return offset, err
 }
 
+func (x *GetPostsByPostIdsReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetPostsByPostIdsReq[number], err)
+}
+
+func (x *GetPostsByPostIdsReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.PostIds = append(x.PostIds, v)
+	return offset, err
+}
+
+func (x *GetPostsByPostIdsResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetPostsByPostIdsResp[number], err)
+}
+
+func (x *GetPostsByPostIdsResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v Post
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Posts = append(x.Posts, &v)
+	return offset, nil
+}
+
 func (x *CreateProductReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
@@ -6401,6 +6461,42 @@ func (x *GetPostsResp) fastWriteField3(buf []byte) (offset int) {
 	return offset
 }
 
+func (x *GetPostsByPostIdsReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *GetPostsByPostIdsReq) fastWriteField1(buf []byte) (offset int) {
+	if len(x.PostIds) == 0 {
+		return offset
+	}
+	for i := range x.GetPostIds() {
+		offset += fastpb.WriteString(buf[offset:], 1, x.GetPostIds()[i])
+	}
+	return offset
+}
+
+func (x *GetPostsByPostIdsResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *GetPostsByPostIdsResp) fastWriteField1(buf []byte) (offset int) {
+	if x.Posts == nil {
+		return offset
+	}
+	for i := range x.GetPosts() {
+		offset += fastpb.WriteMessage(buf[offset:], 1, x.GetPosts()[i])
+	}
+	return offset
+}
+
 func (x *CreateProductReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -9448,6 +9544,42 @@ func (x *GetPostsResp) sizeField3() (n int) {
 	return n
 }
 
+func (x *GetPostsByPostIdsReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *GetPostsByPostIdsReq) sizeField1() (n int) {
+	if len(x.PostIds) == 0 {
+		return n
+	}
+	for i := range x.GetPostIds() {
+		n += fastpb.SizeString(1, x.GetPostIds()[i])
+	}
+	return n
+}
+
+func (x *GetPostsByPostIdsResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *GetPostsByPostIdsResp) sizeField1() (n int) {
+	if x.Posts == nil {
+		return n
+	}
+	for i := range x.GetPosts() {
+		n += fastpb.SizeMessage(1, x.GetPosts()[i])
+	}
+	return n
+}
+
 func (x *CreateProductReq) Size() (n int) {
 	if x == nil {
 		return n
@@ -10939,6 +11071,14 @@ var fieldIDToName_GetPostsResp = map[int32]string{
 	1: "Posts",
 	2: "Total",
 	3: "Token",
+}
+
+var fieldIDToName_GetPostsByPostIdsReq = map[int32]string{
+	1: "PostIds",
+}
+
+var fieldIDToName_GetPostsByPostIdsResp = map[int32]string{
+	1: "Posts",
 }
 
 var fieldIDToName_CreateProductReq = map[int32]string{

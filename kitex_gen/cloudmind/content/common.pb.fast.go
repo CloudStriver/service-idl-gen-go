@@ -1106,16 +1106,6 @@ func (x *PostFilterOptions) FastRead(buf []byte, _type int8, number int32) (offs
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 7:
-		offset, err = x.fastReadField7(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 8:
-		offset, err = x.fastReadField8(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -1137,33 +1127,17 @@ func (x *PostFilterOptions) fastReadField1(buf []byte, _type int8) (offset int, 
 
 func (x *PostFilterOptions) fastReadField2(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadString(buf, _type)
-	x.OnlyPostId = &tmp
-	return offset, err
-}
-
-func (x *PostFilterOptions) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	var v string
-	v, offset, err = fastpb.ReadString(buf, _type)
-	if err != nil {
-		return offset, err
-	}
-	x.OnlyPostIds = append(x.OnlyPostIds, v)
-	return offset, err
-}
-
-func (x *PostFilterOptions) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadString(buf, _type)
 	x.OnlyTitle = &tmp
 	return offset, err
 }
 
-func (x *PostFilterOptions) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+func (x *PostFilterOptions) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadString(buf, _type)
 	x.OnlyText = &tmp
 	return offset, err
 }
 
-func (x *PostFilterOptions) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+func (x *PostFilterOptions) fastReadField4(buf []byte, _type int8) (offset int, err error) {
 	var v string
 	v, offset, err = fastpb.ReadString(buf, _type)
 	if err != nil {
@@ -1173,13 +1147,13 @@ func (x *PostFilterOptions) fastReadField6(buf []byte, _type int8) (offset int, 
 	return offset, err
 }
 
-func (x *PostFilterOptions) fastReadField7(buf []byte, _type int8) (offset int, err error) {
+func (x *PostFilterOptions) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
 	x.OnlySetRelation = &tmp
 	return offset, err
 }
 
-func (x *PostFilterOptions) fastReadField8(buf []byte, _type int8) (offset int, err error) {
+func (x *PostFilterOptions) fastReadField6(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
 	x.OnlyStatus = &tmp
 	return offset, err
@@ -2815,8 +2789,6 @@ func (x *PostFilterOptions) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField4(buf[offset:])
 	offset += x.fastWriteField5(buf[offset:])
 	offset += x.fastWriteField6(buf[offset:])
-	offset += x.fastWriteField7(buf[offset:])
-	offset += x.fastWriteField8(buf[offset:])
 	return offset
 }
 
@@ -2829,62 +2801,44 @@ func (x *PostFilterOptions) fastWriteField1(buf []byte) (offset int) {
 }
 
 func (x *PostFilterOptions) fastWriteField2(buf []byte) (offset int) {
-	if x.OnlyPostId == nil {
+	if x.OnlyTitle == nil {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetOnlyPostId())
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetOnlyTitle())
 	return offset
 }
 
 func (x *PostFilterOptions) fastWriteField3(buf []byte) (offset int) {
-	if len(x.OnlyPostIds) == 0 {
+	if x.OnlyText == nil {
 		return offset
 	}
-	for i := range x.GetOnlyPostIds() {
-		offset += fastpb.WriteString(buf[offset:], 3, x.GetOnlyPostIds()[i])
-	}
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetOnlyText())
 	return offset
 }
 
 func (x *PostFilterOptions) fastWriteField4(buf []byte) (offset int) {
-	if x.OnlyTitle == nil {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 4, x.GetOnlyTitle())
-	return offset
-}
-
-func (x *PostFilterOptions) fastWriteField5(buf []byte) (offset int) {
-	if x.OnlyText == nil {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 5, x.GetOnlyText())
-	return offset
-}
-
-func (x *PostFilterOptions) fastWriteField6(buf []byte) (offset int) {
 	if len(x.OnlyTags) == 0 {
 		return offset
 	}
 	for i := range x.GetOnlyTags() {
-		offset += fastpb.WriteString(buf[offset:], 6, x.GetOnlyTags()[i])
+		offset += fastpb.WriteString(buf[offset:], 4, x.GetOnlyTags()[i])
 	}
 	return offset
 }
 
-func (x *PostFilterOptions) fastWriteField7(buf []byte) (offset int) {
+func (x *PostFilterOptions) fastWriteField5(buf []byte) (offset int) {
 	if x.OnlySetRelation == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetOnlySetRelation())
+	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetOnlySetRelation())
 	return offset
 }
 
-func (x *PostFilterOptions) fastWriteField8(buf []byte) (offset int) {
+func (x *PostFilterOptions) fastWriteField6(buf []byte) (offset int) {
 	if x.OnlyStatus == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 8, x.GetOnlyStatus())
+	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetOnlyStatus())
 	return offset
 }
 
@@ -4342,8 +4296,6 @@ func (x *PostFilterOptions) Size() (n int) {
 	n += x.sizeField4()
 	n += x.sizeField5()
 	n += x.sizeField6()
-	n += x.sizeField7()
-	n += x.sizeField8()
 	return n
 }
 
@@ -4356,62 +4308,44 @@ func (x *PostFilterOptions) sizeField1() (n int) {
 }
 
 func (x *PostFilterOptions) sizeField2() (n int) {
-	if x.OnlyPostId == nil {
+	if x.OnlyTitle == nil {
 		return n
 	}
-	n += fastpb.SizeString(2, x.GetOnlyPostId())
+	n += fastpb.SizeString(2, x.GetOnlyTitle())
 	return n
 }
 
 func (x *PostFilterOptions) sizeField3() (n int) {
-	if len(x.OnlyPostIds) == 0 {
+	if x.OnlyText == nil {
 		return n
 	}
-	for i := range x.GetOnlyPostIds() {
-		n += fastpb.SizeString(3, x.GetOnlyPostIds()[i])
-	}
+	n += fastpb.SizeString(3, x.GetOnlyText())
 	return n
 }
 
 func (x *PostFilterOptions) sizeField4() (n int) {
-	if x.OnlyTitle == nil {
-		return n
-	}
-	n += fastpb.SizeString(4, x.GetOnlyTitle())
-	return n
-}
-
-func (x *PostFilterOptions) sizeField5() (n int) {
-	if x.OnlyText == nil {
-		return n
-	}
-	n += fastpb.SizeString(5, x.GetOnlyText())
-	return n
-}
-
-func (x *PostFilterOptions) sizeField6() (n int) {
 	if len(x.OnlyTags) == 0 {
 		return n
 	}
 	for i := range x.GetOnlyTags() {
-		n += fastpb.SizeString(6, x.GetOnlyTags()[i])
+		n += fastpb.SizeString(4, x.GetOnlyTags()[i])
 	}
 	return n
 }
 
-func (x *PostFilterOptions) sizeField7() (n int) {
+func (x *PostFilterOptions) sizeField5() (n int) {
 	if x.OnlySetRelation == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(7, x.GetOnlySetRelation())
+	n += fastpb.SizeInt64(5, x.GetOnlySetRelation())
 	return n
 }
 
-func (x *PostFilterOptions) sizeField8() (n int) {
+func (x *PostFilterOptions) sizeField6() (n int) {
 	if x.OnlyStatus == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(8, x.GetOnlyStatus())
+	n += fastpb.SizeInt64(6, x.GetOnlyStatus())
 	return n
 }
 
@@ -5133,13 +5067,11 @@ var fieldIDToName_Post = map[int32]string{
 
 var fieldIDToName_PostFilterOptions = map[int32]string{
 	1: "OnlyUserId",
-	2: "OnlyPostId",
-	3: "OnlyPostIds",
-	4: "OnlyTitle",
-	5: "OnlyText",
-	6: "OnlyTags",
-	7: "OnlySetRelation",
-	8: "OnlyStatus",
+	2: "OnlyTitle",
+	3: "OnlyText",
+	4: "OnlyTags",
+	5: "OnlySetRelation",
+	6: "OnlyStatus",
 }
 
 var fieldIDToName_Product = map[int32]string{

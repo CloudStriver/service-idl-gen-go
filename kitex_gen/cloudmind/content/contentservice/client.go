@@ -46,6 +46,7 @@ type Client interface {
 	UpdatePost(ctx context.Context, Req *content.UpdatePostReq, callOptions ...callopt.Option) (r *content.UpdatePostResp, err error)
 	GetPost(ctx context.Context, Req *content.GetPostReq, callOptions ...callopt.Option) (r *content.GetPostResp, err error)
 	GetPosts(ctx context.Context, Req *content.GetPostsReq, callOptions ...callopt.Option) (r *content.GetPostsResp, err error)
+	GetPostsByPostIds(ctx context.Context, Req *content.GetPostsByPostIdsReq, callOptions ...callopt.Option) (r *content.GetPostsByPostIdsResp, err error)
 	CreateProduct(ctx context.Context, Req *content.CreateProductReq, callOptions ...callopt.Option) (r *content.CreateProductResp, err error)
 	DeleteProduct(ctx context.Context, Req *content.DeleteProductReq, callOptions ...callopt.Option) (r *content.DeleteProductResp, err error)
 	UpdateProduct(ctx context.Context, Req *content.UpdateProductReq, callOptions ...callopt.Option) (r *content.UpdateProductResp, err error)
@@ -273,6 +274,11 @@ func (p *kContentServiceClient) GetPost(ctx context.Context, Req *content.GetPos
 func (p *kContentServiceClient) GetPosts(ctx context.Context, Req *content.GetPostsReq, callOptions ...callopt.Option) (r *content.GetPostsResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetPosts(ctx, Req)
+}
+
+func (p *kContentServiceClient) GetPostsByPostIds(ctx context.Context, Req *content.GetPostsByPostIdsReq, callOptions ...callopt.Option) (r *content.GetPostsByPostIdsResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetPostsByPostIds(ctx, Req)
 }
 
 func (p *kContentServiceClient) CreateProduct(ctx context.Context, Req *content.CreateProductReq, callOptions ...callopt.Option) (r *content.CreateProductResp, err error) {

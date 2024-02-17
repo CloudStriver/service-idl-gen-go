@@ -56,6 +56,7 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"UpdatePost":             kitex.NewMethodInfo(updatePostHandler, newUpdatePostArgs, newUpdatePostResult, false),
 		"GetPost":                kitex.NewMethodInfo(getPostHandler, newGetPostArgs, newGetPostResult, false),
 		"GetPosts":               kitex.NewMethodInfo(getPostsHandler, newGetPostsArgs, newGetPostsResult, false),
+		"GetPostsByPostIds":      kitex.NewMethodInfo(getPostsByPostIdsHandler, newGetPostsByPostIdsArgs, newGetPostsByPostIdsResult, false),
 		"CreateProduct":          kitex.NewMethodInfo(createProductHandler, newCreateProductArgs, newCreateProductResult, false),
 		"DeleteProduct":          kitex.NewMethodInfo(deleteProductHandler, newDeleteProductArgs, newDeleteProductResult, false),
 		"UpdateProduct":          kitex.NewMethodInfo(updateProductHandler, newUpdateProductArgs, newUpdateProductResult, false),
@@ -5450,6 +5451,159 @@ func (p *GetPostsResult) GetResult() interface{} {
 	return p.Success
 }
 
+func getPostsByPostIdsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.GetPostsByPostIdsReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).GetPostsByPostIds(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetPostsByPostIdsArgs:
+		success, err := handler.(content.ContentService).GetPostsByPostIds(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetPostsByPostIdsResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetPostsByPostIdsArgs() interface{} {
+	return &GetPostsByPostIdsArgs{}
+}
+
+func newGetPostsByPostIdsResult() interface{} {
+	return &GetPostsByPostIdsResult{}
+}
+
+type GetPostsByPostIdsArgs struct {
+	Req *content.GetPostsByPostIdsReq
+}
+
+func (p *GetPostsByPostIdsArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.GetPostsByPostIdsReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetPostsByPostIdsArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetPostsByPostIdsArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetPostsByPostIdsArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetPostsByPostIdsArgs) Unmarshal(in []byte) error {
+	msg := new(content.GetPostsByPostIdsReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetPostsByPostIdsArgs_Req_DEFAULT *content.GetPostsByPostIdsReq
+
+func (p *GetPostsByPostIdsArgs) GetReq() *content.GetPostsByPostIdsReq {
+	if !p.IsSetReq() {
+		return GetPostsByPostIdsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetPostsByPostIdsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetPostsByPostIdsArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetPostsByPostIdsResult struct {
+	Success *content.GetPostsByPostIdsResp
+}
+
+var GetPostsByPostIdsResult_Success_DEFAULT *content.GetPostsByPostIdsResp
+
+func (p *GetPostsByPostIdsResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.GetPostsByPostIdsResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetPostsByPostIdsResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetPostsByPostIdsResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetPostsByPostIdsResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetPostsByPostIdsResult) Unmarshal(in []byte) error {
+	msg := new(content.GetPostsByPostIdsResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetPostsByPostIdsResult) GetSuccess() *content.GetPostsByPostIdsResp {
+	if !p.IsSetSuccess() {
+		return GetPostsByPostIdsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetPostsByPostIdsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.GetPostsByPostIdsResp)
+}
+
+func (p *GetPostsByPostIdsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetPostsByPostIdsResult) GetResult() interface{} {
+	return p.Success
+}
+
 func createProductHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
@@ -9324,6 +9478,16 @@ func (p *kClient) GetPosts(ctx context.Context, Req *content.GetPostsReq) (r *co
 	_args.Req = Req
 	var _result GetPostsResult
 	if err = p.c.Call(ctx, "GetPosts", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetPostsByPostIds(ctx context.Context, Req *content.GetPostsByPostIdsReq) (r *content.GetPostsByPostIdsResp, err error) {
+	var _args GetPostsByPostIdsArgs
+	_args.Req = Req
+	var _result GetPostsByPostIdsResult
+	if err = p.c.Call(ctx, "GetPostsByPostIds", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
