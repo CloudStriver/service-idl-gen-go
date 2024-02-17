@@ -309,7 +309,7 @@ func (x *Comment) fastReadField8(buf []byte, _type int8) (offset int, err error)
 	if err != nil {
 		return offset, err
 	}
-	x.Tags = append(x.Tags, v)
+	x.Labels = append(x.Labels, v)
 	return offset, err
 }
 
@@ -459,7 +459,7 @@ func (x *CommentInfo) fastReadField8(buf []byte, _type int8) (offset int, err er
 	if err != nil {
 		return offset, err
 	}
-	x.Tags = append(x.Tags, v)
+	x.Labels = append(x.Labels, v)
 	return offset, err
 }
 
@@ -1062,11 +1062,11 @@ func (x *Comment) fastWriteField7(buf []byte) (offset int) {
 }
 
 func (x *Comment) fastWriteField8(buf []byte) (offset int) {
-	if len(x.Tags) == 0 {
+	if len(x.Labels) == 0 {
 		return offset
 	}
-	for i := range x.GetTags() {
-		offset += fastpb.WriteString(buf[offset:], 8, x.GetTags()[i])
+	for i := range x.GetLabels() {
+		offset += fastpb.WriteString(buf[offset:], 8, x.GetLabels()[i])
 	}
 	return offset
 }
@@ -1188,11 +1188,11 @@ func (x *CommentInfo) fastWriteField7(buf []byte) (offset int) {
 }
 
 func (x *CommentInfo) fastWriteField8(buf []byte) (offset int) {
-	if len(x.Tags) == 0 {
+	if len(x.Labels) == 0 {
 		return offset
 	}
-	for i := range x.GetTags() {
-		offset += fastpb.WriteString(buf[offset:], 8, x.GetTags()[i])
+	for i := range x.GetLabels() {
+		offset += fastpb.WriteString(buf[offset:], 8, x.GetLabels()[i])
 	}
 	return offset
 }
@@ -1734,11 +1734,11 @@ func (x *Comment) sizeField7() (n int) {
 }
 
 func (x *Comment) sizeField8() (n int) {
-	if len(x.Tags) == 0 {
+	if len(x.Labels) == 0 {
 		return n
 	}
-	for i := range x.GetTags() {
-		n += fastpb.SizeString(8, x.GetTags()[i])
+	for i := range x.GetLabels() {
+		n += fastpb.SizeString(8, x.GetLabels()[i])
 	}
 	return n
 }
@@ -1860,11 +1860,11 @@ func (x *CommentInfo) sizeField7() (n int) {
 }
 
 func (x *CommentInfo) sizeField8() (n int) {
-	if len(x.Tags) == 0 {
+	if len(x.Labels) == 0 {
 		return n
 	}
-	for i := range x.GetTags() {
-		n += fastpb.SizeString(8, x.GetTags()[i])
+	for i := range x.GetLabels() {
+		n += fastpb.SizeString(8, x.GetLabels()[i])
 	}
 	return n
 }
@@ -2215,7 +2215,7 @@ var fieldIDToName_Comment = map[int32]string{
 	5:  "Count",
 	6:  "State",
 	7:  "Attrs",
-	8:  "Tags",
+	8:  "Labels",
 	9:  "UserId",
 	10: "AtUserId",
 	11: "Content",
@@ -2231,7 +2231,7 @@ var fieldIDToName_CommentInfo = map[int32]string{
 	5:  "Count",
 	6:  "State",
 	7:  "Attrs",
-	8:  "Tags",
+	8:  "Labels",
 	9:  "UserId",
 	10: "AtUserId",
 	11: "Content",
