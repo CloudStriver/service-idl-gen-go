@@ -2126,11 +2126,6 @@ func (x *GetUsersReq) FastRead(buf []byte, _type int8, number int32) (offset int
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 2:
-		offset, err = x.fastReadField2(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	case 3:
 		offset, err = x.fastReadField3(buf, _type)
 		if err != nil {
@@ -2159,16 +2154,6 @@ func (x *GetUsersReq) fastReadField1(buf []byte, _type int8) (offset int, err er
 	return offset, nil
 }
 
-func (x *GetUsersReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	var v UserFilterOptions
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
-	if err != nil {
-		return offset, err
-	}
-	x.UserFilterOptions = &v
-	return offset, nil
-}
-
 func (x *GetUsersReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	var v basic.PaginationOptions
 	offset, err = fastpb.ReadMessage(buf, _type, &v)
@@ -2188,6 +2173,11 @@ func (x *GetUsersResp) FastRead(buf []byte, _type int8, number int32) (offset in
 		}
 	case 2:
 		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
 		if err != nil {
 			goto ReadFieldError
 		}
@@ -2215,8 +2205,73 @@ func (x *GetUsersResp) fastReadField1(buf []byte, _type int8) (offset int, err e
 }
 
 func (x *GetUsersResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.Total, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *GetUsersResp) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	x.LastToken, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
+}
+
+func (x *GetUsersByUserIdsReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetUsersByUserIdsReq[number], err)
+}
+
+func (x *GetUsersByUserIdsReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.UserIds = append(x.UserIds, v)
+	return offset, err
+}
+
+func (x *GetUsersByUserIdsResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetUsersByUserIdsResp[number], err)
+}
+
+func (x *GetUsersByUserIdsResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v User
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Users = append(x.Users, &v)
+	return offset, nil
 }
 
 func (x *CreateUserReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -6002,7 +6057,6 @@ func (x *GetUsersReq) FastWrite(buf []byte) (offset int) {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
-	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
 	return offset
 }
@@ -6012,14 +6066,6 @@ func (x *GetUsersReq) fastWriteField1(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetSearchOptions())
-	return offset
-}
-
-func (x *GetUsersReq) fastWriteField2(buf []byte) (offset int) {
-	if x.UserFilterOptions == nil {
-		return offset
-	}
-	offset += fastpb.WriteMessage(buf[offset:], 2, x.GetUserFilterOptions())
 	return offset
 }
 
@@ -6037,6 +6083,7 @@ func (x *GetUsersResp) FastWrite(buf []byte) (offset int) {
 	}
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
 	return offset
 }
 
@@ -6051,10 +6098,54 @@ func (x *GetUsersResp) fastWriteField1(buf []byte) (offset int) {
 }
 
 func (x *GetUsersResp) fastWriteField2(buf []byte) (offset int) {
+	if x.Total == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetTotal())
+	return offset
+}
+
+func (x *GetUsersResp) fastWriteField3(buf []byte) (offset int) {
 	if x.LastToken == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetLastToken())
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetLastToken())
+	return offset
+}
+
+func (x *GetUsersByUserIdsReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *GetUsersByUserIdsReq) fastWriteField1(buf []byte) (offset int) {
+	if len(x.UserIds) == 0 {
+		return offset
+	}
+	for i := range x.GetUserIds() {
+		offset += fastpb.WriteString(buf[offset:], 1, x.GetUserIds()[i])
+	}
+	return offset
+}
+
+func (x *GetUsersByUserIdsResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *GetUsersByUserIdsResp) fastWriteField1(buf []byte) (offset int) {
+	if x.Users == nil {
+		return offset
+	}
+	for i := range x.GetUsers() {
+		offset += fastpb.WriteMessage(buf[offset:], 1, x.GetUsers()[i])
+	}
 	return offset
 }
 
@@ -9085,7 +9176,6 @@ func (x *GetUsersReq) Size() (n int) {
 		return n
 	}
 	n += x.sizeField1()
-	n += x.sizeField2()
 	n += x.sizeField3()
 	return n
 }
@@ -9095,14 +9185,6 @@ func (x *GetUsersReq) sizeField1() (n int) {
 		return n
 	}
 	n += fastpb.SizeMessage(1, x.GetSearchOptions())
-	return n
-}
-
-func (x *GetUsersReq) sizeField2() (n int) {
-	if x.UserFilterOptions == nil {
-		return n
-	}
-	n += fastpb.SizeMessage(2, x.GetUserFilterOptions())
 	return n
 }
 
@@ -9120,6 +9202,7 @@ func (x *GetUsersResp) Size() (n int) {
 	}
 	n += x.sizeField1()
 	n += x.sizeField2()
+	n += x.sizeField3()
 	return n
 }
 
@@ -9134,10 +9217,54 @@ func (x *GetUsersResp) sizeField1() (n int) {
 }
 
 func (x *GetUsersResp) sizeField2() (n int) {
+	if x.Total == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(2, x.GetTotal())
+	return n
+}
+
+func (x *GetUsersResp) sizeField3() (n int) {
 	if x.LastToken == "" {
 		return n
 	}
-	n += fastpb.SizeString(2, x.GetLastToken())
+	n += fastpb.SizeString(3, x.GetLastToken())
+	return n
+}
+
+func (x *GetUsersByUserIdsReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *GetUsersByUserIdsReq) sizeField1() (n int) {
+	if len(x.UserIds) == 0 {
+		return n
+	}
+	for i := range x.GetUserIds() {
+		n += fastpb.SizeString(1, x.GetUserIds()[i])
+	}
+	return n
+}
+
+func (x *GetUsersByUserIdsResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *GetUsersByUserIdsResp) sizeField1() (n int) {
+	if x.Users == nil {
+		return n
+	}
+	for i := range x.GetUsers() {
+		n += fastpb.SizeMessage(1, x.GetUsers()[i])
+	}
 	return n
 }
 
@@ -10993,13 +11120,21 @@ var fieldIDToName_GetUserResp = map[int32]string{
 
 var fieldIDToName_GetUsersReq = map[int32]string{
 	1: "SearchOptions",
-	2: "UserFilterOptions",
 	3: "PaginationOptions",
 }
 
 var fieldIDToName_GetUsersResp = map[int32]string{
 	1: "Users",
-	2: "LastToken",
+	2: "Total",
+	3: "LastToken",
+}
+
+var fieldIDToName_GetUsersByUserIdsReq = map[int32]string{
+	1: "UserIds",
+}
+
+var fieldIDToName_GetUsersByUserIdsResp = map[int32]string{
+	1: "Users",
 }
 
 var fieldIDToName_CreateUserReq = map[int32]string{

@@ -41,6 +41,7 @@ type Client interface {
 	GetUsers(ctx context.Context, Req *content.GetUsersReq, callOptions ...callopt.Option) (r *content.GetUsersResp, err error)
 	CreateUser(ctx context.Context, Req *content.CreateUserReq, callOptions ...callopt.Option) (r *content.CreateUserResp, err error)
 	DeleteUser(ctx context.Context, Req *content.DeleteUserReq, callOptions ...callopt.Option) (r *content.DeleteUserResp, err error)
+	GetUsersByUserIds(ctx context.Context, Req *content.GetUsersByUserIdsReq, callOptions ...callopt.Option) (r *content.GetUsersByUserIdsResp, err error)
 	CreatePost(ctx context.Context, Req *content.CreatePostReq, callOptions ...callopt.Option) (r *content.CreatePostResp, err error)
 	DeletePost(ctx context.Context, Req *content.DeletePostReq, callOptions ...callopt.Option) (r *content.DeletePostResp, err error)
 	UpdatePost(ctx context.Context, Req *content.UpdatePostReq, callOptions ...callopt.Option) (r *content.UpdatePostResp, err error)
@@ -249,6 +250,11 @@ func (p *kContentServiceClient) CreateUser(ctx context.Context, Req *content.Cre
 func (p *kContentServiceClient) DeleteUser(ctx context.Context, Req *content.DeleteUserReq, callOptions ...callopt.Option) (r *content.DeleteUserResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.DeleteUser(ctx, Req)
+}
+
+func (p *kContentServiceClient) GetUsersByUserIds(ctx context.Context, Req *content.GetUsersByUserIdsReq, callOptions ...callopt.Option) (r *content.GetUsersByUserIdsResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetUsersByUserIds(ctx, Req)
 }
 
 func (p *kContentServiceClient) CreatePost(ctx context.Context, Req *content.CreatePostReq, callOptions ...callopt.Option) (r *content.CreatePostResp, err error) {

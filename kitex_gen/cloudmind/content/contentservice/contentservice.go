@@ -51,6 +51,7 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"GetUsers":               kitex.NewMethodInfo(getUsersHandler, newGetUsersArgs, newGetUsersResult, false),
 		"CreateUser":             kitex.NewMethodInfo(createUserHandler, newCreateUserArgs, newCreateUserResult, false),
 		"DeleteUser":             kitex.NewMethodInfo(deleteUserHandler, newDeleteUserArgs, newDeleteUserResult, false),
+		"GetUsersByUserIds":      kitex.NewMethodInfo(getUsersByUserIdsHandler, newGetUsersByUserIdsArgs, newGetUsersByUserIdsResult, false),
 		"CreatePost":             kitex.NewMethodInfo(createPostHandler, newCreatePostArgs, newCreatePostResult, false),
 		"DeletePost":             kitex.NewMethodInfo(deletePostHandler, newDeletePostArgs, newDeletePostResult, false),
 		"UpdatePost":             kitex.NewMethodInfo(updatePostHandler, newUpdatePostArgs, newUpdatePostResult, false),
@@ -4683,6 +4684,159 @@ func (p *DeleteUserResult) IsSetSuccess() bool {
 }
 
 func (p *DeleteUserResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getUsersByUserIdsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.GetUsersByUserIdsReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).GetUsersByUserIds(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetUsersByUserIdsArgs:
+		success, err := handler.(content.ContentService).GetUsersByUserIds(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetUsersByUserIdsResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetUsersByUserIdsArgs() interface{} {
+	return &GetUsersByUserIdsArgs{}
+}
+
+func newGetUsersByUserIdsResult() interface{} {
+	return &GetUsersByUserIdsResult{}
+}
+
+type GetUsersByUserIdsArgs struct {
+	Req *content.GetUsersByUserIdsReq
+}
+
+func (p *GetUsersByUserIdsArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.GetUsersByUserIdsReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetUsersByUserIdsArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetUsersByUserIdsArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetUsersByUserIdsArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetUsersByUserIdsArgs) Unmarshal(in []byte) error {
+	msg := new(content.GetUsersByUserIdsReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetUsersByUserIdsArgs_Req_DEFAULT *content.GetUsersByUserIdsReq
+
+func (p *GetUsersByUserIdsArgs) GetReq() *content.GetUsersByUserIdsReq {
+	if !p.IsSetReq() {
+		return GetUsersByUserIdsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetUsersByUserIdsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetUsersByUserIdsArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetUsersByUserIdsResult struct {
+	Success *content.GetUsersByUserIdsResp
+}
+
+var GetUsersByUserIdsResult_Success_DEFAULT *content.GetUsersByUserIdsResp
+
+func (p *GetUsersByUserIdsResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.GetUsersByUserIdsResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetUsersByUserIdsResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetUsersByUserIdsResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetUsersByUserIdsResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetUsersByUserIdsResult) Unmarshal(in []byte) error {
+	msg := new(content.GetUsersByUserIdsResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetUsersByUserIdsResult) GetSuccess() *content.GetUsersByUserIdsResp {
+	if !p.IsSetSuccess() {
+		return GetUsersByUserIdsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetUsersByUserIdsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.GetUsersByUserIdsResp)
+}
+
+func (p *GetUsersByUserIdsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetUsersByUserIdsResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -9428,6 +9582,16 @@ func (p *kClient) DeleteUser(ctx context.Context, Req *content.DeleteUserReq) (r
 	_args.Req = Req
 	var _result DeleteUserResult
 	if err = p.c.Call(ctx, "DeleteUser", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetUsersByUserIds(ctx context.Context, Req *content.GetUsersByUserIdsReq) (r *content.GetUsersByUserIdsResp, err error) {
+	var _args GetUsersByUserIdsArgs
+	_args.Req = Req
+	var _result GetUsersByUserIdsResult
+	if err = p.c.Call(ctx, "GetUsersByUserIds", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
