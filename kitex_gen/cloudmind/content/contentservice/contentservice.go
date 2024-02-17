@@ -71,14 +71,14 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"UpdateOrder":            kitex.NewMethodInfo(updateOrderHandler, newUpdateOrderArgs, newUpdateOrderResult, false),
 		"GetOrder":               kitex.NewMethodInfo(getOrderHandler, newGetOrderArgs, newGetOrderResult, false),
 		"GetOrders":              kitex.NewMethodInfo(getOrdersHandler, newGetOrdersArgs, newGetOrdersResult, false),
-		"CreateItems":            kitex.NewMethodInfo(createItemsHandler, newCreateItemsArgs, newCreateItemsResult, false),
+		"CreateItem":             kitex.NewMethodInfo(createItemHandler, newCreateItemArgs, newCreateItemResult, false),
 		"UpdateItem":             kitex.NewMethodInfo(updateItemHandler, newUpdateItemArgs, newUpdateItemResult, false),
 		"DeleteItem":             kitex.NewMethodInfo(deleteItemHandler, newDeleteItemArgs, newDeleteItemResult, false),
 		"GetRecommendByUser":     kitex.NewMethodInfo(getRecommendByUserHandler, newGetRecommendByUserArgs, newGetRecommendByUserResult, false),
 		"GetRecommendByItem":     kitex.NewMethodInfo(getRecommendByItemHandler, newGetRecommendByItemArgs, newGetRecommendByItemResult, false),
 		"GetPopularRecommend":    kitex.NewMethodInfo(getPopularRecommendHandler, newGetPopularRecommendArgs, newGetPopularRecommendResult, false),
 		"GetLatestRecommend":     kitex.NewMethodInfo(getLatestRecommendHandler, newGetLatestRecommendArgs, newGetLatestRecommendResult, false),
-		"CreateFeedBacks":        kitex.NewMethodInfo(createFeedBacksHandler, newCreateFeedBacksArgs, newCreateFeedBacksResult, false),
+		"CreateFeedBack":         kitex.NewMethodInfo(createFeedBackHandler, newCreateFeedBackArgs, newCreateFeedBackResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName":     "cloudmind.content",
@@ -7745,73 +7745,73 @@ func (p *GetOrdersResult) GetResult() interface{} {
 	return p.Success
 }
 
-func createItemsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+func createItemHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(content.CreateItemsReq)
+		req := new(content.CreateItemReq)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
-		resp, err := handler.(content.ContentService).CreateItems(ctx, req)
+		resp, err := handler.(content.ContentService).CreateItem(ctx, req)
 		if err != nil {
 			return err
 		}
 		if err := st.SendMsg(resp); err != nil {
 			return err
 		}
-	case *CreateItemsArgs:
-		success, err := handler.(content.ContentService).CreateItems(ctx, s.Req)
+	case *CreateItemArgs:
+		success, err := handler.(content.ContentService).CreateItem(ctx, s.Req)
 		if err != nil {
 			return err
 		}
-		realResult := result.(*CreateItemsResult)
+		realResult := result.(*CreateItemResult)
 		realResult.Success = success
 	}
 	return nil
 }
-func newCreateItemsArgs() interface{} {
-	return &CreateItemsArgs{}
+func newCreateItemArgs() interface{} {
+	return &CreateItemArgs{}
 }
 
-func newCreateItemsResult() interface{} {
-	return &CreateItemsResult{}
+func newCreateItemResult() interface{} {
+	return &CreateItemResult{}
 }
 
-type CreateItemsArgs struct {
-	Req *content.CreateItemsReq
+type CreateItemArgs struct {
+	Req *content.CreateItemReq
 }
 
-func (p *CreateItemsArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *CreateItemArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(content.CreateItemsReq)
+		p.Req = new(content.CreateItemReq)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
 
-func (p *CreateItemsArgs) FastWrite(buf []byte) (n int) {
+func (p *CreateItemArgs) FastWrite(buf []byte) (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.FastWrite(buf)
 }
 
-func (p *CreateItemsArgs) Size() (n int) {
+func (p *CreateItemArgs) Size() (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.Size()
 }
 
-func (p *CreateItemsArgs) Marshal(out []byte) ([]byte, error) {
+func (p *CreateItemArgs) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetReq() {
 		return out, nil
 	}
 	return proto.Marshal(p.Req)
 }
 
-func (p *CreateItemsArgs) Unmarshal(in []byte) error {
-	msg := new(content.CreateItemsReq)
+func (p *CreateItemArgs) Unmarshal(in []byte) error {
+	msg := new(content.CreateItemReq)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -7819,59 +7819,59 @@ func (p *CreateItemsArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var CreateItemsArgs_Req_DEFAULT *content.CreateItemsReq
+var CreateItemArgs_Req_DEFAULT *content.CreateItemReq
 
-func (p *CreateItemsArgs) GetReq() *content.CreateItemsReq {
+func (p *CreateItemArgs) GetReq() *content.CreateItemReq {
 	if !p.IsSetReq() {
-		return CreateItemsArgs_Req_DEFAULT
+		return CreateItemArgs_Req_DEFAULT
 	}
 	return p.Req
 }
 
-func (p *CreateItemsArgs) IsSetReq() bool {
+func (p *CreateItemArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *CreateItemsArgs) GetFirstArgument() interface{} {
+func (p *CreateItemArgs) GetFirstArgument() interface{} {
 	return p.Req
 }
 
-type CreateItemsResult struct {
-	Success *content.CreateItemsResp
+type CreateItemResult struct {
+	Success *content.CreateItemResp
 }
 
-var CreateItemsResult_Success_DEFAULT *content.CreateItemsResp
+var CreateItemResult_Success_DEFAULT *content.CreateItemResp
 
-func (p *CreateItemsResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *CreateItemResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(content.CreateItemsResp)
+		p.Success = new(content.CreateItemResp)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
 
-func (p *CreateItemsResult) FastWrite(buf []byte) (n int) {
+func (p *CreateItemResult) FastWrite(buf []byte) (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.FastWrite(buf)
 }
 
-func (p *CreateItemsResult) Size() (n int) {
+func (p *CreateItemResult) Size() (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.Size()
 }
 
-func (p *CreateItemsResult) Marshal(out []byte) ([]byte, error) {
+func (p *CreateItemResult) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetSuccess() {
 		return out, nil
 	}
 	return proto.Marshal(p.Success)
 }
 
-func (p *CreateItemsResult) Unmarshal(in []byte) error {
-	msg := new(content.CreateItemsResp)
+func (p *CreateItemResult) Unmarshal(in []byte) error {
+	msg := new(content.CreateItemResp)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -7879,22 +7879,22 @@ func (p *CreateItemsResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *CreateItemsResult) GetSuccess() *content.CreateItemsResp {
+func (p *CreateItemResult) GetSuccess() *content.CreateItemResp {
 	if !p.IsSetSuccess() {
-		return CreateItemsResult_Success_DEFAULT
+		return CreateItemResult_Success_DEFAULT
 	}
 	return p.Success
 }
 
-func (p *CreateItemsResult) SetSuccess(x interface{}) {
-	p.Success = x.(*content.CreateItemsResp)
+func (p *CreateItemResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.CreateItemResp)
 }
 
-func (p *CreateItemsResult) IsSetSuccess() bool {
+func (p *CreateItemResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *CreateItemsResult) GetResult() interface{} {
+func (p *CreateItemResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -8816,73 +8816,73 @@ func (p *GetLatestRecommendResult) GetResult() interface{} {
 	return p.Success
 }
 
-func createFeedBacksHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+func createFeedBackHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(content.CreateFeedBacksReq)
+		req := new(content.CreateFeedBackReq)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
-		resp, err := handler.(content.ContentService).CreateFeedBacks(ctx, req)
+		resp, err := handler.(content.ContentService).CreateFeedBack(ctx, req)
 		if err != nil {
 			return err
 		}
 		if err := st.SendMsg(resp); err != nil {
 			return err
 		}
-	case *CreateFeedBacksArgs:
-		success, err := handler.(content.ContentService).CreateFeedBacks(ctx, s.Req)
+	case *CreateFeedBackArgs:
+		success, err := handler.(content.ContentService).CreateFeedBack(ctx, s.Req)
 		if err != nil {
 			return err
 		}
-		realResult := result.(*CreateFeedBacksResult)
+		realResult := result.(*CreateFeedBackResult)
 		realResult.Success = success
 	}
 	return nil
 }
-func newCreateFeedBacksArgs() interface{} {
-	return &CreateFeedBacksArgs{}
+func newCreateFeedBackArgs() interface{} {
+	return &CreateFeedBackArgs{}
 }
 
-func newCreateFeedBacksResult() interface{} {
-	return &CreateFeedBacksResult{}
+func newCreateFeedBackResult() interface{} {
+	return &CreateFeedBackResult{}
 }
 
-type CreateFeedBacksArgs struct {
-	Req *content.CreateFeedBacksReq
+type CreateFeedBackArgs struct {
+	Req *content.CreateFeedBackReq
 }
 
-func (p *CreateFeedBacksArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *CreateFeedBackArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(content.CreateFeedBacksReq)
+		p.Req = new(content.CreateFeedBackReq)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
 
-func (p *CreateFeedBacksArgs) FastWrite(buf []byte) (n int) {
+func (p *CreateFeedBackArgs) FastWrite(buf []byte) (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.FastWrite(buf)
 }
 
-func (p *CreateFeedBacksArgs) Size() (n int) {
+func (p *CreateFeedBackArgs) Size() (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.Size()
 }
 
-func (p *CreateFeedBacksArgs) Marshal(out []byte) ([]byte, error) {
+func (p *CreateFeedBackArgs) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetReq() {
 		return out, nil
 	}
 	return proto.Marshal(p.Req)
 }
 
-func (p *CreateFeedBacksArgs) Unmarshal(in []byte) error {
-	msg := new(content.CreateFeedBacksReq)
+func (p *CreateFeedBackArgs) Unmarshal(in []byte) error {
+	msg := new(content.CreateFeedBackReq)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -8890,59 +8890,59 @@ func (p *CreateFeedBacksArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var CreateFeedBacksArgs_Req_DEFAULT *content.CreateFeedBacksReq
+var CreateFeedBackArgs_Req_DEFAULT *content.CreateFeedBackReq
 
-func (p *CreateFeedBacksArgs) GetReq() *content.CreateFeedBacksReq {
+func (p *CreateFeedBackArgs) GetReq() *content.CreateFeedBackReq {
 	if !p.IsSetReq() {
-		return CreateFeedBacksArgs_Req_DEFAULT
+		return CreateFeedBackArgs_Req_DEFAULT
 	}
 	return p.Req
 }
 
-func (p *CreateFeedBacksArgs) IsSetReq() bool {
+func (p *CreateFeedBackArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *CreateFeedBacksArgs) GetFirstArgument() interface{} {
+func (p *CreateFeedBackArgs) GetFirstArgument() interface{} {
 	return p.Req
 }
 
-type CreateFeedBacksResult struct {
-	Success *content.CreateFeedBacksResp
+type CreateFeedBackResult struct {
+	Success *content.CreateFeedBackResp
 }
 
-var CreateFeedBacksResult_Success_DEFAULT *content.CreateFeedBacksResp
+var CreateFeedBackResult_Success_DEFAULT *content.CreateFeedBackResp
 
-func (p *CreateFeedBacksResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *CreateFeedBackResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(content.CreateFeedBacksResp)
+		p.Success = new(content.CreateFeedBackResp)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
 
-func (p *CreateFeedBacksResult) FastWrite(buf []byte) (n int) {
+func (p *CreateFeedBackResult) FastWrite(buf []byte) (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.FastWrite(buf)
 }
 
-func (p *CreateFeedBacksResult) Size() (n int) {
+func (p *CreateFeedBackResult) Size() (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.Size()
 }
 
-func (p *CreateFeedBacksResult) Marshal(out []byte) ([]byte, error) {
+func (p *CreateFeedBackResult) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetSuccess() {
 		return out, nil
 	}
 	return proto.Marshal(p.Success)
 }
 
-func (p *CreateFeedBacksResult) Unmarshal(in []byte) error {
-	msg := new(content.CreateFeedBacksResp)
+func (p *CreateFeedBackResult) Unmarshal(in []byte) error {
+	msg := new(content.CreateFeedBackResp)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -8950,22 +8950,22 @@ func (p *CreateFeedBacksResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *CreateFeedBacksResult) GetSuccess() *content.CreateFeedBacksResp {
+func (p *CreateFeedBackResult) GetSuccess() *content.CreateFeedBackResp {
 	if !p.IsSetSuccess() {
-		return CreateFeedBacksResult_Success_DEFAULT
+		return CreateFeedBackResult_Success_DEFAULT
 	}
 	return p.Success
 }
 
-func (p *CreateFeedBacksResult) SetSuccess(x interface{}) {
-	p.Success = x.(*content.CreateFeedBacksResp)
+func (p *CreateFeedBackResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.CreateFeedBackResp)
 }
 
-func (p *CreateFeedBacksResult) IsSetSuccess() bool {
+func (p *CreateFeedBackResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *CreateFeedBacksResult) GetResult() interface{} {
+func (p *CreateFeedBackResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -9479,11 +9479,11 @@ func (p *kClient) GetOrders(ctx context.Context, Req *content.GetOrdersReq) (r *
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) CreateItems(ctx context.Context, Req *content.CreateItemsReq) (r *content.CreateItemsResp, err error) {
-	var _args CreateItemsArgs
+func (p *kClient) CreateItem(ctx context.Context, Req *content.CreateItemReq) (r *content.CreateItemResp, err error) {
+	var _args CreateItemArgs
 	_args.Req = Req
-	var _result CreateItemsResult
-	if err = p.c.Call(ctx, "CreateItems", &_args, &_result); err != nil {
+	var _result CreateItemResult
+	if err = p.c.Call(ctx, "CreateItem", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
@@ -9549,11 +9549,11 @@ func (p *kClient) GetLatestRecommend(ctx context.Context, Req *content.GetLatest
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) CreateFeedBacks(ctx context.Context, Req *content.CreateFeedBacksReq) (r *content.CreateFeedBacksResp, err error) {
-	var _args CreateFeedBacksArgs
+func (p *kClient) CreateFeedBack(ctx context.Context, Req *content.CreateFeedBackReq) (r *content.CreateFeedBackResp, err error) {
+	var _args CreateFeedBackArgs
 	_args.Req = Req
-	var _result CreateFeedBacksResult
-	if err = p.c.Call(ctx, "CreateFeedBacks", &_args, &_result); err != nil {
+	var _result CreateFeedBackResult
+	if err = p.c.Call(ctx, "CreateFeedBack", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

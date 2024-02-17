@@ -3950,10 +3950,25 @@ func (x *GetOrdersResp) fastReadField3(buf []byte, _type int8) (offset int, err 
 	return offset, err
 }
 
-func (x *CreateItemsReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *CreateItemReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
 		if err != nil {
 			goto ReadFieldError
 		}
@@ -3967,20 +3982,35 @@ func (x *CreateItemsReq) FastRead(buf []byte, _type int8, number int32) (offset 
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CreateItemsReq[number], err)
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CreateItemReq[number], err)
 }
 
-func (x *CreateItemsReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v Item
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
+func (x *CreateItemReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.ItemId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *CreateItemReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.IsHidden, offset, err = fastpb.ReadBool(buf, _type)
+	return offset, err
+}
+
+func (x *CreateItemReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
 	if err != nil {
 		return offset, err
 	}
-	x.Items = append(x.Items, &v)
-	return offset, nil
+	x.Labels = append(x.Labels, v)
+	return offset, err
 }
 
-func (x *CreateItemsResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *CreateItemReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	x.Category, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *CreateItemResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
@@ -4410,10 +4440,20 @@ func (x *GetLatestRecommendResp) fastReadField1(buf []byte, _type int8) (offset 
 	return offset, err
 }
 
-func (x *CreateFeedBacksReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *CreateFeedBackReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
 		if err != nil {
 			goto ReadFieldError
 		}
@@ -4427,20 +4467,25 @@ func (x *CreateFeedBacksReq) FastRead(buf []byte, _type int8, number int32) (off
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CreateFeedBacksReq[number], err)
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CreateFeedBackReq[number], err)
 }
 
-func (x *CreateFeedBacksReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v FeedBack
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
-	if err != nil {
-		return offset, err
-	}
-	x.FeedBacks = append(x.FeedBacks, &v)
-	return offset, nil
+func (x *CreateFeedBackReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.FeedbackType, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
 }
 
-func (x *CreateFeedBacksResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *CreateFeedBackReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.UserId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *CreateFeedBackReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.ItemId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *CreateFeedBackResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
@@ -7124,25 +7169,52 @@ func (x *GetOrdersResp) fastWriteField3(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *CreateItemsReq) FastWrite(buf []byte) (offset int) {
+func (x *CreateItemReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
 	return offset
 }
 
-func (x *CreateItemsReq) fastWriteField1(buf []byte) (offset int) {
-	if x.Items == nil {
+func (x *CreateItemReq) fastWriteField1(buf []byte) (offset int) {
+	if x.ItemId == "" {
 		return offset
 	}
-	for i := range x.GetItems() {
-		offset += fastpb.WriteMessage(buf[offset:], 1, x.GetItems()[i])
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetItemId())
+	return offset
+}
+
+func (x *CreateItemReq) fastWriteField2(buf []byte) (offset int) {
+	if !x.IsHidden {
+		return offset
+	}
+	offset += fastpb.WriteBool(buf[offset:], 2, x.GetIsHidden())
+	return offset
+}
+
+func (x *CreateItemReq) fastWriteField3(buf []byte) (offset int) {
+	if len(x.Labels) == 0 {
+		return offset
+	}
+	for i := range x.GetLabels() {
+		offset += fastpb.WriteString(buf[offset:], 3, x.GetLabels()[i])
 	}
 	return offset
 }
 
-func (x *CreateItemsResp) FastWrite(buf []byte) (offset int) {
+func (x *CreateItemReq) fastWriteField4(buf []byte) (offset int) {
+	if x.Category == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetCategory())
+	return offset
+}
+
+func (x *CreateItemResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
@@ -7432,25 +7504,41 @@ func (x *GetLatestRecommendResp) fastWriteField1(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *CreateFeedBacksReq) FastWrite(buf []byte) (offset int) {
+func (x *CreateFeedBackReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
 	return offset
 }
 
-func (x *CreateFeedBacksReq) fastWriteField1(buf []byte) (offset int) {
-	if x.FeedBacks == nil {
+func (x *CreateFeedBackReq) fastWriteField1(buf []byte) (offset int) {
+	if x.FeedbackType == "" {
 		return offset
 	}
-	for i := range x.GetFeedBacks() {
-		offset += fastpb.WriteMessage(buf[offset:], 1, x.GetFeedBacks()[i])
-	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetFeedbackType())
 	return offset
 }
 
-func (x *CreateFeedBacksResp) FastWrite(buf []byte) (offset int) {
+func (x *CreateFeedBackReq) fastWriteField2(buf []byte) (offset int) {
+	if x.UserId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetUserId())
+	return offset
+}
+
+func (x *CreateFeedBackReq) fastWriteField3(buf []byte) (offset int) {
+	if x.ItemId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetItemId())
+	return offset
+}
+
+func (x *CreateFeedBackResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
@@ -10128,25 +10216,52 @@ func (x *GetOrdersResp) sizeField3() (n int) {
 	return n
 }
 
-func (x *CreateItemsReq) Size() (n int) {
+func (x *CreateItemReq) Size() (n int) {
 	if x == nil {
 		return n
 	}
 	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	n += x.sizeField4()
 	return n
 }
 
-func (x *CreateItemsReq) sizeField1() (n int) {
-	if x.Items == nil {
+func (x *CreateItemReq) sizeField1() (n int) {
+	if x.ItemId == "" {
 		return n
 	}
-	for i := range x.GetItems() {
-		n += fastpb.SizeMessage(1, x.GetItems()[i])
+	n += fastpb.SizeString(1, x.GetItemId())
+	return n
+}
+
+func (x *CreateItemReq) sizeField2() (n int) {
+	if !x.IsHidden {
+		return n
+	}
+	n += fastpb.SizeBool(2, x.GetIsHidden())
+	return n
+}
+
+func (x *CreateItemReq) sizeField3() (n int) {
+	if len(x.Labels) == 0 {
+		return n
+	}
+	for i := range x.GetLabels() {
+		n += fastpb.SizeString(3, x.GetLabels()[i])
 	}
 	return n
 }
 
-func (x *CreateItemsResp) Size() (n int) {
+func (x *CreateItemReq) sizeField4() (n int) {
+	if x.Category == "" {
+		return n
+	}
+	n += fastpb.SizeString(4, x.GetCategory())
+	return n
+}
+
+func (x *CreateItemResp) Size() (n int) {
 	if x == nil {
 		return n
 	}
@@ -10436,25 +10551,41 @@ func (x *GetLatestRecommendResp) sizeField1() (n int) {
 	return n
 }
 
-func (x *CreateFeedBacksReq) Size() (n int) {
+func (x *CreateFeedBackReq) Size() (n int) {
 	if x == nil {
 		return n
 	}
 	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
 	return n
 }
 
-func (x *CreateFeedBacksReq) sizeField1() (n int) {
-	if x.FeedBacks == nil {
+func (x *CreateFeedBackReq) sizeField1() (n int) {
+	if x.FeedbackType == "" {
 		return n
 	}
-	for i := range x.GetFeedBacks() {
-		n += fastpb.SizeMessage(1, x.GetFeedBacks()[i])
-	}
+	n += fastpb.SizeString(1, x.GetFeedbackType())
 	return n
 }
 
-func (x *CreateFeedBacksResp) Size() (n int) {
+func (x *CreateFeedBackReq) sizeField2() (n int) {
+	if x.UserId == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetUserId())
+	return n
+}
+
+func (x *CreateFeedBackReq) sizeField3() (n int) {
+	if x.ItemId == "" {
+		return n
+	}
+	n += fastpb.SizeString(3, x.GetItemId())
+	return n
+}
+
+func (x *CreateFeedBackResp) Size() (n int) {
 	if x == nil {
 		return n
 	}
@@ -10952,11 +11083,14 @@ var fieldIDToName_GetOrdersResp = map[int32]string{
 	3: "Token",
 }
 
-var fieldIDToName_CreateItemsReq = map[int32]string{
-	1: "Items",
+var fieldIDToName_CreateItemReq = map[int32]string{
+	1: "ItemId",
+	2: "IsHidden",
+	3: "Labels",
+	4: "Category",
 }
 
-var fieldIDToName_CreateItemsResp = map[int32]string{}
+var fieldIDToName_CreateItemResp = map[int32]string{}
 
 var fieldIDToName_UpdateItemReq = map[int32]string{
 	1: "ItemId",
@@ -11013,10 +11147,12 @@ var fieldIDToName_GetLatestRecommendResp = map[int32]string{
 	1: "ItemIds",
 }
 
-var fieldIDToName_CreateFeedBacksReq = map[int32]string{
-	1: "FeedBacks",
+var fieldIDToName_CreateFeedBackReq = map[int32]string{
+	1: "FeedbackType",
+	2: "UserId",
+	3: "ItemId",
 }
 
-var fieldIDToName_CreateFeedBacksResp = map[int32]string{}
+var fieldIDToName_CreateFeedBackResp = map[int32]string{}
 
 var _ = basic.File_basic_pagination_proto
