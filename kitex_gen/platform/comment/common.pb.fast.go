@@ -334,7 +334,7 @@ func (x *Comment) fastReadField12(buf []byte, _type int8) (offset int, err error
 }
 
 func (x *Comment) fastReadField13(buf []byte, _type int8) (offset int, err error) {
-	x.CreateTime, offset, err = fastpb.ReadInt64(buf, _type)
+	x.SortTime, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -1104,10 +1104,10 @@ func (x *Comment) fastWriteField12(buf []byte) (offset int) {
 }
 
 func (x *Comment) fastWriteField13(buf []byte) (offset int) {
-	if x.CreateTime == 0 {
+	if x.SortTime == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 13, x.GetCreateTime())
+	offset += fastpb.WriteInt64(buf[offset:], 13, x.GetSortTime())
 	return offset
 }
 
@@ -1776,10 +1776,10 @@ func (x *Comment) sizeField12() (n int) {
 }
 
 func (x *Comment) sizeField13() (n int) {
-	if x.CreateTime == 0 {
+	if x.SortTime == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(13, x.GetCreateTime())
+	n += fastpb.SizeInt64(13, x.GetSortTime())
 	return n
 }
 
@@ -2220,7 +2220,7 @@ var fieldIDToName_Comment = map[int32]string{
 	10: "AtUserId",
 	11: "Content",
 	12: "Meta",
-	13: "CreateTime",
+	13: "SortTime",
 }
 
 var fieldIDToName_CommentInfo = map[int32]string{

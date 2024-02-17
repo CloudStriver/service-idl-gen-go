@@ -21,23 +21,22 @@ func NewServiceInfo() *kitex.ServiceInfo {
 	serviceName := "CommentService"
 	handlerType := (*comment.CommentService)(nil)
 	methods := map[string]kitex.MethodInfo{
-		"GetComment":              kitex.NewMethodInfo(getCommentHandler, newGetCommentArgs, newGetCommentResult, false),
-		"GetCommentList":          kitex.NewMethodInfo(getCommentListHandler, newGetCommentListArgs, newGetCommentListResult, false),
-		"CreateComment":           kitex.NewMethodInfo(createCommentHandler, newCreateCommentArgs, newCreateCommentResult, false),
-		"UpdateComment":           kitex.NewMethodInfo(updateCommentHandler, newUpdateCommentArgs, newUpdateCommentResult, false),
-		"DeleteComment":           kitex.NewMethodInfo(deleteCommentHandler, newDeleteCommentArgs, newDeleteCommentResult, false),
-		"DeleteCommentWithUserId": kitex.NewMethodInfo(deleteCommentWithUserIdHandler, newDeleteCommentWithUserIdArgs, newDeleteCommentWithUserIdResult, false),
-		"SetCommentAttrs":         kitex.NewMethodInfo(setCommentAttrsHandler, newSetCommentAttrsArgs, newSetCommentAttrsResult, false),
-		"GetCommentSubject":       kitex.NewMethodInfo(getCommentSubjectHandler, newGetCommentSubjectArgs, newGetCommentSubjectResult, false),
-		"CreateCommentSubject":    kitex.NewMethodInfo(createCommentSubjectHandler, newCreateCommentSubjectArgs, newCreateCommentSubjectResult, false),
-		"UpdateCommentSubject":    kitex.NewMethodInfo(updateCommentSubjectHandler, newUpdateCommentSubjectArgs, newUpdateCommentSubjectResult, false),
-		"DeleteCommentSubject":    kitex.NewMethodInfo(deleteCommentSubjectHandler, newDeleteCommentSubjectArgs, newDeleteCommentSubjectResult, false),
-		"CreateLabel":             kitex.NewMethodInfo(createLabelHandler, newCreateLabelArgs, newCreateLabelResult, false),
-		"DeleteLabel":             kitex.NewMethodInfo(deleteLabelHandler, newDeleteLabelArgs, newDeleteLabelResult, false),
-		"GetLabel":                kitex.NewMethodInfo(getLabelHandler, newGetLabelArgs, newGetLabelResult, false),
-		"GetLabelsInBatch":        kitex.NewMethodInfo(getLabelsInBatchHandler, newGetLabelsInBatchArgs, newGetLabelsInBatchResult, false),
-		"UpdateLabel":             kitex.NewMethodInfo(updateLabelHandler, newUpdateLabelArgs, newUpdateLabelResult, false),
-		"GetLabels":               kitex.NewMethodInfo(getLabelsHandler, newGetLabelsArgs, newGetLabelsResult, false),
+		"GetComment":           kitex.NewMethodInfo(getCommentHandler, newGetCommentArgs, newGetCommentResult, false),
+		"GetCommentList":       kitex.NewMethodInfo(getCommentListHandler, newGetCommentListArgs, newGetCommentListResult, false),
+		"CreateComment":        kitex.NewMethodInfo(createCommentHandler, newCreateCommentArgs, newCreateCommentResult, false),
+		"UpdateComment":        kitex.NewMethodInfo(updateCommentHandler, newUpdateCommentArgs, newUpdateCommentResult, false),
+		"DeleteComment":        kitex.NewMethodInfo(deleteCommentHandler, newDeleteCommentArgs, newDeleteCommentResult, false),
+		"SetCommentAttrs":      kitex.NewMethodInfo(setCommentAttrsHandler, newSetCommentAttrsArgs, newSetCommentAttrsResult, false),
+		"GetCommentSubject":    kitex.NewMethodInfo(getCommentSubjectHandler, newGetCommentSubjectArgs, newGetCommentSubjectResult, false),
+		"CreateCommentSubject": kitex.NewMethodInfo(createCommentSubjectHandler, newCreateCommentSubjectArgs, newCreateCommentSubjectResult, false),
+		"UpdateCommentSubject": kitex.NewMethodInfo(updateCommentSubjectHandler, newUpdateCommentSubjectArgs, newUpdateCommentSubjectResult, false),
+		"DeleteCommentSubject": kitex.NewMethodInfo(deleteCommentSubjectHandler, newDeleteCommentSubjectArgs, newDeleteCommentSubjectResult, false),
+		"CreateLabel":          kitex.NewMethodInfo(createLabelHandler, newCreateLabelArgs, newCreateLabelResult, false),
+		"DeleteLabel":          kitex.NewMethodInfo(deleteLabelHandler, newDeleteLabelArgs, newDeleteLabelResult, false),
+		"GetLabel":             kitex.NewMethodInfo(getLabelHandler, newGetLabelArgs, newGetLabelResult, false),
+		"GetLabelsInBatch":     kitex.NewMethodInfo(getLabelsInBatchHandler, newGetLabelsInBatchArgs, newGetLabelsInBatchResult, false),
+		"UpdateLabel":          kitex.NewMethodInfo(updateLabelHandler, newUpdateLabelArgs, newUpdateLabelResult, false),
+		"GetLabels":            kitex.NewMethodInfo(getLabelsHandler, newGetLabelsArgs, newGetLabelsResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName":     "platform.comment",
@@ -816,159 +815,6 @@ func (p *DeleteCommentResult) IsSetSuccess() bool {
 }
 
 func (p *DeleteCommentResult) GetResult() interface{} {
-	return p.Success
-}
-
-func deleteCommentWithUserIdHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	switch s := arg.(type) {
-	case *streaming.Args:
-		st := s.Stream
-		req := new(comment.DeleteCommentWithUserIdReq)
-		if err := st.RecvMsg(req); err != nil {
-			return err
-		}
-		resp, err := handler.(comment.CommentService).DeleteCommentWithUserId(ctx, req)
-		if err != nil {
-			return err
-		}
-		if err := st.SendMsg(resp); err != nil {
-			return err
-		}
-	case *DeleteCommentWithUserIdArgs:
-		success, err := handler.(comment.CommentService).DeleteCommentWithUserId(ctx, s.Req)
-		if err != nil {
-			return err
-		}
-		realResult := result.(*DeleteCommentWithUserIdResult)
-		realResult.Success = success
-	}
-	return nil
-}
-func newDeleteCommentWithUserIdArgs() interface{} {
-	return &DeleteCommentWithUserIdArgs{}
-}
-
-func newDeleteCommentWithUserIdResult() interface{} {
-	return &DeleteCommentWithUserIdResult{}
-}
-
-type DeleteCommentWithUserIdArgs struct {
-	Req *comment.DeleteCommentWithUserIdReq
-}
-
-func (p *DeleteCommentWithUserIdArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetReq() {
-		p.Req = new(comment.DeleteCommentWithUserIdReq)
-	}
-	return p.Req.FastRead(buf, _type, number)
-}
-
-func (p *DeleteCommentWithUserIdArgs) FastWrite(buf []byte) (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.FastWrite(buf)
-}
-
-func (p *DeleteCommentWithUserIdArgs) Size() (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.Size()
-}
-
-func (p *DeleteCommentWithUserIdArgs) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetReq() {
-		return out, nil
-	}
-	return proto.Marshal(p.Req)
-}
-
-func (p *DeleteCommentWithUserIdArgs) Unmarshal(in []byte) error {
-	msg := new(comment.DeleteCommentWithUserIdReq)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Req = msg
-	return nil
-}
-
-var DeleteCommentWithUserIdArgs_Req_DEFAULT *comment.DeleteCommentWithUserIdReq
-
-func (p *DeleteCommentWithUserIdArgs) GetReq() *comment.DeleteCommentWithUserIdReq {
-	if !p.IsSetReq() {
-		return DeleteCommentWithUserIdArgs_Req_DEFAULT
-	}
-	return p.Req
-}
-
-func (p *DeleteCommentWithUserIdArgs) IsSetReq() bool {
-	return p.Req != nil
-}
-
-func (p *DeleteCommentWithUserIdArgs) GetFirstArgument() interface{} {
-	return p.Req
-}
-
-type DeleteCommentWithUserIdResult struct {
-	Success *comment.DeleteCommentWithUserIdResp
-}
-
-var DeleteCommentWithUserIdResult_Success_DEFAULT *comment.DeleteCommentWithUserIdResp
-
-func (p *DeleteCommentWithUserIdResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetSuccess() {
-		p.Success = new(comment.DeleteCommentWithUserIdResp)
-	}
-	return p.Success.FastRead(buf, _type, number)
-}
-
-func (p *DeleteCommentWithUserIdResult) FastWrite(buf []byte) (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.FastWrite(buf)
-}
-
-func (p *DeleteCommentWithUserIdResult) Size() (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.Size()
-}
-
-func (p *DeleteCommentWithUserIdResult) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetSuccess() {
-		return out, nil
-	}
-	return proto.Marshal(p.Success)
-}
-
-func (p *DeleteCommentWithUserIdResult) Unmarshal(in []byte) error {
-	msg := new(comment.DeleteCommentWithUserIdResp)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Success = msg
-	return nil
-}
-
-func (p *DeleteCommentWithUserIdResult) GetSuccess() *comment.DeleteCommentWithUserIdResp {
-	if !p.IsSetSuccess() {
-		return DeleteCommentWithUserIdResult_Success_DEFAULT
-	}
-	return p.Success
-}
-
-func (p *DeleteCommentWithUserIdResult) SetSuccess(x interface{}) {
-	p.Success = x.(*comment.DeleteCommentWithUserIdResp)
-}
-
-func (p *DeleteCommentWithUserIdResult) IsSetSuccess() bool {
-	return p.Success != nil
-}
-
-func (p *DeleteCommentWithUserIdResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -2710,16 +2556,6 @@ func (p *kClient) DeleteComment(ctx context.Context, Req *comment.DeleteCommentR
 	_args.Req = Req
 	var _result DeleteCommentResult
 	if err = p.c.Call(ctx, "DeleteComment", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
-}
-
-func (p *kClient) DeleteCommentWithUserId(ctx context.Context, Req *comment.DeleteCommentWithUserIdReq) (r *comment.DeleteCommentWithUserIdResp, err error) {
-	var _args DeleteCommentWithUserIdArgs
-	_args.Req = Req
-	var _result DeleteCommentWithUserIdResult
-	if err = p.c.Call(ctx, "DeleteCommentWithUserId", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

@@ -414,21 +414,6 @@ func (x *SetCommentAttrsReq) FastRead(buf []byte, _type int8, number int32) (off
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 3:
-		offset, err = x.fastReadField3(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 4:
-		offset, err = x.fastReadField4(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 5:
-		offset, err = x.fastReadField5(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -448,11 +433,6 @@ func (x *SetCommentAttrsReq) fastReadField1(buf []byte, _type int8) (offset int,
 }
 
 func (x *SetCommentAttrsReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.UserId, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *SetCommentAttrsReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	var v int32
 	v, offset, err = fastpb.ReadInt32(buf, _type)
 	if err != nil {
@@ -460,16 +440,6 @@ func (x *SetCommentAttrsReq) fastReadField3(buf []byte, _type int8) (offset int,
 	}
 	x.Attrs = Attrs(v)
 	return offset, nil
-}
-
-func (x *SetCommentAttrsReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	x.SubjectId, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *SetCommentAttrsReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	x.SortTime, offset, err = fastpb.ReadInt64(buf, _type)
-	return offset, err
 }
 
 func (x *SetCommentAttrsResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -760,13 +730,8 @@ ReadFieldError:
 }
 
 func (x *GetLabelResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v Label
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
-	if err != nil {
-		return offset, err
-	}
-	x.Label = &v
-	return offset, nil
+	x.Label, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
 }
 
 func (x *UpdateLabelReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -982,13 +947,13 @@ ReadFieldError:
 }
 
 func (x *GetLabelsInBatchResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	var v Label
-	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
 	if err != nil {
 		return offset, err
 	}
-	x.Labels = append(x.Labels, &v)
-	return offset, nil
+	x.Labels = append(x.Labels, v)
+	return offset, err
 }
 
 func (x *CreateCommentReq) FastWrite(buf []byte) (offset int) {
@@ -1258,9 +1223,6 @@ func (x *SetCommentAttrsReq) FastWrite(buf []byte) (offset int) {
 	}
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
-	offset += x.fastWriteField3(buf[offset:])
-	offset += x.fastWriteField4(buf[offset:])
-	offset += x.fastWriteField5(buf[offset:])
 	return offset
 }
 
@@ -1273,34 +1235,10 @@ func (x *SetCommentAttrsReq) fastWriteField1(buf []byte) (offset int) {
 }
 
 func (x *SetCommentAttrsReq) fastWriteField2(buf []byte) (offset int) {
-	if x.UserId == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetUserId())
-	return offset
-}
-
-func (x *SetCommentAttrsReq) fastWriteField3(buf []byte) (offset int) {
 	if x.Attrs == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt32(buf[offset:], 3, int32(x.GetAttrs()))
-	return offset
-}
-
-func (x *SetCommentAttrsReq) fastWriteField4(buf []byte) (offset int) {
-	if x.SubjectId == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 4, x.GetSubjectId())
-	return offset
-}
-
-func (x *SetCommentAttrsReq) fastWriteField5(buf []byte) (offset int) {
-	if x.SortTime == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetSortTime())
+	offset += fastpb.WriteInt32(buf[offset:], 2, int32(x.GetAttrs()))
 	return offset
 }
 
@@ -1469,10 +1407,10 @@ func (x *GetLabelResp) FastWrite(buf []byte) (offset int) {
 }
 
 func (x *GetLabelResp) fastWriteField1(buf []byte) (offset int) {
-	if x.Label == nil {
+	if x.Label == "" {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 1, x.GetLabel())
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetLabel())
 	return offset
 }
 
@@ -1614,11 +1552,11 @@ func (x *GetLabelsInBatchResp) FastWrite(buf []byte) (offset int) {
 }
 
 func (x *GetLabelsInBatchResp) fastWriteField1(buf []byte) (offset int) {
-	if x.Labels == nil {
+	if len(x.Labels) == 0 {
 		return offset
 	}
 	for i := range x.GetLabels() {
-		offset += fastpb.WriteMessage(buf[offset:], 1, x.GetLabels()[i])
+		offset += fastpb.WriteString(buf[offset:], 1, x.GetLabels()[i])
 	}
 	return offset
 }
@@ -1890,9 +1828,6 @@ func (x *SetCommentAttrsReq) Size() (n int) {
 	}
 	n += x.sizeField1()
 	n += x.sizeField2()
-	n += x.sizeField3()
-	n += x.sizeField4()
-	n += x.sizeField5()
 	return n
 }
 
@@ -1905,34 +1840,10 @@ func (x *SetCommentAttrsReq) sizeField1() (n int) {
 }
 
 func (x *SetCommentAttrsReq) sizeField2() (n int) {
-	if x.UserId == "" {
-		return n
-	}
-	n += fastpb.SizeString(2, x.GetUserId())
-	return n
-}
-
-func (x *SetCommentAttrsReq) sizeField3() (n int) {
 	if x.Attrs == 0 {
 		return n
 	}
-	n += fastpb.SizeInt32(3, int32(x.GetAttrs()))
-	return n
-}
-
-func (x *SetCommentAttrsReq) sizeField4() (n int) {
-	if x.SubjectId == "" {
-		return n
-	}
-	n += fastpb.SizeString(4, x.GetSubjectId())
-	return n
-}
-
-func (x *SetCommentAttrsReq) sizeField5() (n int) {
-	if x.SortTime == 0 {
-		return n
-	}
-	n += fastpb.SizeInt64(5, x.GetSortTime())
+	n += fastpb.SizeInt32(2, int32(x.GetAttrs()))
 	return n
 }
 
@@ -2101,10 +2012,10 @@ func (x *GetLabelResp) Size() (n int) {
 }
 
 func (x *GetLabelResp) sizeField1() (n int) {
-	if x.Label == nil {
+	if x.Label == "" {
 		return n
 	}
-	n += fastpb.SizeMessage(1, x.GetLabel())
+	n += fastpb.SizeString(1, x.GetLabel())
 	return n
 }
 
@@ -2246,11 +2157,11 @@ func (x *GetLabelsInBatchResp) Size() (n int) {
 }
 
 func (x *GetLabelsInBatchResp) sizeField1() (n int) {
-	if x.Labels == nil {
+	if len(x.Labels) == 0 {
 		return n
 	}
 	for i := range x.GetLabels() {
-		n += fastpb.SizeMessage(1, x.GetLabels()[i])
+		n += fastpb.SizeString(1, x.GetLabels()[i])
 	}
 	return n
 }
@@ -2306,10 +2217,7 @@ var fieldIDToName_DeleteCommentResp = map[int32]string{}
 
 var fieldIDToName_SetCommentAttrsReq = map[int32]string{
 	1: "CommentId",
-	2: "UserId",
-	3: "Attrs",
-	4: "SubjectId",
-	5: "SortTime",
+	2: "Attrs",
 }
 
 var fieldIDToName_SetCommentAttrsResp = map[int32]string{}
