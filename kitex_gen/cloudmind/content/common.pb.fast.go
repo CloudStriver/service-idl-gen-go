@@ -420,6 +420,11 @@ func (x *ShareFile) FastRead(buf []byte, _type int8, number int32) (offset int, 
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 9:
+		offset, err = x.fastReadField9(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -475,6 +480,11 @@ func (x *ShareFile) fastReadField8(buf []byte, _type int8) (offset int, err erro
 		return offset, err
 	}
 	x.FileList = append(x.FileList, v)
+	return offset, err
+}
+
+func (x *ShareFile) fastReadField9(buf []byte, _type int8) (offset int, err error) {
+	x.Key, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -2250,6 +2260,7 @@ func (x *ShareFile) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField6(buf[offset:])
 	offset += x.fastWriteField7(buf[offset:])
 	offset += x.fastWriteField8(buf[offset:])
+	offset += x.fastWriteField9(buf[offset:])
 	return offset
 }
 
@@ -2316,6 +2327,14 @@ func (x *ShareFile) fastWriteField8(buf []byte) (offset int) {
 	for i := range x.GetFileList() {
 		offset += fastpb.WriteString(buf[offset:], 8, x.GetFileList()[i])
 	}
+	return offset
+}
+
+func (x *ShareFile) fastWriteField9(buf []byte) (offset int) {
+	if x.Key == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 9, x.GetKey())
 	return offset
 }
 
@@ -3757,6 +3776,7 @@ func (x *ShareFile) Size() (n int) {
 	n += x.sizeField6()
 	n += x.sizeField7()
 	n += x.sizeField8()
+	n += x.sizeField9()
 	return n
 }
 
@@ -3823,6 +3843,14 @@ func (x *ShareFile) sizeField8() (n int) {
 	for i := range x.GetFileList() {
 		n += fastpb.SizeString(8, x.GetFileList()[i])
 	}
+	return n
+}
+
+func (x *ShareFile) sizeField9() (n int) {
+	if x.Key == "" {
+		return n
+	}
+	n += fastpb.SizeString(9, x.GetKey())
 	return n
 }
 
@@ -4997,6 +5025,7 @@ var fieldIDToName_ShareFile = map[int32]string{
 	6: "BrowseNumber",
 	7: "CreateAt",
 	8: "FileList",
+	9: "Key",
 }
 
 var fieldIDToName_ShareCode = map[int32]string{
