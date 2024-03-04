@@ -89,6 +89,11 @@ func (x *FileInfo) FastRead(buf []byte, _type int8, number int32) (offset int, e
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 16:
+		offset, err = x.fastReadField16(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -179,6 +184,11 @@ func (x *FileInfo) fastReadField14(buf []byte, _type int8) (offset int, err erro
 
 func (x *FileInfo) fastReadField15(buf []byte, _type int8) (offset int, err error) {
 	x.UpdateAt, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *FileInfo) fastReadField16(buf []byte, _type int8) (offset int, err error) {
+	x.DeleteAt, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -1963,6 +1973,7 @@ func (x *FileInfo) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField13(buf[offset:])
 	offset += x.fastWriteField14(buf[offset:])
 	offset += x.fastWriteField15(buf[offset:])
+	offset += x.fastWriteField16(buf[offset:])
 	return offset
 }
 
@@ -2085,6 +2096,14 @@ func (x *FileInfo) fastWriteField15(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteInt64(buf[offset:], 15, x.GetUpdateAt())
+	return offset
+}
+
+func (x *FileInfo) fastWriteField16(buf []byte) (offset int) {
+	if x.DeleteAt == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 16, x.GetDeleteAt())
 	return offset
 }
 
@@ -3479,6 +3498,7 @@ func (x *FileInfo) Size() (n int) {
 	n += x.sizeField13()
 	n += x.sizeField14()
 	n += x.sizeField15()
+	n += x.sizeField16()
 	return n
 }
 
@@ -3601,6 +3621,14 @@ func (x *FileInfo) sizeField15() (n int) {
 		return n
 	}
 	n += fastpb.SizeInt64(15, x.GetUpdateAt())
+	return n
+}
+
+func (x *FileInfo) sizeField16() (n int) {
+	if x.DeleteAt == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(16, x.GetDeleteAt())
 	return n
 }
 
@@ -4992,6 +5020,7 @@ var fieldIDToName_FileInfo = map[int32]string{
 	13: "Labels",
 	14: "CreateAt",
 	15: "UpdateAt",
+	16: "DeleteAt",
 }
 
 var fieldIDToName_File = map[int32]string{

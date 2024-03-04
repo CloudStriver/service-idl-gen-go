@@ -269,6 +269,11 @@ func (x *PrivateFile) FastRead(buf []byte, _type int8, number int32) (offset int
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 11:
+		offset, err = x.fastReadField11(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -329,6 +334,11 @@ func (x *PrivateFile) fastReadField9(buf []byte, _type int8) (offset int, err er
 
 func (x *PrivateFile) fastReadField10(buf []byte, _type int8) (offset int, err error) {
 	x.UpdateAt, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *PrivateFile) fastReadField11(buf []byte, _type int8) (offset int, err error) {
+	x.DeleteAt, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -2729,6 +2739,7 @@ func (x *PrivateFile) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField8(buf[offset:])
 	offset += x.fastWriteField9(buf[offset:])
 	offset += x.fastWriteField10(buf[offset:])
+	offset += x.fastWriteField11(buf[offset:])
 	return offset
 }
 
@@ -2809,6 +2820,14 @@ func (x *PrivateFile) fastWriteField10(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteInt64(buf[offset:], 10, x.GetUpdateAt())
+	return offset
+}
+
+func (x *PrivateFile) fastWriteField11(buf []byte) (offset int) {
+	if x.DeleteAt == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 11, x.GetDeleteAt())
 	return offset
 }
 
@@ -4709,6 +4728,7 @@ func (x *PrivateFile) Size() (n int) {
 	n += x.sizeField8()
 	n += x.sizeField9()
 	n += x.sizeField10()
+	n += x.sizeField11()
 	return n
 }
 
@@ -4789,6 +4809,14 @@ func (x *PrivateFile) sizeField10() (n int) {
 		return n
 	}
 	n += fastpb.SizeInt64(10, x.GetUpdateAt())
+	return n
+}
+
+func (x *PrivateFile) sizeField11() (n int) {
+	if x.DeleteAt == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(11, x.GetDeleteAt())
 	return n
 }
 
@@ -6552,6 +6580,7 @@ var fieldIDToName_PrivateFile = map[int32]string{
 	8:  "IsDel",
 	9:  "CreateAt",
 	10: "UpdateAt",
+	11: "DeleteAt",
 }
 
 var fieldIDToName_PublicFile = map[int32]string{
