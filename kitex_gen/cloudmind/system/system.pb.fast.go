@@ -25,8 +25,8 @@ func (x *GetNotificationsReq) FastRead(buf []byte, _type int8, number int32) (of
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 5:
-		offset, err = x.fastReadField5(buf, _type)
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
 		if err != nil {
 			goto ReadFieldError
 		}
@@ -54,7 +54,7 @@ func (x *GetNotificationsReq) fastReadField2(buf []byte, _type int8) (offset int
 	return offset, err
 }
 
-func (x *GetNotificationsReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+func (x *GetNotificationsReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	var v basic.PaginationOptions
 	offset, err = fastpb.ReadMessage(buf, _type, &v)
 	if err != nil {
@@ -199,11 +199,6 @@ func (x *GetNotificationCountReq) FastRead(buf []byte, _type int8, number int32)
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 2:
-		offset, err = x.fastReadField2(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -219,12 +214,6 @@ ReadFieldError:
 
 func (x *GetNotificationCountReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
 	x.UserId, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *GetNotificationCountReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadInt64(buf, _type)
-	x.OnlyType = &tmp
 	return offset, err
 }
 
@@ -253,7 +242,7 @@ func (x *GetNotificationCountResp) fastReadField1(buf []byte, _type int8) (offse
 	return offset, err
 }
 
-func (x *UpdateNotificationsReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *ReadNotificationsReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
@@ -275,21 +264,58 @@ func (x *UpdateNotificationsReq) FastRead(buf []byte, _type int8, number int32) 
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_UpdateNotificationsReq[number], err)
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_ReadNotificationsReq[number], err)
 }
 
-func (x *UpdateNotificationsReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+func (x *ReadNotificationsReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
 	x.UserId, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
-func (x *UpdateNotificationsReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadInt64(buf, _type)
-	x.OnlyType = &tmp
+func (x *ReadNotificationsReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.ReadCount, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
-func (x *UpdateNotificationsResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *ReadNotificationsResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+}
+
+func (x *InsertNotificationCountReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_InsertNotificationCountReq[number], err)
+}
+
+func (x *InsertNotificationCountReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.UserId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *InsertNotificationCountResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
@@ -594,7 +620,7 @@ func (x *GetNotificationsReq) FastWrite(buf []byte) (offset int) {
 	}
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
-	offset += x.fastWriteField5(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
 	return offset
 }
 
@@ -614,11 +640,11 @@ func (x *GetNotificationsReq) fastWriteField2(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *GetNotificationsReq) fastWriteField5(buf []byte) (offset int) {
+func (x *GetNotificationsReq) fastWriteField3(buf []byte) (offset int) {
 	if x.PaginationOptions == nil {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 5, x.GetPaginationOptions())
+	offset += fastpb.WriteMessage(buf[offset:], 3, x.GetPaginationOptions())
 	return offset
 }
 
@@ -722,7 +748,6 @@ func (x *GetNotificationCountReq) FastWrite(buf []byte) (offset int) {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
-	offset += x.fastWriteField2(buf[offset:])
 	return offset
 }
 
@@ -731,14 +756,6 @@ func (x *GetNotificationCountReq) fastWriteField1(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 1, x.GetUserId())
-	return offset
-}
-
-func (x *GetNotificationCountReq) fastWriteField2(buf []byte) (offset int) {
-	if x.OnlyType == nil {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetOnlyType())
 	return offset
 }
 
@@ -758,7 +775,7 @@ func (x *GetNotificationCountResp) fastWriteField1(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *UpdateNotificationsReq) FastWrite(buf []byte) (offset int) {
+func (x *ReadNotificationsReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
@@ -767,7 +784,7 @@ func (x *UpdateNotificationsReq) FastWrite(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *UpdateNotificationsReq) fastWriteField1(buf []byte) (offset int) {
+func (x *ReadNotificationsReq) fastWriteField1(buf []byte) (offset int) {
 	if x.UserId == "" {
 		return offset
 	}
@@ -775,15 +792,38 @@ func (x *UpdateNotificationsReq) fastWriteField1(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *UpdateNotificationsReq) fastWriteField2(buf []byte) (offset int) {
-	if x.OnlyType == nil {
+func (x *ReadNotificationsReq) fastWriteField2(buf []byte) (offset int) {
+	if x.ReadCount == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetOnlyType())
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetReadCount())
 	return offset
 }
 
-func (x *UpdateNotificationsResp) FastWrite(buf []byte) (offset int) {
+func (x *ReadNotificationsResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	return offset
+}
+
+func (x *InsertNotificationCountReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *InsertNotificationCountReq) fastWriteField1(buf []byte) (offset int) {
+	if x.UserId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetUserId())
+	return offset
+}
+
+func (x *InsertNotificationCountResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
@@ -998,7 +1038,7 @@ func (x *GetNotificationsReq) Size() (n int) {
 	}
 	n += x.sizeField1()
 	n += x.sizeField2()
-	n += x.sizeField5()
+	n += x.sizeField3()
 	return n
 }
 
@@ -1018,11 +1058,11 @@ func (x *GetNotificationsReq) sizeField2() (n int) {
 	return n
 }
 
-func (x *GetNotificationsReq) sizeField5() (n int) {
+func (x *GetNotificationsReq) sizeField3() (n int) {
 	if x.PaginationOptions == nil {
 		return n
 	}
-	n += fastpb.SizeMessage(5, x.GetPaginationOptions())
+	n += fastpb.SizeMessage(3, x.GetPaginationOptions())
 	return n
 }
 
@@ -1126,7 +1166,6 @@ func (x *GetNotificationCountReq) Size() (n int) {
 		return n
 	}
 	n += x.sizeField1()
-	n += x.sizeField2()
 	return n
 }
 
@@ -1135,14 +1174,6 @@ func (x *GetNotificationCountReq) sizeField1() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(1, x.GetUserId())
-	return n
-}
-
-func (x *GetNotificationCountReq) sizeField2() (n int) {
-	if x.OnlyType == nil {
-		return n
-	}
-	n += fastpb.SizeInt64(2, x.GetOnlyType())
 	return n
 }
 
@@ -1162,7 +1193,7 @@ func (x *GetNotificationCountResp) sizeField1() (n int) {
 	return n
 }
 
-func (x *UpdateNotificationsReq) Size() (n int) {
+func (x *ReadNotificationsReq) Size() (n int) {
 	if x == nil {
 		return n
 	}
@@ -1171,7 +1202,7 @@ func (x *UpdateNotificationsReq) Size() (n int) {
 	return n
 }
 
-func (x *UpdateNotificationsReq) sizeField1() (n int) {
+func (x *ReadNotificationsReq) sizeField1() (n int) {
 	if x.UserId == "" {
 		return n
 	}
@@ -1179,15 +1210,38 @@ func (x *UpdateNotificationsReq) sizeField1() (n int) {
 	return n
 }
 
-func (x *UpdateNotificationsReq) sizeField2() (n int) {
-	if x.OnlyType == nil {
+func (x *ReadNotificationsReq) sizeField2() (n int) {
+	if x.ReadCount == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(2, x.GetOnlyType())
+	n += fastpb.SizeInt64(2, x.GetReadCount())
 	return n
 }
 
-func (x *UpdateNotificationsResp) Size() (n int) {
+func (x *ReadNotificationsResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	return n
+}
+
+func (x *InsertNotificationCountReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *InsertNotificationCountReq) sizeField1() (n int) {
+	if x.UserId == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetUserId())
+	return n
+}
+
+func (x *InsertNotificationCountResp) Size() (n int) {
 	if x == nil {
 		return n
 	}
@@ -1399,7 +1453,7 @@ func (x *DeleteSliderResp) Size() (n int) {
 var fieldIDToName_GetNotificationsReq = map[int32]string{
 	1: "UserId",
 	2: "OnlyType",
-	5: "PaginationOptions",
+	3: "PaginationOptions",
 }
 
 var fieldIDToName_GetNotificationsResp = map[int32]string{
@@ -1420,19 +1474,24 @@ var fieldIDToName_CreateNotificationsResp = map[int32]string{}
 
 var fieldIDToName_GetNotificationCountReq = map[int32]string{
 	1: "UserId",
-	2: "OnlyType",
 }
 
 var fieldIDToName_GetNotificationCountResp = map[int32]string{
 	1: "Total",
 }
 
-var fieldIDToName_UpdateNotificationsReq = map[int32]string{
+var fieldIDToName_ReadNotificationsReq = map[int32]string{
 	1: "UserId",
-	2: "OnlyType",
+	2: "ReadCount",
 }
 
-var fieldIDToName_UpdateNotificationsResp = map[int32]string{}
+var fieldIDToName_ReadNotificationsResp = map[int32]string{}
+
+var fieldIDToName_InsertNotificationCountReq = map[int32]string{
+	1: "UserId",
+}
+
+var fieldIDToName_InsertNotificationCountResp = map[int32]string{}
 
 var fieldIDToName_GetSlidersReq = map[int32]string{
 	1: "OnlyType",

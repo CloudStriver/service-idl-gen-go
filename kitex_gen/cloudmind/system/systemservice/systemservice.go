@@ -64,10 +64,17 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingUnary),
 	),
-	"UpdateNotifications": kitex.NewMethodInfo(
-		updateNotificationsHandler,
-		newUpdateNotificationsArgs,
-		newUpdateNotificationsResult,
+	"ReadNotifications": kitex.NewMethodInfo(
+		readNotificationsHandler,
+		newReadNotificationsArgs,
+		newReadNotificationsResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingUnary),
+	),
+	"InsertNotificationCount": kitex.NewMethodInfo(
+		insertNotificationCountHandler,
+		newInsertNotificationCountArgs,
+		newInsertNotificationCountResult,
 		false,
 		kitex.WithStreamingMode(kitex.StreamingUnary),
 	),
@@ -1208,73 +1215,73 @@ func (p *CreateNotificationsResult) GetResult() interface{} {
 	return p.Success
 }
 
-func updateNotificationsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+func readNotificationsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(system.UpdateNotificationsReq)
+		req := new(system.ReadNotificationsReq)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
-		resp, err := handler.(system.SystemService).UpdateNotifications(ctx, req)
+		resp, err := handler.(system.SystemService).ReadNotifications(ctx, req)
 		if err != nil {
 			return err
 		}
 		return st.SendMsg(resp)
-	case *UpdateNotificationsArgs:
-		success, err := handler.(system.SystemService).UpdateNotifications(ctx, s.Req)
+	case *ReadNotificationsArgs:
+		success, err := handler.(system.SystemService).ReadNotifications(ctx, s.Req)
 		if err != nil {
 			return err
 		}
-		realResult := result.(*UpdateNotificationsResult)
+		realResult := result.(*ReadNotificationsResult)
 		realResult.Success = success
 		return nil
 	default:
 		return errInvalidMessageType
 	}
 }
-func newUpdateNotificationsArgs() interface{} {
-	return &UpdateNotificationsArgs{}
+func newReadNotificationsArgs() interface{} {
+	return &ReadNotificationsArgs{}
 }
 
-func newUpdateNotificationsResult() interface{} {
-	return &UpdateNotificationsResult{}
+func newReadNotificationsResult() interface{} {
+	return &ReadNotificationsResult{}
 }
 
-type UpdateNotificationsArgs struct {
-	Req *system.UpdateNotificationsReq
+type ReadNotificationsArgs struct {
+	Req *system.ReadNotificationsReq
 }
 
-func (p *UpdateNotificationsArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *ReadNotificationsArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(system.UpdateNotificationsReq)
+		p.Req = new(system.ReadNotificationsReq)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
 
-func (p *UpdateNotificationsArgs) FastWrite(buf []byte) (n int) {
+func (p *ReadNotificationsArgs) FastWrite(buf []byte) (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.FastWrite(buf)
 }
 
-func (p *UpdateNotificationsArgs) Size() (n int) {
+func (p *ReadNotificationsArgs) Size() (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.Size()
 }
 
-func (p *UpdateNotificationsArgs) Marshal(out []byte) ([]byte, error) {
+func (p *ReadNotificationsArgs) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetReq() {
 		return out, nil
 	}
 	return proto.Marshal(p.Req)
 }
 
-func (p *UpdateNotificationsArgs) Unmarshal(in []byte) error {
-	msg := new(system.UpdateNotificationsReq)
+func (p *ReadNotificationsArgs) Unmarshal(in []byte) error {
+	msg := new(system.ReadNotificationsReq)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -1282,59 +1289,59 @@ func (p *UpdateNotificationsArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var UpdateNotificationsArgs_Req_DEFAULT *system.UpdateNotificationsReq
+var ReadNotificationsArgs_Req_DEFAULT *system.ReadNotificationsReq
 
-func (p *UpdateNotificationsArgs) GetReq() *system.UpdateNotificationsReq {
+func (p *ReadNotificationsArgs) GetReq() *system.ReadNotificationsReq {
 	if !p.IsSetReq() {
-		return UpdateNotificationsArgs_Req_DEFAULT
+		return ReadNotificationsArgs_Req_DEFAULT
 	}
 	return p.Req
 }
 
-func (p *UpdateNotificationsArgs) IsSetReq() bool {
+func (p *ReadNotificationsArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *UpdateNotificationsArgs) GetFirstArgument() interface{} {
+func (p *ReadNotificationsArgs) GetFirstArgument() interface{} {
 	return p.Req
 }
 
-type UpdateNotificationsResult struct {
-	Success *system.UpdateNotificationsResp
+type ReadNotificationsResult struct {
+	Success *system.ReadNotificationsResp
 }
 
-var UpdateNotificationsResult_Success_DEFAULT *system.UpdateNotificationsResp
+var ReadNotificationsResult_Success_DEFAULT *system.ReadNotificationsResp
 
-func (p *UpdateNotificationsResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *ReadNotificationsResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(system.UpdateNotificationsResp)
+		p.Success = new(system.ReadNotificationsResp)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
 
-func (p *UpdateNotificationsResult) FastWrite(buf []byte) (n int) {
+func (p *ReadNotificationsResult) FastWrite(buf []byte) (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.FastWrite(buf)
 }
 
-func (p *UpdateNotificationsResult) Size() (n int) {
+func (p *ReadNotificationsResult) Size() (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.Size()
 }
 
-func (p *UpdateNotificationsResult) Marshal(out []byte) ([]byte, error) {
+func (p *ReadNotificationsResult) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetSuccess() {
 		return out, nil
 	}
 	return proto.Marshal(p.Success)
 }
 
-func (p *UpdateNotificationsResult) Unmarshal(in []byte) error {
-	msg := new(system.UpdateNotificationsResp)
+func (p *ReadNotificationsResult) Unmarshal(in []byte) error {
+	msg := new(system.ReadNotificationsResp)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -1342,22 +1349,175 @@ func (p *UpdateNotificationsResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *UpdateNotificationsResult) GetSuccess() *system.UpdateNotificationsResp {
+func (p *ReadNotificationsResult) GetSuccess() *system.ReadNotificationsResp {
 	if !p.IsSetSuccess() {
-		return UpdateNotificationsResult_Success_DEFAULT
+		return ReadNotificationsResult_Success_DEFAULT
 	}
 	return p.Success
 }
 
-func (p *UpdateNotificationsResult) SetSuccess(x interface{}) {
-	p.Success = x.(*system.UpdateNotificationsResp)
+func (p *ReadNotificationsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*system.ReadNotificationsResp)
 }
 
-func (p *UpdateNotificationsResult) IsSetSuccess() bool {
+func (p *ReadNotificationsResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *UpdateNotificationsResult) GetResult() interface{} {
+func (p *ReadNotificationsResult) GetResult() interface{} {
+	return p.Success
+}
+
+func insertNotificationCountHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(system.InsertNotificationCountReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(system.SystemService).InsertNotificationCount(ctx, req)
+		if err != nil {
+			return err
+		}
+		return st.SendMsg(resp)
+	case *InsertNotificationCountArgs:
+		success, err := handler.(system.SystemService).InsertNotificationCount(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*InsertNotificationCountResult)
+		realResult.Success = success
+		return nil
+	default:
+		return errInvalidMessageType
+	}
+}
+func newInsertNotificationCountArgs() interface{} {
+	return &InsertNotificationCountArgs{}
+}
+
+func newInsertNotificationCountResult() interface{} {
+	return &InsertNotificationCountResult{}
+}
+
+type InsertNotificationCountArgs struct {
+	Req *system.InsertNotificationCountReq
+}
+
+func (p *InsertNotificationCountArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(system.InsertNotificationCountReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *InsertNotificationCountArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *InsertNotificationCountArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *InsertNotificationCountArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *InsertNotificationCountArgs) Unmarshal(in []byte) error {
+	msg := new(system.InsertNotificationCountReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var InsertNotificationCountArgs_Req_DEFAULT *system.InsertNotificationCountReq
+
+func (p *InsertNotificationCountArgs) GetReq() *system.InsertNotificationCountReq {
+	if !p.IsSetReq() {
+		return InsertNotificationCountArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *InsertNotificationCountArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *InsertNotificationCountArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type InsertNotificationCountResult struct {
+	Success *system.InsertNotificationCountResp
+}
+
+var InsertNotificationCountResult_Success_DEFAULT *system.InsertNotificationCountResp
+
+func (p *InsertNotificationCountResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(system.InsertNotificationCountResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *InsertNotificationCountResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *InsertNotificationCountResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *InsertNotificationCountResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *InsertNotificationCountResult) Unmarshal(in []byte) error {
+	msg := new(system.InsertNotificationCountResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *InsertNotificationCountResult) GetSuccess() *system.InsertNotificationCountResp {
+	if !p.IsSetSuccess() {
+		return InsertNotificationCountResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *InsertNotificationCountResult) SetSuccess(x interface{}) {
+	p.Success = x.(*system.InsertNotificationCountResp)
+}
+
+func (p *InsertNotificationCountResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *InsertNotificationCountResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -1441,11 +1601,21 @@ func (p *kClient) CreateNotifications(ctx context.Context, Req *system.CreateNot
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) UpdateNotifications(ctx context.Context, Req *system.UpdateNotificationsReq) (r *system.UpdateNotificationsResp, err error) {
-	var _args UpdateNotificationsArgs
+func (p *kClient) ReadNotifications(ctx context.Context, Req *system.ReadNotificationsReq) (r *system.ReadNotificationsResp, err error) {
+	var _args ReadNotificationsArgs
 	_args.Req = Req
-	var _result UpdateNotificationsResult
-	if err = p.c.Call(ctx, "UpdateNotifications", &_args, &_result); err != nil {
+	var _result ReadNotificationsResult
+	if err = p.c.Call(ctx, "ReadNotifications", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) InsertNotificationCount(ctx context.Context, Req *system.InsertNotificationCountReq) (r *system.InsertNotificationCountResp, err error) {
+	var _args InsertNotificationCountArgs
+	_args.Req = Req
+	var _result InsertNotificationCountResult
+	if err = p.c.Call(ctx, "InsertNotificationCount", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

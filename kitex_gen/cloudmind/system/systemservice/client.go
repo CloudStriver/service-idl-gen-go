@@ -18,7 +18,8 @@ type Client interface {
 	GetNotifications(ctx context.Context, Req *system.GetNotificationsReq, callOptions ...callopt.Option) (r *system.GetNotificationsResp, err error)
 	GetNotificationCount(ctx context.Context, Req *system.GetNotificationCountReq, callOptions ...callopt.Option) (r *system.GetNotificationCountResp, err error)
 	CreateNotifications(ctx context.Context, Req *system.CreateNotificationsReq, callOptions ...callopt.Option) (r *system.CreateNotificationsResp, err error)
-	UpdateNotifications(ctx context.Context, Req *system.UpdateNotificationsReq, callOptions ...callopt.Option) (r *system.UpdateNotificationsResp, err error)
+	ReadNotifications(ctx context.Context, Req *system.ReadNotificationsReq, callOptions ...callopt.Option) (r *system.ReadNotificationsResp, err error)
+	InsertNotificationCount(ctx context.Context, Req *system.InsertNotificationCountReq, callOptions ...callopt.Option) (r *system.InsertNotificationCountResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -85,7 +86,12 @@ func (p *kSystemServiceClient) CreateNotifications(ctx context.Context, Req *sys
 	return p.kClient.CreateNotifications(ctx, Req)
 }
 
-func (p *kSystemServiceClient) UpdateNotifications(ctx context.Context, Req *system.UpdateNotificationsReq, callOptions ...callopt.Option) (r *system.UpdateNotificationsResp, err error) {
+func (p *kSystemServiceClient) ReadNotifications(ctx context.Context, Req *system.ReadNotificationsReq, callOptions ...callopt.Option) (r *system.ReadNotificationsResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.UpdateNotifications(ctx, Req)
+	return p.kClient.ReadNotifications(ctx, Req)
+}
+
+func (p *kSystemServiceClient) InsertNotificationCount(ctx context.Context, Req *system.InsertNotificationCountReq, callOptions ...callopt.Option) (r *system.InsertNotificationCountResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.InsertNotificationCount(ctx, Req)
 }

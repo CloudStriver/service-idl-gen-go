@@ -54,11 +54,6 @@ func (x *Notification) FastRead(buf []byte, _type int8, number int32) (offset in
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 9:
-		offset, err = x.fastReadField9(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -108,11 +103,6 @@ func (x *Notification) fastReadField7(buf []byte, _type int8) (offset int, err e
 }
 
 func (x *Notification) fastReadField8(buf []byte, _type int8) (offset int, err error) {
-	x.Status, offset, err = fastpb.ReadInt64(buf, _type)
-	return offset, err
-}
-
-func (x *Notification) fastReadField9(buf []byte, _type int8) (offset int, err error) {
 	x.CreateTime, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
@@ -299,7 +289,6 @@ func (x *Notification) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField6(buf[offset:])
 	offset += x.fastWriteField7(buf[offset:])
 	offset += x.fastWriteField8(buf[offset:])
-	offset += x.fastWriteField9(buf[offset:])
 	return offset
 }
 
@@ -360,18 +349,10 @@ func (x *Notification) fastWriteField7(buf []byte) (offset int) {
 }
 
 func (x *Notification) fastWriteField8(buf []byte) (offset int) {
-	if x.Status == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 8, x.GetStatus())
-	return offset
-}
-
-func (x *Notification) fastWriteField9(buf []byte) (offset int) {
 	if x.CreateTime == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 9, x.GetCreateTime())
+	offset += fastpb.WriteInt64(buf[offset:], 8, x.GetCreateTime())
 	return offset
 }
 
@@ -527,7 +508,6 @@ func (x *Notification) Size() (n int) {
 	n += x.sizeField6()
 	n += x.sizeField7()
 	n += x.sizeField8()
-	n += x.sizeField9()
 	return n
 }
 
@@ -588,18 +568,10 @@ func (x *Notification) sizeField7() (n int) {
 }
 
 func (x *Notification) sizeField8() (n int) {
-	if x.Status == 0 {
-		return n
-	}
-	n += fastpb.SizeInt64(8, x.GetStatus())
-	return n
-}
-
-func (x *Notification) sizeField9() (n int) {
 	if x.CreateTime == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(9, x.GetCreateTime())
+	n += fastpb.SizeInt64(8, x.GetCreateTime())
 	return n
 }
 
@@ -751,8 +723,7 @@ var fieldIDToName_Notification = map[int32]string{
 	5: "TargetType",
 	6: "Type",
 	7: "Text",
-	8: "Status",
-	9: "CreateTime",
+	8: "CreateTime",
 }
 
 var fieldIDToName_Slider = map[int32]string{
