@@ -175,7 +175,7 @@ func (x *GetNotificationCountResp) fastReadField1(buf []byte, _type int8) (offse
 	return offset, err
 }
 
-func (x *UpdateNotificationsReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *ReadNotificationsReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
@@ -192,16 +192,16 @@ func (x *UpdateNotificationsReq) FastRead(buf []byte, _type int8, number int32) 
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 ReadFieldError:
-	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_UpdateNotificationsReq[number], err)
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_ReadNotificationsReq[number], err)
 }
 
-func (x *UpdateNotificationsReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+func (x *ReadNotificationsReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
 	x.OnlyType = &tmp
 	return offset, err
 }
 
-func (x *UpdateNotificationsResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+func (x *ReadNotificationsResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
@@ -325,7 +325,7 @@ func (x *GetNotificationCountResp) fastWriteField1(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *UpdateNotificationsReq) FastWrite(buf []byte) (offset int) {
+func (x *ReadNotificationsReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
@@ -333,7 +333,7 @@ func (x *UpdateNotificationsReq) FastWrite(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *UpdateNotificationsReq) fastWriteField1(buf []byte) (offset int) {
+func (x *ReadNotificationsReq) fastWriteField1(buf []byte) (offset int) {
 	if x.OnlyType == nil {
 		return offset
 	}
@@ -341,7 +341,7 @@ func (x *UpdateNotificationsReq) fastWriteField1(buf []byte) (offset int) {
 	return offset
 }
 
-func (x *UpdateNotificationsResp) FastWrite(buf []byte) (offset int) {
+func (x *ReadNotificationsResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
@@ -459,7 +459,7 @@ func (x *GetNotificationCountResp) sizeField1() (n int) {
 	return n
 }
 
-func (x *UpdateNotificationsReq) Size() (n int) {
+func (x *ReadNotificationsReq) Size() (n int) {
 	if x == nil {
 		return n
 	}
@@ -467,7 +467,7 @@ func (x *UpdateNotificationsReq) Size() (n int) {
 	return n
 }
 
-func (x *UpdateNotificationsReq) sizeField1() (n int) {
+func (x *ReadNotificationsReq) sizeField1() (n int) {
 	if x.OnlyType == nil {
 		return n
 	}
@@ -475,7 +475,7 @@ func (x *UpdateNotificationsReq) sizeField1() (n int) {
 	return n
 }
 
-func (x *UpdateNotificationsResp) Size() (n int) {
+func (x *ReadNotificationsResp) Size() (n int) {
 	if x == nil {
 		return n
 	}
@@ -503,11 +503,11 @@ var fieldIDToName_GetNotificationCountResp = map[int32]string{
 	1: "Total",
 }
 
-var fieldIDToName_UpdateNotificationsReq = map[int32]string{
+var fieldIDToName_ReadNotificationsReq = map[int32]string{
 	1: "OnlyType",
 }
 
-var fieldIDToName_UpdateNotificationsResp = map[int32]string{}
+var fieldIDToName_ReadNotificationsResp = map[int32]string{}
 
 var _ = basic.File_basic_pagination_proto
 var _ = http.File_http_http_proto
