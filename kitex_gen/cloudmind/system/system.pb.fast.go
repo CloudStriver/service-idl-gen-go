@@ -399,11 +399,6 @@ func (x *CreateSliderReq) FastRead(buf []byte, _type int8, number int32) (offset
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 4:
-		offset, err = x.fastReadField4(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -428,11 +423,6 @@ func (x *CreateSliderReq) fastReadField2(buf []byte, _type int8) (offset int, er
 }
 
 func (x *CreateSliderReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	x.Type, offset, err = fastpb.ReadInt64(buf, _type)
-	return offset, err
-}
-
-func (x *CreateSliderReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
 	x.IsPublic, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
@@ -472,11 +462,6 @@ func (x *UpdateSliderReq) FastRead(buf []byte, _type int8, number int32) (offset
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 5:
-		offset, err = x.fastReadField5(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -506,11 +491,6 @@ func (x *UpdateSliderReq) fastReadField3(buf []byte, _type int8) (offset int, er
 }
 
 func (x *UpdateSliderReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	x.Type, offset, err = fastpb.ReadInt64(buf, _type)
-	return offset, err
-}
-
-func (x *UpdateSliderReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	x.IsPublic, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
@@ -827,7 +807,6 @@ func (x *CreateSliderReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
-	offset += x.fastWriteField4(buf[offset:])
 	return offset
 }
 
@@ -848,18 +827,10 @@ func (x *CreateSliderReq) fastWriteField2(buf []byte) (offset int) {
 }
 
 func (x *CreateSliderReq) fastWriteField3(buf []byte) (offset int) {
-	if x.Type == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetType())
-	return offset
-}
-
-func (x *CreateSliderReq) fastWriteField4(buf []byte) (offset int) {
 	if x.IsPublic == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetIsPublic())
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetIsPublic())
 	return offset
 }
 
@@ -878,7 +849,6 @@ func (x *UpdateSliderReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
-	offset += x.fastWriteField5(buf[offset:])
 	return offset
 }
 
@@ -907,18 +877,10 @@ func (x *UpdateSliderReq) fastWriteField3(buf []byte) (offset int) {
 }
 
 func (x *UpdateSliderReq) fastWriteField4(buf []byte) (offset int) {
-	if x.Type == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetType())
-	return offset
-}
-
-func (x *UpdateSliderReq) fastWriteField5(buf []byte) (offset int) {
 	if x.IsPublic == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetIsPublic())
+	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetIsPublic())
 	return offset
 }
 
@@ -1213,7 +1175,6 @@ func (x *CreateSliderReq) Size() (n int) {
 	n += x.sizeField1()
 	n += x.sizeField2()
 	n += x.sizeField3()
-	n += x.sizeField4()
 	return n
 }
 
@@ -1234,18 +1195,10 @@ func (x *CreateSliderReq) sizeField2() (n int) {
 }
 
 func (x *CreateSliderReq) sizeField3() (n int) {
-	if x.Type == 0 {
-		return n
-	}
-	n += fastpb.SizeInt64(3, x.GetType())
-	return n
-}
-
-func (x *CreateSliderReq) sizeField4() (n int) {
 	if x.IsPublic == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(4, x.GetIsPublic())
+	n += fastpb.SizeInt64(3, x.GetIsPublic())
 	return n
 }
 
@@ -1264,7 +1217,6 @@ func (x *UpdateSliderReq) Size() (n int) {
 	n += x.sizeField2()
 	n += x.sizeField3()
 	n += x.sizeField4()
-	n += x.sizeField5()
 	return n
 }
 
@@ -1293,18 +1245,10 @@ func (x *UpdateSliderReq) sizeField3() (n int) {
 }
 
 func (x *UpdateSliderReq) sizeField4() (n int) {
-	if x.Type == 0 {
-		return n
-	}
-	n += fastpb.SizeInt64(4, x.GetType())
-	return n
-}
-
-func (x *UpdateSliderReq) sizeField5() (n int) {
 	if x.IsPublic == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(5, x.GetIsPublic())
+	n += fastpb.SizeInt64(4, x.GetIsPublic())
 	return n
 }
 
@@ -1389,8 +1333,7 @@ var fieldIDToName_GetSlidersResp = map[int32]string{
 var fieldIDToName_CreateSliderReq = map[int32]string{
 	1: "ImageUrl",
 	2: "LinkUrl",
-	3: "Type",
-	4: "IsPublic",
+	3: "IsPublic",
 }
 
 var fieldIDToName_CreateSliderResp = map[int32]string{}
@@ -1399,8 +1342,7 @@ var fieldIDToName_UpdateSliderReq = map[int32]string{
 	1: "SliderId",
 	2: "ImageUrl",
 	3: "LinkUrl",
-	4: "Type",
-	5: "IsPublic",
+	4: "IsPublic",
 }
 
 var fieldIDToName_UpdateSliderResp = map[int32]string{}

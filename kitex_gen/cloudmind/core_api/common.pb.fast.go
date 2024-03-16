@@ -39,21 +39,6 @@ func (x *Slider) FastRead(buf []byte, _type int8, number int32) (offset int, err
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 5:
-		offset, err = x.fastReadField5(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 6:
-		offset, err = x.fastReadField6(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 7:
-		offset, err = x.fastReadField7(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -83,22 +68,7 @@ func (x *Slider) fastReadField3(buf []byte, _type int8) (offset int, err error) 
 }
 
 func (x *Slider) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	x.Type, offset, err = fastpb.ReadInt64(buf, _type)
-	return offset, err
-}
-
-func (x *Slider) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	x.IsPublic, offset, err = fastpb.ReadInt64(buf, _type)
-	return offset, err
-}
-
-func (x *Slider) fastReadField6(buf []byte, _type int8) (offset int, err error) {
-	x.CreateTime, offset, err = fastpb.ReadInt64(buf, _type)
-	return offset, err
-}
-
-func (x *Slider) fastReadField7(buf []byte, _type int8) (offset int, err error) {
-	x.UpdateTime, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -2660,9 +2630,6 @@ func (x *Slider) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
-	offset += x.fastWriteField5(buf[offset:])
-	offset += x.fastWriteField6(buf[offset:])
-	offset += x.fastWriteField7(buf[offset:])
 	return offset
 }
 
@@ -2691,34 +2658,10 @@ func (x *Slider) fastWriteField3(buf []byte) (offset int) {
 }
 
 func (x *Slider) fastWriteField4(buf []byte) (offset int) {
-	if x.Type == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetType())
-	return offset
-}
-
-func (x *Slider) fastWriteField5(buf []byte) (offset int) {
 	if x.IsPublic == 0 {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetIsPublic())
-	return offset
-}
-
-func (x *Slider) fastWriteField6(buf []byte) (offset int) {
-	if x.CreateTime == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetCreateTime())
-	return offset
-}
-
-func (x *Slider) fastWriteField7(buf []byte) (offset int) {
-	if x.UpdateTime == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetUpdateTime())
+	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetIsPublic())
 	return offset
 }
 
@@ -4719,9 +4662,6 @@ func (x *Slider) Size() (n int) {
 	n += x.sizeField2()
 	n += x.sizeField3()
 	n += x.sizeField4()
-	n += x.sizeField5()
-	n += x.sizeField6()
-	n += x.sizeField7()
 	return n
 }
 
@@ -4750,34 +4690,10 @@ func (x *Slider) sizeField3() (n int) {
 }
 
 func (x *Slider) sizeField4() (n int) {
-	if x.Type == 0 {
-		return n
-	}
-	n += fastpb.SizeInt64(4, x.GetType())
-	return n
-}
-
-func (x *Slider) sizeField5() (n int) {
 	if x.IsPublic == 0 {
 		return n
 	}
-	n += fastpb.SizeInt64(5, x.GetIsPublic())
-	return n
-}
-
-func (x *Slider) sizeField6() (n int) {
-	if x.CreateTime == 0 {
-		return n
-	}
-	n += fastpb.SizeInt64(6, x.GetCreateTime())
-	return n
-}
-
-func (x *Slider) sizeField7() (n int) {
-	if x.UpdateTime == 0 {
-		return n
-	}
-	n += fastpb.SizeInt64(7, x.GetUpdateTime())
+	n += fastpb.SizeInt64(4, x.GetIsPublic())
 	return n
 }
 
@@ -6774,10 +6690,7 @@ var fieldIDToName_Slider = map[int32]string{
 	1: "SliderId",
 	2: "ImageUrl",
 	3: "LinkUrl",
-	4: "Type",
-	5: "IsPublic",
-	6: "CreateTime",
-	7: "UpdateTime",
+	4: "IsPublic",
 }
 
 var fieldIDToName_User = map[int32]string{

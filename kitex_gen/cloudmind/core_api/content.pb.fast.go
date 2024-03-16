@@ -3204,6 +3204,11 @@ func (x *GetPostsReq) FastRead(buf []byte, _type int8, number int32) (offset int
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 14:
+		offset, err = x.fastReadField14(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -3271,23 +3276,29 @@ func (x *GetPostsReq) fastReadField9(buf []byte, _type int8) (offset int, err er
 
 func (x *GetPostsReq) fastReadField10(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
-	x.Limit = &tmp
+	x.OnlyStatus = &tmp
 	return offset, err
 }
 
 func (x *GetPostsReq) fastReadField11(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadInt64(buf, _type)
+	x.Limit = &tmp
+	return offset, err
+}
+
+func (x *GetPostsReq) fastReadField12(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadString(buf, _type)
 	x.LastToken = &tmp
 	return offset, err
 }
 
-func (x *GetPostsReq) fastReadField12(buf []byte, _type int8) (offset int, err error) {
+func (x *GetPostsReq) fastReadField13(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadBool(buf, _type)
 	x.Backward = &tmp
 	return offset, err
 }
 
-func (x *GetPostsReq) fastReadField13(buf []byte, _type int8) (offset int, err error) {
+func (x *GetPostsReq) fastReadField14(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
 	x.Offset = &tmp
 	return offset, err
@@ -6621,6 +6632,7 @@ func (x *GetPostsReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField11(buf[offset:])
 	offset += x.fastWriteField12(buf[offset:])
 	offset += x.fastWriteField13(buf[offset:])
+	offset += x.fastWriteField14(buf[offset:])
 	return offset
 }
 
@@ -6691,34 +6703,42 @@ func (x *GetPostsReq) fastWriteField9(buf []byte) (offset int) {
 }
 
 func (x *GetPostsReq) fastWriteField10(buf []byte) (offset int) {
-	if x.Limit == nil {
+	if x.OnlyStatus == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 10, x.GetLimit())
+	offset += fastpb.WriteInt64(buf[offset:], 10, x.GetOnlyStatus())
 	return offset
 }
 
 func (x *GetPostsReq) fastWriteField11(buf []byte) (offset int) {
-	if x.LastToken == nil {
+	if x.Limit == nil {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 11, x.GetLastToken())
+	offset += fastpb.WriteInt64(buf[offset:], 11, x.GetLimit())
 	return offset
 }
 
 func (x *GetPostsReq) fastWriteField12(buf []byte) (offset int) {
-	if x.Backward == nil {
+	if x.LastToken == nil {
 		return offset
 	}
-	offset += fastpb.WriteBool(buf[offset:], 12, x.GetBackward())
+	offset += fastpb.WriteString(buf[offset:], 12, x.GetLastToken())
 	return offset
 }
 
 func (x *GetPostsReq) fastWriteField13(buf []byte) (offset int) {
+	if x.Backward == nil {
+		return offset
+	}
+	offset += fastpb.WriteBool(buf[offset:], 13, x.GetBackward())
+	return offset
+}
+
+func (x *GetPostsReq) fastWriteField14(buf []byte) (offset int) {
 	if x.Offset == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 13, x.GetOffset())
+	offset += fastpb.WriteInt64(buf[offset:], 14, x.GetOffset())
 	return offset
 }
 
@@ -9736,6 +9756,7 @@ func (x *GetPostsReq) Size() (n int) {
 	n += x.sizeField11()
 	n += x.sizeField12()
 	n += x.sizeField13()
+	n += x.sizeField14()
 	return n
 }
 
@@ -9806,34 +9827,42 @@ func (x *GetPostsReq) sizeField9() (n int) {
 }
 
 func (x *GetPostsReq) sizeField10() (n int) {
-	if x.Limit == nil {
+	if x.OnlyStatus == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(10, x.GetLimit())
+	n += fastpb.SizeInt64(10, x.GetOnlyStatus())
 	return n
 }
 
 func (x *GetPostsReq) sizeField11() (n int) {
-	if x.LastToken == nil {
+	if x.Limit == nil {
 		return n
 	}
-	n += fastpb.SizeString(11, x.GetLastToken())
+	n += fastpb.SizeInt64(11, x.GetLimit())
 	return n
 }
 
 func (x *GetPostsReq) sizeField12() (n int) {
-	if x.Backward == nil {
+	if x.LastToken == nil {
 		return n
 	}
-	n += fastpb.SizeBool(12, x.GetBackward())
+	n += fastpb.SizeString(12, x.GetLastToken())
 	return n
 }
 
 func (x *GetPostsReq) sizeField13() (n int) {
+	if x.Backward == nil {
+		return n
+	}
+	n += fastpb.SizeBool(13, x.GetBackward())
+	return n
+}
+
+func (x *GetPostsReq) sizeField14() (n int) {
 	if x.Offset == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(13, x.GetOffset())
+	n += fastpb.SizeInt64(14, x.GetOffset())
 	return n
 }
 
@@ -10977,10 +11006,11 @@ var fieldIDToName_GetPostsReq = map[int32]string{
 	6:  "OnlyUserId",
 	7:  "OnlyTags",
 	9:  "OnlySetRelation",
-	10: "Limit",
-	11: "LastToken",
-	12: "Backward",
-	13: "Offset",
+	10: "OnlyStatus",
+	11: "Limit",
+	12: "LastToken",
+	13: "Backward",
+	14: "Offset",
 }
 
 var fieldIDToName_GetPostsResp = map[int32]string{
