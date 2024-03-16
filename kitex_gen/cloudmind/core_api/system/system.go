@@ -23,7 +23,10 @@ func NewServiceInfo() *kitex.ServiceInfo {
 	methods := map[string]kitex.MethodInfo{
 		"GetNotifications":     kitex.NewMethodInfo(getNotificationsHandler, newGetNotificationsArgs, newGetNotificationsResult, false),
 		"GetNotificationCount": kitex.NewMethodInfo(getNotificationCountHandler, newGetNotificationCountArgs, newGetNotificationCountResult, false),
-		"ReadNotifications":    kitex.NewMethodInfo(readNotificationsHandler, newReadNotificationsArgs, newReadNotificationsResult, false),
+		"UpdateSlider":         kitex.NewMethodInfo(updateSliderHandler, newUpdateSliderArgs, newUpdateSliderResult, false),
+		"DeleteSlider":         kitex.NewMethodInfo(deleteSliderHandler, newDeleteSliderArgs, newDeleteSliderResult, false),
+		"CreateSlider":         kitex.NewMethodInfo(createSliderHandler, newCreateSliderArgs, newCreateSliderResult, false),
+		"GetSliders":           kitex.NewMethodInfo(getSlidersHandler, newGetSlidersArgs, newGetSlidersResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName":     "cloudmind.core_api",
@@ -346,73 +349,73 @@ func (p *GetNotificationCountResult) GetResult() interface{} {
 	return p.Success
 }
 
-func readNotificationsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+func updateSliderHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	switch s := arg.(type) {
 	case *streaming.Args:
 		st := s.Stream
-		req := new(core_api.ReadNotificationsReq)
+		req := new(core_api.UpdateSliderReq)
 		if err := st.RecvMsg(req); err != nil {
 			return err
 		}
-		resp, err := handler.(core_api.System).ReadNotifications(ctx, req)
+		resp, err := handler.(core_api.System).UpdateSlider(ctx, req)
 		if err != nil {
 			return err
 		}
 		if err := st.SendMsg(resp); err != nil {
 			return err
 		}
-	case *ReadNotificationsArgs:
-		success, err := handler.(core_api.System).ReadNotifications(ctx, s.Req)
+	case *UpdateSliderArgs:
+		success, err := handler.(core_api.System).UpdateSlider(ctx, s.Req)
 		if err != nil {
 			return err
 		}
-		realResult := result.(*ReadNotificationsResult)
+		realResult := result.(*UpdateSliderResult)
 		realResult.Success = success
 	}
 	return nil
 }
-func newReadNotificationsArgs() interface{} {
-	return &ReadNotificationsArgs{}
+func newUpdateSliderArgs() interface{} {
+	return &UpdateSliderArgs{}
 }
 
-func newReadNotificationsResult() interface{} {
-	return &ReadNotificationsResult{}
+func newUpdateSliderResult() interface{} {
+	return &UpdateSliderResult{}
 }
 
-type ReadNotificationsArgs struct {
-	Req *core_api.ReadNotificationsReq
+type UpdateSliderArgs struct {
+	Req *core_api.UpdateSliderReq
 }
 
-func (p *ReadNotificationsArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *UpdateSliderArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetReq() {
-		p.Req = new(core_api.ReadNotificationsReq)
+		p.Req = new(core_api.UpdateSliderReq)
 	}
 	return p.Req.FastRead(buf, _type, number)
 }
 
-func (p *ReadNotificationsArgs) FastWrite(buf []byte) (n int) {
+func (p *UpdateSliderArgs) FastWrite(buf []byte) (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.FastWrite(buf)
 }
 
-func (p *ReadNotificationsArgs) Size() (n int) {
+func (p *UpdateSliderArgs) Size() (n int) {
 	if !p.IsSetReq() {
 		return 0
 	}
 	return p.Req.Size()
 }
 
-func (p *ReadNotificationsArgs) Marshal(out []byte) ([]byte, error) {
+func (p *UpdateSliderArgs) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetReq() {
 		return out, nil
 	}
 	return proto.Marshal(p.Req)
 }
 
-func (p *ReadNotificationsArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.ReadNotificationsReq)
+func (p *UpdateSliderArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.UpdateSliderReq)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -420,59 +423,59 @@ func (p *ReadNotificationsArgs) Unmarshal(in []byte) error {
 	return nil
 }
 
-var ReadNotificationsArgs_Req_DEFAULT *core_api.ReadNotificationsReq
+var UpdateSliderArgs_Req_DEFAULT *core_api.UpdateSliderReq
 
-func (p *ReadNotificationsArgs) GetReq() *core_api.ReadNotificationsReq {
+func (p *UpdateSliderArgs) GetReq() *core_api.UpdateSliderReq {
 	if !p.IsSetReq() {
-		return ReadNotificationsArgs_Req_DEFAULT
+		return UpdateSliderArgs_Req_DEFAULT
 	}
 	return p.Req
 }
 
-func (p *ReadNotificationsArgs) IsSetReq() bool {
+func (p *UpdateSliderArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *ReadNotificationsArgs) GetFirstArgument() interface{} {
+func (p *UpdateSliderArgs) GetFirstArgument() interface{} {
 	return p.Req
 }
 
-type ReadNotificationsResult struct {
-	Success *core_api.ReadNotificationsResp
+type UpdateSliderResult struct {
+	Success *core_api.UpdateSliderResp
 }
 
-var ReadNotificationsResult_Success_DEFAULT *core_api.ReadNotificationsResp
+var UpdateSliderResult_Success_DEFAULT *core_api.UpdateSliderResp
 
-func (p *ReadNotificationsResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+func (p *UpdateSliderResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
 	if !p.IsSetSuccess() {
-		p.Success = new(core_api.ReadNotificationsResp)
+		p.Success = new(core_api.UpdateSliderResp)
 	}
 	return p.Success.FastRead(buf, _type, number)
 }
 
-func (p *ReadNotificationsResult) FastWrite(buf []byte) (n int) {
+func (p *UpdateSliderResult) FastWrite(buf []byte) (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.FastWrite(buf)
 }
 
-func (p *ReadNotificationsResult) Size() (n int) {
+func (p *UpdateSliderResult) Size() (n int) {
 	if !p.IsSetSuccess() {
 		return 0
 	}
 	return p.Success.Size()
 }
 
-func (p *ReadNotificationsResult) Marshal(out []byte) ([]byte, error) {
+func (p *UpdateSliderResult) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetSuccess() {
 		return out, nil
 	}
 	return proto.Marshal(p.Success)
 }
 
-func (p *ReadNotificationsResult) Unmarshal(in []byte) error {
-	msg := new(core_api.ReadNotificationsResp)
+func (p *UpdateSliderResult) Unmarshal(in []byte) error {
+	msg := new(core_api.UpdateSliderResp)
 	if err := proto.Unmarshal(in, msg); err != nil {
 		return err
 	}
@@ -480,22 +483,481 @@ func (p *ReadNotificationsResult) Unmarshal(in []byte) error {
 	return nil
 }
 
-func (p *ReadNotificationsResult) GetSuccess() *core_api.ReadNotificationsResp {
+func (p *UpdateSliderResult) GetSuccess() *core_api.UpdateSliderResp {
 	if !p.IsSetSuccess() {
-		return ReadNotificationsResult_Success_DEFAULT
+		return UpdateSliderResult_Success_DEFAULT
 	}
 	return p.Success
 }
 
-func (p *ReadNotificationsResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.ReadNotificationsResp)
+func (p *UpdateSliderResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.UpdateSliderResp)
 }
 
-func (p *ReadNotificationsResult) IsSetSuccess() bool {
+func (p *UpdateSliderResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *ReadNotificationsResult) GetResult() interface{} {
+func (p *UpdateSliderResult) GetResult() interface{} {
+	return p.Success
+}
+
+func deleteSliderHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.DeleteSliderReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.System).DeleteSlider(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *DeleteSliderArgs:
+		success, err := handler.(core_api.System).DeleteSlider(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*DeleteSliderResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newDeleteSliderArgs() interface{} {
+	return &DeleteSliderArgs{}
+}
+
+func newDeleteSliderResult() interface{} {
+	return &DeleteSliderResult{}
+}
+
+type DeleteSliderArgs struct {
+	Req *core_api.DeleteSliderReq
+}
+
+func (p *DeleteSliderArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.DeleteSliderReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *DeleteSliderArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *DeleteSliderArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *DeleteSliderArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *DeleteSliderArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.DeleteSliderReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var DeleteSliderArgs_Req_DEFAULT *core_api.DeleteSliderReq
+
+func (p *DeleteSliderArgs) GetReq() *core_api.DeleteSliderReq {
+	if !p.IsSetReq() {
+		return DeleteSliderArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *DeleteSliderArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *DeleteSliderArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type DeleteSliderResult struct {
+	Success *core_api.DeleteSliderResp
+}
+
+var DeleteSliderResult_Success_DEFAULT *core_api.DeleteSliderResp
+
+func (p *DeleteSliderResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.DeleteSliderResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *DeleteSliderResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *DeleteSliderResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *DeleteSliderResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *DeleteSliderResult) Unmarshal(in []byte) error {
+	msg := new(core_api.DeleteSliderResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *DeleteSliderResult) GetSuccess() *core_api.DeleteSliderResp {
+	if !p.IsSetSuccess() {
+		return DeleteSliderResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *DeleteSliderResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.DeleteSliderResp)
+}
+
+func (p *DeleteSliderResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *DeleteSliderResult) GetResult() interface{} {
+	return p.Success
+}
+
+func createSliderHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.CreateSliderReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.System).CreateSlider(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *CreateSliderArgs:
+		success, err := handler.(core_api.System).CreateSlider(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*CreateSliderResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newCreateSliderArgs() interface{} {
+	return &CreateSliderArgs{}
+}
+
+func newCreateSliderResult() interface{} {
+	return &CreateSliderResult{}
+}
+
+type CreateSliderArgs struct {
+	Req *core_api.CreateSliderReq
+}
+
+func (p *CreateSliderArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.CreateSliderReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *CreateSliderArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *CreateSliderArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *CreateSliderArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *CreateSliderArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.CreateSliderReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var CreateSliderArgs_Req_DEFAULT *core_api.CreateSliderReq
+
+func (p *CreateSliderArgs) GetReq() *core_api.CreateSliderReq {
+	if !p.IsSetReq() {
+		return CreateSliderArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *CreateSliderArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *CreateSliderArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type CreateSliderResult struct {
+	Success *core_api.CreateSliderResp
+}
+
+var CreateSliderResult_Success_DEFAULT *core_api.CreateSliderResp
+
+func (p *CreateSliderResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.CreateSliderResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *CreateSliderResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *CreateSliderResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *CreateSliderResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *CreateSliderResult) Unmarshal(in []byte) error {
+	msg := new(core_api.CreateSliderResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *CreateSliderResult) GetSuccess() *core_api.CreateSliderResp {
+	if !p.IsSetSuccess() {
+		return CreateSliderResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *CreateSliderResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.CreateSliderResp)
+}
+
+func (p *CreateSliderResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *CreateSliderResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getSlidersHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.GetSlidersReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.System).GetSliders(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetSlidersArgs:
+		success, err := handler.(core_api.System).GetSliders(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetSlidersResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetSlidersArgs() interface{} {
+	return &GetSlidersArgs{}
+}
+
+func newGetSlidersResult() interface{} {
+	return &GetSlidersResult{}
+}
+
+type GetSlidersArgs struct {
+	Req *core_api.GetSlidersReq
+}
+
+func (p *GetSlidersArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.GetSlidersReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetSlidersArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetSlidersArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetSlidersArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetSlidersArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.GetSlidersReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetSlidersArgs_Req_DEFAULT *core_api.GetSlidersReq
+
+func (p *GetSlidersArgs) GetReq() *core_api.GetSlidersReq {
+	if !p.IsSetReq() {
+		return GetSlidersArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetSlidersArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetSlidersArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetSlidersResult struct {
+	Success *core_api.GetSlidersResp
+}
+
+var GetSlidersResult_Success_DEFAULT *core_api.GetSlidersResp
+
+func (p *GetSlidersResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.GetSlidersResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetSlidersResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetSlidersResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetSlidersResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetSlidersResult) Unmarshal(in []byte) error {
+	msg := new(core_api.GetSlidersResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetSlidersResult) GetSuccess() *core_api.GetSlidersResp {
+	if !p.IsSetSuccess() {
+		return GetSlidersResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetSlidersResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.GetSlidersResp)
+}
+
+func (p *GetSlidersResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetSlidersResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -529,11 +991,41 @@ func (p *kClient) GetNotificationCount(ctx context.Context, Req *core_api.GetNot
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) ReadNotifications(ctx context.Context, Req *core_api.ReadNotificationsReq) (r *core_api.ReadNotificationsResp, err error) {
-	var _args ReadNotificationsArgs
+func (p *kClient) UpdateSlider(ctx context.Context, Req *core_api.UpdateSliderReq) (r *core_api.UpdateSliderResp, err error) {
+	var _args UpdateSliderArgs
 	_args.Req = Req
-	var _result ReadNotificationsResult
-	if err = p.c.Call(ctx, "ReadNotifications", &_args, &_result); err != nil {
+	var _result UpdateSliderResult
+	if err = p.c.Call(ctx, "UpdateSlider", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) DeleteSlider(ctx context.Context, Req *core_api.DeleteSliderReq) (r *core_api.DeleteSliderResp, err error) {
+	var _args DeleteSliderArgs
+	_args.Req = Req
+	var _result DeleteSliderResult
+	if err = p.c.Call(ctx, "DeleteSlider", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CreateSlider(ctx context.Context, Req *core_api.CreateSliderReq) (r *core_api.CreateSliderResp, err error) {
+	var _args CreateSliderArgs
+	_args.Req = Req
+	var _result CreateSliderResult
+	if err = p.c.Call(ctx, "CreateSlider", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetSliders(ctx context.Context, Req *core_api.GetSlidersReq) (r *core_api.GetSlidersResp, err error) {
+	var _args GetSlidersArgs
+	_args.Req = Req
+	var _result GetSlidersResult
+	if err = p.c.Call(ctx, "GetSliders", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

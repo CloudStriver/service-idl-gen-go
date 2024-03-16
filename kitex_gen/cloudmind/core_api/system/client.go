@@ -13,7 +13,10 @@ import (
 type Client interface {
 	GetNotifications(ctx context.Context, Req *core_api.GetNotificationsReq, callOptions ...callopt.Option) (r *core_api.GetNotificationsResp, err error)
 	GetNotificationCount(ctx context.Context, Req *core_api.GetNotificationCountReq, callOptions ...callopt.Option) (r *core_api.GetNotificationCountResp, err error)
-	ReadNotifications(ctx context.Context, Req *core_api.ReadNotificationsReq, callOptions ...callopt.Option) (r *core_api.ReadNotificationsResp, err error)
+	UpdateSlider(ctx context.Context, Req *core_api.UpdateSliderReq, callOptions ...callopt.Option) (r *core_api.UpdateSliderResp, err error)
+	DeleteSlider(ctx context.Context, Req *core_api.DeleteSliderReq, callOptions ...callopt.Option) (r *core_api.DeleteSliderResp, err error)
+	CreateSlider(ctx context.Context, Req *core_api.CreateSliderReq, callOptions ...callopt.Option) (r *core_api.CreateSliderResp, err error)
+	GetSliders(ctx context.Context, Req *core_api.GetSlidersReq, callOptions ...callopt.Option) (r *core_api.GetSlidersResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -55,7 +58,22 @@ func (p *kSystemClient) GetNotificationCount(ctx context.Context, Req *core_api.
 	return p.kClient.GetNotificationCount(ctx, Req)
 }
 
-func (p *kSystemClient) ReadNotifications(ctx context.Context, Req *core_api.ReadNotificationsReq, callOptions ...callopt.Option) (r *core_api.ReadNotificationsResp, err error) {
+func (p *kSystemClient) UpdateSlider(ctx context.Context, Req *core_api.UpdateSliderReq, callOptions ...callopt.Option) (r *core_api.UpdateSliderResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.ReadNotifications(ctx, Req)
+	return p.kClient.UpdateSlider(ctx, Req)
+}
+
+func (p *kSystemClient) DeleteSlider(ctx context.Context, Req *core_api.DeleteSliderReq, callOptions ...callopt.Option) (r *core_api.DeleteSliderResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteSlider(ctx, Req)
+}
+
+func (p *kSystemClient) CreateSlider(ctx context.Context, Req *core_api.CreateSliderReq, callOptions ...callopt.Option) (r *core_api.CreateSliderResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateSlider(ctx, Req)
+}
+
+func (p *kSystemClient) GetSliders(ctx context.Context, Req *core_api.GetSlidersReq, callOptions ...callopt.Option) (r *core_api.GetSlidersResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetSliders(ctx, Req)
 }

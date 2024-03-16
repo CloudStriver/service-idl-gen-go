@@ -21,13 +21,14 @@ func NewServiceInfo() *kitex.ServiceInfo {
 	serviceName := "SystemService"
 	handlerType := (*system.SystemService)(nil)
 	methods := map[string]kitex.MethodInfo{
-		"GetSliders":           kitex.NewMethodInfo(getSlidersHandler, newGetSlidersArgs, newGetSlidersResult, false),
-		"CreateSlider":         kitex.NewMethodInfo(createSliderHandler, newCreateSliderArgs, newCreateSliderResult, false),
-		"UpdateSlider":         kitex.NewMethodInfo(updateSliderHandler, newUpdateSliderArgs, newUpdateSliderResult, false),
-		"DeleteSlider":         kitex.NewMethodInfo(deleteSliderHandler, newDeleteSliderArgs, newDeleteSliderResult, false),
-		"GetNotifications":     kitex.NewMethodInfo(getNotificationsHandler, newGetNotificationsArgs, newGetNotificationsResult, false),
-		"GetNotificationCount": kitex.NewMethodInfo(getNotificationCountHandler, newGetNotificationCountArgs, newGetNotificationCountResult, false),
-		"CreateNotifications":  kitex.NewMethodInfo(createNotificationsHandler, newCreateNotificationsArgs, newCreateNotificationsResult, false),
+		"GetSliders":              kitex.NewMethodInfo(getSlidersHandler, newGetSlidersArgs, newGetSlidersResult, false),
+		"CreateSlider":            kitex.NewMethodInfo(createSliderHandler, newCreateSliderArgs, newCreateSliderResult, false),
+		"UpdateSlider":            kitex.NewMethodInfo(updateSliderHandler, newUpdateSliderArgs, newUpdateSliderResult, false),
+		"DeleteSlider":            kitex.NewMethodInfo(deleteSliderHandler, newDeleteSliderArgs, newDeleteSliderResult, false),
+		"GetNotifications":        kitex.NewMethodInfo(getNotificationsHandler, newGetNotificationsArgs, newGetNotificationsResult, false),
+		"GetNotificationCount":    kitex.NewMethodInfo(getNotificationCountHandler, newGetNotificationCountArgs, newGetNotificationCountResult, false),
+		"CreateNotifications":     kitex.NewMethodInfo(createNotificationsHandler, newCreateNotificationsArgs, newCreateNotificationsResult, false),
+		"CreateNotificationCount": kitex.NewMethodInfo(createNotificationCountHandler, newCreateNotificationCountArgs, newCreateNotificationCountResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName":     "cloudmind.system",
@@ -1115,6 +1116,159 @@ func (p *CreateNotificationsResult) GetResult() interface{} {
 	return p.Success
 }
 
+func createNotificationCountHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(system.CreateNotificationCountReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(system.SystemService).CreateNotificationCount(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *CreateNotificationCountArgs:
+		success, err := handler.(system.SystemService).CreateNotificationCount(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*CreateNotificationCountResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newCreateNotificationCountArgs() interface{} {
+	return &CreateNotificationCountArgs{}
+}
+
+func newCreateNotificationCountResult() interface{} {
+	return &CreateNotificationCountResult{}
+}
+
+type CreateNotificationCountArgs struct {
+	Req *system.CreateNotificationCountReq
+}
+
+func (p *CreateNotificationCountArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(system.CreateNotificationCountReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *CreateNotificationCountArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *CreateNotificationCountArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *CreateNotificationCountArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *CreateNotificationCountArgs) Unmarshal(in []byte) error {
+	msg := new(system.CreateNotificationCountReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var CreateNotificationCountArgs_Req_DEFAULT *system.CreateNotificationCountReq
+
+func (p *CreateNotificationCountArgs) GetReq() *system.CreateNotificationCountReq {
+	if !p.IsSetReq() {
+		return CreateNotificationCountArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *CreateNotificationCountArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *CreateNotificationCountArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type CreateNotificationCountResult struct {
+	Success *system.CreateNotificationCountResp
+}
+
+var CreateNotificationCountResult_Success_DEFAULT *system.CreateNotificationCountResp
+
+func (p *CreateNotificationCountResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(system.CreateNotificationCountResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *CreateNotificationCountResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *CreateNotificationCountResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *CreateNotificationCountResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *CreateNotificationCountResult) Unmarshal(in []byte) error {
+	msg := new(system.CreateNotificationCountResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *CreateNotificationCountResult) GetSuccess() *system.CreateNotificationCountResp {
+	if !p.IsSetSuccess() {
+		return CreateNotificationCountResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *CreateNotificationCountResult) SetSuccess(x interface{}) {
+	p.Success = x.(*system.CreateNotificationCountResp)
+}
+
+func (p *CreateNotificationCountResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *CreateNotificationCountResult) GetResult() interface{} {
+	return p.Success
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -1190,6 +1344,16 @@ func (p *kClient) CreateNotifications(ctx context.Context, Req *system.CreateNot
 	_args.Req = Req
 	var _result CreateNotificationsResult
 	if err = p.c.Call(ctx, "CreateNotifications", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CreateNotificationCount(ctx context.Context, Req *system.CreateNotificationCountReq) (r *system.CreateNotificationCountResp, err error) {
+	var _args CreateNotificationCountArgs
+	_args.Req = Req
+	var _result CreateNotificationCountResult
+	if err = p.c.Call(ctx, "CreateNotificationCount", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
