@@ -606,6 +606,11 @@ func (x *CreateFileResp) FastRead(buf []byte, _type int8, number int32) (offset 
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -621,6 +626,11 @@ ReadFieldError:
 
 func (x *CreateFileResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
 	x.FileId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *CreateFileResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.Name, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -857,6 +867,11 @@ func (x *SaveFileToPrivateSpaceResp) FastRead(buf []byte, _type int8, number int
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -872,6 +887,11 @@ ReadFieldError:
 
 func (x *SaveFileToPrivateSpaceResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
 	x.FileId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *SaveFileToPrivateSpaceResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.Name, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -4930,6 +4950,7 @@ func (x *CreateFileResp) FastWrite(buf []byte) (offset int) {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
 	return offset
 }
 
@@ -4938,6 +4959,14 @@ func (x *CreateFileResp) fastWriteField1(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 1, x.GetFileId())
+	return offset
+}
+
+func (x *CreateFileResp) fastWriteField2(buf []byte) (offset int) {
+	if x.Name == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetName())
 	return offset
 }
 
@@ -5116,6 +5145,7 @@ func (x *SaveFileToPrivateSpaceResp) FastWrite(buf []byte) (offset int) {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
 	return offset
 }
 
@@ -5124,6 +5154,14 @@ func (x *SaveFileToPrivateSpaceResp) fastWriteField1(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 1, x.GetFileId())
+	return offset
+}
+
+func (x *SaveFileToPrivateSpaceResp) fastWriteField2(buf []byte) (offset int) {
+	if x.Name == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetName())
 	return offset
 }
 
@@ -7981,6 +8019,7 @@ func (x *CreateFileResp) Size() (n int) {
 		return n
 	}
 	n += x.sizeField1()
+	n += x.sizeField2()
 	return n
 }
 
@@ -7989,6 +8028,14 @@ func (x *CreateFileResp) sizeField1() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(1, x.GetFileId())
+	return n
+}
+
+func (x *CreateFileResp) sizeField2() (n int) {
+	if x.Name == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetName())
 	return n
 }
 
@@ -8167,6 +8214,7 @@ func (x *SaveFileToPrivateSpaceResp) Size() (n int) {
 		return n
 	}
 	n += x.sizeField1()
+	n += x.sizeField2()
 	return n
 }
 
@@ -8175,6 +8223,14 @@ func (x *SaveFileToPrivateSpaceResp) sizeField1() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(1, x.GetFileId())
+	return n
+}
+
+func (x *SaveFileToPrivateSpaceResp) sizeField2() (n int) {
+	if x.Name == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetName())
 	return n
 }
 
@@ -10717,6 +10773,7 @@ var fieldIDToName_CreateFileReq = map[int32]string{
 
 var fieldIDToName_CreateFileResp = map[int32]string{
 	1: "FileId",
+	2: "Name",
 }
 
 var fieldIDToName_UpdateFileReq = map[int32]string{
@@ -10749,6 +10806,7 @@ var fieldIDToName_SaveFileToPrivateSpaceReq = map[int32]string{
 
 var fieldIDToName_SaveFileToPrivateSpaceResp = map[int32]string{
 	1: "FileId",
+	2: "Name",
 }
 
 var fieldIDToName_AddFileToPublicSpaceReq = map[int32]string{
