@@ -1070,16 +1070,6 @@ func (x *DeleteFileReq) FastRead(buf []byte, _type int8, number int32) (offset i
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 4:
-		offset, err = x.fastReadField4(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
-	case 5:
-		offset, err = x.fastReadField5(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -1104,18 +1094,13 @@ func (x *DeleteFileReq) fastReadField2(buf []byte, _type int8) (offset int, err 
 }
 
 func (x *DeleteFileReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	x.FileId, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *DeleteFileReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	x.Path, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *DeleteFileReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	x.SpaceSize, offset, err = fastpb.ReadInt64(buf, _type)
-	return offset, err
+	var v FileParameter
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Files = append(x.Files, &v)
+	return offset, nil
 }
 
 func (x *DeleteFileResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -1138,11 +1123,6 @@ func (x *RecoverRecycleBinFileReq) FastRead(buf []byte, _type int8, number int32
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 2:
-		offset, err = x.fastReadField2(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -1157,13 +1137,13 @@ ReadFieldError:
 }
 
 func (x *RecoverRecycleBinFileReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	x.Path, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
-func (x *RecoverRecycleBinFileReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.SpaceSize, offset, err = fastpb.ReadInt64(buf, _type)
-	return offset, err
+	var v FileParameter
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Files = append(x.Files, &v)
+	return offset, nil
 }
 
 func (x *RecoverRecycleBinFileResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -5285,8 +5265,6 @@ func (x *DeleteFileReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
-	offset += x.fastWriteField4(buf[offset:])
-	offset += x.fastWriteField5(buf[offset:])
 	return offset
 }
 
@@ -5307,26 +5285,12 @@ func (x *DeleteFileReq) fastWriteField2(buf []byte) (offset int) {
 }
 
 func (x *DeleteFileReq) fastWriteField3(buf []byte) (offset int) {
-	if x.FileId == "" {
+	if x.Files == nil {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 3, x.GetFileId())
-	return offset
-}
-
-func (x *DeleteFileReq) fastWriteField4(buf []byte) (offset int) {
-	if x.Path == "" {
-		return offset
+	for i := range x.GetFiles() {
+		offset += fastpb.WriteMessage(buf[offset:], 3, x.GetFiles()[i])
 	}
-	offset += fastpb.WriteString(buf[offset:], 4, x.GetPath())
-	return offset
-}
-
-func (x *DeleteFileReq) fastWriteField5(buf []byte) (offset int) {
-	if x.SpaceSize == 0 {
-		return offset
-	}
-	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetSpaceSize())
 	return offset
 }
 
@@ -5342,23 +5306,16 @@ func (x *RecoverRecycleBinFileReq) FastWrite(buf []byte) (offset int) {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
-	offset += x.fastWriteField2(buf[offset:])
 	return offset
 }
 
 func (x *RecoverRecycleBinFileReq) fastWriteField1(buf []byte) (offset int) {
-	if x.Path == "" {
+	if x.Files == nil {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 1, x.GetPath())
-	return offset
-}
-
-func (x *RecoverRecycleBinFileReq) fastWriteField2(buf []byte) (offset int) {
-	if x.SpaceSize == 0 {
-		return offset
+	for i := range x.GetFiles() {
+		offset += fastpb.WriteMessage(buf[offset:], 1, x.GetFiles()[i])
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetSpaceSize())
 	return offset
 }
 
@@ -8359,8 +8316,6 @@ func (x *DeleteFileReq) Size() (n int) {
 	n += x.sizeField1()
 	n += x.sizeField2()
 	n += x.sizeField3()
-	n += x.sizeField4()
-	n += x.sizeField5()
 	return n
 }
 
@@ -8381,26 +8336,12 @@ func (x *DeleteFileReq) sizeField2() (n int) {
 }
 
 func (x *DeleteFileReq) sizeField3() (n int) {
-	if x.FileId == "" {
+	if x.Files == nil {
 		return n
 	}
-	n += fastpb.SizeString(3, x.GetFileId())
-	return n
-}
-
-func (x *DeleteFileReq) sizeField4() (n int) {
-	if x.Path == "" {
-		return n
+	for i := range x.GetFiles() {
+		n += fastpb.SizeMessage(3, x.GetFiles()[i])
 	}
-	n += fastpb.SizeString(4, x.GetPath())
-	return n
-}
-
-func (x *DeleteFileReq) sizeField5() (n int) {
-	if x.SpaceSize == 0 {
-		return n
-	}
-	n += fastpb.SizeInt64(5, x.GetSpaceSize())
 	return n
 }
 
@@ -8416,23 +8357,16 @@ func (x *RecoverRecycleBinFileReq) Size() (n int) {
 		return n
 	}
 	n += x.sizeField1()
-	n += x.sizeField2()
 	return n
 }
 
 func (x *RecoverRecycleBinFileReq) sizeField1() (n int) {
-	if x.Path == "" {
+	if x.Files == nil {
 		return n
 	}
-	n += fastpb.SizeString(1, x.GetPath())
-	return n
-}
-
-func (x *RecoverRecycleBinFileReq) sizeField2() (n int) {
-	if x.SpaceSize == 0 {
-		return n
+	for i := range x.GetFiles() {
+		n += fastpb.SizeMessage(1, x.GetFiles()[i])
 	}
-	n += fastpb.SizeInt64(2, x.GetSpaceSize())
 	return n
 }
 
@@ -10842,16 +10776,13 @@ var fieldIDToName_CompletelyRemoveFileResp = map[int32]string{}
 var fieldIDToName_DeleteFileReq = map[int32]string{
 	1: "DeleteType",
 	2: "ClearCommunity",
-	3: "FileId",
-	4: "Path",
-	5: "SpaceSize",
+	3: "Files",
 }
 
 var fieldIDToName_DeleteFileResp = map[int32]string{}
 
 var fieldIDToName_RecoverRecycleBinFileReq = map[int32]string{
-	1: "Path",
-	2: "SpaceSize",
+	1: "Files",
 }
 
 var fieldIDToName_RecoverRecycleBinFileResp = map[int32]string{}

@@ -343,6 +343,51 @@ func (x *File) fastReadField13(buf []byte, _type int8) (offset int, err error) {
 	return offset, err
 }
 
+func (x *FileParameter) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_FileParameter[number], err)
+}
+
+func (x *FileParameter) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.FileId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *FileParameter) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.Path, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *FileParameter) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.SpaceSize, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
 func (x *Zone) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
@@ -2233,6 +2278,40 @@ func (x *File) fastWriteField13(buf []byte) (offset int) {
 	return offset
 }
 
+func (x *FileParameter) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	return offset
+}
+
+func (x *FileParameter) fastWriteField1(buf []byte) (offset int) {
+	if x.FileId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetFileId())
+	return offset
+}
+
+func (x *FileParameter) fastWriteField2(buf []byte) (offset int) {
+	if x.Path == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetPath())
+	return offset
+}
+
+func (x *FileParameter) fastWriteField3(buf []byte) (offset int) {
+	if x.SpaceSize == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetSpaceSize())
+	return offset
+}
+
 func (x *Zone) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -3758,6 +3837,40 @@ func (x *File) sizeField13() (n int) {
 	return n
 }
 
+func (x *FileParameter) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	return n
+}
+
+func (x *FileParameter) sizeField1() (n int) {
+	if x.FileId == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetFileId())
+	return n
+}
+
+func (x *FileParameter) sizeField2() (n int) {
+	if x.Path == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetPath())
+	return n
+}
+
+func (x *FileParameter) sizeField3() (n int) {
+	if x.SpaceSize == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(3, x.GetSpaceSize())
+	return n
+}
+
 func (x *Zone) Size() (n int) {
 	if x == nil {
 		return n
@@ -5037,6 +5150,12 @@ var fieldIDToName_File = map[int32]string{
 	11: "SubZone",
 	12: "Description",
 	13: "Labels",
+}
+
+var fieldIDToName_FileParameter = map[int32]string{
+	1: "FileId",
+	2: "Path",
+	3: "SpaceSize",
 }
 
 var fieldIDToName_Zone = map[int32]string{

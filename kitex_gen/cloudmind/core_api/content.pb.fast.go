@@ -1510,7 +1510,12 @@ ReadFieldError:
 }
 
 func (x *DeleteFileReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	x.FileId, offset, err = fastpb.ReadString(buf, _type)
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.FileIds = append(x.FileIds, v)
 	return offset, err
 }
 
@@ -1611,7 +1616,12 @@ ReadFieldError:
 }
 
 func (x *RecoverRecycleBinFileReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	x.FileId, offset, err = fastpb.ReadString(buf, _type)
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.FileIds = append(x.FileIds, v)
 	return offset, err
 }
 
@@ -5452,10 +5462,12 @@ func (x *DeleteFileReq) FastWrite(buf []byte) (offset int) {
 }
 
 func (x *DeleteFileReq) fastWriteField1(buf []byte) (offset int) {
-	if x.FileId == "" {
+	if len(x.FileIds) == 0 {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 1, x.GetFileId())
+	for i := range x.GetFileIds() {
+		offset += fastpb.WriteString(buf[offset:], 1, x.GetFileIds()[i])
+	}
 	return offset
 }
 
@@ -5523,10 +5535,12 @@ func (x *RecoverRecycleBinFileReq) FastWrite(buf []byte) (offset int) {
 }
 
 func (x *RecoverRecycleBinFileReq) fastWriteField1(buf []byte) (offset int) {
-	if x.FileId == "" {
+	if len(x.FileIds) == 0 {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 1, x.GetFileId())
+	for i := range x.GetFileIds() {
+		offset += fastpb.WriteString(buf[offset:], 1, x.GetFileIds()[i])
+	}
 	return offset
 }
 
@@ -8576,10 +8590,12 @@ func (x *DeleteFileReq) Size() (n int) {
 }
 
 func (x *DeleteFileReq) sizeField1() (n int) {
-	if x.FileId == "" {
+	if len(x.FileIds) == 0 {
 		return n
 	}
-	n += fastpb.SizeString(1, x.GetFileId())
+	for i := range x.GetFileIds() {
+		n += fastpb.SizeString(1, x.GetFileIds()[i])
+	}
 	return n
 }
 
@@ -8647,10 +8663,12 @@ func (x *RecoverRecycleBinFileReq) Size() (n int) {
 }
 
 func (x *RecoverRecycleBinFileReq) sizeField1() (n int) {
-	if x.FileId == "" {
+	if len(x.FileIds) == 0 {
 		return n
 	}
-	n += fastpb.SizeString(1, x.GetFileId())
+	for i := range x.GetFileIds() {
+		n += fastpb.SizeString(1, x.GetFileIds()[i])
+	}
 	return n
 }
 
@@ -10780,7 +10798,7 @@ var fieldIDToName_AddFileToPublicSpaceReq = map[int32]string{
 var fieldIDToName_AddFileToPublicSpaceResp = map[int32]string{}
 
 var fieldIDToName_DeleteFileReq = map[int32]string{
-	1: "FileId",
+	1: "FileIds",
 	2: "DeleteType",
 	3: "ClearCommunity",
 }
@@ -10795,7 +10813,7 @@ var fieldIDToName_CompletelyRemoveFileReq = map[int32]string{
 var fieldIDToName_CompletelyRemoveFileResp = map[int32]string{}
 
 var fieldIDToName_RecoverRecycleBinFileReq = map[int32]string{
-	1: "FileId",
+	1: "FileIds",
 }
 
 var fieldIDToName_RecoverRecycleBinFileResp = map[int32]string{}
