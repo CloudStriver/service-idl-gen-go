@@ -15,7 +15,6 @@ type Client interface {
 	SearchUser(ctx context.Context, Req *core_api.SearchUserReq, callOptions ...callopt.Option) (r *core_api.SearchUserResp, err error)
 	GetUser(ctx context.Context, Req *core_api.GetUserReq, callOptions ...callopt.Option) (r *core_api.GetUserResp, err error)
 	GetUserDetail(ctx context.Context, Req *core_api.GetUserDetailReq, callOptions ...callopt.Option) (r *core_api.GetUserDetailResp, err error)
-	AskUploadAvatar(ctx context.Context, Req *core_api.AskUploadAvatarReq, callOptions ...callopt.Option) (r *core_api.AskUploadAvatarResp, err error)
 	GetPublicFile(ctx context.Context, Req *core_api.GetPublicFilesReq, callOptions ...callopt.Option) (r *core_api.GetPublicFilesResp, err error)
 	GetPrivateFile(ctx context.Context, Req *core_api.GetPrivateFileReq, callOptions ...callopt.Option) (r *core_api.GetPrivateFileResp, err error)
 	GetPrivateFiles(ctx context.Context, Req *core_api.GetPrivateFilesReq, callOptions ...callopt.Option) (r *core_api.GetPrivateFilesResp, err error)
@@ -104,11 +103,6 @@ func (p *kContentClient) GetUser(ctx context.Context, Req *core_api.GetUserReq, 
 func (p *kContentClient) GetUserDetail(ctx context.Context, Req *core_api.GetUserDetailReq, callOptions ...callopt.Option) (r *core_api.GetUserDetailResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetUserDetail(ctx, Req)
-}
-
-func (p *kContentClient) AskUploadAvatar(ctx context.Context, Req *core_api.AskUploadAvatarReq, callOptions ...callopt.Option) (r *core_api.AskUploadAvatarResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.AskUploadAvatar(ctx, Req)
 }
 
 func (p *kContentClient) GetPublicFile(ctx context.Context, Req *core_api.GetPublicFilesReq, callOptions ...callopt.Option) (r *core_api.GetPublicFilesResp, err error) {

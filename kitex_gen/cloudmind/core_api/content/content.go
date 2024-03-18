@@ -25,7 +25,6 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"SearchUser":             kitex.NewMethodInfo(searchUserHandler, newSearchUserArgs, newSearchUserResult, false),
 		"GetUser":                kitex.NewMethodInfo(getUserHandler, newGetUserArgs, newGetUserResult, false),
 		"GetUserDetail":          kitex.NewMethodInfo(getUserDetailHandler, newGetUserDetailArgs, newGetUserDetailResult, false),
-		"AskUploadAvatar":        kitex.NewMethodInfo(askUploadAvatarHandler, newAskUploadAvatarArgs, newAskUploadAvatarResult, false),
 		"GetPublicFile":          kitex.NewMethodInfo(getPublicFileHandler, newGetPublicFileArgs, newGetPublicFileResult, false),
 		"GetPrivateFile":         kitex.NewMethodInfo(getPrivateFileHandler, newGetPrivateFileArgs, newGetPrivateFileResult, false),
 		"GetPrivateFiles":        kitex.NewMethodInfo(getPrivateFilesHandler, newGetPrivateFilesArgs, newGetPrivateFilesResult, false),
@@ -690,159 +689,6 @@ func (p *GetUserDetailResult) IsSetSuccess() bool {
 }
 
 func (p *GetUserDetailResult) GetResult() interface{} {
-	return p.Success
-}
-
-func askUploadAvatarHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	switch s := arg.(type) {
-	case *streaming.Args:
-		st := s.Stream
-		req := new(core_api.AskUploadAvatarReq)
-		if err := st.RecvMsg(req); err != nil {
-			return err
-		}
-		resp, err := handler.(core_api.Content).AskUploadAvatar(ctx, req)
-		if err != nil {
-			return err
-		}
-		if err := st.SendMsg(resp); err != nil {
-			return err
-		}
-	case *AskUploadAvatarArgs:
-		success, err := handler.(core_api.Content).AskUploadAvatar(ctx, s.Req)
-		if err != nil {
-			return err
-		}
-		realResult := result.(*AskUploadAvatarResult)
-		realResult.Success = success
-	}
-	return nil
-}
-func newAskUploadAvatarArgs() interface{} {
-	return &AskUploadAvatarArgs{}
-}
-
-func newAskUploadAvatarResult() interface{} {
-	return &AskUploadAvatarResult{}
-}
-
-type AskUploadAvatarArgs struct {
-	Req *core_api.AskUploadAvatarReq
-}
-
-func (p *AskUploadAvatarArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetReq() {
-		p.Req = new(core_api.AskUploadAvatarReq)
-	}
-	return p.Req.FastRead(buf, _type, number)
-}
-
-func (p *AskUploadAvatarArgs) FastWrite(buf []byte) (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.FastWrite(buf)
-}
-
-func (p *AskUploadAvatarArgs) Size() (n int) {
-	if !p.IsSetReq() {
-		return 0
-	}
-	return p.Req.Size()
-}
-
-func (p *AskUploadAvatarArgs) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetReq() {
-		return out, nil
-	}
-	return proto.Marshal(p.Req)
-}
-
-func (p *AskUploadAvatarArgs) Unmarshal(in []byte) error {
-	msg := new(core_api.AskUploadAvatarReq)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Req = msg
-	return nil
-}
-
-var AskUploadAvatarArgs_Req_DEFAULT *core_api.AskUploadAvatarReq
-
-func (p *AskUploadAvatarArgs) GetReq() *core_api.AskUploadAvatarReq {
-	if !p.IsSetReq() {
-		return AskUploadAvatarArgs_Req_DEFAULT
-	}
-	return p.Req
-}
-
-func (p *AskUploadAvatarArgs) IsSetReq() bool {
-	return p.Req != nil
-}
-
-func (p *AskUploadAvatarArgs) GetFirstArgument() interface{} {
-	return p.Req
-}
-
-type AskUploadAvatarResult struct {
-	Success *core_api.AskUploadAvatarResp
-}
-
-var AskUploadAvatarResult_Success_DEFAULT *core_api.AskUploadAvatarResp
-
-func (p *AskUploadAvatarResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
-	if !p.IsSetSuccess() {
-		p.Success = new(core_api.AskUploadAvatarResp)
-	}
-	return p.Success.FastRead(buf, _type, number)
-}
-
-func (p *AskUploadAvatarResult) FastWrite(buf []byte) (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.FastWrite(buf)
-}
-
-func (p *AskUploadAvatarResult) Size() (n int) {
-	if !p.IsSetSuccess() {
-		return 0
-	}
-	return p.Success.Size()
-}
-
-func (p *AskUploadAvatarResult) Marshal(out []byte) ([]byte, error) {
-	if !p.IsSetSuccess() {
-		return out, nil
-	}
-	return proto.Marshal(p.Success)
-}
-
-func (p *AskUploadAvatarResult) Unmarshal(in []byte) error {
-	msg := new(core_api.AskUploadAvatarResp)
-	if err := proto.Unmarshal(in, msg); err != nil {
-		return err
-	}
-	p.Success = msg
-	return nil
-}
-
-func (p *AskUploadAvatarResult) GetSuccess() *core_api.AskUploadAvatarResp {
-	if !p.IsSetSuccess() {
-		return AskUploadAvatarResult_Success_DEFAULT
-	}
-	return p.Success
-}
-
-func (p *AskUploadAvatarResult) SetSuccess(x interface{}) {
-	p.Success = x.(*core_api.AskUploadAvatarResp)
-}
-
-func (p *AskUploadAvatarResult) IsSetSuccess() bool {
-	return p.Success != nil
-}
-
-func (p *AskUploadAvatarResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -6858,16 +6704,6 @@ func (p *kClient) GetUserDetail(ctx context.Context, Req *core_api.GetUserDetail
 	_args.Req = Req
 	var _result GetUserDetailResult
 	if err = p.c.Call(ctx, "GetUserDetail", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
-}
-
-func (p *kClient) AskUploadAvatar(ctx context.Context, Req *core_api.AskUploadAvatarReq) (r *core_api.AskUploadAvatarResp, err error) {
-	var _args AskUploadAvatarArgs
-	_args.Req = Req
-	var _result AskUploadAvatarResult
-	if err = p.c.Call(ctx, "AskUploadAvatar", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

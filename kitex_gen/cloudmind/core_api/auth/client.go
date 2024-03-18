@@ -11,6 +11,7 @@ import (
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
+	AskUploadAvatar(ctx context.Context, Req *core_api.AskUploadAvatarReq, callOptions ...callopt.Option) (r *core_api.AskUploadAvatarResp, err error)
 	Register(ctx context.Context, Req *core_api.RegisterReq, callOptions ...callopt.Option) (r *core_api.RegisterResp, err error)
 	CheckEmail(ctx context.Context, Req *core_api.CheckEmailReq, callOptions ...callopt.Option) (r *core_api.CheckEmailResp, err error)
 	EmailLogin(ctx context.Context, Req *core_api.EmailLoginReq, callOptions ...callopt.Option) (r *core_api.EmailLoginResp, err error)
@@ -49,6 +50,11 @@ func MustNewClient(destService string, opts ...client.Option) Client {
 
 type kAuthClient struct {
 	*kClient
+}
+
+func (p *kAuthClient) AskUploadAvatar(ctx context.Context, Req *core_api.AskUploadAvatarReq, callOptions ...callopt.Option) (r *core_api.AskUploadAvatarResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.AskUploadAvatar(ctx, Req)
 }
 
 func (p *kAuthClient) Register(ctx context.Context, Req *core_api.RegisterReq, callOptions ...callopt.Option) (r *core_api.RegisterResp, err error) {
