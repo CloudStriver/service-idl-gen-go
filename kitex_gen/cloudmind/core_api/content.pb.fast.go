@@ -2772,7 +2772,12 @@ ReadFieldError:
 }
 
 func (x *DeletePostReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	x.PostId, offset, err = fastpb.ReadString(buf, _type)
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.PostIds = append(x.PostIds, v)
 	return offset, err
 }
 
@@ -6266,10 +6271,12 @@ func (x *DeletePostReq) FastWrite(buf []byte) (offset int) {
 }
 
 func (x *DeletePostReq) fastWriteField1(buf []byte) (offset int) {
-	if x.PostId == "" {
+	if len(x.PostIds) == 0 {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 1, x.GetPostId())
+	for i := range x.GetPostIds() {
+		offset += fastpb.WriteString(buf[offset:], 1, x.GetPostIds()[i])
+	}
 	return offset
 }
 
@@ -9344,10 +9351,12 @@ func (x *DeletePostReq) Size() (n int) {
 }
 
 func (x *DeletePostReq) sizeField1() (n int) {
-	if x.PostId == "" {
+	if len(x.PostIds) == 0 {
 		return n
 	}
-	n += fastpb.SizeString(1, x.GetPostId())
+	for i := range x.GetPostIds() {
+		n += fastpb.SizeString(1, x.GetPostIds()[i])
+	}
 	return n
 }
 
@@ -10797,7 +10806,7 @@ var fieldIDToName_CreatePostReq = map[int32]string{
 var fieldIDToName_CreatePostResp = map[int32]string{}
 
 var fieldIDToName_DeletePostReq = map[int32]string{
-	1: "PostId",
+	1: "PostIds",
 }
 
 var fieldIDToName_DeletePostResp = map[int32]string{}
