@@ -2446,7 +2446,12 @@ ReadFieldError:
 }
 
 func (x *DeletePostReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
-	x.PostId, offset, err = fastpb.ReadString(buf, _type)
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.PostId = append(x.PostId, v)
 	return offset, err
 }
 
@@ -6201,10 +6206,12 @@ func (x *DeletePostReq) FastWrite(buf []byte) (offset int) {
 }
 
 func (x *DeletePostReq) fastWriteField1(buf []byte) (offset int) {
-	if x.PostId == "" {
+	if len(x.PostId) == 0 {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 1, x.GetPostId())
+	for i := range x.GetPostId() {
+		offset += fastpb.WriteString(buf[offset:], 1, x.GetPostId()[i])
+	}
 	return offset
 }
 
@@ -9270,10 +9277,12 @@ func (x *DeletePostReq) Size() (n int) {
 }
 
 func (x *DeletePostReq) sizeField1() (n int) {
-	if x.PostId == "" {
+	if len(x.PostId) == 0 {
 		return n
 	}
-	n += fastpb.SizeString(1, x.GetPostId())
+	for i := range x.GetPostId() {
+		n += fastpb.SizeString(1, x.GetPostId()[i])
+	}
 	return n
 }
 
