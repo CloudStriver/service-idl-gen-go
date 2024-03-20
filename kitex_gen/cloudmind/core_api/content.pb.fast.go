@@ -1577,6 +1577,32 @@ SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 }
 
+func (x *EmptyRecycleBinReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+}
+
+func (x *EmptyRecycleBinResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+}
+
 func (x *CompletelyRemoveFileReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
@@ -5456,6 +5482,20 @@ func (x *DeleteFileResp) FastWrite(buf []byte) (offset int) {
 	return offset
 }
 
+func (x *EmptyRecycleBinReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	return offset
+}
+
+func (x *EmptyRecycleBinResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	return offset
+}
+
 func (x *CompletelyRemoveFileReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -8536,6 +8576,20 @@ func (x *DeleteFileResp) Size() (n int) {
 	return n
 }
 
+func (x *EmptyRecycleBinReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	return n
+}
+
+func (x *EmptyRecycleBinResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	return n
+}
+
 func (x *CompletelyRemoveFileReq) Size() (n int) {
 	if x == nil {
 		return n
@@ -10646,6 +10700,10 @@ var fieldIDToName_DeleteFileReq = map[int32]string{
 }
 
 var fieldIDToName_DeleteFileResp = map[int32]string{}
+
+var fieldIDToName_EmptyRecycleBinReq = map[int32]string{}
+
+var fieldIDToName_EmptyRecycleBinResp = map[int32]string{}
 
 var fieldIDToName_CompletelyRemoveFileReq = map[int32]string{
 	1: "FileId",

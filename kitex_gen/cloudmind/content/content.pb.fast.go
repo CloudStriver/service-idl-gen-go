@@ -1136,6 +1136,44 @@ SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 }
 
+func (x *EmptyRecycleBinReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_EmptyRecycleBinReq[number], err)
+}
+
+func (x *EmptyRecycleBinReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.UserId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *EmptyRecycleBinResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+}
+
 func (x *RecoverRecycleBinFileReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
@@ -5344,6 +5382,29 @@ func (x *DeleteFileResp) FastWrite(buf []byte) (offset int) {
 	return offset
 }
 
+func (x *EmptyRecycleBinReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *EmptyRecycleBinReq) fastWriteField1(buf []byte) (offset int) {
+	if x.UserId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetUserId())
+	return offset
+}
+
+func (x *EmptyRecycleBinResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	return offset
+}
+
 func (x *RecoverRecycleBinFileReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -8415,6 +8476,29 @@ func (x *DeleteFileResp) Size() (n int) {
 	return n
 }
 
+func (x *EmptyRecycleBinReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *EmptyRecycleBinReq) sizeField1() (n int) {
+	if x.UserId == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetUserId())
+	return n
+}
+
+func (x *EmptyRecycleBinResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	return n
+}
+
 func (x *RecoverRecycleBinFileReq) Size() (n int) {
 	if x == nil {
 		return n
@@ -10847,6 +10931,12 @@ var fieldIDToName_DeleteFileReq = map[int32]string{
 }
 
 var fieldIDToName_DeleteFileResp = map[int32]string{}
+
+var fieldIDToName_EmptyRecycleBinReq = map[int32]string{
+	1: "UserId",
+}
+
+var fieldIDToName_EmptyRecycleBinResp = map[int32]string{}
 
 var fieldIDToName_RecoverRecycleBinFileReq = map[int32]string{
 	1: "Files",

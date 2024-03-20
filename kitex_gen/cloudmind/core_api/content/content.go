@@ -38,6 +38,7 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"AddFileToPublicSpace":   kitex.NewMethodInfo(addFileToPublicSpaceHandler, newAddFileToPublicSpaceArgs, newAddFileToPublicSpaceResult, false),
 		"CompletelyRemoveFile":   kitex.NewMethodInfo(completelyRemoveFileHandler, newCompletelyRemoveFileArgs, newCompletelyRemoveFileResult, false),
 		"DeleteFile":             kitex.NewMethodInfo(deleteFileHandler, newDeleteFileArgs, newDeleteFileResult, false),
+		"EmptyRecycleBin":        kitex.NewMethodInfo(emptyRecycleBinHandler, newEmptyRecycleBinArgs, newEmptyRecycleBinResult, false),
 		"RecoverRecycleBinFile":  kitex.NewMethodInfo(recoverRecycleBinFileHandler, newRecoverRecycleBinFileArgs, newRecoverRecycleBinFileResult, false),
 		"CreateZone":             kitex.NewMethodInfo(createZoneHandler, newCreateZoneArgs, newCreateZoneResult, false),
 		"UpdateZone":             kitex.NewMethodInfo(updateZoneHandler, newUpdateZoneArgs, newUpdateZoneResult, false),
@@ -2678,6 +2679,159 @@ func (p *DeleteFileResult) IsSetSuccess() bool {
 }
 
 func (p *DeleteFileResult) GetResult() interface{} {
+	return p.Success
+}
+
+func emptyRecycleBinHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.EmptyRecycleBinReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Content).EmptyRecycleBin(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *EmptyRecycleBinArgs:
+		success, err := handler.(core_api.Content).EmptyRecycleBin(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*EmptyRecycleBinResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newEmptyRecycleBinArgs() interface{} {
+	return &EmptyRecycleBinArgs{}
+}
+
+func newEmptyRecycleBinResult() interface{} {
+	return &EmptyRecycleBinResult{}
+}
+
+type EmptyRecycleBinArgs struct {
+	Req *core_api.EmptyRecycleBinReq
+}
+
+func (p *EmptyRecycleBinArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.EmptyRecycleBinReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *EmptyRecycleBinArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *EmptyRecycleBinArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *EmptyRecycleBinArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *EmptyRecycleBinArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.EmptyRecycleBinReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var EmptyRecycleBinArgs_Req_DEFAULT *core_api.EmptyRecycleBinReq
+
+func (p *EmptyRecycleBinArgs) GetReq() *core_api.EmptyRecycleBinReq {
+	if !p.IsSetReq() {
+		return EmptyRecycleBinArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *EmptyRecycleBinArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *EmptyRecycleBinArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type EmptyRecycleBinResult struct {
+	Success *core_api.EmptyRecycleBinResp
+}
+
+var EmptyRecycleBinResult_Success_DEFAULT *core_api.EmptyRecycleBinResp
+
+func (p *EmptyRecycleBinResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.EmptyRecycleBinResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *EmptyRecycleBinResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *EmptyRecycleBinResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *EmptyRecycleBinResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *EmptyRecycleBinResult) Unmarshal(in []byte) error {
+	msg := new(core_api.EmptyRecycleBinResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *EmptyRecycleBinResult) GetSuccess() *core_api.EmptyRecycleBinResp {
+	if !p.IsSetSuccess() {
+		return EmptyRecycleBinResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *EmptyRecycleBinResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.EmptyRecycleBinResp)
+}
+
+func (p *EmptyRecycleBinResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *EmptyRecycleBinResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -6834,6 +6988,16 @@ func (p *kClient) DeleteFile(ctx context.Context, Req *core_api.DeleteFileReq) (
 	_args.Req = Req
 	var _result DeleteFileResult
 	if err = p.c.Call(ctx, "DeleteFile", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) EmptyRecycleBin(ctx context.Context, Req *core_api.EmptyRecycleBinReq) (r *core_api.EmptyRecycleBinResp, err error) {
+	var _args EmptyRecycleBinArgs
+	_args.Req = Req
+	var _result EmptyRecycleBinResult
+	if err = p.c.Call(ctx, "EmptyRecycleBin", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
