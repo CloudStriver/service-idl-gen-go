@@ -441,6 +441,11 @@ func (x *GetPrivateFilesReq) FastRead(buf []byte, _type int8, number int32) (off
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 11:
+		offset, err = x.fastReadField11(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -515,6 +520,12 @@ func (x *GetPrivateFilesReq) fastReadField9(buf []byte, _type int8) (offset int,
 func (x *GetPrivateFilesReq) fastReadField10(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
 	x.Offset = &tmp
+	return offset, err
+}
+
+func (x *GetPrivateFilesReq) fastReadField11(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadInt64(buf, _type)
+	x.OnlyCategory = &tmp
 	return offset, err
 }
 
@@ -660,6 +671,11 @@ func (x *GetPublicFilesReq) FastRead(buf []byte, _type int8, number int32) (offs
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 15:
+		offset, err = x.fastReadField15(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -758,6 +774,12 @@ func (x *GetPublicFilesReq) fastReadField13(buf []byte, _type int8) (offset int,
 func (x *GetPublicFilesReq) fastReadField14(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
 	x.Offset = &tmp
+	return offset, err
+}
+
+func (x *GetPublicFilesReq) fastReadField15(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadInt64(buf, _type)
+	x.OnlyCategory = &tmp
 	return offset, err
 }
 
@@ -4616,6 +4638,7 @@ func (x *GetPrivateFilesReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField8(buf[offset:])
 	offset += x.fastWriteField9(buf[offset:])
 	offset += x.fastWriteField10(buf[offset:])
+	offset += x.fastWriteField11(buf[offset:])
 	return offset
 }
 
@@ -4701,6 +4724,14 @@ func (x *GetPrivateFilesReq) fastWriteField10(buf []byte) (offset int) {
 	return offset
 }
 
+func (x *GetPrivateFilesReq) fastWriteField11(buf []byte) (offset int) {
+	if x.OnlyCategory == nil {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 11, x.GetOnlyCategory())
+	return offset
+}
+
 func (x *GetPrivateFilesResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -4773,6 +4804,7 @@ func (x *GetPublicFilesReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField12(buf[offset:])
 	offset += x.fastWriteField13(buf[offset:])
 	offset += x.fastWriteField14(buf[offset:])
+	offset += x.fastWriteField15(buf[offset:])
 	return offset
 }
 
@@ -4887,6 +4919,14 @@ func (x *GetPublicFilesReq) fastWriteField14(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteInt64(buf[offset:], 14, x.GetOffset())
+	return offset
+}
+
+func (x *GetPublicFilesReq) fastWriteField15(buf []byte) (offset int) {
+	if x.OnlyCategory == nil {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 15, x.GetOnlyCategory())
 	return offset
 }
 
@@ -7712,6 +7752,7 @@ func (x *GetPrivateFilesReq) Size() (n int) {
 	n += x.sizeField8()
 	n += x.sizeField9()
 	n += x.sizeField10()
+	n += x.sizeField11()
 	return n
 }
 
@@ -7797,6 +7838,14 @@ func (x *GetPrivateFilesReq) sizeField10() (n int) {
 	return n
 }
 
+func (x *GetPrivateFilesReq) sizeField11() (n int) {
+	if x.OnlyCategory == nil {
+		return n
+	}
+	n += fastpb.SizeInt64(11, x.GetOnlyCategory())
+	return n
+}
+
 func (x *GetPrivateFilesResp) Size() (n int) {
 	if x == nil {
 		return n
@@ -7869,6 +7918,7 @@ func (x *GetPublicFilesReq) Size() (n int) {
 	n += x.sizeField12()
 	n += x.sizeField13()
 	n += x.sizeField14()
+	n += x.sizeField15()
 	return n
 }
 
@@ -7983,6 +8033,14 @@ func (x *GetPublicFilesReq) sizeField14() (n int) {
 		return n
 	}
 	n += fastpb.SizeInt64(14, x.GetOffset())
+	return n
+}
+
+func (x *GetPublicFilesReq) sizeField15() (n int) {
+	if x.OnlyCategory == nil {
+		return n
+	}
+	n += fastpb.SizeInt64(15, x.GetOnlyCategory())
 	return n
 }
 
@@ -10584,6 +10642,7 @@ var fieldIDToName_GetPrivateFilesReq = map[int32]string{
 	8:  "LastToken",
 	9:  "Backward",
 	10: "Offset",
+	11: "OnlyCategory",
 }
 
 var fieldIDToName_GetPrivateFilesResp = map[int32]string{
@@ -10609,6 +10668,7 @@ var fieldIDToName_GetPublicFilesReq = map[int32]string{
 	12: "LastToken",
 	13: "Backward",
 	14: "Offset",
+	15: "OnlyCategory",
 }
 
 var fieldIDToName_GetPublicFilesResp = map[int32]string{
