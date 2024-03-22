@@ -154,11 +154,6 @@ func (x *SearchUserReq) FastRead(buf []byte, _type int8, number int32) (offset i
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 8:
-		offset, err = x.fastReadField8(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -186,35 +181,29 @@ func (x *SearchUserReq) fastReadField2(buf []byte, _type int8) (offset int, err 
 
 func (x *SearchUserReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadString(buf, _type)
-	x.Id = &tmp
-	return offset, err
-}
-
-func (x *SearchUserReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	tmp, offset, err := fastpb.ReadString(buf, _type)
 	x.Description = &tmp
 	return offset, err
 }
 
-func (x *SearchUserReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+func (x *SearchUserReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
 	x.Limit = &tmp
 	return offset, err
 }
 
-func (x *SearchUserReq) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+func (x *SearchUserReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadString(buf, _type)
 	x.LastToken = &tmp
 	return offset, err
 }
 
-func (x *SearchUserReq) fastReadField7(buf []byte, _type int8) (offset int, err error) {
+func (x *SearchUserReq) fastReadField6(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadBool(buf, _type)
 	x.Backward = &tmp
 	return offset, err
 }
 
-func (x *SearchUserReq) fastReadField8(buf []byte, _type int8) (offset int, err error) {
+func (x *SearchUserReq) fastReadField7(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
 	x.Offset = &tmp
 	return offset, err
@@ -2437,6 +2426,11 @@ func (x *GetUserResp) FastRead(buf []byte, _type int8, number int32) (offset int
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -2462,6 +2456,16 @@ func (x *GetUserResp) fastReadField2(buf []byte, _type int8) (offset int, err er
 
 func (x *GetUserResp) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	x.Url, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *GetUserResp) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Tags = append(x.Tags, v)
 	return offset, err
 }
 
@@ -4421,7 +4425,6 @@ func (x *SearchUserReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField5(buf[offset:])
 	offset += x.fastWriteField6(buf[offset:])
 	offset += x.fastWriteField7(buf[offset:])
-	offset += x.fastWriteField8(buf[offset:])
 	return offset
 }
 
@@ -4442,50 +4445,42 @@ func (x *SearchUserReq) fastWriteField2(buf []byte) (offset int) {
 }
 
 func (x *SearchUserReq) fastWriteField3(buf []byte) (offset int) {
-	if x.Id == nil {
+	if x.Description == nil {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 3, x.GetId())
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetDescription())
 	return offset
 }
 
 func (x *SearchUserReq) fastWriteField4(buf []byte) (offset int) {
-	if x.Description == nil {
+	if x.Limit == nil {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 4, x.GetDescription())
+	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetLimit())
 	return offset
 }
 
 func (x *SearchUserReq) fastWriteField5(buf []byte) (offset int) {
-	if x.Limit == nil {
+	if x.LastToken == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetLimit())
+	offset += fastpb.WriteString(buf[offset:], 5, x.GetLastToken())
 	return offset
 }
 
 func (x *SearchUserReq) fastWriteField6(buf []byte) (offset int) {
-	if x.LastToken == nil {
+	if x.Backward == nil {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 6, x.GetLastToken())
+	offset += fastpb.WriteBool(buf[offset:], 6, x.GetBackward())
 	return offset
 }
 
 func (x *SearchUserReq) fastWriteField7(buf []byte) (offset int) {
-	if x.Backward == nil {
-		return offset
-	}
-	offset += fastpb.WriteBool(buf[offset:], 7, x.GetBackward())
-	return offset
-}
-
-func (x *SearchUserReq) fastWriteField8(buf []byte) (offset int) {
 	if x.Offset == nil {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 8, x.GetOffset())
+	offset += fastpb.WriteInt64(buf[offset:], 7, x.GetOffset())
 	return offset
 }
 
@@ -6045,6 +6040,7 @@ func (x *GetUserResp) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
 	return offset
 }
 
@@ -6069,6 +6065,16 @@ func (x *GetUserResp) fastWriteField3(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 3, x.GetUrl())
+	return offset
+}
+
+func (x *GetUserResp) fastWriteField4(buf []byte) (offset int) {
+	if len(x.Tags) == 0 {
+		return offset
+	}
+	for i := range x.GetTags() {
+		offset += fastpb.WriteString(buf[offset:], 4, x.GetTags()[i])
+	}
 	return offset
 }
 
@@ -7515,7 +7521,6 @@ func (x *SearchUserReq) Size() (n int) {
 	n += x.sizeField5()
 	n += x.sizeField6()
 	n += x.sizeField7()
-	n += x.sizeField8()
 	return n
 }
 
@@ -7536,50 +7541,42 @@ func (x *SearchUserReq) sizeField2() (n int) {
 }
 
 func (x *SearchUserReq) sizeField3() (n int) {
-	if x.Id == nil {
+	if x.Description == nil {
 		return n
 	}
-	n += fastpb.SizeString(3, x.GetId())
+	n += fastpb.SizeString(3, x.GetDescription())
 	return n
 }
 
 func (x *SearchUserReq) sizeField4() (n int) {
-	if x.Description == nil {
+	if x.Limit == nil {
 		return n
 	}
-	n += fastpb.SizeString(4, x.GetDescription())
+	n += fastpb.SizeInt64(4, x.GetLimit())
 	return n
 }
 
 func (x *SearchUserReq) sizeField5() (n int) {
-	if x.Limit == nil {
+	if x.LastToken == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(5, x.GetLimit())
+	n += fastpb.SizeString(5, x.GetLastToken())
 	return n
 }
 
 func (x *SearchUserReq) sizeField6() (n int) {
-	if x.LastToken == nil {
+	if x.Backward == nil {
 		return n
 	}
-	n += fastpb.SizeString(6, x.GetLastToken())
+	n += fastpb.SizeBool(6, x.GetBackward())
 	return n
 }
 
 func (x *SearchUserReq) sizeField7() (n int) {
-	if x.Backward == nil {
-		return n
-	}
-	n += fastpb.SizeBool(7, x.GetBackward())
-	return n
-}
-
-func (x *SearchUserReq) sizeField8() (n int) {
 	if x.Offset == nil {
 		return n
 	}
-	n += fastpb.SizeInt64(8, x.GetOffset())
+	n += fastpb.SizeInt64(7, x.GetOffset())
 	return n
 }
 
@@ -9139,6 +9136,7 @@ func (x *GetUserResp) Size() (n int) {
 	n += x.sizeField1()
 	n += x.sizeField2()
 	n += x.sizeField3()
+	n += x.sizeField4()
 	return n
 }
 
@@ -9163,6 +9161,16 @@ func (x *GetUserResp) sizeField3() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(3, x.GetUrl())
+	return n
+}
+
+func (x *GetUserResp) sizeField4() (n int) {
+	if len(x.Tags) == 0 {
+		return n
+	}
+	for i := range x.GetTags() {
+		n += fastpb.SizeString(4, x.GetTags()[i])
+	}
 	return n
 }
 
@@ -10534,12 +10542,11 @@ var fieldIDToName_UpdateUserResp = map[int32]string{}
 var fieldIDToName_SearchUserReq = map[int32]string{
 	1: "AllFieldsKey",
 	2: "Name",
-	3: "Id",
-	4: "Description",
-	5: "Limit",
-	6: "LastToken",
-	7: "Backward",
-	8: "Offset",
+	3: "Description",
+	4: "Limit",
+	5: "LastToken",
+	6: "Backward",
+	7: "Offset",
 }
 
 var fieldIDToName_SearchUserResp = map[int32]string{
@@ -10823,6 +10830,7 @@ var fieldIDToName_GetUserResp = map[int32]string{
 	1: "UserId",
 	2: "Name",
 	3: "Url",
+	4: "Tags",
 }
 
 var fieldIDToName_CreateUserReq = map[int32]string{
