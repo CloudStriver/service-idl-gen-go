@@ -175,6 +175,60 @@ func (x *GetNotificationCountResp) fastReadField1(buf []byte, _type int8) (offse
 	return offset, err
 }
 
+func (x *DeleteNotificationsReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_DeleteNotificationsReq[number], err)
+}
+
+func (x *DeleteNotificationsReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.NotificationIds = append(x.NotificationIds, v)
+	return offset, err
+}
+
+func (x *DeleteNotificationsReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadInt64(buf, _type)
+	x.OnlyType = &tmp
+	return offset, err
+}
+
+func (x *DeleteNotificationsResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+}
+
 func (x *CreateSliderReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
@@ -523,6 +577,40 @@ func (x *GetNotificationCountResp) fastWriteField1(buf []byte) (offset int) {
 	return offset
 }
 
+func (x *DeleteNotificationsReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	return offset
+}
+
+func (x *DeleteNotificationsReq) fastWriteField1(buf []byte) (offset int) {
+	if len(x.NotificationIds) == 0 {
+		return offset
+	}
+	for i := range x.GetNotificationIds() {
+		offset += fastpb.WriteString(buf[offset:], 1, x.GetNotificationIds()[i])
+	}
+	return offset
+}
+
+func (x *DeleteNotificationsReq) fastWriteField2(buf []byte) (offset int) {
+	if x.OnlyType == nil {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetOnlyType())
+	return offset
+}
+
+func (x *DeleteNotificationsResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	return offset
+}
+
 func (x *CreateSliderReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -800,6 +888,40 @@ func (x *GetNotificationCountResp) sizeField1() (n int) {
 	return n
 }
 
+func (x *DeleteNotificationsReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	return n
+}
+
+func (x *DeleteNotificationsReq) sizeField1() (n int) {
+	if len(x.NotificationIds) == 0 {
+		return n
+	}
+	for i := range x.GetNotificationIds() {
+		n += fastpb.SizeString(1, x.GetNotificationIds()[i])
+	}
+	return n
+}
+
+func (x *DeleteNotificationsReq) sizeField2() (n int) {
+	if x.OnlyType == nil {
+		return n
+	}
+	n += fastpb.SizeInt64(2, x.GetOnlyType())
+	return n
+}
+
+func (x *DeleteNotificationsResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	return n
+}
+
 func (x *CreateSliderReq) Size() (n int) {
 	if x == nil {
 		return n
@@ -986,6 +1108,13 @@ var fieldIDToName_GetNotificationCountReq = map[int32]string{
 var fieldIDToName_GetNotificationCountResp = map[int32]string{
 	1: "Total",
 }
+
+var fieldIDToName_DeleteNotificationsReq = map[int32]string{
+	1: "NotificationIds",
+	2: "OnlyType",
+}
+
+var fieldIDToName_DeleteNotificationsResp = map[int32]string{}
 
 var fieldIDToName_CreateSliderReq = map[int32]string{
 	1: "ImageUrl",

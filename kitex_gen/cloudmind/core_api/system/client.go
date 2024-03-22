@@ -13,6 +13,7 @@ import (
 type Client interface {
 	GetNotifications(ctx context.Context, Req *core_api.GetNotificationsReq, callOptions ...callopt.Option) (r *core_api.GetNotificationsResp, err error)
 	GetNotificationCount(ctx context.Context, Req *core_api.GetNotificationCountReq, callOptions ...callopt.Option) (r *core_api.GetNotificationCountResp, err error)
+	DeleteNotifications(ctx context.Context, Req *core_api.DeleteNotificationsReq, callOptions ...callopt.Option) (r *core_api.DeleteNotificationsResp, err error)
 	UpdateSlider(ctx context.Context, Req *core_api.UpdateSliderReq, callOptions ...callopt.Option) (r *core_api.UpdateSliderResp, err error)
 	DeleteSlider(ctx context.Context, Req *core_api.DeleteSliderReq, callOptions ...callopt.Option) (r *core_api.DeleteSliderResp, err error)
 	CreateSlider(ctx context.Context, Req *core_api.CreateSliderReq, callOptions ...callopt.Option) (r *core_api.CreateSliderResp, err error)
@@ -56,6 +57,11 @@ func (p *kSystemClient) GetNotifications(ctx context.Context, Req *core_api.GetN
 func (p *kSystemClient) GetNotificationCount(ctx context.Context, Req *core_api.GetNotificationCountReq, callOptions ...callopt.Option) (r *core_api.GetNotificationCountResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetNotificationCount(ctx, Req)
+}
+
+func (p *kSystemClient) DeleteNotifications(ctx context.Context, Req *core_api.DeleteNotificationsReq, callOptions ...callopt.Option) (r *core_api.DeleteNotificationsResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteNotifications(ctx, Req)
 }
 
 func (p *kSystemClient) UpdateSlider(ctx context.Context, Req *core_api.UpdateSliderReq, callOptions ...callopt.Option) (r *core_api.UpdateSliderResp, err error) {
