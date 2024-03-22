@@ -5,6 +5,7 @@ package core_api
 import (
 	fmt "fmt"
 	basic "github.com/CloudStriver/service-idl-gen-go/kitex_gen/basic"
+	http "github.com/CloudStriver/service-idl-gen-go/kitex_gen/http"
 	fastpb "github.com/cloudwego/fastpb"
 )
 
@@ -1162,3 +1163,4 @@ var fieldIDToName_DeleteRelationReq = map[int32]string{
 var fieldIDToName_DeleteRelationResp = map[int32]string{}
 
 var _ = basic.File_basic_pagination_proto
+var _ = http.File_http_http_proto
