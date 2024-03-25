@@ -20,6 +20,8 @@ type Client interface {
 	GenCosSts(ctx context.Context, Req *sts.GenCosStsReq, callOptions ...callopt.Option) (r *sts.GenCosStsResp, err error)
 	GenSignedUrl(ctx context.Context, Req *sts.GenSignedUrlReq, callOptions ...callopt.Option) (r *sts.GenSignedUrlResp, err error)
 	DeleteObject(ctx context.Context, Req *sts.DeleteObjectReq, callOptions ...callopt.Option) (r *sts.DeleteObjectResp, err error)
+	ReplaceContent(ctx context.Context, Req *sts.ReplaceContentReq, callOptions ...callopt.Option) (r *sts.ReplaceContentResp, err error)
+	FindAllContent(ctx context.Context, Req *sts.FindAllContentReq, callOptions ...callopt.Option) (r *sts.FindAllContentResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -94,4 +96,14 @@ func (p *kStsServiceClient) GenSignedUrl(ctx context.Context, Req *sts.GenSigned
 func (p *kStsServiceClient) DeleteObject(ctx context.Context, Req *sts.DeleteObjectReq, callOptions ...callopt.Option) (r *sts.DeleteObjectResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.DeleteObject(ctx, Req)
+}
+
+func (p *kStsServiceClient) ReplaceContent(ctx context.Context, Req *sts.ReplaceContentReq, callOptions ...callopt.Option) (r *sts.ReplaceContentResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.ReplaceContent(ctx, Req)
+}
+
+func (p *kStsServiceClient) FindAllContent(ctx context.Context, Req *sts.FindAllContentReq, callOptions ...callopt.Option) (r *sts.FindAllContentResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.FindAllContent(ctx, Req)
 }

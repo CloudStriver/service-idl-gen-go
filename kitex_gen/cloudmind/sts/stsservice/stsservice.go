@@ -21,15 +21,17 @@ func NewServiceInfo() *kitex.ServiceInfo {
 	serviceName := "StsService"
 	handlerType := (*sts.StsService)(nil)
 	methods := map[string]kitex.MethodInfo{
-		"SetPassword":  kitex.NewMethodInfo(setPasswordHandler, newSetPasswordArgs, newSetPasswordResult, false),
-		"SendEmail":    kitex.NewMethodInfo(sendEmailHandler, newSendEmailArgs, newSendEmailResult, false),
-		"CheckEmail":   kitex.NewMethodInfo(checkEmailHandler, newCheckEmailArgs, newCheckEmailResult, false),
-		"CreateAuth":   kitex.NewMethodInfo(createAuthHandler, newCreateAuthArgs, newCreateAuthResult, false),
-		"Login":        kitex.NewMethodInfo(loginHandler, newLoginArgs, newLoginResult, false),
-		"AppendAuth":   kitex.NewMethodInfo(appendAuthHandler, newAppendAuthArgs, newAppendAuthResult, false),
-		"genCosSts":    kitex.NewMethodInfo(genCosStsHandler, newGenCosStsArgs, newGenCosStsResult, false),
-		"genSignedUrl": kitex.NewMethodInfo(genSignedUrlHandler, newGenSignedUrlArgs, newGenSignedUrlResult, false),
-		"deleteObject": kitex.NewMethodInfo(deleteObjectHandler, newDeleteObjectArgs, newDeleteObjectResult, false),
+		"SetPassword":    kitex.NewMethodInfo(setPasswordHandler, newSetPasswordArgs, newSetPasswordResult, false),
+		"SendEmail":      kitex.NewMethodInfo(sendEmailHandler, newSendEmailArgs, newSendEmailResult, false),
+		"CheckEmail":     kitex.NewMethodInfo(checkEmailHandler, newCheckEmailArgs, newCheckEmailResult, false),
+		"CreateAuth":     kitex.NewMethodInfo(createAuthHandler, newCreateAuthArgs, newCreateAuthResult, false),
+		"Login":          kitex.NewMethodInfo(loginHandler, newLoginArgs, newLoginResult, false),
+		"AppendAuth":     kitex.NewMethodInfo(appendAuthHandler, newAppendAuthArgs, newAppendAuthResult, false),
+		"genCosSts":      kitex.NewMethodInfo(genCosStsHandler, newGenCosStsArgs, newGenCosStsResult, false),
+		"genSignedUrl":   kitex.NewMethodInfo(genSignedUrlHandler, newGenSignedUrlArgs, newGenSignedUrlResult, false),
+		"deleteObject":   kitex.NewMethodInfo(deleteObjectHandler, newDeleteObjectArgs, newDeleteObjectResult, false),
+		"ReplaceContent": kitex.NewMethodInfo(replaceContentHandler, newReplaceContentArgs, newReplaceContentResult, false),
+		"FindAllContent": kitex.NewMethodInfo(findAllContentHandler, newFindAllContentArgs, newFindAllContentResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName":     "cloudmind.sts",
@@ -1423,6 +1425,312 @@ func (p *DeleteObjectResult) GetResult() interface{} {
 	return p.Success
 }
 
+func replaceContentHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(sts.ReplaceContentReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(sts.StsService).ReplaceContent(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *ReplaceContentArgs:
+		success, err := handler.(sts.StsService).ReplaceContent(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*ReplaceContentResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newReplaceContentArgs() interface{} {
+	return &ReplaceContentArgs{}
+}
+
+func newReplaceContentResult() interface{} {
+	return &ReplaceContentResult{}
+}
+
+type ReplaceContentArgs struct {
+	Req *sts.ReplaceContentReq
+}
+
+func (p *ReplaceContentArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(sts.ReplaceContentReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *ReplaceContentArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *ReplaceContentArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *ReplaceContentArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *ReplaceContentArgs) Unmarshal(in []byte) error {
+	msg := new(sts.ReplaceContentReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var ReplaceContentArgs_Req_DEFAULT *sts.ReplaceContentReq
+
+func (p *ReplaceContentArgs) GetReq() *sts.ReplaceContentReq {
+	if !p.IsSetReq() {
+		return ReplaceContentArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *ReplaceContentArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *ReplaceContentArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type ReplaceContentResult struct {
+	Success *sts.ReplaceContentResp
+}
+
+var ReplaceContentResult_Success_DEFAULT *sts.ReplaceContentResp
+
+func (p *ReplaceContentResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(sts.ReplaceContentResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *ReplaceContentResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *ReplaceContentResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *ReplaceContentResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *ReplaceContentResult) Unmarshal(in []byte) error {
+	msg := new(sts.ReplaceContentResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *ReplaceContentResult) GetSuccess() *sts.ReplaceContentResp {
+	if !p.IsSetSuccess() {
+		return ReplaceContentResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *ReplaceContentResult) SetSuccess(x interface{}) {
+	p.Success = x.(*sts.ReplaceContentResp)
+}
+
+func (p *ReplaceContentResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *ReplaceContentResult) GetResult() interface{} {
+	return p.Success
+}
+
+func findAllContentHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(sts.FindAllContentReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(sts.StsService).FindAllContent(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *FindAllContentArgs:
+		success, err := handler.(sts.StsService).FindAllContent(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*FindAllContentResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newFindAllContentArgs() interface{} {
+	return &FindAllContentArgs{}
+}
+
+func newFindAllContentResult() interface{} {
+	return &FindAllContentResult{}
+}
+
+type FindAllContentArgs struct {
+	Req *sts.FindAllContentReq
+}
+
+func (p *FindAllContentArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(sts.FindAllContentReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *FindAllContentArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *FindAllContentArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *FindAllContentArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *FindAllContentArgs) Unmarshal(in []byte) error {
+	msg := new(sts.FindAllContentReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var FindAllContentArgs_Req_DEFAULT *sts.FindAllContentReq
+
+func (p *FindAllContentArgs) GetReq() *sts.FindAllContentReq {
+	if !p.IsSetReq() {
+		return FindAllContentArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *FindAllContentArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *FindAllContentArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type FindAllContentResult struct {
+	Success *sts.FindAllContentResp
+}
+
+var FindAllContentResult_Success_DEFAULT *sts.FindAllContentResp
+
+func (p *FindAllContentResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(sts.FindAllContentResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *FindAllContentResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *FindAllContentResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *FindAllContentResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *FindAllContentResult) Unmarshal(in []byte) error {
+	msg := new(sts.FindAllContentResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *FindAllContentResult) GetSuccess() *sts.FindAllContentResp {
+	if !p.IsSetSuccess() {
+		return FindAllContentResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *FindAllContentResult) SetSuccess(x interface{}) {
+	p.Success = x.(*sts.FindAllContentResp)
+}
+
+func (p *FindAllContentResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *FindAllContentResult) GetResult() interface{} {
+	return p.Success
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -1518,6 +1826,26 @@ func (p *kClient) DeleteObject(ctx context.Context, Req *sts.DeleteObjectReq) (r
 	_args.Req = Req
 	var _result DeleteObjectResult
 	if err = p.c.Call(ctx, "deleteObject", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) ReplaceContent(ctx context.Context, Req *sts.ReplaceContentReq) (r *sts.ReplaceContentResp, err error) {
+	var _args ReplaceContentArgs
+	_args.Req = Req
+	var _result ReplaceContentResult
+	if err = p.c.Call(ctx, "ReplaceContent", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) FindAllContent(ctx context.Context, Req *sts.FindAllContentReq) (r *sts.FindAllContentResp, err error) {
+	var _args FindAllContentArgs
+	_args.Req = Req
+	var _result FindAllContentResult
+	if err = p.c.Call(ctx, "FindAllContent", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

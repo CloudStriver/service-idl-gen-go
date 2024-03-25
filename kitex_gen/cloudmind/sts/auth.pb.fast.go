@@ -4,6 +4,7 @@ package sts
 
 import (
 	fmt "fmt"
+	basic "github.com/CloudStriver/service-idl-gen-go/kitex_gen/basic"
 	fastpb "github.com/cloudwego/fastpb"
 )
 
@@ -599,6 +600,156 @@ SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 }
 
+func (x *ReplaceContentReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_ReplaceContentReq[number], err)
+}
+
+func (x *ReplaceContentReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Contents = append(x.Contents, v)
+	return offset, err
+}
+
+func (x *ReplaceContentResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_ReplaceContentResp[number], err)
+}
+
+func (x *ReplaceContentResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Content = append(x.Content, v)
+	return offset, err
+}
+
+func (x *FindAllContentReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_FindAllContentReq[number], err)
+}
+
+func (x *FindAllContentReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Contents = append(x.Contents, v)
+	return offset, err
+}
+
+func (x *Keywords) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_Keywords[number], err)
+}
+
+func (x *Keywords) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Keywords = append(x.Keywords, v)
+	return offset, err
+}
+
+func (x *FindAllContentResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_FindAllContentResp[number], err)
+}
+
+func (x *FindAllContentResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v Keywords
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Keywords = append(x.Keywords, &v)
+	return offset, nil
+}
+
 func (x *SendEmailReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -982,6 +1133,96 @@ func (x *DeleteObjectReq) fastWriteField1(buf []byte) (offset int) {
 func (x *DeleteObjectResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
+	}
+	return offset
+}
+
+func (x *ReplaceContentReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *ReplaceContentReq) fastWriteField1(buf []byte) (offset int) {
+	if len(x.Contents) == 0 {
+		return offset
+	}
+	for i := range x.GetContents() {
+		offset += fastpb.WriteString(buf[offset:], 1, x.GetContents()[i])
+	}
+	return offset
+}
+
+func (x *ReplaceContentResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *ReplaceContentResp) fastWriteField1(buf []byte) (offset int) {
+	if len(x.Content) == 0 {
+		return offset
+	}
+	for i := range x.GetContent() {
+		offset += fastpb.WriteString(buf[offset:], 1, x.GetContent()[i])
+	}
+	return offset
+}
+
+func (x *FindAllContentReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *FindAllContentReq) fastWriteField1(buf []byte) (offset int) {
+	if len(x.Contents) == 0 {
+		return offset
+	}
+	for i := range x.GetContents() {
+		offset += fastpb.WriteString(buf[offset:], 1, x.GetContents()[i])
+	}
+	return offset
+}
+
+func (x *Keywords) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *Keywords) fastWriteField1(buf []byte) (offset int) {
+	if len(x.Keywords) == 0 {
+		return offset
+	}
+	for i := range x.GetKeywords() {
+		offset += fastpb.WriteString(buf[offset:], 1, x.GetKeywords()[i])
+	}
+	return offset
+}
+
+func (x *FindAllContentResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *FindAllContentResp) fastWriteField1(buf []byte) (offset int) {
+	if x.Keywords == nil {
+		return offset
+	}
+	for i := range x.GetKeywords() {
+		offset += fastpb.WriteMessage(buf[offset:], 1, x.GetKeywords()[i])
 	}
 	return offset
 }
@@ -1373,6 +1614,96 @@ func (x *DeleteObjectResp) Size() (n int) {
 	return n
 }
 
+func (x *ReplaceContentReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *ReplaceContentReq) sizeField1() (n int) {
+	if len(x.Contents) == 0 {
+		return n
+	}
+	for i := range x.GetContents() {
+		n += fastpb.SizeString(1, x.GetContents()[i])
+	}
+	return n
+}
+
+func (x *ReplaceContentResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *ReplaceContentResp) sizeField1() (n int) {
+	if len(x.Content) == 0 {
+		return n
+	}
+	for i := range x.GetContent() {
+		n += fastpb.SizeString(1, x.GetContent()[i])
+	}
+	return n
+}
+
+func (x *FindAllContentReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *FindAllContentReq) sizeField1() (n int) {
+	if len(x.Contents) == 0 {
+		return n
+	}
+	for i := range x.GetContents() {
+		n += fastpb.SizeString(1, x.GetContents()[i])
+	}
+	return n
+}
+
+func (x *Keywords) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *Keywords) sizeField1() (n int) {
+	if len(x.Keywords) == 0 {
+		return n
+	}
+	for i := range x.GetKeywords() {
+		n += fastpb.SizeString(1, x.GetKeywords()[i])
+	}
+	return n
+}
+
+func (x *FindAllContentResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *FindAllContentResp) sizeField1() (n int) {
+	if x.Keywords == nil {
+		return n
+	}
+	for i := range x.GetKeywords() {
+		n += fastpb.SizeMessage(1, x.GetKeywords()[i])
+	}
+	return n
+}
+
 var fieldIDToName_SendEmailReq = map[int32]string{
 	1: "Email",
 	2: "Subject",
@@ -1451,3 +1782,25 @@ var fieldIDToName_DeleteObjectReq = map[int32]string{
 }
 
 var fieldIDToName_DeleteObjectResp = map[int32]string{}
+
+var fieldIDToName_ReplaceContentReq = map[int32]string{
+	1: "Contents",
+}
+
+var fieldIDToName_ReplaceContentResp = map[int32]string{
+	1: "Content",
+}
+
+var fieldIDToName_FindAllContentReq = map[int32]string{
+	1: "Contents",
+}
+
+var fieldIDToName_Keywords = map[int32]string{
+	1: "Keywords",
+}
+
+var fieldIDToName_FindAllContentResp = map[int32]string{
+	1: "Keywords",
+}
+
+var _ = basic.File_basic_pagination_proto
