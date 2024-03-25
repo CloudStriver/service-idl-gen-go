@@ -38,6 +38,11 @@ func (x *RegisterReq) FastRead(buf []byte, _type int8, number int32) (offset int
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -71,6 +76,11 @@ func (x *RegisterReq) fastReadField4(buf []byte, _type int8) (offset int, err er
 	return offset, err
 }
 
+func (x *RegisterReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	x.IsSure, offset, err = fastpb.ReadBool(buf, _type)
+	return offset, err
+}
+
 func (x *RegisterResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
@@ -85,6 +95,11 @@ func (x *RegisterResp) FastRead(buf []byte, _type int8, number int32) (offset in
 		}
 	case 3:
 		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
 		if err != nil {
 			goto ReadFieldError
 		}
@@ -114,6 +129,16 @@ func (x *RegisterResp) fastReadField2(buf []byte, _type int8) (offset int, err e
 func (x *RegisterResp) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	x.UserId, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
+}
+
+func (x *RegisterResp) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	var v Keywords
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Keywords = append(x.Keywords, &v)
+	return offset, nil
 }
 
 func (x *EmailLoginReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -766,6 +791,7 @@ func (x *RegisterReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
 	return offset
 }
 
@@ -801,6 +827,14 @@ func (x *RegisterReq) fastWriteField4(buf []byte) (offset int) {
 	return offset
 }
 
+func (x *RegisterReq) fastWriteField5(buf []byte) (offset int) {
+	if !x.IsSure {
+		return offset
+	}
+	offset += fastpb.WriteBool(buf[offset:], 5, x.GetIsSure())
+	return offset
+}
+
 func (x *RegisterResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -808,6 +842,7 @@ func (x *RegisterResp) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
 	return offset
 }
 
@@ -832,6 +867,16 @@ func (x *RegisterResp) fastWriteField3(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 3, x.GetUserId())
+	return offset
+}
+
+func (x *RegisterResp) fastWriteField4(buf []byte) (offset int) {
+	if x.Keywords == nil {
+		return offset
+	}
+	for i := range x.GetKeywords() {
+		offset += fastpb.WriteMessage(buf[offset:], 4, x.GetKeywords()[i])
+	}
 	return offset
 }
 
@@ -1298,6 +1343,7 @@ func (x *RegisterReq) Size() (n int) {
 	n += x.sizeField2()
 	n += x.sizeField3()
 	n += x.sizeField4()
+	n += x.sizeField5()
 	return n
 }
 
@@ -1333,6 +1379,14 @@ func (x *RegisterReq) sizeField4() (n int) {
 	return n
 }
 
+func (x *RegisterReq) sizeField5() (n int) {
+	if !x.IsSure {
+		return n
+	}
+	n += fastpb.SizeBool(5, x.GetIsSure())
+	return n
+}
+
 func (x *RegisterResp) Size() (n int) {
 	if x == nil {
 		return n
@@ -1340,6 +1394,7 @@ func (x *RegisterResp) Size() (n int) {
 	n += x.sizeField1()
 	n += x.sizeField2()
 	n += x.sizeField3()
+	n += x.sizeField4()
 	return n
 }
 
@@ -1364,6 +1419,16 @@ func (x *RegisterResp) sizeField3() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(3, x.GetUserId())
+	return n
+}
+
+func (x *RegisterResp) sizeField4() (n int) {
+	if x.Keywords == nil {
+		return n
+	}
+	for i := range x.GetKeywords() {
+		n += fastpb.SizeMessage(4, x.GetKeywords()[i])
+	}
 	return n
 }
 
@@ -1827,12 +1892,14 @@ var fieldIDToName_RegisterReq = map[int32]string{
 	2: "Sex",
 	3: "Email",
 	4: "Password",
+	5: "IsSure",
 }
 
 var fieldIDToName_RegisterResp = map[int32]string{
 	1: "ShortToken",
 	2: "LongToken",
 	3: "UserId",
+	4: "Keywords",
 }
 
 var fieldIDToName_EmailLoginReq = map[int32]string{

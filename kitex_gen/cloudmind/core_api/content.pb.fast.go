@@ -51,6 +51,11 @@ func (x *UpdateUserReq) FastRead(buf []byte, _type int8, number int32) (offset i
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 8:
+		offset, err = x.fastReadField8(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -104,8 +109,18 @@ func (x *UpdateUserReq) fastReadField7(buf []byte, _type int8) (offset int, err 
 	return offset, err
 }
 
+func (x *UpdateUserReq) fastReadField8(buf []byte, _type int8) (offset int, err error) {
+	x.IsSure, offset, err = fastpb.ReadBool(buf, _type)
+	return offset, err
+}
+
 func (x *UpdateUserResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -115,6 +130,18 @@ func (x *UpdateUserResp) FastRead(buf []byte, _type int8, number int32) (offset 
 	return offset, nil
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_UpdateUserResp[number], err)
+}
+
+func (x *UpdateUserResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v Keywords
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Keywords = append(x.Keywords, &v)
+	return offset, nil
 }
 
 func (x *SearchUserReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -2866,6 +2893,11 @@ func (x *CreatePostReq) FastRead(buf []byte, _type int8, number int32) (offset i
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 6:
+		offset, err = x.fastReadField6(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -2909,10 +2941,20 @@ func (x *CreatePostReq) fastReadField5(buf []byte, _type int8) (offset int, err 
 	return offset, err
 }
 
+func (x *CreatePostReq) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+	x.IsSure, offset, err = fastpb.ReadBool(buf, _type)
+	return offset, err
+}
+
 func (x *CreatePostResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
 		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
 		if err != nil {
 			goto ReadFieldError
 		}
@@ -2931,6 +2973,46 @@ ReadFieldError:
 
 func (x *CreatePostResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
 	x.PostId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *CreatePostResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	var v Keywords
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Keywords = append(x.Keywords, &v)
+	return offset, nil
+}
+
+func (x *Keywords) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_Keywords[number], err)
+}
+
+func (x *Keywords) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Keywords = append(x.Keywords, v)
 	return offset, err
 }
 
@@ -3009,6 +3091,11 @@ func (x *UpdatePostReq) FastRead(buf []byte, _type int8, number int32) (offset i
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 7:
+		offset, err = x.fastReadField7(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -3057,8 +3144,18 @@ func (x *UpdatePostReq) fastReadField6(buf []byte, _type int8) (offset int, err 
 	return offset, err
 }
 
+func (x *UpdatePostReq) fastReadField7(buf []byte, _type int8) (offset int, err error) {
+	x.IsSure, offset, err = fastpb.ReadBool(buf, _type)
+	return offset, err
+}
+
 func (x *UpdatePostResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -3068,6 +3165,18 @@ func (x *UpdatePostResp) FastRead(buf []byte, _type int8, number int32) (offset 
 	return offset, nil
 SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_UpdatePostResp[number], err)
+}
+
+func (x *UpdatePostResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v Keywords
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Keywords = append(x.Keywords, &v)
+	return offset, nil
 }
 
 func (x *GetPostReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
@@ -4487,6 +4596,7 @@ func (x *UpdateUserReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField5(buf[offset:])
 	offset += x.fastWriteField6(buf[offset:])
 	offset += x.fastWriteField7(buf[offset:])
+	offset += x.fastWriteField8(buf[offset:])
 	return offset
 }
 
@@ -4548,9 +4658,28 @@ func (x *UpdateUserReq) fastWriteField7(buf []byte) (offset int) {
 	return offset
 }
 
+func (x *UpdateUserReq) fastWriteField8(buf []byte) (offset int) {
+	if !x.IsSure {
+		return offset
+	}
+	offset += fastpb.WriteBool(buf[offset:], 8, x.GetIsSure())
+	return offset
+}
+
 func (x *UpdateUserResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *UpdateUserResp) fastWriteField1(buf []byte) (offset int) {
+	if x.Keywords == nil {
+		return offset
+	}
+	for i := range x.GetKeywords() {
+		offset += fastpb.WriteMessage(buf[offset:], 1, x.GetKeywords()[i])
 	}
 	return offset
 }
@@ -6504,6 +6633,7 @@ func (x *CreatePostReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
 	offset += x.fastWriteField5(buf[offset:])
+	offset += x.fastWriteField6(buf[offset:])
 	return offset
 }
 
@@ -6549,11 +6679,20 @@ func (x *CreatePostReq) fastWriteField5(buf []byte) (offset int) {
 	return offset
 }
 
+func (x *CreatePostReq) fastWriteField6(buf []byte) (offset int) {
+	if !x.IsSure {
+		return offset
+	}
+	offset += fastpb.WriteBool(buf[offset:], 6, x.GetIsSure())
+	return offset
+}
+
 func (x *CreatePostResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
 	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
 	return offset
 }
 
@@ -6562,6 +6701,34 @@ func (x *CreatePostResp) fastWriteField1(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 1, x.GetPostId())
+	return offset
+}
+
+func (x *CreatePostResp) fastWriteField2(buf []byte) (offset int) {
+	if x.Keywords == nil {
+		return offset
+	}
+	for i := range x.GetKeywords() {
+		offset += fastpb.WriteMessage(buf[offset:], 2, x.GetKeywords()[i])
+	}
+	return offset
+}
+
+func (x *Keywords) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *Keywords) fastWriteField1(buf []byte) (offset int) {
+	if len(x.Keywords) == 0 {
+		return offset
+	}
+	for i := range x.GetKeywords() {
+		offset += fastpb.WriteString(buf[offset:], 1, x.GetKeywords()[i])
+	}
 	return offset
 }
 
@@ -6600,6 +6767,7 @@ func (x *UpdatePostReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField4(buf[offset:])
 	offset += x.fastWriteField5(buf[offset:])
 	offset += x.fastWriteField6(buf[offset:])
+	offset += x.fastWriteField7(buf[offset:])
 	return offset
 }
 
@@ -6653,9 +6821,28 @@ func (x *UpdatePostReq) fastWriteField6(buf []byte) (offset int) {
 	return offset
 }
 
+func (x *UpdatePostReq) fastWriteField7(buf []byte) (offset int) {
+	if !x.IsSure {
+		return offset
+	}
+	offset += fastpb.WriteBool(buf[offset:], 7, x.GetIsSure())
+	return offset
+}
+
 func (x *UpdatePostResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *UpdatePostResp) fastWriteField1(buf []byte) (offset int) {
+	if x.Keywords == nil {
+		return offset
+	}
+	for i := range x.GetKeywords() {
+		offset += fastpb.WriteMessage(buf[offset:], 1, x.GetKeywords()[i])
 	}
 	return offset
 }
@@ -7689,6 +7876,7 @@ func (x *UpdateUserReq) Size() (n int) {
 	n += x.sizeField5()
 	n += x.sizeField6()
 	n += x.sizeField7()
+	n += x.sizeField8()
 	return n
 }
 
@@ -7750,9 +7938,28 @@ func (x *UpdateUserReq) sizeField7() (n int) {
 	return n
 }
 
+func (x *UpdateUserReq) sizeField8() (n int) {
+	if !x.IsSure {
+		return n
+	}
+	n += fastpb.SizeBool(8, x.GetIsSure())
+	return n
+}
+
 func (x *UpdateUserResp) Size() (n int) {
 	if x == nil {
 		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *UpdateUserResp) sizeField1() (n int) {
+	if x.Keywords == nil {
+		return n
+	}
+	for i := range x.GetKeywords() {
+		n += fastpb.SizeMessage(1, x.GetKeywords()[i])
 	}
 	return n
 }
@@ -9706,6 +9913,7 @@ func (x *CreatePostReq) Size() (n int) {
 	n += x.sizeField3()
 	n += x.sizeField4()
 	n += x.sizeField5()
+	n += x.sizeField6()
 	return n
 }
 
@@ -9751,11 +9959,20 @@ func (x *CreatePostReq) sizeField5() (n int) {
 	return n
 }
 
+func (x *CreatePostReq) sizeField6() (n int) {
+	if !x.IsSure {
+		return n
+	}
+	n += fastpb.SizeBool(6, x.GetIsSure())
+	return n
+}
+
 func (x *CreatePostResp) Size() (n int) {
 	if x == nil {
 		return n
 	}
 	n += x.sizeField1()
+	n += x.sizeField2()
 	return n
 }
 
@@ -9764,6 +9981,34 @@ func (x *CreatePostResp) sizeField1() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(1, x.GetPostId())
+	return n
+}
+
+func (x *CreatePostResp) sizeField2() (n int) {
+	if x.Keywords == nil {
+		return n
+	}
+	for i := range x.GetKeywords() {
+		n += fastpb.SizeMessage(2, x.GetKeywords()[i])
+	}
+	return n
+}
+
+func (x *Keywords) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *Keywords) sizeField1() (n int) {
+	if len(x.Keywords) == 0 {
+		return n
+	}
+	for i := range x.GetKeywords() {
+		n += fastpb.SizeString(1, x.GetKeywords()[i])
+	}
 	return n
 }
 
@@ -9802,6 +10047,7 @@ func (x *UpdatePostReq) Size() (n int) {
 	n += x.sizeField4()
 	n += x.sizeField5()
 	n += x.sizeField6()
+	n += x.sizeField7()
 	return n
 }
 
@@ -9855,9 +10101,28 @@ func (x *UpdatePostReq) sizeField6() (n int) {
 	return n
 }
 
+func (x *UpdatePostReq) sizeField7() (n int) {
+	if !x.IsSure {
+		return n
+	}
+	n += fastpb.SizeBool(7, x.GetIsSure())
+	return n
+}
+
 func (x *UpdatePostResp) Size() (n int) {
 	if x == nil {
 		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *UpdatePostResp) sizeField1() (n int) {
+	if x.Keywords == nil {
+		return n
+	}
+	for i := range x.GetKeywords() {
+		n += fastpb.SizeMessage(1, x.GetKeywords()[i])
 	}
 	return n
 }
@@ -10888,9 +11153,12 @@ var fieldIDToName_UpdateUserReq = map[int32]string{
 	5: "Description",
 	6: "Labels",
 	7: "Url",
+	8: "IsSure",
 }
 
-var fieldIDToName_UpdateUserResp = map[int32]string{}
+var fieldIDToName_UpdateUserResp = map[int32]string{
+	1: "Keywords",
+}
 
 var fieldIDToName_SearchUserReq = map[int32]string{
 	1: "AllFieldsKey",
@@ -11237,10 +11505,16 @@ var fieldIDToName_CreatePostReq = map[int32]string{
 	3: "Tags",
 	4: "Status",
 	5: "Url",
+	6: "IsSure",
 }
 
 var fieldIDToName_CreatePostResp = map[int32]string{
 	1: "PostId",
+	2: "Keywords",
+}
+
+var fieldIDToName_Keywords = map[int32]string{
+	1: "Keywords",
 }
 
 var fieldIDToName_DeletePostReq = map[int32]string{
@@ -11256,9 +11530,12 @@ var fieldIDToName_UpdatePostReq = map[int32]string{
 	4: "Tags",
 	5: "Status",
 	6: "Url",
+	7: "IsSure",
 }
 
-var fieldIDToName_UpdatePostResp = map[int32]string{}
+var fieldIDToName_UpdatePostResp = map[int32]string{
+	1: "Keywords",
+}
 
 var fieldIDToName_GetPostReq = map[int32]string{
 	1: "PostId",
