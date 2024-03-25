@@ -259,6 +259,11 @@ func (x *File) FastRead(buf []byte, _type int8, number int32) (offset int, err e
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 14:
+		offset, err = x.fastReadField14(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -340,6 +345,11 @@ func (x *File) fastReadField13(buf []byte, _type int8) (offset int, err error) {
 		return offset, err
 	}
 	x.Labels = append(x.Labels, v)
+	return offset, err
+}
+
+func (x *File) fastReadField14(buf []byte, _type int8) (offset int, err error) {
+	x.Category, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -2180,6 +2190,7 @@ func (x *File) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField11(buf[offset:])
 	offset += x.fastWriteField12(buf[offset:])
 	offset += x.fastWriteField13(buf[offset:])
+	offset += x.fastWriteField14(buf[offset:])
 	return offset
 }
 
@@ -2286,6 +2297,14 @@ func (x *File) fastWriteField13(buf []byte) (offset int) {
 	for i := range x.GetLabels() {
 		offset += fastpb.WriteString(buf[offset:], 13, x.GetLabels()[i])
 	}
+	return offset
+}
+
+func (x *File) fastWriteField14(buf []byte) (offset int) {
+	if x.Category == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 14, x.GetCategory())
 	return offset
 }
 
@@ -3748,6 +3767,7 @@ func (x *File) Size() (n int) {
 	n += x.sizeField11()
 	n += x.sizeField12()
 	n += x.sizeField13()
+	n += x.sizeField14()
 	return n
 }
 
@@ -3854,6 +3874,14 @@ func (x *File) sizeField13() (n int) {
 	for i := range x.GetLabels() {
 		n += fastpb.SizeString(13, x.GetLabels()[i])
 	}
+	return n
+}
+
+func (x *File) sizeField14() (n int) {
+	if x.Category == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(14, x.GetCategory())
 	return n
 }
 
@@ -5179,6 +5207,7 @@ var fieldIDToName_File = map[int32]string{
 	11: "SubZone",
 	12: "Description",
 	13: "Labels",
+	14: "Category",
 }
 
 var fieldIDToName_FileParameter = map[int32]string{

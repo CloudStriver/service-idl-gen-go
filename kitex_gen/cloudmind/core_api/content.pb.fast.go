@@ -1187,6 +1187,11 @@ func (x *CreateFileReq) FastRead(buf []byte, _type int8, number int32) (offset i
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 6:
+		offset, err = x.fastReadField6(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -1223,6 +1228,11 @@ func (x *CreateFileReq) fastReadField4(buf []byte, _type int8) (offset int, err 
 
 func (x *CreateFileReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	x.Md5, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *CreateFileReq) fastReadField6(buf []byte, _type int8) (offset int, err error) {
+	x.Category, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -5453,6 +5463,7 @@ func (x *CreateFileReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
 	offset += x.fastWriteField5(buf[offset:])
+	offset += x.fastWriteField6(buf[offset:])
 	return offset
 }
 
@@ -5493,6 +5504,14 @@ func (x *CreateFileReq) fastWriteField5(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 5, x.GetMd5())
+	return offset
+}
+
+func (x *CreateFileReq) fastWriteField6(buf []byte) (offset int) {
+	if x.Category == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetCategory())
 	return offset
 }
 
@@ -8733,6 +8752,7 @@ func (x *CreateFileReq) Size() (n int) {
 	n += x.sizeField3()
 	n += x.sizeField4()
 	n += x.sizeField5()
+	n += x.sizeField6()
 	return n
 }
 
@@ -8773,6 +8793,14 @@ func (x *CreateFileReq) sizeField5() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(5, x.GetMd5())
+	return n
+}
+
+func (x *CreateFileReq) sizeField6() (n int) {
+	if x.Category == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(6, x.GetCategory())
 	return n
 }
 
@@ -11280,6 +11308,7 @@ var fieldIDToName_CreateFileReq = map[int32]string{
 	3: "FatherId",
 	4: "SpaceSize",
 	5: "Md5",
+	6: "Category",
 }
 
 var fieldIDToName_CreateFileResp = map[int32]string{
