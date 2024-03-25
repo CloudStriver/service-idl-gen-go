@@ -43,6 +43,7 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"CreateZone":             kitex.NewMethodInfo(createZoneHandler, newCreateZoneArgs, newCreateZoneResult, false),
 		"UpdateZone":             kitex.NewMethodInfo(updateZoneHandler, newUpdateZoneArgs, newUpdateZoneResult, false),
 		"GetZone":                kitex.NewMethodInfo(getZoneHandler, newGetZoneArgs, newGetZoneResult, false),
+		"GetZones":               kitex.NewMethodInfo(getZonesHandler, newGetZonesArgs, newGetZonesResult, false),
 		"DeleteZone":             kitex.NewMethodInfo(deleteZoneHandler, newDeleteZoneArgs, newDeleteZoneResult, false),
 		"CreateShareCode":        kitex.NewMethodInfo(createShareCodeHandler, newCreateShareCodeArgs, newCreateShareCodeResult, false),
 		"GetShareList":           kitex.NewMethodInfo(getShareListHandler, newGetShareListArgs, newGetShareListResult, false),
@@ -3444,6 +3445,159 @@ func (p *GetZoneResult) IsSetSuccess() bool {
 }
 
 func (p *GetZoneResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getZonesHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(core_api.GetZonesReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(core_api.Content).GetZones(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetZonesArgs:
+		success, err := handler.(core_api.Content).GetZones(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetZonesResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetZonesArgs() interface{} {
+	return &GetZonesArgs{}
+}
+
+func newGetZonesResult() interface{} {
+	return &GetZonesResult{}
+}
+
+type GetZonesArgs struct {
+	Req *core_api.GetZonesReq
+}
+
+func (p *GetZonesArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(core_api.GetZonesReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetZonesArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetZonesArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetZonesArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetZonesArgs) Unmarshal(in []byte) error {
+	msg := new(core_api.GetZonesReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetZonesArgs_Req_DEFAULT *core_api.GetZonesReq
+
+func (p *GetZonesArgs) GetReq() *core_api.GetZonesReq {
+	if !p.IsSetReq() {
+		return GetZonesArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetZonesArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetZonesArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetZonesResult struct {
+	Success *core_api.GetZonesResp
+}
+
+var GetZonesResult_Success_DEFAULT *core_api.GetZonesResp
+
+func (p *GetZonesResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(core_api.GetZonesResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetZonesResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetZonesResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetZonesResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetZonesResult) Unmarshal(in []byte) error {
+	msg := new(core_api.GetZonesResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetZonesResult) GetSuccess() *core_api.GetZonesResp {
+	if !p.IsSetSuccess() {
+		return GetZonesResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetZonesResult) SetSuccess(x interface{}) {
+	p.Success = x.(*core_api.GetZonesResp)
+}
+
+func (p *GetZonesResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetZonesResult) GetResult() interface{} {
 	return p.Success
 }
 
@@ -7038,6 +7192,16 @@ func (p *kClient) GetZone(ctx context.Context, Req *core_api.GetZoneReq) (r *cor
 	_args.Req = Req
 	var _result GetZoneResult
 	if err = p.c.Call(ctx, "GetZone", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetZones(ctx context.Context, Req *core_api.GetZonesReq) (r *core_api.GetZonesResp, err error) {
+	var _args GetZonesArgs
+	_args.Req = Req
+	var _result GetZonesResult
+	if err = p.c.Call(ctx, "GetZones", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

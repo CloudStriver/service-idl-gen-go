@@ -33,6 +33,7 @@ type Client interface {
 	CreateZone(ctx context.Context, Req *core_api.CreateZoneReq, callOptions ...callopt.Option) (r *core_api.CreateZoneResp, err error)
 	UpdateZone(ctx context.Context, Req *core_api.UpdateZoneReq, callOptions ...callopt.Option) (r *core_api.UpdateZoneResp, err error)
 	GetZone(ctx context.Context, Req *core_api.GetZoneReq, callOptions ...callopt.Option) (r *core_api.GetZoneResp, err error)
+	GetZones(ctx context.Context, Req *core_api.GetZonesReq, callOptions ...callopt.Option) (r *core_api.GetZonesResp, err error)
 	DeleteZone(ctx context.Context, Req *core_api.DeleteZoneReq, callOptions ...callopt.Option) (r *core_api.DeleteZoneResp, err error)
 	CreateShareCode(ctx context.Context, Req *core_api.CreateShareCodeReq, callOptions ...callopt.Option) (r *core_api.CreateShareCodeResp, err error)
 	GetShareList(ctx context.Context, Req *core_api.GetShareListReq, callOptions ...callopt.Option) (r *core_api.GetShareListResp, err error)
@@ -194,6 +195,11 @@ func (p *kContentClient) UpdateZone(ctx context.Context, Req *core_api.UpdateZon
 func (p *kContentClient) GetZone(ctx context.Context, Req *core_api.GetZoneReq, callOptions ...callopt.Option) (r *core_api.GetZoneResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetZone(ctx, Req)
+}
+
+func (p *kContentClient) GetZones(ctx context.Context, Req *core_api.GetZonesReq, callOptions ...callopt.Option) (r *core_api.GetZonesResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetZones(ctx, Req)
 }
 
 func (p *kContentClient) DeleteZone(ctx context.Context, Req *core_api.DeleteZoneReq, callOptions ...callopt.Option) (r *core_api.DeleteZoneResp, err error) {

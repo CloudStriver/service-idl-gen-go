@@ -1820,6 +1820,125 @@ func (x *GetZoneResp) fastReadField1(buf []byte, _type int8) (offset int, err er
 	return offset, nil
 }
 
+func (x *GetZonesReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetZonesReq[number], err)
+}
+
+func (x *GetZonesReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.FatherId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *GetZonesReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadInt64(buf, _type)
+	x.Limit = &tmp
+	return offset, err
+}
+
+func (x *GetZonesReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadString(buf, _type)
+	x.LastToken = &tmp
+	return offset, err
+}
+
+func (x *GetZonesReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadBool(buf, _type)
+	x.Backward = &tmp
+	return offset, err
+}
+
+func (x *GetZonesReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	tmp, offset, err := fastpb.ReadInt64(buf, _type)
+	x.Offset = &tmp
+	return offset, err
+}
+
+func (x *GetZonesResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetZonesResp[number], err)
+}
+
+func (x *GetZonesResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v Zone
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Zones = append(x.Zones, &v)
+	return offset, nil
+}
+
+func (x *GetZonesResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.Total, offset, err = fastpb.ReadInt64(buf, _type)
+	return offset, err
+}
+
+func (x *GetZonesResp) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.Token, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
 func (x *UpdateZoneReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
 	switch number {
 	case 1:
@@ -5662,6 +5781,94 @@ func (x *GetZoneResp) fastWriteField1(buf []byte) (offset int) {
 	return offset
 }
 
+func (x *GetZonesReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
+	return offset
+}
+
+func (x *GetZonesReq) fastWriteField1(buf []byte) (offset int) {
+	if x.FatherId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetFatherId())
+	return offset
+}
+
+func (x *GetZonesReq) fastWriteField2(buf []byte) (offset int) {
+	if x.Limit == nil {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetLimit())
+	return offset
+}
+
+func (x *GetZonesReq) fastWriteField3(buf []byte) (offset int) {
+	if x.LastToken == nil {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetLastToken())
+	return offset
+}
+
+func (x *GetZonesReq) fastWriteField4(buf []byte) (offset int) {
+	if x.Backward == nil {
+		return offset
+	}
+	offset += fastpb.WriteBool(buf[offset:], 4, x.GetBackward())
+	return offset
+}
+
+func (x *GetZonesReq) fastWriteField5(buf []byte) (offset int) {
+	if x.Offset == nil {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetOffset())
+	return offset
+}
+
+func (x *GetZonesResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	return offset
+}
+
+func (x *GetZonesResp) fastWriteField1(buf []byte) (offset int) {
+	if x.Zones == nil {
+		return offset
+	}
+	for i := range x.GetZones() {
+		offset += fastpb.WriteMessage(buf[offset:], 1, x.GetZones()[i])
+	}
+	return offset
+}
+
+func (x *GetZonesResp) fastWriteField2(buf []byte) (offset int) {
+	if x.Total == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetTotal())
+	return offset
+}
+
+func (x *GetZonesResp) fastWriteField3(buf []byte) (offset int) {
+	if x.Token == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetToken())
+	return offset
+}
+
 func (x *UpdateZoneReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -8776,6 +8983,94 @@ func (x *GetZoneResp) sizeField1() (n int) {
 	return n
 }
 
+func (x *GetZonesReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
+	return n
+}
+
+func (x *GetZonesReq) sizeField1() (n int) {
+	if x.FatherId == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetFatherId())
+	return n
+}
+
+func (x *GetZonesReq) sizeField2() (n int) {
+	if x.Limit == nil {
+		return n
+	}
+	n += fastpb.SizeInt64(2, x.GetLimit())
+	return n
+}
+
+func (x *GetZonesReq) sizeField3() (n int) {
+	if x.LastToken == nil {
+		return n
+	}
+	n += fastpb.SizeString(3, x.GetLastToken())
+	return n
+}
+
+func (x *GetZonesReq) sizeField4() (n int) {
+	if x.Backward == nil {
+		return n
+	}
+	n += fastpb.SizeBool(4, x.GetBackward())
+	return n
+}
+
+func (x *GetZonesReq) sizeField5() (n int) {
+	if x.Offset == nil {
+		return n
+	}
+	n += fastpb.SizeInt64(5, x.GetOffset())
+	return n
+}
+
+func (x *GetZonesResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	return n
+}
+
+func (x *GetZonesResp) sizeField1() (n int) {
+	if x.Zones == nil {
+		return n
+	}
+	for i := range x.GetZones() {
+		n += fastpb.SizeMessage(1, x.GetZones()[i])
+	}
+	return n
+}
+
+func (x *GetZonesResp) sizeField2() (n int) {
+	if x.Total == 0 {
+		return n
+	}
+	n += fastpb.SizeInt64(2, x.GetTotal())
+	return n
+}
+
+func (x *GetZonesResp) sizeField3() (n int) {
+	if x.Token == "" {
+		return n
+	}
+	n += fastpb.SizeString(3, x.GetToken())
+	return n
+}
+
 func (x *UpdateZoneReq) Size() (n int) {
 	if x == nil {
 		return n
@@ -10801,6 +11096,20 @@ var fieldIDToName_GetZoneReq = map[int32]string{
 
 var fieldIDToName_GetZoneResp = map[int32]string{
 	1: "Zone",
+}
+
+var fieldIDToName_GetZonesReq = map[int32]string{
+	1: "FatherId",
+	2: "Limit",
+	3: "LastToken",
+	4: "Backward",
+	5: "Offset",
+}
+
+var fieldIDToName_GetZonesResp = map[int32]string{
+	1: "Zones",
+	2: "Total",
+	3: "Token",
 }
 
 var fieldIDToName_UpdateZoneReq = map[int32]string{
