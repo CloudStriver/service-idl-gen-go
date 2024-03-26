@@ -1216,23 +1216,23 @@ func (x *CreateFileReq) fastReadField2(buf []byte, _type int8) (offset int, err 
 }
 
 func (x *CreateFileReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	x.FatherId, offset, err = fastpb.ReadString(buf, _type)
+	x.Category, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
 func (x *CreateFileReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	x.FatherId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *CreateFileReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
 	tmp, offset, err := fastpb.ReadInt64(buf, _type)
 	x.SpaceSize = &tmp
 	return offset, err
 }
 
-func (x *CreateFileReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	x.Md5, offset, err = fastpb.ReadString(buf, _type)
-	return offset, err
-}
-
 func (x *CreateFileReq) fastReadField6(buf []byte, _type int8) (offset int, err error) {
-	x.Category, offset, err = fastpb.ReadInt64(buf, _type)
+	x.Md5, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -5484,34 +5484,34 @@ func (x *CreateFileReq) fastWriteField2(buf []byte) (offset int) {
 }
 
 func (x *CreateFileReq) fastWriteField3(buf []byte) (offset int) {
-	if x.FatherId == "" {
+	if x.Category == 0 {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 3, x.GetFatherId())
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.GetCategory())
 	return offset
 }
 
 func (x *CreateFileReq) fastWriteField4(buf []byte) (offset int) {
-	if x.SpaceSize == nil {
+	if x.FatherId == "" {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 4, x.GetSpaceSize())
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetFatherId())
 	return offset
 }
 
 func (x *CreateFileReq) fastWriteField5(buf []byte) (offset int) {
-	if x.Md5 == "" {
+	if x.SpaceSize == nil {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 5, x.GetMd5())
+	offset += fastpb.WriteInt64(buf[offset:], 5, x.GetSpaceSize())
 	return offset
 }
 
 func (x *CreateFileReq) fastWriteField6(buf []byte) (offset int) {
-	if x.Category == 0 {
+	if x.Md5 == "" {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 6, x.GetCategory())
+	offset += fastpb.WriteString(buf[offset:], 6, x.GetMd5())
 	return offset
 }
 
@@ -8773,34 +8773,34 @@ func (x *CreateFileReq) sizeField2() (n int) {
 }
 
 func (x *CreateFileReq) sizeField3() (n int) {
-	if x.FatherId == "" {
+	if x.Category == 0 {
 		return n
 	}
-	n += fastpb.SizeString(3, x.GetFatherId())
+	n += fastpb.SizeInt64(3, x.GetCategory())
 	return n
 }
 
 func (x *CreateFileReq) sizeField4() (n int) {
-	if x.SpaceSize == nil {
+	if x.FatherId == "" {
 		return n
 	}
-	n += fastpb.SizeInt64(4, x.GetSpaceSize())
+	n += fastpb.SizeString(4, x.GetFatherId())
 	return n
 }
 
 func (x *CreateFileReq) sizeField5() (n int) {
-	if x.Md5 == "" {
+	if x.SpaceSize == nil {
 		return n
 	}
-	n += fastpb.SizeString(5, x.GetMd5())
+	n += fastpb.SizeInt64(5, x.GetSpaceSize())
 	return n
 }
 
 func (x *CreateFileReq) sizeField6() (n int) {
-	if x.Category == 0 {
+	if x.Md5 == "" {
 		return n
 	}
-	n += fastpb.SizeInt64(6, x.GetCategory())
+	n += fastpb.SizeString(6, x.GetMd5())
 	return n
 }
 
@@ -11305,10 +11305,10 @@ var fieldIDToName_GetFileBySharingCodeResp = map[int32]string{
 var fieldIDToName_CreateFileReq = map[int32]string{
 	1: "Name",
 	2: "Type",
-	3: "FatherId",
-	4: "SpaceSize",
-	5: "Md5",
-	6: "Category",
+	3: "Category",
+	4: "FatherId",
+	5: "SpaceSize",
+	6: "Md5",
 }
 
 var fieldIDToName_CreateFileResp = map[int32]string{
