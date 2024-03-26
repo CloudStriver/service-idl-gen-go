@@ -38,11 +38,6 @@ func (x *RegisterReq) FastRead(buf []byte, _type int8, number int32) (offset int
 		if err != nil {
 			goto ReadFieldError
 		}
-	case 5:
-		offset, err = x.fastReadField5(buf, _type)
-		if err != nil {
-			goto ReadFieldError
-		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -62,21 +57,16 @@ func (x *RegisterReq) fastReadField1(buf []byte, _type int8) (offset int, err er
 }
 
 func (x *RegisterReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.Sex, offset, err = fastpb.ReadInt64(buf, _type)
-	return offset, err
-}
-
-func (x *RegisterReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	x.Email, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
-func (x *RegisterReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+func (x *RegisterReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	x.Password, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
-func (x *RegisterReq) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+func (x *RegisterReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
 	x.IsSure, offset, err = fastpb.ReadBool(buf, _type)
 	return offset, err
 }
@@ -791,7 +781,6 @@ func (x *RegisterReq) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
 	offset += x.fastWriteField4(buf[offset:])
-	offset += x.fastWriteField5(buf[offset:])
 	return offset
 }
 
@@ -804,34 +793,26 @@ func (x *RegisterReq) fastWriteField1(buf []byte) (offset int) {
 }
 
 func (x *RegisterReq) fastWriteField2(buf []byte) (offset int) {
-	if x.Sex == 0 {
+	if x.Email == "" {
 		return offset
 	}
-	offset += fastpb.WriteInt64(buf[offset:], 2, x.GetSex())
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetEmail())
 	return offset
 }
 
 func (x *RegisterReq) fastWriteField3(buf []byte) (offset int) {
-	if x.Email == "" {
+	if x.Password == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 3, x.GetEmail())
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetPassword())
 	return offset
 }
 
 func (x *RegisterReq) fastWriteField4(buf []byte) (offset int) {
-	if x.Password == "" {
-		return offset
-	}
-	offset += fastpb.WriteString(buf[offset:], 4, x.GetPassword())
-	return offset
-}
-
-func (x *RegisterReq) fastWriteField5(buf []byte) (offset int) {
 	if !x.IsSure {
 		return offset
 	}
-	offset += fastpb.WriteBool(buf[offset:], 5, x.GetIsSure())
+	offset += fastpb.WriteBool(buf[offset:], 4, x.GetIsSure())
 	return offset
 }
 
@@ -1343,7 +1324,6 @@ func (x *RegisterReq) Size() (n int) {
 	n += x.sizeField2()
 	n += x.sizeField3()
 	n += x.sizeField4()
-	n += x.sizeField5()
 	return n
 }
 
@@ -1356,34 +1336,26 @@ func (x *RegisterReq) sizeField1() (n int) {
 }
 
 func (x *RegisterReq) sizeField2() (n int) {
-	if x.Sex == 0 {
+	if x.Email == "" {
 		return n
 	}
-	n += fastpb.SizeInt64(2, x.GetSex())
+	n += fastpb.SizeString(2, x.GetEmail())
 	return n
 }
 
 func (x *RegisterReq) sizeField3() (n int) {
-	if x.Email == "" {
+	if x.Password == "" {
 		return n
 	}
-	n += fastpb.SizeString(3, x.GetEmail())
+	n += fastpb.SizeString(3, x.GetPassword())
 	return n
 }
 
 func (x *RegisterReq) sizeField4() (n int) {
-	if x.Password == "" {
-		return n
-	}
-	n += fastpb.SizeString(4, x.GetPassword())
-	return n
-}
-
-func (x *RegisterReq) sizeField5() (n int) {
 	if !x.IsSure {
 		return n
 	}
-	n += fastpb.SizeBool(5, x.GetIsSure())
+	n += fastpb.SizeBool(4, x.GetIsSure())
 	return n
 }
 
@@ -1889,10 +1861,9 @@ func (x *AskUploadAvatarResp) sizeField5() (n int) {
 
 var fieldIDToName_RegisterReq = map[int32]string{
 	1: "Name",
-	2: "Sex",
-	3: "Email",
-	4: "Password",
-	5: "IsSure",
+	2: "Email",
+	3: "Password",
+	4: "IsSure",
 }
 
 var fieldIDToName_RegisterResp = map[int32]string{
