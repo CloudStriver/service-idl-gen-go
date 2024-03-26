@@ -72,6 +72,10 @@ type Client interface {
 	GetPopularRecommend(ctx context.Context, Req *content.GetPopularRecommendReq, callOptions ...callopt.Option) (r *content.GetPopularRecommendResp, err error)
 	GetLatestRecommend(ctx context.Context, Req *content.GetLatestRecommendReq, callOptions ...callopt.Option) (r *content.GetLatestRecommendResp, err error)
 	CreateFeedBack(ctx context.Context, Req *content.CreateFeedBackReq, callOptions ...callopt.Option) (r *content.CreateFeedBackResp, err error)
+	IncrHotValue(ctx context.Context, Req *content.IncrHotValueReq, callOptions ...callopt.Option) (r *content.IncrHotValueResp, err error)
+	GetHotValue(ctx context.Context, Req *content.GetHotValueReq, callOptions ...callopt.Option) (r *content.GetHotValueResp, err error)
+	CreateHot(ctx context.Context, Req *content.CreateHotReq, callOptions ...callopt.Option) (r *content.CreateHotResp, err error)
+	GetHotValues(ctx context.Context, Req *content.GetHotValuesReq, callOptions ...callopt.Option) (r *content.GetHotValuesResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -406,4 +410,24 @@ func (p *kContentServiceClient) GetLatestRecommend(ctx context.Context, Req *con
 func (p *kContentServiceClient) CreateFeedBack(ctx context.Context, Req *content.CreateFeedBackReq, callOptions ...callopt.Option) (r *content.CreateFeedBackResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.CreateFeedBack(ctx, Req)
+}
+
+func (p *kContentServiceClient) IncrHotValue(ctx context.Context, Req *content.IncrHotValueReq, callOptions ...callopt.Option) (r *content.IncrHotValueResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.IncrHotValue(ctx, Req)
+}
+
+func (p *kContentServiceClient) GetHotValue(ctx context.Context, Req *content.GetHotValueReq, callOptions ...callopt.Option) (r *content.GetHotValueResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetHotValue(ctx, Req)
+}
+
+func (p *kContentServiceClient) CreateHot(ctx context.Context, Req *content.CreateHotReq, callOptions ...callopt.Option) (r *content.CreateHotResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateHot(ctx, Req)
+}
+
+func (p *kContentServiceClient) GetHotValues(ctx context.Context, Req *content.GetHotValuesReq, callOptions ...callopt.Option) (r *content.GetHotValuesResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetHotValues(ctx, Req)
 }

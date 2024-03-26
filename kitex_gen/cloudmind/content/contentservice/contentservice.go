@@ -82,6 +82,10 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"GetPopularRecommend":    kitex.NewMethodInfo(getPopularRecommendHandler, newGetPopularRecommendArgs, newGetPopularRecommendResult, false),
 		"GetLatestRecommend":     kitex.NewMethodInfo(getLatestRecommendHandler, newGetLatestRecommendArgs, newGetLatestRecommendResult, false),
 		"CreateFeedBack":         kitex.NewMethodInfo(createFeedBackHandler, newCreateFeedBackArgs, newCreateFeedBackResult, false),
+		"IncrHotValue":           kitex.NewMethodInfo(incrHotValueHandler, newIncrHotValueArgs, newIncrHotValueResult, false),
+		"GetHotValue":            kitex.NewMethodInfo(getHotValueHandler, newGetHotValueArgs, newGetHotValueResult, false),
+		"CreateHot":              kitex.NewMethodInfo(createHotHandler, newCreateHotArgs, newCreateHotResult, false),
+		"GetHotValues":           kitex.NewMethodInfo(getHotValuesHandler, newGetHotValuesArgs, newGetHotValuesResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName":     "cloudmind.content",
@@ -9431,6 +9435,618 @@ func (p *CreateFeedBackResult) GetResult() interface{} {
 	return p.Success
 }
 
+func incrHotValueHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.IncrHotValueReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).IncrHotValue(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *IncrHotValueArgs:
+		success, err := handler.(content.ContentService).IncrHotValue(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*IncrHotValueResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newIncrHotValueArgs() interface{} {
+	return &IncrHotValueArgs{}
+}
+
+func newIncrHotValueResult() interface{} {
+	return &IncrHotValueResult{}
+}
+
+type IncrHotValueArgs struct {
+	Req *content.IncrHotValueReq
+}
+
+func (p *IncrHotValueArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.IncrHotValueReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *IncrHotValueArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *IncrHotValueArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *IncrHotValueArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *IncrHotValueArgs) Unmarshal(in []byte) error {
+	msg := new(content.IncrHotValueReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var IncrHotValueArgs_Req_DEFAULT *content.IncrHotValueReq
+
+func (p *IncrHotValueArgs) GetReq() *content.IncrHotValueReq {
+	if !p.IsSetReq() {
+		return IncrHotValueArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *IncrHotValueArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *IncrHotValueArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type IncrHotValueResult struct {
+	Success *content.IncrHotValueResp
+}
+
+var IncrHotValueResult_Success_DEFAULT *content.IncrHotValueResp
+
+func (p *IncrHotValueResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.IncrHotValueResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *IncrHotValueResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *IncrHotValueResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *IncrHotValueResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *IncrHotValueResult) Unmarshal(in []byte) error {
+	msg := new(content.IncrHotValueResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *IncrHotValueResult) GetSuccess() *content.IncrHotValueResp {
+	if !p.IsSetSuccess() {
+		return IncrHotValueResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *IncrHotValueResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.IncrHotValueResp)
+}
+
+func (p *IncrHotValueResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *IncrHotValueResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getHotValueHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.GetHotValueReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).GetHotValue(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetHotValueArgs:
+		success, err := handler.(content.ContentService).GetHotValue(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetHotValueResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetHotValueArgs() interface{} {
+	return &GetHotValueArgs{}
+}
+
+func newGetHotValueResult() interface{} {
+	return &GetHotValueResult{}
+}
+
+type GetHotValueArgs struct {
+	Req *content.GetHotValueReq
+}
+
+func (p *GetHotValueArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.GetHotValueReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetHotValueArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetHotValueArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetHotValueArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetHotValueArgs) Unmarshal(in []byte) error {
+	msg := new(content.GetHotValueReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetHotValueArgs_Req_DEFAULT *content.GetHotValueReq
+
+func (p *GetHotValueArgs) GetReq() *content.GetHotValueReq {
+	if !p.IsSetReq() {
+		return GetHotValueArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetHotValueArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetHotValueArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetHotValueResult struct {
+	Success *content.GetHotValueResp
+}
+
+var GetHotValueResult_Success_DEFAULT *content.GetHotValueResp
+
+func (p *GetHotValueResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.GetHotValueResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetHotValueResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetHotValueResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetHotValueResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetHotValueResult) Unmarshal(in []byte) error {
+	msg := new(content.GetHotValueResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetHotValueResult) GetSuccess() *content.GetHotValueResp {
+	if !p.IsSetSuccess() {
+		return GetHotValueResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetHotValueResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.GetHotValueResp)
+}
+
+func (p *GetHotValueResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetHotValueResult) GetResult() interface{} {
+	return p.Success
+}
+
+func createHotHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.CreateHotReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).CreateHot(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *CreateHotArgs:
+		success, err := handler.(content.ContentService).CreateHot(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*CreateHotResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newCreateHotArgs() interface{} {
+	return &CreateHotArgs{}
+}
+
+func newCreateHotResult() interface{} {
+	return &CreateHotResult{}
+}
+
+type CreateHotArgs struct {
+	Req *content.CreateHotReq
+}
+
+func (p *CreateHotArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.CreateHotReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *CreateHotArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *CreateHotArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *CreateHotArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *CreateHotArgs) Unmarshal(in []byte) error {
+	msg := new(content.CreateHotReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var CreateHotArgs_Req_DEFAULT *content.CreateHotReq
+
+func (p *CreateHotArgs) GetReq() *content.CreateHotReq {
+	if !p.IsSetReq() {
+		return CreateHotArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *CreateHotArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *CreateHotArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type CreateHotResult struct {
+	Success *content.CreateHotResp
+}
+
+var CreateHotResult_Success_DEFAULT *content.CreateHotResp
+
+func (p *CreateHotResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.CreateHotResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *CreateHotResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *CreateHotResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *CreateHotResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *CreateHotResult) Unmarshal(in []byte) error {
+	msg := new(content.CreateHotResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *CreateHotResult) GetSuccess() *content.CreateHotResp {
+	if !p.IsSetSuccess() {
+		return CreateHotResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *CreateHotResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.CreateHotResp)
+}
+
+func (p *CreateHotResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *CreateHotResult) GetResult() interface{} {
+	return p.Success
+}
+
+func getHotValuesHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	switch s := arg.(type) {
+	case *streaming.Args:
+		st := s.Stream
+		req := new(content.GetHotValuesReq)
+		if err := st.RecvMsg(req); err != nil {
+			return err
+		}
+		resp, err := handler.(content.ContentService).GetHotValues(ctx, req)
+		if err != nil {
+			return err
+		}
+		if err := st.SendMsg(resp); err != nil {
+			return err
+		}
+	case *GetHotValuesArgs:
+		success, err := handler.(content.ContentService).GetHotValues(ctx, s.Req)
+		if err != nil {
+			return err
+		}
+		realResult := result.(*GetHotValuesResult)
+		realResult.Success = success
+	}
+	return nil
+}
+func newGetHotValuesArgs() interface{} {
+	return &GetHotValuesArgs{}
+}
+
+func newGetHotValuesResult() interface{} {
+	return &GetHotValuesResult{}
+}
+
+type GetHotValuesArgs struct {
+	Req *content.GetHotValuesReq
+}
+
+func (p *GetHotValuesArgs) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetReq() {
+		p.Req = new(content.GetHotValuesReq)
+	}
+	return p.Req.FastRead(buf, _type, number)
+}
+
+func (p *GetHotValuesArgs) FastWrite(buf []byte) (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.FastWrite(buf)
+}
+
+func (p *GetHotValuesArgs) Size() (n int) {
+	if !p.IsSetReq() {
+		return 0
+	}
+	return p.Req.Size()
+}
+
+func (p *GetHotValuesArgs) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetReq() {
+		return out, nil
+	}
+	return proto.Marshal(p.Req)
+}
+
+func (p *GetHotValuesArgs) Unmarshal(in []byte) error {
+	msg := new(content.GetHotValuesReq)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Req = msg
+	return nil
+}
+
+var GetHotValuesArgs_Req_DEFAULT *content.GetHotValuesReq
+
+func (p *GetHotValuesArgs) GetReq() *content.GetHotValuesReq {
+	if !p.IsSetReq() {
+		return GetHotValuesArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *GetHotValuesArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GetHotValuesArgs) GetFirstArgument() interface{} {
+	return p.Req
+}
+
+type GetHotValuesResult struct {
+	Success *content.GetHotValuesResp
+}
+
+var GetHotValuesResult_Success_DEFAULT *content.GetHotValuesResp
+
+func (p *GetHotValuesResult) FastRead(buf []byte, _type int8, number int32) (n int, err error) {
+	if !p.IsSetSuccess() {
+		p.Success = new(content.GetHotValuesResp)
+	}
+	return p.Success.FastRead(buf, _type, number)
+}
+
+func (p *GetHotValuesResult) FastWrite(buf []byte) (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.FastWrite(buf)
+}
+
+func (p *GetHotValuesResult) Size() (n int) {
+	if !p.IsSetSuccess() {
+		return 0
+	}
+	return p.Success.Size()
+}
+
+func (p *GetHotValuesResult) Marshal(out []byte) ([]byte, error) {
+	if !p.IsSetSuccess() {
+		return out, nil
+	}
+	return proto.Marshal(p.Success)
+}
+
+func (p *GetHotValuesResult) Unmarshal(in []byte) error {
+	msg := new(content.GetHotValuesResp)
+	if err := proto.Unmarshal(in, msg); err != nil {
+		return err
+	}
+	p.Success = msg
+	return nil
+}
+
+func (p *GetHotValuesResult) GetSuccess() *content.GetHotValuesResp {
+	if !p.IsSetSuccess() {
+		return GetHotValuesResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+func (p *GetHotValuesResult) SetSuccess(x interface{}) {
+	p.Success = x.(*content.GetHotValuesResp)
+}
+
+func (p *GetHotValuesResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GetHotValuesResult) GetResult() interface{} {
+	return p.Success
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -10046,6 +10662,46 @@ func (p *kClient) CreateFeedBack(ctx context.Context, Req *content.CreateFeedBac
 	_args.Req = Req
 	var _result CreateFeedBackResult
 	if err = p.c.Call(ctx, "CreateFeedBack", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) IncrHotValue(ctx context.Context, Req *content.IncrHotValueReq) (r *content.IncrHotValueResp, err error) {
+	var _args IncrHotValueArgs
+	_args.Req = Req
+	var _result IncrHotValueResult
+	if err = p.c.Call(ctx, "IncrHotValue", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetHotValue(ctx context.Context, Req *content.GetHotValueReq) (r *content.GetHotValueResp, err error) {
+	var _args GetHotValueArgs
+	_args.Req = Req
+	var _result GetHotValueResult
+	if err = p.c.Call(ctx, "GetHotValue", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CreateHot(ctx context.Context, Req *content.CreateHotReq) (r *content.CreateHotResp, err error) {
+	var _args CreateHotArgs
+	_args.Req = Req
+	var _result CreateHotResult
+	if err = p.c.Call(ctx, "CreateHot", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetHotValues(ctx context.Context, Req *content.GetHotValuesReq) (r *content.GetHotValuesResp, err error) {
+	var _args GetHotValuesArgs
+	_args.Req = Req
+	var _result GetHotValuesResult
+	if err = p.c.Call(ctx, "GetHotValues", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

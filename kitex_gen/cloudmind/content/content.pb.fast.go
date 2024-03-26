@@ -4606,6 +4606,226 @@ SkipFieldError:
 	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
 }
 
+func (x *GetHotValueReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetHotValueReq[number], err)
+}
+
+func (x *GetHotValueReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.HotId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *GetHotValueResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetHotValueResp[number], err)
+}
+
+func (x *GetHotValueResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.HotValue, offset, err = fastpb.ReadDouble(buf, _type)
+	return offset, err
+}
+
+func (x *IncrHotValueReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_IncrHotValueReq[number], err)
+}
+
+func (x *IncrHotValueReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v int32
+	v, offset, err = fastpb.ReadInt32(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Action = Action(v)
+	return offset, nil
+}
+
+func (x *IncrHotValueReq) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.HotId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *IncrHotValueReq) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	var v int32
+	v, offset, err = fastpb.ReadInt32(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.TargetType = TargetType(v)
+	return offset, nil
+}
+
+func (x *IncrHotValueResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+}
+
+func (x *CreateHotReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_CreateHotReq[number], err)
+}
+
+func (x *CreateHotReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.HotId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *CreateHotResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+}
+
+func (x *GetHotValuesReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetHotValuesReq[number], err)
+}
+
+func (x *GetHotValuesReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.HotIds = append(x.HotIds, v)
+	return offset, err
+}
+
+func (x *GetHotValuesResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetHotValuesResp[number], err)
+}
+
+func (x *GetHotValuesResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	offset, err = fastpb.ReadList(buf, _type,
+		func(buf []byte, _type int8) (n int, err error) {
+			var v float64
+			v, offset, err = fastpb.ReadDouble(buf, _type)
+			if err != nil {
+				return offset, err
+			}
+			x.HotValues = append(x.HotValues, v)
+			return offset, err
+		})
+	return offset, err
+}
+
 func (x *GetFileIsExistReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -7697,6 +7917,141 @@ func (x *CreateFeedBackResp) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
 	}
+	return offset
+}
+
+func (x *GetHotValueReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *GetHotValueReq) fastWriteField1(buf []byte) (offset int) {
+	if x.HotId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetHotId())
+	return offset
+}
+
+func (x *GetHotValueResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *GetHotValueResp) fastWriteField1(buf []byte) (offset int) {
+	if x.HotValue == 0 {
+		return offset
+	}
+	offset += fastpb.WriteDouble(buf[offset:], 1, x.GetHotValue())
+	return offset
+}
+
+func (x *IncrHotValueReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	return offset
+}
+
+func (x *IncrHotValueReq) fastWriteField1(buf []byte) (offset int) {
+	if x.Action == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 1, int32(x.GetAction()))
+	return offset
+}
+
+func (x *IncrHotValueReq) fastWriteField2(buf []byte) (offset int) {
+	if x.HotId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetHotId())
+	return offset
+}
+
+func (x *IncrHotValueReq) fastWriteField3(buf []byte) (offset int) {
+	if x.TargetType == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 3, int32(x.GetTargetType()))
+	return offset
+}
+
+func (x *IncrHotValueResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	return offset
+}
+
+func (x *CreateHotReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *CreateHotReq) fastWriteField1(buf []byte) (offset int) {
+	if x.HotId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetHotId())
+	return offset
+}
+
+func (x *CreateHotResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	return offset
+}
+
+func (x *GetHotValuesReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *GetHotValuesReq) fastWriteField1(buf []byte) (offset int) {
+	if len(x.HotIds) == 0 {
+		return offset
+	}
+	for i := range x.GetHotIds() {
+		offset += fastpb.WriteString(buf[offset:], 1, x.GetHotIds()[i])
+	}
+	return offset
+}
+
+func (x *GetHotValuesResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *GetHotValuesResp) fastWriteField1(buf []byte) (offset int) {
+	if len(x.HotValues) == 0 {
+		return offset
+	}
+	offset += fastpb.WriteListPacked(buf[offset:], 1, len(x.GetHotValues()),
+		func(buf []byte, numTagOrKey, numIdxOrVal int32) int {
+			offset := 0
+			offset += fastpb.WriteDouble(buf[offset:], numTagOrKey, x.GetHotValues()[numIdxOrVal])
+			return offset
+		})
 	return offset
 }
 
@@ -10794,6 +11149,141 @@ func (x *CreateFeedBackResp) Size() (n int) {
 	return n
 }
 
+func (x *GetHotValueReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *GetHotValueReq) sizeField1() (n int) {
+	if x.HotId == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetHotId())
+	return n
+}
+
+func (x *GetHotValueResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *GetHotValueResp) sizeField1() (n int) {
+	if x.HotValue == 0 {
+		return n
+	}
+	n += fastpb.SizeDouble(1, x.GetHotValue())
+	return n
+}
+
+func (x *IncrHotValueReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	return n
+}
+
+func (x *IncrHotValueReq) sizeField1() (n int) {
+	if x.Action == 0 {
+		return n
+	}
+	n += fastpb.SizeInt32(1, int32(x.GetAction()))
+	return n
+}
+
+func (x *IncrHotValueReq) sizeField2() (n int) {
+	if x.HotId == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetHotId())
+	return n
+}
+
+func (x *IncrHotValueReq) sizeField3() (n int) {
+	if x.TargetType == 0 {
+		return n
+	}
+	n += fastpb.SizeInt32(3, int32(x.GetTargetType()))
+	return n
+}
+
+func (x *IncrHotValueResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	return n
+}
+
+func (x *CreateHotReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *CreateHotReq) sizeField1() (n int) {
+	if x.HotId == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetHotId())
+	return n
+}
+
+func (x *CreateHotResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	return n
+}
+
+func (x *GetHotValuesReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *GetHotValuesReq) sizeField1() (n int) {
+	if len(x.HotIds) == 0 {
+		return n
+	}
+	for i := range x.GetHotIds() {
+		n += fastpb.SizeString(1, x.GetHotIds()[i])
+	}
+	return n
+}
+
+func (x *GetHotValuesResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *GetHotValuesResp) sizeField1() (n int) {
+	if len(x.HotValues) == 0 {
+		return n
+	}
+	n += fastpb.SizeListPacked(1, len(x.GetHotValues()),
+		func(numTagOrKey, numIdxOrVal int32) int {
+			n := 0
+			n += fastpb.SizeDouble(numTagOrKey, x.GetHotValues()[numIdxOrVal])
+			return n
+		})
+	return n
+}
+
 var fieldIDToName_GetFileIsExistReq = map[int32]string{
 	1: "Md5",
 }
@@ -11372,5 +11862,35 @@ var fieldIDToName_CreateFeedBackReq = map[int32]string{
 }
 
 var fieldIDToName_CreateFeedBackResp = map[int32]string{}
+
+var fieldIDToName_GetHotValueReq = map[int32]string{
+	1: "HotId",
+}
+
+var fieldIDToName_GetHotValueResp = map[int32]string{
+	1: "HotValue",
+}
+
+var fieldIDToName_IncrHotValueReq = map[int32]string{
+	1: "Action",
+	2: "HotId",
+	3: "TargetType",
+}
+
+var fieldIDToName_IncrHotValueResp = map[int32]string{}
+
+var fieldIDToName_CreateHotReq = map[int32]string{
+	1: "HotId",
+}
+
+var fieldIDToName_CreateHotResp = map[int32]string{}
+
+var fieldIDToName_GetHotValuesReq = map[int32]string{
+	1: "HotIds",
+}
+
+var fieldIDToName_GetHotValuesResp = map[int32]string{
+	1: "HotValues",
+}
 
 var _ = basic.File_basic_pagination_proto
