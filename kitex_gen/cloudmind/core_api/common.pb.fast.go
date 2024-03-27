@@ -89,6 +89,11 @@ func (x *User) FastRead(buf []byte, _type int8, number int32) (offset int, err e
 		if err != nil {
 			goto ReadFieldError
 		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
 	default:
 		offset, err = fastpb.Skip(buf, _type, number)
 		if err != nil {
@@ -114,6 +119,206 @@ func (x *User) fastReadField2(buf []byte, _type int8) (offset int, err error) {
 
 func (x *User) fastReadField3(buf []byte, _type int8) (offset int, err error) {
 	x.Url, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *User) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Tags = append(x.Tags, v)
+	return offset, err
+}
+
+func (x *HotUser) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_HotUser[number], err)
+}
+
+func (x *HotUser) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.UserId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *HotUser) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.Name, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *HotUser) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.Url, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *HotUser) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	var v string
+	v, offset, err = fastpb.ReadString(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.Tags = append(x.Tags, v)
+	return offset, err
+}
+
+func (x *HotUser) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	x.HotValue, offset, err = fastpb.ReadDouble(buf, _type)
+	return offset, err
+}
+
+func (x *HotPost) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_HotPost[number], err)
+}
+
+func (x *HotPost) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.PostId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *HotPost) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	x.Title, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *HotPost) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.Url, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *HotPost) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	x.UserName, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *HotPost) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	x.HotValue, offset, err = fastpb.ReadDouble(buf, _type)
+	return offset, err
+}
+
+func (x *HotFile) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 4:
+		offset, err = x.fastReadField4(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 5:
+		offset, err = x.fastReadField5(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_HotFile[number], err)
+}
+
+func (x *HotFile) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	x.FileId, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *HotFile) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	x.Name, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *HotFile) fastReadField4(buf []byte, _type int8) (offset int, err error) {
+	x.Type, offset, err = fastpb.ReadString(buf, _type)
+	return offset, err
+}
+
+func (x *HotFile) fastReadField5(buf []byte, _type int8) (offset int, err error) {
+	x.HotValue, offset, err = fastpb.ReadDouble(buf, _type)
 	return offset, err
 }
 
@@ -2693,6 +2898,7 @@ func (x *User) FastWrite(buf []byte) (offset int) {
 	offset += x.fastWriteField1(buf[offset:])
 	offset += x.fastWriteField2(buf[offset:])
 	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
 	return offset
 }
 
@@ -2717,6 +2923,165 @@ func (x *User) fastWriteField3(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 3, x.GetUrl())
+	return offset
+}
+
+func (x *User) fastWriteField4(buf []byte) (offset int) {
+	if len(x.Tags) == 0 {
+		return offset
+	}
+	for i := range x.GetTags() {
+		offset += fastpb.WriteString(buf[offset:], 4, x.GetTags()[i])
+	}
+	return offset
+}
+
+func (x *HotUser) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
+	return offset
+}
+
+func (x *HotUser) fastWriteField1(buf []byte) (offset int) {
+	if x.UserId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetUserId())
+	return offset
+}
+
+func (x *HotUser) fastWriteField2(buf []byte) (offset int) {
+	if x.Name == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetName())
+	return offset
+}
+
+func (x *HotUser) fastWriteField3(buf []byte) (offset int) {
+	if x.Url == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetUrl())
+	return offset
+}
+
+func (x *HotUser) fastWriteField4(buf []byte) (offset int) {
+	if len(x.Tags) == 0 {
+		return offset
+	}
+	for i := range x.GetTags() {
+		offset += fastpb.WriteString(buf[offset:], 4, x.GetTags()[i])
+	}
+	return offset
+}
+
+func (x *HotUser) fastWriteField5(buf []byte) (offset int) {
+	if x.HotValue == 0 {
+		return offset
+	}
+	offset += fastpb.WriteDouble(buf[offset:], 5, x.GetHotValue())
+	return offset
+}
+
+func (x *HotPost) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
+	return offset
+}
+
+func (x *HotPost) fastWriteField1(buf []byte) (offset int) {
+	if x.PostId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetPostId())
+	return offset
+}
+
+func (x *HotPost) fastWriteField2(buf []byte) (offset int) {
+	if x.Title == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetTitle())
+	return offset
+}
+
+func (x *HotPost) fastWriteField3(buf []byte) (offset int) {
+	if x.Url == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetUrl())
+	return offset
+}
+
+func (x *HotPost) fastWriteField4(buf []byte) (offset int) {
+	if x.UserName == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetUserName())
+	return offset
+}
+
+func (x *HotPost) fastWriteField5(buf []byte) (offset int) {
+	if x.HotValue == 0 {
+		return offset
+	}
+	offset += fastpb.WriteDouble(buf[offset:], 5, x.GetHotValue())
+	return offset
+}
+
+func (x *HotFile) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	offset += x.fastWriteField4(buf[offset:])
+	offset += x.fastWriteField5(buf[offset:])
+	return offset
+}
+
+func (x *HotFile) fastWriteField1(buf []byte) (offset int) {
+	if x.FileId == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 1, x.GetFileId())
+	return offset
+}
+
+func (x *HotFile) fastWriteField3(buf []byte) (offset int) {
+	if x.Name == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 3, x.GetName())
+	return offset
+}
+
+func (x *HotFile) fastWriteField4(buf []byte) (offset int) {
+	if x.Type == "" {
+		return offset
+	}
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetType())
+	return offset
+}
+
+func (x *HotFile) fastWriteField5(buf []byte) (offset int) {
+	if x.HotValue == 0 {
+		return offset
+	}
+	offset += fastpb.WriteDouble(buf[offset:], 5, x.GetHotValue())
 	return offset
 }
 
@@ -4743,6 +5108,7 @@ func (x *User) Size() (n int) {
 	n += x.sizeField1()
 	n += x.sizeField2()
 	n += x.sizeField3()
+	n += x.sizeField4()
 	return n
 }
 
@@ -4767,6 +5133,165 @@ func (x *User) sizeField3() (n int) {
 		return n
 	}
 	n += fastpb.SizeString(3, x.GetUrl())
+	return n
+}
+
+func (x *User) sizeField4() (n int) {
+	if len(x.Tags) == 0 {
+		return n
+	}
+	for i := range x.GetTags() {
+		n += fastpb.SizeString(4, x.GetTags()[i])
+	}
+	return n
+}
+
+func (x *HotUser) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
+	return n
+}
+
+func (x *HotUser) sizeField1() (n int) {
+	if x.UserId == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetUserId())
+	return n
+}
+
+func (x *HotUser) sizeField2() (n int) {
+	if x.Name == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetName())
+	return n
+}
+
+func (x *HotUser) sizeField3() (n int) {
+	if x.Url == "" {
+		return n
+	}
+	n += fastpb.SizeString(3, x.GetUrl())
+	return n
+}
+
+func (x *HotUser) sizeField4() (n int) {
+	if len(x.Tags) == 0 {
+		return n
+	}
+	for i := range x.GetTags() {
+		n += fastpb.SizeString(4, x.GetTags()[i])
+	}
+	return n
+}
+
+func (x *HotUser) sizeField5() (n int) {
+	if x.HotValue == 0 {
+		return n
+	}
+	n += fastpb.SizeDouble(5, x.GetHotValue())
+	return n
+}
+
+func (x *HotPost) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
+	return n
+}
+
+func (x *HotPost) sizeField1() (n int) {
+	if x.PostId == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetPostId())
+	return n
+}
+
+func (x *HotPost) sizeField2() (n int) {
+	if x.Title == "" {
+		return n
+	}
+	n += fastpb.SizeString(2, x.GetTitle())
+	return n
+}
+
+func (x *HotPost) sizeField3() (n int) {
+	if x.Url == "" {
+		return n
+	}
+	n += fastpb.SizeString(3, x.GetUrl())
+	return n
+}
+
+func (x *HotPost) sizeField4() (n int) {
+	if x.UserName == "" {
+		return n
+	}
+	n += fastpb.SizeString(4, x.GetUserName())
+	return n
+}
+
+func (x *HotPost) sizeField5() (n int) {
+	if x.HotValue == 0 {
+		return n
+	}
+	n += fastpb.SizeDouble(5, x.GetHotValue())
+	return n
+}
+
+func (x *HotFile) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField3()
+	n += x.sizeField4()
+	n += x.sizeField5()
+	return n
+}
+
+func (x *HotFile) sizeField1() (n int) {
+	if x.FileId == "" {
+		return n
+	}
+	n += fastpb.SizeString(1, x.GetFileId())
+	return n
+}
+
+func (x *HotFile) sizeField3() (n int) {
+	if x.Name == "" {
+		return n
+	}
+	n += fastpb.SizeString(3, x.GetName())
+	return n
+}
+
+func (x *HotFile) sizeField4() (n int) {
+	if x.Type == "" {
+		return n
+	}
+	n += fastpb.SizeString(4, x.GetType())
+	return n
+}
+
+func (x *HotFile) sizeField5() (n int) {
+	if x.HotValue == 0 {
+		return n
+	}
+	n += fastpb.SizeDouble(5, x.GetHotValue())
 	return n
 }
 
@@ -6754,6 +7279,30 @@ var fieldIDToName_User = map[int32]string{
 	1: "UserId",
 	2: "Name",
 	3: "Url",
+	4: "Tags",
+}
+
+var fieldIDToName_HotUser = map[int32]string{
+	1: "UserId",
+	2: "Name",
+	3: "Url",
+	4: "Tags",
+	5: "HotValue",
+}
+
+var fieldIDToName_HotPost = map[int32]string{
+	1: "PostId",
+	2: "Title",
+	3: "Url",
+	4: "UserName",
+	5: "HotValue",
+}
+
+var fieldIDToName_HotFile = map[int32]string{
+	1: "FileId",
+	3: "Name",
+	4: "Type",
+	5: "HotValue",
 }
 
 var fieldIDToName_RecommendUser = map[int32]string{

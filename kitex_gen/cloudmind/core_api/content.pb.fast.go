@@ -4595,6 +4595,96 @@ func (x *GetProductsResp) fastReadField3(buf []byte, _type int8) (offset int, er
 	return offset, err
 }
 
+func (x *GetHotRanksReq) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetHotRanksReq[number], err)
+}
+
+func (x *GetHotRanksReq) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v int32
+	v, offset, err = fastpb.ReadInt32(buf, _type)
+	if err != nil {
+		return offset, err
+	}
+	x.TargetType = TargetType(v)
+	return offset, nil
+}
+
+func (x *GetHotRanksResp) FastRead(buf []byte, _type int8, number int32) (offset int, err error) {
+	switch number {
+	case 1:
+		offset, err = x.fastReadField1(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 2:
+		offset, err = x.fastReadField2(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	case 3:
+		offset, err = x.fastReadField3(buf, _type)
+		if err != nil {
+			goto ReadFieldError
+		}
+	default:
+		offset, err = fastpb.Skip(buf, _type, number)
+		if err != nil {
+			goto SkipFieldError
+		}
+	}
+	return offset, nil
+SkipFieldError:
+	return offset, fmt.Errorf("%T cannot parse invalid wire-format data, error: %s", x, err)
+ReadFieldError:
+	return offset, fmt.Errorf("%T read field %d '%s' error: %s", x, number, fieldIDToName_GetHotRanksResp[number], err)
+}
+
+func (x *GetHotRanksResp) fastReadField1(buf []byte, _type int8) (offset int, err error) {
+	var v HotPost
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Posts = append(x.Posts, &v)
+	return offset, nil
+}
+
+func (x *GetHotRanksResp) fastReadField2(buf []byte, _type int8) (offset int, err error) {
+	var v HotUser
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Users = append(x.Users, &v)
+	return offset, nil
+}
+
+func (x *GetHotRanksResp) fastReadField3(buf []byte, _type int8) (offset int, err error) {
+	var v HotFile
+	offset, err = fastpb.ReadMessage(buf, _type, &v)
+	if err != nil {
+		return offset, err
+	}
+	x.Files = append(x.Files, &v)
+	return offset, nil
+}
+
 func (x *UpdateUserReq) FastWrite(buf []byte) (offset int) {
 	if x == nil {
 		return offset
@@ -7881,6 +7971,62 @@ func (x *GetProductsResp) fastWriteField3(buf []byte) (offset int) {
 		return offset
 	}
 	offset += fastpb.WriteString(buf[offset:], 3, x.GetToken())
+	return offset
+}
+
+func (x *GetHotRanksReq) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	return offset
+}
+
+func (x *GetHotRanksReq) fastWriteField1(buf []byte) (offset int) {
+	if x.TargetType == 0 {
+		return offset
+	}
+	offset += fastpb.WriteInt32(buf[offset:], 1, int32(x.GetTargetType()))
+	return offset
+}
+
+func (x *GetHotRanksResp) FastWrite(buf []byte) (offset int) {
+	if x == nil {
+		return offset
+	}
+	offset += x.fastWriteField1(buf[offset:])
+	offset += x.fastWriteField2(buf[offset:])
+	offset += x.fastWriteField3(buf[offset:])
+	return offset
+}
+
+func (x *GetHotRanksResp) fastWriteField1(buf []byte) (offset int) {
+	if x.Posts == nil {
+		return offset
+	}
+	for i := range x.GetPosts() {
+		offset += fastpb.WriteMessage(buf[offset:], 1, x.GetPosts()[i])
+	}
+	return offset
+}
+
+func (x *GetHotRanksResp) fastWriteField2(buf []byte) (offset int) {
+	if x.Users == nil {
+		return offset
+	}
+	for i := range x.GetUsers() {
+		offset += fastpb.WriteMessage(buf[offset:], 2, x.GetUsers()[i])
+	}
+	return offset
+}
+
+func (x *GetHotRanksResp) fastWriteField3(buf []byte) (offset int) {
+	if x.Files == nil {
+		return offset
+	}
+	for i := range x.GetFiles() {
+		offset += fastpb.WriteMessage(buf[offset:], 3, x.GetFiles()[i])
+	}
 	return offset
 }
 
@@ -11173,6 +11319,62 @@ func (x *GetProductsResp) sizeField3() (n int) {
 	return n
 }
 
+func (x *GetHotRanksReq) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	return n
+}
+
+func (x *GetHotRanksReq) sizeField1() (n int) {
+	if x.TargetType == 0 {
+		return n
+	}
+	n += fastpb.SizeInt32(1, int32(x.GetTargetType()))
+	return n
+}
+
+func (x *GetHotRanksResp) Size() (n int) {
+	if x == nil {
+		return n
+	}
+	n += x.sizeField1()
+	n += x.sizeField2()
+	n += x.sizeField3()
+	return n
+}
+
+func (x *GetHotRanksResp) sizeField1() (n int) {
+	if x.Posts == nil {
+		return n
+	}
+	for i := range x.GetPosts() {
+		n += fastpb.SizeMessage(1, x.GetPosts()[i])
+	}
+	return n
+}
+
+func (x *GetHotRanksResp) sizeField2() (n int) {
+	if x.Users == nil {
+		return n
+	}
+	for i := range x.GetUsers() {
+		n += fastpb.SizeMessage(2, x.GetUsers()[i])
+	}
+	return n
+}
+
+func (x *GetHotRanksResp) sizeField3() (n int) {
+	if x.Files == nil {
+		return n
+	}
+	for i := range x.GetFiles() {
+		n += fastpb.SizeMessage(3, x.GetFiles()[i])
+	}
+	return n
+}
+
 var fieldIDToName_UpdateUserReq = map[int32]string{
 	1: "Name",
 	2: "Sex",
@@ -11724,6 +11926,16 @@ var fieldIDToName_GetProductsResp = map[int32]string{
 	1: "Products",
 	2: "Total",
 	3: "Token",
+}
+
+var fieldIDToName_GetHotRanksReq = map[int32]string{
+	1: "TargetType",
+}
+
+var fieldIDToName_GetHotRanksResp = map[int32]string{
+	1: "Posts",
+	2: "Users",
+	3: "Files",
 }
 
 var _ = basic.File_basic_pagination_proto
